@@ -1,4 +1,4 @@
-package lmp.admin.panel;
+package lmp.admin.menu.readingroom;
 
 public class ReadingRoomMgmt {
 
