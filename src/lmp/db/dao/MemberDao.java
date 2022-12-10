@@ -189,6 +189,7 @@ public class MemberDao extends MenuDao{
 	 * 회원 삭제
 	 * 
 	 * @param memberVO
+	 * @throws SQLException
 	 */
 	@Override
 	public void delete(MemberVO memberVO) throws SQLException {
