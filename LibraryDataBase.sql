@@ -32,7 +32,7 @@ CREATE TABLE admins(
      admin_phone    VARCHAR2(255)  CONSTRAINT ad_ad_phone_uk UNIQUE,       -- 사원 연락처 (UK)
      admin_email    VARCHAR2(255)  CONSTRAINT ad_ad_email_nn NOT NULL,     -- 사원 이메일
      admin_address  VARCHAR2(255)  CONSTRAINT ad_ad_address_nn NOT NULL,   -- 사원 주소
-     admin_registrationdate  DATE  CONSTRAINT ad_ad_reg_date_nn NOT NULL,  -- 사원 등록일 
+     admin_registrationdate  VARCHAR2(255)  DEFAULT sysdate,               -- 사원 등록일 
      admin_note     VARCHAR2(255)                                          -- 비고
 );
 
@@ -47,7 +47,7 @@ CREATE TABLE members (
      mem_phone      VARCHAR2(255) CONSTRAINT m_m_phone_uk UNIQUE,     -- 회원 연락처 (UK)
      mem_email      VARCHAR2(255) CONSTRAINT m_m_email_nn NOT NULL,   -- 회원 이메일
      mem_address    VARCHAR2(255) CONSTRAINT m_m_address_nn NOT NULL, -- 회원 주소
-     mem_registrationdate DATE CONSTRAINT m_m_reg_date_nn NOT NULL,   -- 회원 등록 번호
+     mem_registrationdate VARCHAR2(255)     DEFAULT sysdate,          -- 회원 등록 번호
      mem_note       VARCHAR2(255)                                     -- 비고
 );
 
@@ -60,7 +60,7 @@ CREATE TABLE books(
      book_isbn  VARCHAR2(255) CONSTRAINT b_b_isbn_uk UNIQUE,               -- 도서 ISBN 번호  (UK)
      book_bias      NUMBER(11) DEFAULT 1,                                  -- 도서 편권차 (기본값 1)
      book_duplicates NUMBER(11) DEFAULT 1,                                 -- 도서 복권수 (기본값 1)
-     book_registration_date   DATE CONSTRAINT b_b_reg_nn NOT NULL,         -- 도서 등록일
+     book_registration_date   VARCHAR2(255) DEFAULT sysdate,               -- 도서 등록일
      book_price     NUMBER(11),                                            -- 도서 가격
      location_id    CHAR(1) CONSTRAINT b_loc_id_fk REFERENCES locations(location_id), -- 도서 위치 (FK)
      book_note      VARCHAR2(255)                                          -- 비고
@@ -85,9 +85,9 @@ CREATE TABLE check_out_info(
      check_out_id   NUMBER(11) CONSTRAINT coi_coi_id_pk PRIMARY KEY,                 -- 대여 아이디 (PK)
      book_id        VARCHAR2(255) CONSTRAINT coi_b_id_fk REFERENCES books(book_id),  -- 대여 도서   (FK)
      mem_num        NUMBER(11) CONSTRAINT coi_m_num_fk REFERENCES members(mem_num),  -- 회원 번호   (FK)
-     check_out_date DATE CONSTRAINT coi_c_o_date_nn NOT NULL,                        -- 대여 날짜
-     expect_return_date DATE,                                                        -- 반납 예정 날짜
-     check_in_date  DATE                                                             -- 반납 날짜
+     check_out_date VARCHAR2(255)           DEFAULT sysdate,                         -- 대여 날짜
+     expect_return_date VARCHAR2(255)       DEFAULT sysdate + (INTERVAL '7' DAY),    -- 반납 예정 날짜
+     check_in_date  VARCHAR2(255)                                                    -- 반납 날짜
 );
 
 -- 열람실 정보 테이블
@@ -99,11 +99,11 @@ CREATE TABLE readingroom(
 
 -- 좌석 이용 정보 테이블
 CREATE TABLE seat_use_details(
-     use_id    NUMBER(11) CONSTRAINT sud_u_id_pk PRIMARY KEY,                        -- 열람실 사용내역 아이디     (PK)
-     mem_num   NUMBER(11) CONSTRAINT sud_m_num_fk REFERENCES members(mem_num),       -- 회원정보   (FK)
-     seat_num  NUMBER(11) CONSTRAINT sud_s_num_fk REFERENCES readingroom(seat_num),  -- 좌석 번호  (FK)
-     start_time DATE CONSTRAINT sud_s_time_nn NOT NULL,                              -- 사용 시작 시간
-     end_time DATE                                                                   -- 사용 종료 시간
+     use_id     NUMBER(11) CONSTRAINT sud_u_id_pk PRIMARY KEY,                        -- 열람실 사용내역 아이디     (PK)
+     mem_num    NUMBER(11) CONSTRAINT sud_m_num_fk REFERENCES members(mem_num),       -- 회원정보   (FK)
+     seat_num   NUMBER(11) CONSTRAINT sud_s_num_fk REFERENCES readingroom(seat_num),  -- 좌석 번호  (FK)
+     start_time VARCHAR2(255) DEFAULT to_char(sysdate, 'yyyy.mm.dd hh24:mi'),         -- 사용 시작 시간
+     end_time   VARCHAR2(255)                                                         -- 사용 종료 시간
 );
 
 -- 이미지 정보 테이블
@@ -157,5 +157,3 @@ CREATE SEQUENCE check_out_id_seq
      MAXVALUE 99999999
      CYCLE
      NOCACHE;
-
-SELECT * FROM tabs;
