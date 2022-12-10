@@ -157,5 +157,3 @@ CREATE SEQUENCE check_out_id_seq
      MAXVALUE 99999999
      CYCLE
      NOCACHE;
-
-SELECT * FROM tabs;
