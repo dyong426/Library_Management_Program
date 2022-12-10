@@ -13,9 +13,9 @@ public class CheckOutVO {
 	private Integer	 checkOutID;
 	private BookVO	 book;
 	private MemberVO member;
-	private Date	 checkOutDate;
-	private Date	 expectReturnDate;
-	private Date	 checkInDate;
+	private String	 checkOutDate;
+	private String	 expectReturnDate;
+	private String	 checkInDate;
 	
 	/**
 	 * 도서 정보, 대여상태 생성자
@@ -26,11 +26,13 @@ public class CheckOutVO {
 	 * @param checkInDate
 	 */
 	public CheckOutVO(
+					   Integer checkOutID,
 					   BookVO book,
-					   Date checkOutDate,
-					   Date expectRetrunDate,
-					   Date checkInDate
+					   String checkOutDate,
+					   String expectRetrunDate,
+					   String checkInDate
 					   ) {
+		this.checkOutID = checkOutID;
 		this.book = book;
 		this.checkOutDate = checkOutDate;
 		this.expectReturnDate = expectRetrunDate;
@@ -53,9 +55,9 @@ public class CheckOutVO {
 					   Integer	checkOutID,
 					   BookVO   book,
 					   MemberVO member,
-					   Date		checkOutDate,
-					   Date		expectReturnDate,
-					   Date		checkInDate
+					   String	checkOutDate,
+					   String	expectReturnDate,
+					   String	checkInDate
 					   ) {
 		this.checkOutID = checkOutID;
 		this.book = book;
@@ -64,9 +66,6 @@ public class CheckOutVO {
 		this.checkOutDate = checkOutDate;
 	}
 
-	public Date getCheckInDate() {
-		return checkInDate;
-	}
 
 	public Integer getCheckOutID() {
 		return checkOutID;
@@ -80,12 +79,15 @@ public class CheckOutVO {
 		return member;
 	}
 
-	public Date getCheckOutDate() {
+	public String getCheckOutDate() {
 		return checkOutDate;
 	}
 
-	public Date getExpectReturnDate() {
+	public String getExpectReturnDate() {
 		return expectReturnDate;
+	}
+	public String getCheckInDate() {
+		return checkInDate;
 	}
 	
 }

@@ -10,10 +10,11 @@ public class SeatUseDetailVO {
 	 * MEMBERS JOIN READINGROOM
 	 */
 	
+	private Integer use_id;
 	private MemberVO member;
 	private ReadingRoomVO readingroom;
-	private Date startTime;
-	private Date endTime;
+	private String startTime;
+	private String endTime;
 	
 	/**
 	 * 열람실 이용내역 정보 생성자
@@ -24,17 +25,22 @@ public class SeatUseDetailVO {
 	 * @param endTime
 	 */
 	public SeatUseDetailVO(
+							Integer use_id,
 							MemberVO member,
 							ReadingRoomVO readingroom,
-							Date startTime,
-							Date endTime
+							String startTime,
+							String endTime
 							) {
-		
+		this.use_id		 = use_id;
 		this.member		 = member;
 		this.readingroom = readingroom;
 		this.startTime	 = startTime;
 		this.endTime	 = endTime;
 		
+	}
+
+	public Integer getUse_id() {
+		return use_id;
 	}
 
 	public MemberVO getMember() {
@@ -45,11 +51,11 @@ public class SeatUseDetailVO {
 		return readingroom;
 	}
 
-	public Date getStartTime() {
+	public String getStartTime() {
 		return startTime;
 	}
 
-	public Date getEndTime() {
+	public String getEndTime() {
 		return endTime;
 	}
 }

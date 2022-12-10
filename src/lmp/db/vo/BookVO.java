@@ -15,7 +15,7 @@ public class BookVO {
 	private String	   isbn;
 	private Integer	   bias;
 	private Integer	   duplicates;
-	private Date	   regDate;
+	private String	   regDate;
 	private Integer	   price;
 	private LocationVO location;	
 	private String	   note;
@@ -43,7 +43,7 @@ public class BookVO {
 				  String  book_isbn,
 				  Integer book_bias,
 				  Integer book_duplicates,
-				  Date	  book_registrationdate,
+				  String  book_registrationdate,
 				  Integer book_price,
 				  LocationVO location,
 				  String  book_note
@@ -91,7 +91,7 @@ public class BookVO {
 		return duplicates;
 	}
 
-	public Date getRegDate() {
+	public String getRegDate() {
 		return regDate;
 	}
 

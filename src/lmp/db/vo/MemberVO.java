@@ -17,7 +17,7 @@ public class MemberVO {
 	private	String	phone;
 	private	String	email;
 	private	String	address;
-	private	Date	regDate;
+	private	String	regDate;
 	private	String	note;
 	
 	
@@ -59,7 +59,7 @@ public class MemberVO {
 					String	mem_phone,
 					String	mem_email,
 					String	mem_address,
-					Date	mem_registrationDate,
+					String	mem_registrationDate,
 					String	mem_note
 					) {
 		
@@ -113,7 +113,7 @@ public class MemberVO {
 		return address;
 	}
 
-	public Date getRegDate() {
+	public String getRegDate() {
 		return regDate;
 	}
 
