@@ -151,14 +151,14 @@ public class MemberDao extends MenuDao{
 	 * @return ArrayList<MemberVO> memberList
 	 */
 	@Override
-	public ArrayList get(String header, String searchStr) throws SQLException {
-		String num = "SELECT * FROM members WHERE mem_num = ?";
-		String name = "SELECT * FROM members WHERE mem_name = ?";
-		String id = "SELECT * FROM members WHERE mem_id = ?";
-		String phone = "SELECT * FROM members WHERE mem_phone = ?";
+	public ArrayList get(int header, String searchStr) throws SQLException {
+		
+		StringBuilder sql = new StringBuilder(selectSql(header));
+
 		Connection conn = getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(header);
-		pstmt.setString(1, searchStr);
+		System.out.println(conn);
+		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+		pstmt.setString(1, "%"+searchStr+"%");
 		
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<MemberVO> memberList = new ArrayList<>();
@@ -183,7 +183,34 @@ public class MemberDao extends MenuDao{
 		return memberList;
 	}
 	
-
+	/**
+	 * 해당하는 조건의 sql문 가져오기
+	 * header
+	 * 회원번호 - 1
+	 * 회원이름 - 2
+	 * 회원아이디 - 3
+	 * 회원연락처 - 4
+	 * 
+	 * @param header
+	 * @return StringBuilder sql
+	 */
+	public StringBuilder selectSql(int header) {
+		StringBuilder sql = new StringBuilder();
+		String num = "SELECT * FROM members WHERE mem_num LIKE ?";
+		String name = "SELECT * FROM members WHERE mem_name LIKE ?";
+		String id = "SELECT * FROM members WHERE mem_id LIKE ?";
+		String phone = "SELECT * FROM members WHERE mem_phone LIKE ?";
+		if (header == 1) {
+			sql.append(num);
+		} else if (header == 2) {
+			sql.append(name);
+		} else if (header == 3) {
+			sql.append(id);
+		} else if (header == 4) {
+			sql.append(phone);
+		}
+		return sql;
+	}
 
 	/**
 	 * 회원 삭제
@@ -203,6 +230,8 @@ public class MemberDao extends MenuDao{
 		pstmt.close();
 		conn.close();
 	}
+	
+	
 
 	
 }

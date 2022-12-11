@@ -42,9 +42,10 @@ public abstract class MenuDao {
 	public ArrayList get() throws SQLException {
 		return null;
 	}
-	public ArrayList get(String header, String searchStr) throws SQLException {
+	public ArrayList get(int header, String searchStr) throws SQLException {
 		return null;
 	}
+	
 	
 	public void delete(AdminVO adminVO) throws SQLException {}
 	

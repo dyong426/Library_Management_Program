@@ -58,4 +58,10 @@ public class SeatUseDetailVO {
 	public String getEndTime() {
 		return endTime;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("%d,%s,%s,%s,%s", this.use_id, this.member, this.readingroom, this.startTime, this.endTime);
+	}
+	
 }

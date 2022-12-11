@@ -30,4 +30,10 @@ public class ReadingRoomVO {
 		return tableDivider;
 	}
 	
+	@Override
+	public String toString() {
+		
+		return String.format("%d,%s", this.seatNum, this.tableDivider);
+	}
+	
 }

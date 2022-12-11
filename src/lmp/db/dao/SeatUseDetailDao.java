@@ -135,11 +135,13 @@ public class SeatUseDetailDao extends MenuDao{
 	 * @return ArrayList<SeatUseDetailVO> sudList
 	 */
 	@Override
-	public ArrayList get(String header, String searchStr) throws SQLException {
-		String using = "SELECT * FROM seat_use_details JOIN members USING(mem_num) JOIN readingroom USING(seat_num) WHERE end_time is ?";
-		String seatNum = "SELECT * FROM seat_use_details JOIN members USING(mem_num) JOIN readingroom USING(seat_num) WHERE seat_num = ?";
+	public ArrayList get(int header, String searchStr) throws SQLException {
+		
+		StringBuilder sql = new StringBuilder(selectSql(header));
+
 		Connection conn = getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(header);
+		System.out.println(conn);
+		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 		pstmt.setString(1, searchStr);
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<SeatUseDetailVO> sudList = new ArrayList<>();
@@ -175,6 +177,18 @@ public class SeatUseDetailDao extends MenuDao{
 		
 		return sudList;
 	}
+	
+	
+	public StringBuilder selectSql(int header) {
+		StringBuilder sql = new StringBuilder();
+		String seatNum = "SELECT * FROM seat_use_details JOIN members USING(mem_num) JOIN readingroom USING(seat_num) WHERE seat_num = ?";
+		if (header == 1) {
+			sql.append(seatNum);
+		}
+		return sql;
+	}
+	
+	
 	
 	
 	/**

@@ -107,4 +107,9 @@ public class BookVO {
 		return note;
 	}
 
+	@Override
+	public String toString() {
+		
+		return String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", this.id,this.title,this.author,this.publisher,this.isbn,this.bias,this.duplicates,this.price,this.location.getLocID(),this.regDate,this.note);
+	}
 }

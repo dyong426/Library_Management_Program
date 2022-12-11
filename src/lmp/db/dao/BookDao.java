@@ -128,16 +128,14 @@ public class BookDao extends MenuDao{
 	 */
 	
 	@Override
-	public ArrayList get(String header, String searchStr) throws SQLException {
-		String id = "SELECT * FROM books JOIN locations USING(location_id) WHERE book_id = ?";
-		String title = "SELECT * FROM books JOIN locations USING(location_id) WHERE book_title = ?";
-		String author = "SELECT * FROM books JOIN locations USING(location_id) WHERE book_author = ?";
-		String publisher = "SELECT * FROM books JOIN locations USING(location_id) WHERE book_publisher = ?";
-		String isbn = "SELECT * FROM books JOIN locations USING(location_id) WHERE book_isbn = ?";
-		String location = "SELECT * FROM books JOIN locations USING(location_id) WHERE location_id = ?";
+	public ArrayList get(int header, String searchStr) throws SQLException {
+		
+		StringBuilder sql = new StringBuilder(selectSql(header));
+
 		Connection conn = getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(header);
-		pstmt.setString(1, searchStr);
+		System.out.println(conn);
+		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+		pstmt.setString(1, "%"+searchStr+"%");
 		
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<BookVO> bookList = new ArrayList<>();
@@ -161,6 +159,33 @@ public class BookDao extends MenuDao{
 		
 		return bookList;
 	}
+	
+	
+	public StringBuilder selectSql(int header) {
+		StringBuilder sql = new StringBuilder();
+		String id = "SELECT * FROM books JOIN locations USING(location_id) WHERE book_id LIKE ?";
+		String title = "SELECT * FROM books JOIN locations USING(location_id) WHERE book_title LIKE ?";
+		String author = "SELECT * FROM books JOIN locations USING(location_id) WHERE book_author LIKE ?";
+		String publisher = "SELECT * FROM books JOIN locations USING(location_id) WHERE book_publisher LIKE ?";
+		String isbn = "SELECT * FROM books JOIN locations USING(location_id) WHERE book_isbn LIKE ?";
+		String location = "SELECT * FROM books JOIN locations USING(location_id) WHERE location_id LIKE ?";
+		if (header == 1) {
+			sql.append(id);
+		} else if (header == 2) {
+			sql.append(title);
+		} else if (header == 3) {
+			sql.append(author);
+		} else if (header == 4) {
+			sql.append(publisher);
+		} else if (header == 5) {
+			sql.append(isbn);
+		} else if(header == 6) {
+			sql.append(location);
+		}
+		return sql;
+	}
+	
+	
 	
 	/**
 	 * 도서 삭제

@@ -93,14 +93,15 @@ public class CheckOutDao extends MenuDao{
 	 * @throws SQLException
 	 */
 	@Override
-	public ArrayList get(String header, String searchStr) throws SQLException {
-		String id = "SELECT * FROM check_out_info JOIN members USING(mem_num) JOIN books USING(book_id) JOIN locations USING(location_id) WHERE book_id = ?";
-		String title = "SELECT * FROM check_out_info JOIN members USING(mem_num) JOIN books USING(book_id) JOIN locations USING(location_id) WHERE book_title = ?";
-		String num = "SELECT * FROM check_out_info JOIN members USING(mem_num) JOIN books USING(book_id) JOIN locations USING(location_id) WHERE mem_num = ?";
-		String name = "SELECT * FROM check_out_info JOIN members USING(mem_num) JOIN books USING(book_id) JOIN locations USING(location_id) WHERE mem_name = ?";
+	public ArrayList get(int header, String searchStr) throws SQLException {
+		
+		StringBuilder sql = new StringBuilder(selectSql(header));
+
 		Connection conn = getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(header);
-		pstmt.setString(1, searchStr);
+		System.out.println(conn);
+		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+		pstmt.setString(1, "%"+searchStr+"%");
+		
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<CheckOutVO> checkOutList = new ArrayList<>();
 		while (rs.next()) {
@@ -138,6 +139,39 @@ public class CheckOutDao extends MenuDao{
 		
 		return checkOutList;
 	}
+	
+	/**
+	 * 해당하는 조건의 sql문 가져오기
+	 * header
+	 * 도서 등록번호 - 1
+	 * 도서 제목 - 2
+	 * 회원번호 - 3
+	 * 회원이름 - 4
+	 * 
+	 * @param header
+	 * @return StringBuilder sql
+	 */
+	public StringBuilder selectSql(int header) {
+		StringBuilder sql = new StringBuilder();
+		String id = "SELECT * FROM check_out_info JOIN members USING(mem_num) JOIN books USING(book_id) JOIN locations USING(location_id) WHERE book_id LIKE ?";
+		String title = "SELECT * FROM check_out_info JOIN members USING(mem_num) JOIN books USING(book_id) JOIN locations USING(location_id) WHERE book_title LIKE ?";
+		String num = "SELECT * FROM check_out_info JOIN members USING(mem_num) JOIN books USING(book_id) JOIN locations USING(location_id) WHERE mem_num LIKE ?";
+		String name = "SELECT * FROM check_out_info JOIN members USING(mem_num) JOIN books USING(book_id) JOIN locations USING(location_id) WHERE mem_name LIKE ?";
+		if (header == 1) {
+			sql.append(id);
+		} else if (header == 2) {
+			sql.append(title);
+		} else if (header == 3) {
+			sql.append(num);
+		} else if (header == 4) {
+			sql.append(name);
+		}
+		return sql;
+	}
+
+	
+	
+	
 	
 	/**
 	 * 대여 내역 삭제 (이용중인 좌석 제외) 

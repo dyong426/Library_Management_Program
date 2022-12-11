@@ -121,4 +121,10 @@ public class MemberVO {
 		return note;
 	}
 	
+	@Override
+	public String toString() {
+		
+		return String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", this.num,this.name,this.id,this.pw,this.birthDay,this.phone,this.email,this.address,this.regDate,this.note);
+	}
+	
 }

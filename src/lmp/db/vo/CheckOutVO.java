@@ -90,4 +90,9 @@ public class CheckOutVO {
 		return checkInDate;
 	}
 	
+	@Override
+	public String toString() {
+		
+		return String.format("%s%s%s%s", this.checkOutID, this.book, this.member, this.checkOutID, this.expectReturnDate, this.checkInDate);
+	}
 }

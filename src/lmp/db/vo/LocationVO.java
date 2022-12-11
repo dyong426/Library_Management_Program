@@ -37,6 +37,10 @@ public class LocationVO {
 	}
 	
 	
-	
+	@Override
+	public String toString() {
+		
+		return String.format("%s,%s", this.locID, this.locName);
+	}
 
 }
