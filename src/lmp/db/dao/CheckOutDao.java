@@ -48,7 +48,7 @@ public class CheckOutDao extends MenuDao{
 	}
 	
 	/**
-	 * 대여 목록 업데이트
+	 * 반납 목록 업데이트
 	 * 
 	 * 반납날짜 check_in_date 현재 날짜로 수정
 	 * 
@@ -106,7 +106,7 @@ public class CheckOutDao extends MenuDao{
 		ArrayList<CheckOutVO> checkOutList = new ArrayList<>();
 		while (rs.next()) {
 			checkOutList.add(new CheckOutVO(
-								rs.getInt("check_out_info"),
+								rs.getInt("check_out_id"),
 								new BookVO(rs.getString("book_id"),
 										rs.getString("book_title"),
 										rs.getString("book_author"),
