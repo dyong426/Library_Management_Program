@@ -32,7 +32,8 @@ CREATE TABLE admins(
      admin_phone    VARCHAR2(255)  CONSTRAINT ad_ad_phone_uk UNIQUE,       -- 사원 연락처 (UK)
      admin_email    VARCHAR2(255)  CONSTRAINT ad_ad_email_nn NOT NULL,     -- 사원 이메일
      admin_address  VARCHAR2(255)  CONSTRAINT ad_ad_address_nn NOT NULL,   -- 사원 주소
-     admin_registrationdate  VARCHAR2(255)  DEFAULT sysdate,               -- 사원 등록일 
+     admin_registrationdate  VARCHAR2(255)  DEFAULT sysdate,               -- 사원 등록일
+     admin_updatedate    VARCHAR2(255)                                     -- 사원 수정일
      admin_note     VARCHAR2(255)                                          -- 비고
 );
 
@@ -47,7 +48,8 @@ CREATE TABLE members (
      mem_phone      VARCHAR2(255) CONSTRAINT m_m_phone_uk UNIQUE,     -- 회원 연락처 (UK)
      mem_email      VARCHAR2(255) CONSTRAINT m_m_email_nn NOT NULL,   -- 회원 이메일
      mem_address    VARCHAR2(255) CONSTRAINT m_m_address_nn NOT NULL, -- 회원 주소
-     mem_registrationdate VARCHAR2(255)     DEFAULT sysdate,          -- 회원 등록 번호
+     mem_registrationdate VARCHAR2(255)     DEFAULT sysdate,          -- 회원 등록일
+     mem_updatedate VARCHAR2(255)                                     -- 회원 정보 수정일
      mem_note       VARCHAR2(255)                                     -- 비고
 );
 
@@ -60,9 +62,10 @@ CREATE TABLE books(
      book_isbn  VARCHAR2(255) CONSTRAINT b_b_isbn_uk UNIQUE,               -- 도서 ISBN 번호  (UK)
      book_bias      NUMBER(11) DEFAULT 1,                                  -- 도서 편권차 (기본값 1)
      book_duplicates NUMBER(11) DEFAULT 1,                                 -- 도서 복권수 (기본값 1)
-     book_registration_date   VARCHAR2(255) DEFAULT sysdate,               -- 도서 등록일
      book_price     NUMBER(11),                                            -- 도서 가격
      location_id    CHAR(1) CONSTRAINT b_loc_id_fk REFERENCES locations(location_id), -- 도서 위치 (FK)
+     book_registrationdate   VARCHAR2(255) DEFAULT sysdate,               -- 도서 등록일
+     book_updatedate     VARCHAR2(255)                                     -- 도서 정보 
      book_note      VARCHAR2(255)                                          -- 비고
 );
 
@@ -94,7 +97,6 @@ CREATE TABLE check_out_info(
 CREATE TABLE readingroom(
      seat_num       NUMBER(11) CONSTRAINT r_s_num_pk PRIMARY KEY,     -- 좌석 번호  (PK)
      table_divider  CHAR(1),                                          -- 칸막이 여부
-     seat_sex       CHAR(1)                                           -- 좌석 성별
 );
 
 -- 좌석 이용 정보 테이블
