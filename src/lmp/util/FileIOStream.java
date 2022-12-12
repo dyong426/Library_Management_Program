@@ -1,4 +1,5 @@
 package lmp.util;
+/*
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -12,7 +13,6 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-
 public class FileIOStream {
 	public static void main(String[] args) {
 		String path = "C:\\javaFullStack_LDH\\repos\\Library_Management_Program\\examplefiles\\"; // 파일 경로 설정
@@ -42,8 +42,8 @@ public class FileIOStream {
 
 					int cells = row.getPhysicalNumberOfCells();
 
-					System.out.print("|" + r + "|");
-					booklist.append("|" + r + "|");
+					System.out.print("/" + r + "/");
+					booklist.append("/" + r + "/");
 					for (int c = 0; c < cells; c++) {
 						HSSFCell cell = row.getCell(c);
 
@@ -65,8 +65,8 @@ public class FileIOStream {
 								break;
 							}
 						}
-						System.out.print("" + value + "|");
-						booklist.append(value + "|");
+						System.out.print("" + value + "/");
+						booklist.append(value + "/");
 					}
 					System.out.println();
 					booklist.append("\n");
@@ -91,6 +91,6 @@ public class FileIOStream {
 			e.printStackTrace();
 		}
 	}
-
 }
+ */
 
