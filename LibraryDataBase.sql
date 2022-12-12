@@ -1,71 +1,71 @@
 /* 
-     ë„ì„œê´€ ê´€ë¦¬ í”„ë¡œê·¸ë¨ DB
+     ?„?„œê´? ê´?ë¦? ?”„ë¡œê·¸?¨ DB
      
      * TABLE ëª©ë¡
      
-     - admins                 ê´€ë¦¬ì ì§ì› ì •ë³´
-     - members                íšŒì› ì •ë³´
-     - books                  ë„ì„œì •ë³´
-     - locations              ë„ì„œ ìœ„ì¹˜ ì •ë³´
-     - check_out_info         ëŒ€ì¶œ ì •ë³´
-     - readingroom            ì—´ëŒì‹¤ ì •ë³´
-     - seat_use_details       ì—´ëŒì‹¤ ì‚¬ìš©ë‚´ì—­
-     - image_information      í”„ë¡œê·¸ë¨ì— ì‚¬ìš©ë˜ëŠ” ì´ë¯¸ì§€ ì •ë³´
+     - admins                 ê´?ë¦¬ì ì§ì› ? •ë³?
+     - members                ?šŒ?› ? •ë³?
+     - books                  ?„?„œ? •ë³?
+     - locations              ?„?„œ ?œ„ì¹? ? •ë³?
+     - check_out_info         ??ì¶? ? •ë³?
+     - readingroom            ?—´?Œ?‹¤ ? •ë³?
+     - seat_use_details       ?—´?Œ?‹¤ ?‚¬?š©?‚´?—­
+     - image_information      ?”„ë¡œê·¸?¨?— ?‚¬?š©?˜?Š” ?´ë¯¸ì? ? •ë³?
      
      * SEQUENCE
           
-     - admin_num_seq          ê´€ë¦¬ì ë²ˆí˜¸
-     - mem_num_seq            íšŒì› ë²ˆí˜¸
-     - book_id_seq            ë“±ë¡ ë²ˆí˜¸
-     - check_out_id_seq       ëŒ€ì¶œë‚´ì—­ ì•„ì´ë”” 
-     - user_detail_id_seq     ì—´ëŒì‹¤ ì¢Œì„ ì‚¬ìš©ë‚´ì—­ ì•„ì´ë””
+     - admin_num_seq          ê´?ë¦¬ì ë²ˆí˜¸
+     - mem_num_seq            ?šŒ?› ë²ˆí˜¸
+     - book_id_seq            ?“±ë¡? ë²ˆí˜¸
+     - check_out_id_seq       ??ì¶œë‚´?—­ ?•„?´?”” 
+     - user_detail_id_seq     ?—´?Œ?‹¤ ì¢Œì„ ?‚¬?š©?‚´?—­ ?•„?´?””
      
 */
 SELECT * FROM tabs;
 SELECT * FROM user_sequences;
 
--- ê´€ë¦¬ì ì§ì› ì •ë³´ í…Œì´ë¸”
+-- ê´?ë¦¬ì ì§ì› ? •ë³? ?…Œ?´ë¸?
 CREATE TABLE admins(
-     admin_num      NUMBER(11)  CONSTRAINT ad_ad_num_pk  PRIMARY KEY,      -- ì‚¬ì› ë²ˆí˜¸  (PK)
-     admin_name     VARCHAR2(255)  CONSTRAINT ad_ad_name_nn NOT NULL,      -- ì‚¬ì› ì´ë¦„
-     admin_pw       VARCHAR2(255)  CONSTRAINT ad_ad_pw_nn NOT NULL,        -- ì‚¬ì› ë¹„ë°€ë²ˆí˜¸
-     admin_phone    VARCHAR2(255)  CONSTRAINT ad_ad_phone_uk UNIQUE,       -- ì‚¬ì› ì—°ë½ì²˜ (UK)
-     admin_email    VARCHAR2(255)  CONSTRAINT ad_ad_email_nn NOT NULL,     -- ì‚¬ì› ì´ë©”ì¼
-     admin_address  VARCHAR2(255)  CONSTRAINT ad_ad_address_nn NOT NULL,   -- ì‚¬ì› ì£¼ì†Œ
-     admin_registrationdate  VARCHAR2(255)  DEFAULT sysdate,               -- ì‚¬ì› ë“±ë¡ì¼
-     admin_updatedate    VARCHAR2(255)                                     -- ì‚¬ì› ìˆ˜ì •ì¼
+     admin_num      NUMBER(11)  CONSTRAINT ad_ad_num_pk  PRIMARY KEY,      -- ?‚¬?› ë²ˆí˜¸  (PK)
+     admin_name     VARCHAR2(255)  CONSTRAINT ad_ad_name_nn NOT NULL,      -- ?‚¬?› ?´ë¦?
+     admin_pw       VARCHAR2(255)  CONSTRAINT ad_ad_pw_nn NOT NULL,        -- ?‚¬?› ë¹„ë?ë²ˆí˜¸
+     admin_phone    VARCHAR2(255)  CONSTRAINT ad_ad_phone_uk UNIQUE,       -- ?‚¬?› ?—°?½ì²? (UK)
+     admin_email    VARCHAR2(255)  CONSTRAINT ad_ad_email_nn NOT NULL,     -- ?‚¬?› ?´ë©”ì¼
+     admin_address  VARCHAR2(255)  CONSTRAINT ad_ad_address_nn NOT NULL,   -- ?‚¬?› ì£¼ì†Œ
+     admin_registrationdate  VARCHAR2(255)  DEFAULT sysdate,               -- ?‚¬?› ?“±ë¡ì¼
+     admin_updatedate    VARCHAR2(255),                                     -- ?‚¬?› ?ˆ˜? •?¼
      admin_note     VARCHAR2(255)                                          -- ë¹„ê³ 
 );
 
--- íšŒì› ì •ë³´ í…Œì´ë¸”
+-- ?šŒ?› ? •ë³? ?…Œ?´ë¸?
 CREATE TABLE members (
-     mem_num        NUMBER(11) CONSTRAINT m_m_num_pk  PRIMARY KEY,    -- íšŒì› ë²ˆí˜¸  (PK)
-     mem_name       VARCHAR2(255) CONSTRAINT m_m_name_nn NOT NULL,    -- íšŒì› ì´ë¦„
-     mem_id         VARCHAR2(255) CONSTRAINT m_m_id_uk UNIQUE,        -- íšŒì› ì•„ì´ë”” (UK)
-     mem_pw         VARCHAR2(255) CONSTRAINT m_m_pw_nn NOT NULL,      -- íšŒì› ë¹„ë°€ë²ˆí˜¸
-     mem_birthday   CHAR(6) CONSTRAINT m_m_birthday_nn NOT NULL,      -- íšŒì› ìƒë…„ì›”ì¼
-     mem_sex        CHAR(1) CONSTRAINT m_m_sex_boolean CHECK(mem_sex IN ('0', '1')), -- íšŒì› ì„±ë³„ (0,1 ë¡œ êµ¬ë¶„)
-     mem_phone      VARCHAR2(255) CONSTRAINT m_m_phone_uk UNIQUE,     -- íšŒì› ì—°ë½ì²˜ (UK)
-     mem_email      VARCHAR2(255) CONSTRAINT m_m_email_nn NOT NULL,   -- íšŒì› ì´ë©”ì¼
-     mem_address    VARCHAR2(255) CONSTRAINT m_m_address_nn NOT NULL, -- íšŒì› ì£¼ì†Œ
-     mem_registrationdate VARCHAR2(255)     DEFAULT sysdate,          -- íšŒì› ë“±ë¡ì¼
-     mem_updatedate VARCHAR2(255)                                     -- íšŒì› ì •ë³´ ìˆ˜ì •ì¼
+     mem_num        NUMBER(11) CONSTRAINT m_m_num_pk  PRIMARY KEY,    -- ?šŒ?› ë²ˆí˜¸  (PK)
+     mem_name       VARCHAR2(255) CONSTRAINT m_m_name_nn NOT NULL,    -- ?šŒ?› ?´ë¦?
+     mem_id         VARCHAR2(255) CONSTRAINT m_m_id_uk UNIQUE,        -- ?šŒ?› ?•„?´?”” (UK)
+     mem_pw         VARCHAR2(255) CONSTRAINT m_m_pw_nn NOT NULL,      -- ?šŒ?› ë¹„ë?ë²ˆí˜¸
+     mem_birthday   CHAR(6) CONSTRAINT m_m_birthday_nn NOT NULL,      -- ?šŒ?› ?ƒ?…„?›”?¼
+     mem_sex        CHAR(1) CONSTRAINT m_m_sex_boolean CHECK(mem_sex IN ('0', '1')), -- ?šŒ?› ?„±ë³? (0,1 ë¡? êµ¬ë¶„)
+     mem_phone      VARCHAR2(255) CONSTRAINT m_m_phone_uk UNIQUE,     -- ?šŒ?› ?—°?½ì²? (UK)
+     mem_email      VARCHAR2(255) CONSTRAINT m_m_email_nn NOT NULL,   -- ?šŒ?› ?´ë©”ì¼
+     mem_address    VARCHAR2(255) CONSTRAINT m_m_address_nn NOT NULL, -- ?šŒ?› ì£¼ì†Œ
+     mem_registrationdate VARCHAR2(255)     DEFAULT sysdate,          -- ?šŒ?› ?“±ë¡ì¼
+     mem_updatedate VARCHAR2(255)                                     -- ?šŒ?› ? •ë³? ?ˆ˜? •?¼
      mem_note       VARCHAR2(255)                                     -- ë¹„ê³ 
 );
 
--- ë„ì„œ ì •ë³´ í…Œì´ë¸”
+-- ?„?„œ ? •ë³? ?…Œ?´ë¸?
 CREATE TABLE books(
-     book_id        VARCHAR2(255)  CONSTRAINT b_b_id_pk  PRIMARY KEY,      -- ë„ì„œ ë“±ë¡ë²ˆí˜¸ (PK)
-     book_title     VARCHAR2(255)  CONSTRAINT b_b_title_nn NOT NULL,       -- ë„ì„œ ì œëª©
-     book_author    VARCHAR2(255)  CONSTRAINT b_b_author_nn NOT NULL,      -- ë„ì„œ ì €ì
-     book_publisher VARCHAR2(255)  CONSTRAINT b_b_publisher_nn NOT NULL,   -- ë„ì„œ ì¶œíŒì‚¬
-     book_isbn  VARCHAR2(255) CONSTRAINT b_b_isbn_uk UNIQUE,               -- ë„ì„œ ISBN ë²ˆí˜¸  (UK)
-     book_bias      NUMBER(11) DEFAULT 1,                                  -- ë„ì„œ í¸ê¶Œì°¨ (ê¸°ë³¸ê°’ 1)
-     book_duplicates NUMBER(11) DEFAULT 1,                                 -- ë„ì„œ ë³µê¶Œìˆ˜ (ê¸°ë³¸ê°’ 1)
-     book_price     NUMBER(11),                                            -- ë„ì„œ ê°€ê²©
-     location_id    CHAR(1) CONSTRAINT b_loc_id_fk REFERENCES locations(location_id), -- ë„ì„œ ìœ„ì¹˜ (FK)
-     book_registrationdate   VARCHAR2(255) DEFAULT sysdate,               -- ë„ì„œ ë“±ë¡ì¼
-     book_updatedate     VARCHAR2(255)                                     -- ë„ì„œ ì •ë³´ 
+     book_id        VARCHAR2(255)  CONSTRAINT b_b_id_pk  PRIMARY KEY,      -- ?„?„œ ?“±ë¡ë²ˆ?˜¸ (PK)
+     book_title     VARCHAR2(255)  CONSTRAINT b_b_title_nn NOT NULL,       -- ?„?„œ ? œëª?
+     book_author    VARCHAR2(255)  CONSTRAINT b_b_author_nn NOT NULL,      -- ?„?„œ ???
+     book_publisher VARCHAR2(255)  CONSTRAINT b_b_publisher_nn NOT NULL,   -- ?„?„œ ì¶œíŒ?‚¬
+     book_isbn  VARCHAR2(255) CONSTRAINT b_b_isbn_uk UNIQUE,               -- ?„?„œ ISBN ë²ˆí˜¸  (UK)
+     book_bias      NUMBER(11) DEFAULT 1,                                  -- ?„?„œ ?¸ê¶Œì°¨ (ê¸°ë³¸ê°? 1)
+     book_duplicates NUMBER(11) DEFAULT 1,                                 -- ?„?„œ ë³µê¶Œ?ˆ˜ (ê¸°ë³¸ê°? 1)
+     book_price     NUMBER(11),                                            -- ?„?„œ ê°?ê²?
+     location_id    CHAR(1) CONSTRAINT b_loc_id_fk REFERENCES locations(location_id), -- ?„?„œ ?œ„ì¹? (FK)
+     book_registrationdate   VARCHAR2(255) DEFAULT sysdate,               -- ?„?„œ ?“±ë¡ì¼
+     book_updatedate     VARCHAR2(255)                                     -- ?„?„œ ? •ë³? 
      book_note      VARCHAR2(255)                                          -- ë¹„ê³ 
 );
 
@@ -77,45 +77,45 @@ CREATE TABLE books(
 --     cs_duplicates     NUMBER(11)
 --);
 
--- ë„ì„œ ë¶„ë¥˜ / ìœ„ì¹˜ í…Œì´ë¸”
+-- ?„?„œ ë¶„ë¥˜ / ?œ„ì¹? ?…Œ?´ë¸?
 CREATE TABLE locations(
-     location_id    CHAR(1) CONSTRAINT l_l_id_pk  PRIMARY KEY,        -- ë„ì„œ ìœ„ì¹˜ ì•„ì´ë””   (PK)
-     location_name  VARCHAR2(255) CONSTRAINT l_l_name_nn NOT NULL     -- ë„ì„œ ìœ„ì¹˜ ì´ë¦„
+     location_id    CHAR(1) CONSTRAINT l_l_id_pk  PRIMARY KEY,        -- ?„?„œ ?œ„ì¹? ?•„?´?””   (PK)
+     location_name  VARCHAR2(255) CONSTRAINT l_l_name_nn NOT NULL     -- ?„?„œ ?œ„ì¹? ?´ë¦?
 );
 
--- ëŒ€ì¶œ ë‚´ì—­ í…Œì´ë¸”
+-- ??ì¶? ?‚´?—­ ?…Œ?´ë¸?
 CREATE TABLE check_out_info(
-     check_out_id   NUMBER(11) CONSTRAINT coi_coi_id_pk PRIMARY KEY,                 -- ëŒ€ì—¬ ì•„ì´ë”” (PK)
-     book_id        VARCHAR2(255) CONSTRAINT coi_b_id_fk REFERENCES books(book_id),  -- ëŒ€ì—¬ ë„ì„œ   (FK)
-     mem_num        NUMBER(11) CONSTRAINT coi_m_num_fk REFERENCES members(mem_num),  -- íšŒì› ë²ˆí˜¸   (FK)
-     check_out_date VARCHAR2(255)           DEFAULT sysdate,                         -- ëŒ€ì—¬ ë‚ ì§œ
-     expect_return_date VARCHAR2(255)       DEFAULT sysdate + (INTERVAL '7' DAY),    -- ë°˜ë‚© ì˜ˆì • ë‚ ì§œ
-     check_in_date  VARCHAR2(255)                                                    -- ë°˜ë‚© ë‚ ì§œ
+     check_out_id   NUMBER(11) CONSTRAINT coi_coi_id_pk PRIMARY KEY,                 -- ???—¬ ?•„?´?”” (PK)
+     book_id        VARCHAR2(255) CONSTRAINT coi_b_id_fk REFERENCES books(book_id),  -- ???—¬ ?„?„œ   (FK)
+     mem_num        NUMBER(11) CONSTRAINT coi_m_num_fk REFERENCES members(mem_num),  -- ?šŒ?› ë²ˆí˜¸   (FK)
+     check_out_date VARCHAR2(255)           DEFAULT sysdate,                         -- ???—¬ ?‚ ì§?
+     expect_return_date VARCHAR2(255)       DEFAULT sysdate + (INTERVAL '7' DAY),    -- ë°˜ë‚© ?˜ˆ? • ?‚ ì§?
+     check_in_date  VARCHAR2(255)                                                    -- ë°˜ë‚© ?‚ ì§?
 );
 
--- ì—´ëŒì‹¤ ì •ë³´ í…Œì´ë¸”
+-- ?—´?Œ?‹¤ ? •ë³? ?…Œ?´ë¸?
 CREATE TABLE readingroom(
      seat_num       NUMBER(11) CONSTRAINT r_s_num_pk PRIMARY KEY,     -- ì¢Œì„ ë²ˆí˜¸  (PK)
-     table_divider  CHAR(1),                                          -- ì¹¸ë§‰ì´ ì—¬ë¶€
+     table_divider  CHAR(1),                                          -- ì¹¸ë§‰?´ ?—¬ë¶?
 );
 
--- ì¢Œì„ ì´ìš© ì •ë³´ í…Œì´ë¸”
+-- ì¢Œì„ ?´?š© ? •ë³? ?…Œ?´ë¸?
 CREATE TABLE seat_use_details(
-     use_id     NUMBER(11) CONSTRAINT sud_u_id_pk PRIMARY KEY,                        -- ì—´ëŒì‹¤ ì‚¬ìš©ë‚´ì—­ ì•„ì´ë””     (PK)
-     mem_num    NUMBER(11) CONSTRAINT sud_m_num_fk REFERENCES members(mem_num),       -- íšŒì›ì •ë³´   (FK)
+     use_id     NUMBER(11) CONSTRAINT sud_u_id_pk PRIMARY KEY,                        -- ?—´?Œ?‹¤ ?‚¬?š©?‚´?—­ ?•„?´?””     (PK)
+     mem_num    NUMBER(11) CONSTRAINT sud_m_num_fk REFERENCES members(mem_num),       -- ?šŒ?›? •ë³?   (FK)
      seat_num   NUMBER(11) CONSTRAINT sud_s_num_fk REFERENCES readingroom(seat_num),  -- ì¢Œì„ ë²ˆí˜¸  (FK)
-     start_time VARCHAR2(255) DEFAULT to_char(sysdate, 'yyyy.mm.dd hh24:mi'),         -- ì‚¬ìš© ì‹œì‘ ì‹œê°„
-     end_time   VARCHAR2(255)                                                         -- ì‚¬ìš© ì¢…ë£Œ ì‹œê°„
+     start_time VARCHAR2(255) DEFAULT to_char(sysdate, 'yyyy.mm.dd hh24:mi'),         -- ?‚¬?š© ?‹œ?‘ ?‹œê°?
+     end_time   VARCHAR2(255)                                                         -- ?‚¬?š© ì¢…ë£Œ ?‹œê°?
 );
 
--- ì´ë¯¸ì§€ ì •ë³´ í…Œì´ë¸”
+-- ?´ë¯¸ì? ? •ë³? ?…Œ?´ë¸?
 CREATE TABLE IMAGE_INFORMATION(
-     image_id  NUMBER(11) CONSTRAINT i_i_id_pk PRIMARY KEY,                          -- ì´ë¯¸ì§€ ì•„ì´ë””     (PK)
-     image_name     VARCHAR2(255) CONSTRAINT i_i_name_nn NOT NULL,                   -- ì´ë¯¸ì§€ ì´ë¦„
-     image_byte_info      BLOB CONSTRAINT i_i_b_info_nn NOT NULL                     -- ì´ë¯¸ì§€ byte ì •ë³´
+     image_id  NUMBER(11) CONSTRAINT i_i_id_pk PRIMARY KEY,                          -- ?´ë¯¸ì? ?•„?´?””     (PK)
+     image_name     VARCHAR2(255) CONSTRAINT i_i_name_nn NOT NULL,                   -- ?´ë¯¸ì? ?´ë¦?
+     image_byte_info      BLOB CONSTRAINT i_i_b_info_nn NOT NULL                     -- ?´ë¯¸ì? byte ? •ë³?
 );
 
--- íšŒì› ë²ˆí˜¸ ì‹œí€€ìŠ¤
+-- ?šŒ?› ë²ˆí˜¸ ?‹œ???Š¤
 CREATE SEQUENCE mem_num_seq
      INCREMENT BY 1
      START WITH 1
@@ -124,7 +124,7 @@ CREATE SEQUENCE mem_num_seq
      CYCLE
      NOCACHE;
      
--- ì‚¬ì› ë²ˆí˜¸ ì‹œí€€ìŠ¤
+-- ?‚¬?› ë²ˆí˜¸ ?‹œ???Š¤
 CREATE SEQUENCE admin_num_seq
      INCREMENT BY 1
      START WITH 1
@@ -133,7 +133,7 @@ CREATE SEQUENCE admin_num_seq
      CYCLE
      NOCACHE;
 
--- ë„ì„œ ë“±ë¡ë²ˆí˜¸ ì‹œí€€ìŠ¤
+-- ?„?„œ ?“±ë¡ë²ˆ?˜¸ ?‹œ???Š¤
 CREATE SEQUENCE book_id_seq
      INCREMENT BY 1
      START WITH 1
@@ -142,7 +142,7 @@ CREATE SEQUENCE book_id_seq
      CYCLE
      NOCACHE;
 
--- ì—´ëŒì‹¤ ì‚¬ìš© ë‚´ì—­ ì•„ì´ë”” ì‹œí€€ìŠ¤
+-- ?—´?Œ?‹¤ ?‚¬?š© ?‚´?—­ ?•„?´?”” ?‹œ???Š¤
 CREATE SEQUENCE user_detail_id_seq
      INCREMENT BY 1
      START WITH 1
@@ -151,7 +151,7 @@ CREATE SEQUENCE user_detail_id_seq
      CYCLE
      NOCACHE;
 
--- ëŒ€ì—¬ ì•„ì´ë”” ì‹œí€€ìŠ¤
+-- ???—¬ ?•„?´?”” ?‹œ???Š¤
 CREATE SEQUENCE check_out_id_seq
      INCREMENT BY 1
      START WITH 1
