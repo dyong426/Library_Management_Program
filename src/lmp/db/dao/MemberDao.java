@@ -138,10 +138,10 @@ public class MemberDao extends MenuDao{
 	/**
 	 * 회원 조건 검색
 	 * header
-	 * num - 회원번호
-	 * name - 회원이름
-	 * id - 회원 아이디
-	 * phone - 회원 연락처
+	 * 1 : num - 회원번호
+	 * 2 : name - 회원이름
+	 * 3 : id - 회원 아이디
+	 * 4 : phone - 회원 연락처
 	 * 
 	 * searchStr
 	 * header에 해당하는 값

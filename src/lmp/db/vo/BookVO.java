@@ -17,7 +17,7 @@ public class BookVO {
 	private Integer	   duplicates;
 	private String	   regDate;
 	private Integer	   price;
-	private LocationVO location;	
+	private LocationVO location;
 	private String	   note;
 	
 	/**
