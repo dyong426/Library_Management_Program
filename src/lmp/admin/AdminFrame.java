@@ -19,8 +19,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
 
+import lmp.admin.menu.book.booksearch.BookSearchPanel;
 import lmp.admin.menu.checkin_out.Member_Searching_Panel;
 
 
@@ -60,6 +60,15 @@ public class AdminFrame extends JFrame{
 			// 버튼 생성 메서드 테스트
 			bookMgmt = getButton("도서 관리");
 			bookMgmt.setIcon(new ImageIcon(bookMgmtIcon));
+			bookMgmt.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					card.show(menuCardPanel, "2");
+					
+				}
+			});	
+			
 //			bookMgmt = new JButton(new ImageIcon(bookMgmtIcon)) {
 //				{
 //				setBackground(Color.GRAY);
@@ -108,6 +117,12 @@ public class AdminFrame extends JFrame{
 		menuCardPanel.setBounds(17, 200, 1150, 550);
 		menuCardPanel.add("1", initialLabel());
 		menuCardPanel.add("3", new Member_Searching_Panel());
+		
+		menuCardPanel.setBounds(17, 200, 1150, 550);
+		menuCardPanel.add("1", initialLabel());
+		menuCardPanel.add("2", new BookSearchPanel());
+		
+		
 		
 		menuButtonPanel.add(bookMgmt);
 		menuButtonPanel.add(checkIn_Out);
