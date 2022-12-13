@@ -74,7 +74,7 @@ public class Member_Searching_Panel extends JPanel {
 		label.setFont(new Font(null, Font.BOLD, 20));
 		label.setForeground(Color.WHITE);
 		label.setHorizontalAlignment(JLabel.CENTER);
-		label.setBounds(490, 20, 200, 50);
+		label.setBounds(475, 20, 200, 50);
 		
 		
 		keyword = new JComboBox(keywordList);

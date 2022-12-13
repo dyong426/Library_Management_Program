@@ -114,12 +114,12 @@ public class BookDao extends MenuDao{
 	 * 도서 조건 검색
 	 * 
 	 * header
-	 * id - 등록번호
-	 * title - 제목
-	 * author - 저자
-	 * publisher - 출판사
-	 * isbn - isbn 번호
-	 * location - 위치
+	 * 1 : id - 등록번호
+	 * 2 : title - 제목
+	 * 3 : author - 저자
+	 * 4 : publisher - 출판사
+	 * 5 : isbn - isbn 번호
+	 * 6 : location - 위치
 	 * 
 	 * @param header
 	 * @param searchStr

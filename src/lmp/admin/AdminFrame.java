@@ -45,11 +45,11 @@ public class AdminFrame extends JFrame{
 		BufferedImage befferedMemberMgmt = null;
 		BufferedImage bufferedReadingRoom = null;
 		try {
-			bufferedBookMgmt = ImageIO.read(new File("src/lmp/admin/menuButtonImages/bookMgmtIcon.png"));
-			bufferedCheckIn_Out = ImageIO.read(new File("src/lmp/admin/menuButtonImages/checkIn_OutIcon.png"));
-			bufferedEmployeeMgmt = ImageIO.read(new File("src/lmp/admin/menuButtonImages/employeeMgmtIcon.png"));
-			befferedMemberMgmt = ImageIO.read(new File("src/lmp/admin/menuButtonImages/memberMgmtIcon.png"));
-			bufferedReadingRoom = ImageIO.read(new File("src/lmp/admin/menuButtonImages/readingRoomIcon.png"));
+			bufferedBookMgmt = ImageIO.read(new File("src/lmp/admin/menuButtonImages/bookMgmtImage.png"));
+			bufferedCheckIn_Out = ImageIO.read(new File("src/lmp/admin/menuButtonImages/checkIn_OutMgmtImage.png"));
+			bufferedEmployeeMgmt = ImageIO.read(new File("src/lmp/admin/menuButtonImages/employeeMgmtImage.png"));
+			befferedMemberMgmt = ImageIO.read(new File("src/lmp/admin/menuButtonImages/memberMgmtImage.png"));
+			bufferedReadingRoom = ImageIO.read(new File("src/lmp/admin/menuButtonImages/readingRoomMgmtImage.png"));
 			
 			Image bookMgmtIcon = bufferedBookMgmt.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
 			Image checkIn_OutIcon = bufferedCheckIn_Out.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
@@ -58,7 +58,7 @@ public class AdminFrame extends JFrame{
 			Image readingRoomIcon = bufferedReadingRoom.getScaledInstance(100, 100, Image.SCALE_SMOOTH);			
 			
 			// 버튼 생성 메서드 테스트
-			bookMgmt = getButton();
+			bookMgmt = getButton("도서 관리");
 			bookMgmt.setIcon(new ImageIcon(bookMgmtIcon));
 //			bookMgmt = new JButton(new ImageIcon(bookMgmtIcon)) {
 //				{
@@ -80,100 +80,29 @@ public class AdminFrame extends JFrame{
 //				});
 //				}
 //			};
-			checkIn_Out = new JButton("대출/반납", new ImageIcon(checkIn_OutIcon)) {
-				{
-				setBackground(Color.GRAY);
-				setBorderPainted(false);
-				setForeground(Color.WHITE);
-				setFocusPainted(false);
-				setContentAreaFilled(false);
-				setVerticalTextPosition(BOTTOM);
-				setHorizontalTextPosition(CENTER);
-				setFont(new Font(null, Font.BOLD, 15));
-				addMouseListener(new MouseAdapter() {
-					// 버튼에 마우스 올리면 배경색 변경
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						setContentAreaFilled(true);
-						setToolTipText("대출/반납");
-					}
-					// 버튼에서 마우스 떼면 배경색 투명
-					@Override
-					public void mouseExited(MouseEvent e) {
-						setContentAreaFilled(false);
-					}
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						card.show(menuCardPanel, "3");
-					}
-				});
+			checkIn_Out = getButton("대출/반납");
+			checkIn_Out.setIcon(new ImageIcon(checkIn_OutIcon));
+			checkIn_Out.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					card.show(menuCardPanel, "3");
 				}
-			};
-			employeeMgmt = new JButton(new ImageIcon(employeeMgmtIcon)) {
-				{
-				setBackground(Color.GRAY);
-				setBorderPainted(false);
-				setFocusPainted(false);
-				setContentAreaFilled(false);
-				addMouseListener(new MouseAdapter() {
-					// 버튼에 마우스 올리면 배경색 변경
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						setContentAreaFilled(true);
-					}
-					// 버튼에서 마우스 떼면 배경색 투명
-					@Override
-					public void mouseExited(MouseEvent e) {
-						setContentAreaFilled(false);
-					}
-				});
-				}
-			};
-			memberMgmt = new JButton(new ImageIcon(memberMgmtIcon)) {
-				{
-				setBackground(Color.GRAY);
-				setBorderPainted(false);
-				setFocusPainted(false);
-				setContentAreaFilled(false);
-				addMouseListener(new MouseAdapter() {
-					// 버튼에 마우스 올리면 배경색 변경
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						setContentAreaFilled(true);
-					}
-					// 버튼에서 마우스 떼면 배경색 투명
-					@Override
-					public void mouseExited(MouseEvent e) {
-						setContentAreaFilled(false);
-					}
-				});
-				}
-			};
-			readingRoom = new JButton(new ImageIcon(readingRoomIcon)) {
-				{
-				setBackground(Color.GRAY);
-				setBorderPainted(false);
-				setFocusPainted(false);
-				setContentAreaFilled(false);
-				addMouseListener(new MouseAdapter() {
-					// 버튼에 마우스 올리면 배경색 변경
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						setContentAreaFilled(true);
-					}
-					// 버튼에서 마우스 떼면 배경색 투명
-					@Override
-					public void mouseExited(MouseEvent e) {
-						setContentAreaFilled(false);
-					}
-				});
-				}
-			};	
+			});
+			
+			employeeMgmt = getButton("직원 관리");
+			employeeMgmt.setIcon(new ImageIcon(employeeMgmtIcon));
+			
+			memberMgmt = getButton("회원 관리");
+			memberMgmt.setIcon(new ImageIcon(memberMgmtIcon));
+			
+			readingRoom = getButton("열람실 관리");
+			readingRoom.setIcon(new ImageIcon(readingRoomIcon));
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-		menuButtonPanel.setBounds(150, 40, 900, 120);
+		menuButtonPanel.setBounds(90, 40, 1000, 120);
 		menuButtonPanel.setBackground(new Color(49, 82, 91));
 		
 		menuCardPanel.setBounds(17, 200, 1150, 550);
@@ -190,7 +119,6 @@ public class AdminFrame extends JFrame{
 		add(menuCardPanel);
 		
 		setBounds(300, 100, 1200, 800);
-		setLayout(null);
 		getContentPane().setBackground(new Color(49, 82, 91));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
@@ -216,23 +144,29 @@ public class AdminFrame extends JFrame{
 		return initImagePanel;
 	}
 	
-	public JButton getButton() {
+	// 버튼 생성 및 설정 메서드
+	public static JButton getButton(String text) {
 		 return new JButton() {
 			 {
-				setBackground(Color.GRAY);
+				setHorizontalTextPosition(CENTER);
+				setVerticalTextPosition(BOTTOM);
+				setForeground(Color.WHITE);
+				setFont(new Font(null, Font.BOLD, 15));
+				setText(text);
+				setToolTipText(text);
 				setBorderPainted(false);
 				setFocusPainted(false);
 				setContentAreaFilled(false);
 				addMouseListener(new MouseAdapter() {
-					// 버튼에 마우스 올리면 배경색 변경
+					// 버튼에 마우스 올리면 테두리 생성
 					@Override
 					public void mouseEntered(MouseEvent e) {
-						setContentAreaFilled(true);
+						setBorderPainted(true);
 					}
-					// 버튼에서 마우스 떼면 배경색 투명
+					// 버튼에서 마우스 떼면 테두리 삭제
 					@Override
 					public void mouseExited(MouseEvent e) {
-						setContentAreaFilled(false);
+						setBorderPainted(false);
 					}
 				});
 				}

@@ -2,10 +2,16 @@ package lmp.admin.menu.checkin_out;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -18,6 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import lmp.admin.AdminFrame;
 import lmp.db.dao.BookDao;
 import lmp.db.dao.CheckOutDao;
 import lmp.db.vo.CheckOutVO;
@@ -33,7 +40,7 @@ public class CheckIn_Out_Frame extends JFrame{
 	JButton checkInButton, searchbutton, checkOutButton;
 	JLabel checkInLabel;
 	JComboBox keyword;
-	JTextField searchField;	
+	JTextField searchField;
 	
 	
 	//	table.getValueAt(table.getSelectedRow(), 0)
@@ -81,6 +88,7 @@ public class CheckIn_Out_Frame extends JFrame{
 		checkedOutLabel.setFont(new Font(null, Font.BOLD, 20));
 		checkedOutLabel.setHorizontalAlignment(JLabel.CENTER);
 		checkedOutLabel.setBounds(440, 10, 100, 50);
+		checkedOutLabel.setForeground(Color.WHITE);
 		
 		
 		// 대출 목록 3행 빈 테이블 넣어두고 DB에서 가져온 데이터로 채우기
@@ -97,10 +105,11 @@ public class CheckIn_Out_Frame extends JFrame{
 		checkedOutPane.setBounds(0, 70, 986, 92);
 		
 		
-		checkInButton = new JButton("반납");
+		checkInButton = AdminFrame.getButton("반납");
+//		BufferedImage buffer = ImageIO.read(new File("src/"));
+		checkInButton.setHorizontalTextPosition(JButton.RIGHT);
+		checkInButton.setVerticalTextPosition(JButton.CENTER);
 		checkInButton.setBounds(850, 180, 100, 30);
-		checkInButton.setFont(new Font(null, Font.BOLD, 20));
-		checkInButton.setBackground(new Color(218, 232, 252));
 		
 		// 반납 버튼을 누르면 DB에 존재하는 해당 등록번호의 도서 정보 업데이트
 		checkInButton.addActionListener(new ActionListener() {
@@ -130,19 +139,26 @@ public class CheckIn_Out_Frame extends JFrame{
 		checkInLabel.setFont(new Font(null, Font.BOLD, 20));
 		checkInLabel.setHorizontalAlignment(JLabel.CENTER);
 		checkInLabel.setBounds(390, 200, 200, 50);
+		checkInLabel.setForeground(Color.WHITE);
 		
 		
 		keyword = new JComboBox(keywordList);
 		keyword.setFont(new Font(null, Font.BOLD, 15));
 		keyword.setBounds(120, 250, 120, 30);
 		
-		searchbutton = new JButton("검색하기");
-		searchbutton.setFont(new Font(null, Font.BOLD, 15));
-		searchbutton.setBounds(770, 250, 100, 30);
+		searchbutton = AdminFrame.getButton("검색");
+//		try {
+//			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/searchButtonIcon.png"));
+//			Image image = buffer.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+//			searchbutton.setIcon(new ImageIcon(image));
+//		} catch (IOException e2) {
+//			e2.printStackTrace();
+//		}
+		searchbutton.setBounds(720, 230, 70, 70);
 		
 		// 텍스트 필드에서 엔터 누르면 버튼 클릭되도록 액션 추가 (검색 버튼 눌러도 되고 텍스트 필드에서 엔터 눌러도 검색됨)
 		searchField = new JTextField();
-		searchField.setBounds(320, 250, 350, 30);
+		searchField.setBounds(310, 250, 350, 30);
 		searchField.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -152,11 +168,19 @@ public class CheckIn_Out_Frame extends JFrame{
 		
 		
 		
-		checkOutButton = new JButton("대출");
+		checkOutButton = AdminFrame.getButton("대출");
+		checkOutButton.setHorizontalTextPosition(JButton.RIGHT);
+		checkOutButton.setVerticalTextPosition(JButton.CENTER);
+//		BufferedImage buffer;
+//		try {
+//			buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/checkInImage.png"));
+//			Image image = buffer.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+//			checkOutButton.setIcon(new ImageIcon(image));
+//		} catch (IOException e2) {
+//			e2.printStackTrace();
+//		}
 		// 버튼을 누르면 VO에 들어있는 현재 회원의 정보, 해당 도서의 정보 업데이트
-		checkOutButton.setBounds(850, 518, 100, 30);
-		checkOutButton.setFont(new Font(null, Font.BOLD, 20));
-		checkOutButton.setBackground(new Color(255, 230, 204));
+		checkOutButton.setBounds(850, 490, 120, 70);
 		
 		searchbutton.addActionListener(new ActionListener() {
 			@Override
@@ -230,6 +254,7 @@ public class CheckIn_Out_Frame extends JFrame{
 		checkPanel.add(searchbutton);
 		checkPanel.add(checkOutButton);
 		checkPanel.add(checkOutPane);
+		checkPanel.setBackground(new Color(49, 82, 91));
 		
 
 		add(checkPanel);
@@ -238,5 +263,9 @@ public class CheckIn_Out_Frame extends JFrame{
 		setDefaultCloseOperation(frame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 		
+	}
+	
+	public static void main(String[] args) {
+		new CheckIn_Out_Frame();
 	}
 }
