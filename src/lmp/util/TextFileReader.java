@@ -26,7 +26,7 @@ public class TextFileReader {
 						System.out.print(matcher.group(j) + "***");
 					}
 				}
-				System.out.println();
+				System.out.println(); 
 			}
 
 			// 최근에 열었던 순서대로 닫아야 한다

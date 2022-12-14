@@ -6,5 +6,8 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Gi7C-09/Downloads/commons-validator-1.7/commons-validator-1.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Gi7C-09/Downloads/commons-validator-1.7/commons-validator-1.7-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Gi7C-09/Downloads/commons-validator-1.7/commons-validator-1.7-javadoc.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

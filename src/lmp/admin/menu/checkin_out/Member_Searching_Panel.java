@@ -149,12 +149,12 @@ public class Member_Searching_Panel extends JPanel {
 				
 				// 컬럼별 최소 너비 설정
 //				for (int i = 0; i < category.length; ++i) {
-//					table.getColumnModel().getColumn(i).setMinWidth(250);
+//					table.getColumnModel().getColumn(i).setMinWidth(250); 
 //				}
-				// 컨테이너 사이즈에 따라 자동으로 테이블 크기 조정 안되게 세팅 (가로 스크롤 나오게 설정)
-				table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+				// 컨테이너 사이즈에 따라 자동으로 테이블 크기 조정 안되게 세팅 (가로 스크롤 나오게 설정) 
+				table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); 
 				
-				result.setViewportView(table);
+				result.setViewportView(table); 
 				validate();
 				
 			}

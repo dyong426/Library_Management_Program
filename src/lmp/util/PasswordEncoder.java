@@ -55,7 +55,7 @@ public class PasswordEncoder {
 		c.init(Cipher.ENCRYPT_MODE, keySpec, new IvParameterSpec(iv.getBytes()));
 		byte[] encrypted = c.doFinal(password.getBytes("UTF-8"));
 		String encryptedPassWord = Base64.getEncoder().encodeToString(encrypted);
-		return encryptedPassWord;
+		return encryptedPassWord; 
 	}
 
 	/**
