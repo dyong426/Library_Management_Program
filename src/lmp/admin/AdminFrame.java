@@ -1,5 +1,6 @@
 package lmp.admin;
 
+import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -19,6 +20,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import lmp.admin.menu.book.booksearch.BookSearchPanel;
 import lmp.admin.menu.checkin_out.Member_Searching_Panel;
@@ -132,7 +134,7 @@ public class AdminFrame extends JFrame{
 		
 		add(menuButtonPanel);
 		add(menuCardPanel);
-		
+			
 		setBounds(300, 100, 1200, 800);
 		getContentPane().setBackground(new Color(49, 82, 91));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
