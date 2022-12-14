@@ -29,7 +29,7 @@ public class BookDao extends MenuDao{
 	@Override
 	public void add(BookVO bookVO) throws SQLException {
 		
-		Connection conn = getConnection();
+		Connection conn = getConnection(); 
 		
 		String sql = "INSERT INTO books("
 									  + "book_id,"

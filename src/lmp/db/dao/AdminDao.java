@@ -48,7 +48,7 @@ public class AdminDao extends MenuDao{
 		pstmt.executeUpdate();
 			
 		pstmt.close();
-		conn.close();
+		conn.close(); 
 		
 	}
 
