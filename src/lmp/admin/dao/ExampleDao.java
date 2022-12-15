@@ -1,18 +1,20 @@
 package lmp.admin.dao;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import lmp.admin.vo.AdminVO;
 import lmp.admin.vo.BookVO;
 
 public class ExampleDao {
 	
 	
-	private static String url = "jdbc:oracle:thin:@192.168.0.100:1521:XE";
-	private static String user = "library";
+	private static String url = "jdbc:oracle:thin:@localhost:1521:XE";
+	private static String user = "lmp";
 	private static String pw = "1234";
 	
 public void add(BookVO bookVO) throws SQLException {
@@ -47,6 +49,30 @@ public void add(BookVO bookVO) throws SQLException {
 		pstmt.close();
 		conn.close();
 		
+	}
+
+	public void add(File file) throws SQLException, FileNotFoundException {
+		Connection conn = getConnection(); 
+		
+		
+		String sql = "INSERT INTO image_information VALUES(image_id_seq.nextval,?,?)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		FileInputStream fis = new FileInputStream(file);
+		pstmt.setString(1, file.getName());
+		pstmt.setBinaryStream(2, fis,(long)(file.length()));
+		
+		int rowNum = pstmt.executeUpdate();
+		
+		if(rowNum >0){
+            System.out.println("삽입성공");
+        }else
+        {
+            System.out.println("실패");
+        }
+		
+		pstmt.close();
+		conn.close();
 	}
 	
 	

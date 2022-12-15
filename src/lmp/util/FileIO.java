@@ -2,7 +2,11 @@ package lmp.util;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,6 +18,7 @@ import lmp.admin.vo.LocationVO;
 public class FileIO {
 	
 	private static String path = "C:\\javaFullStack_LDH\\repos\\Library_Management_Program\\examplefiles\\BookList.txt";
+	private static String imagePath = "";
 	
 	ExampleDao eDao = new ExampleDao();
 	//  /2/1/이지스퍼블리싱/IT전문서/전자책/Do it! 게임 10개 만들며 배우는 파이썬/벤 포터, 쉬무엘 포터/안동현/44915/376/15000/9791163034278/정상 판매중/
@@ -63,17 +68,17 @@ public class FileIO {
 	}
 	
 	
-	public void imageOutPut() {
+	public void imageRead(String imagePath) throws FileNotFoundException, IOException, SQLException {
 		
-		
-		
+		File image = new File(imagePath);
+		eDao.add(image);
 	}
 	
 
 	public static void main(String[] args) {
 		FileIO t = new FileIO();
 		try {
-			t.textFileReader(path);
+			t.imageRead(imagePath);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
