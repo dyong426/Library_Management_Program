@@ -1,4 +1,4 @@
-package lmp.db.dao;
+package lmp.members.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,10 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import lmp.db.vo.AdminVO;
-import lmp.db.vo.MemberVO;
-import lmp.db.vo.ReadingRoomVO;
-import lmp.db.vo.SeatUseDetailVO;
+import lmp.members.vo.MemberVO;
+import lmp.members.vo.ReadingRoomVO;
+import lmp.members.vo.SeatUseDetailVO;
+
+
 
 public class SeatUseDetailDao extends MenuDao{
 	
@@ -34,7 +35,7 @@ public class SeatUseDetailDao extends MenuDao{
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
-		pstmt.setString(1, sudVO.getMember().getNum());
+		pstmt.setInt(1, sudVO.getMember().getNum());
 		pstmt.setInt(2, sudVO.getReadingroom().getSeatNum());
 			
 		pstmt.executeUpdate();
@@ -58,7 +59,7 @@ public class SeatUseDetailDao extends MenuDao{
 		
 		String sql =  "UPDATE"
 					+ " seat_use_details"
-					+ "SET "
+					+ "SET"
 					+ " end_time = sysdate,"
 					+ "WHERE"
 					+ " use_id = ?";
@@ -92,7 +93,7 @@ public class SeatUseDetailDao extends MenuDao{
 						new SeatUseDetailVO(
 							rs.getInt("use_id"),
 							new MemberVO(
-								rs.getString("mem_num"),
+								rs.getInt("mem_num"),
 								rs.getString("mem_name"),
 								rs.getString("mem_id"),
 								rs.getString("mem_pw"),
@@ -118,93 +119,6 @@ public class SeatUseDetailDao extends MenuDao{
 		conn.close();
 		
 		return sudList;
-	}
-	
-	
-	/**
-	 * 열람실 좌석 조건 검색
-	 * 
-	 * header
-	 * seatNum - 좌석 번호
-	 * 
-	 * searchStr
-	 * header에 해당하는 값
-	 * 
-	 * @param header
-	 * @param searchStr
-	 * @return ArrayList<SeatUseDetailVO> sudList
-	 */
-	@Override
-	public ArrayList get(int header, String searchStr) throws SQLException {
-		
-		StringBuilder sql = new StringBuilder(selectSql(header));
-
-		Connection conn = getConnection();
-		System.out.println(conn);
-		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
-		pstmt.setString(1, searchStr);
-		ResultSet rs = pstmt.executeQuery();
-		ArrayList<SeatUseDetailVO> sudList = new ArrayList<>();
-		while (rs.next()) {
-			sudList.add(
-						new SeatUseDetailVO(
-							rs.getInt("use_id"),
-							new MemberVO(
-								rs.getString("mem_num"),
-								rs.getString("mem_name"),
-								rs.getString("mem_id"),
-								rs.getString("mem_pw"),
-								rs.getString("mem_birthday"),
-								rs.getString("mem_sex"),
-								rs.getString("mem_phone"),
-								rs.getString("mem_email"),
-								rs.getString("mem_address"),
-								rs.getString("mem_registrationdate"),
-								rs.getString("mem_note")
-								),
-							new ReadingRoomVO(
-								rs.getInt("seat_num"),
-								rs.getString("table_divider")
-								),
-							rs.getString("start_time"),
-							rs.getString("end_time")
-							)
-						);
-		}
-		rs.close();
-		pstmt.close();
-		conn.close();
-		
-		return sudList;
-	}
-	
-	
-	public StringBuilder selectSql(int header) {
-		StringBuilder sql = new StringBuilder();
-		String seatNum = "SELECT * FROM seat_use_details JOIN members USING(mem_num) JOIN readingroom USING(seat_num) WHERE seat_num = ?";
-		if (header == 1) {
-			sql.append(seatNum);
-		}
-		return sql;
-	}
-	
-	
-	
-	
-	/**
-	 * 열람실 이용 내역 삭제 (이용중인 좌석 제외)
-	 * 
-	 */
-	@Override
-	public void delete() throws SQLException {
-		String sql = "DELETE FROM seat_use_details WHERE end_time is not null";
-		Connection conn = getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		
-		pstmt.executeUpdate();
-		
-		pstmt.close();
-		conn.close();
 	}
 
 }

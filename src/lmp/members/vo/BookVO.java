@@ -1,6 +1,6 @@
-package lmp.db.vo;
+package lmp.members.vo;
 
-import java.util.Date;
+
 
 public class BookVO {
 	
@@ -8,7 +8,7 @@ public class BookVO {
 	 * 도서 정보
 	 */
 	
-	private String	   id;
+	private Integer	   id;
 	private String	   title;
 	private String	   author;
 	private String	   publisher;
@@ -32,11 +32,11 @@ public class BookVO {
 	 * @param book_duplicates
 	 * @param book_registrationdate
 	 * @param book_price
-	 * @param location
+	 * @param locationVO
 	 * @param book_note
 	 */
 	public BookVO(
-				  String  book_id,
+				  Integer  book_id,
 				  String  book_title,
 				  String  book_author,
 				  String  book_publisher,
@@ -62,8 +62,10 @@ public class BookVO {
 		this.note		=	book_note;
 		
 	}
+	
+	
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
@@ -110,6 +112,7 @@ public class BookVO {
 	@Override
 	public String toString() {
 		
-		return String.format("%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", this.id,this.title,this.author,this.publisher,this.isbn,this.bias,this.duplicates,this.price,this.location.getLocID(),this.regDate,this.note);
+		return String.format("%d,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s", this.id,this.title,this.author,this.publisher,this.isbn,this.bias,this.duplicates,this.price,this.location.getLocID(),this.regDate,this.note);
 	}
+
 }

@@ -1,4 +1,4 @@
-package lmp.db.dao;
+package lmp.admin.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,10 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import lmp.db.vo.BookVO;
-import lmp.db.vo.CheckOutVO;
-import lmp.db.vo.LocationVO;
-import lmp.db.vo.MemberVO;
+import lmp.admin.vo.BookVO;
+import lmp.admin.vo.CheckOutVO;
+import lmp.admin.vo.LocationVO;
+import lmp.admin.vo.MemberVO;
 
 public class CheckOutDao extends MenuDao{
 	
@@ -38,8 +38,8 @@ public class CheckOutDao extends MenuDao{
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
-		pstmt.setString(1, checkOutVO.getBook().getId());
-		pstmt.setString(2, checkOutVO.getMember().getNum());
+		pstmt.setInt(1, checkOutVO.getBook().getId());
+		pstmt.setInt(2, checkOutVO.getMember().getNum());
 			
 		pstmt.executeUpdate();
 			
@@ -107,7 +107,7 @@ public class CheckOutDao extends MenuDao{
 		while (rs.next()) {
 			checkOutList.add(new CheckOutVO(
 								rs.getInt("check_out_id"),
-								new BookVO(rs.getString("book_id"),
+								new BookVO(rs.getInt("book_id"),
 										rs.getString("book_title"),
 										rs.getString("book_author"),
 										rs.getString("book_publisher"),
@@ -118,7 +118,7 @@ public class CheckOutDao extends MenuDao{
 										rs.getInt("book_price"),
 										new LocationVO(rs.getString("location_id"), rs.getString("location_name")),
 										rs.getString("book_note")),
-								new MemberVO(rs.getString("mem_num"),
+								new MemberVO(rs.getInt("mem_num"),
 										rs.getString("mem_name"),
 										rs.getString("mem_id"),
 										rs.getString("mem_pw"),

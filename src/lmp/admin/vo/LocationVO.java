@@ -1,11 +1,11 @@
-package lmp.db.vo;
+package lmp.admin.vo;
 
 public class LocationVO {
 	/**
 	 * 도서 위치 정보
 	 */
-	private String	locID;
-	private String	locName;
+	private static String	locID;
+	private static String	locName;
 	
 	/**
 	 * join을 위한 생성자
@@ -28,11 +28,11 @@ public class LocationVO {
 		this.locName = location_name;
 	}
 
-	public String getLocID() {
-		return locID;
+	public static String getLocID() {
+			return locID;
 	}
 
-	public String getLocName() {
+	public static String getLocName() {
 		return locName;
 	}
 	

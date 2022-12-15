@@ -1,21 +1,21 @@
-package lmp.db.dao;
+package lmp.admin.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import lmp.db.vo.AdminVO;
-import lmp.db.vo.BookVO;
-import lmp.db.vo.CheckOutVO;
-import lmp.db.vo.MemberVO;
-import lmp.db.vo.SeatUseDetailVO;
+import lmp.admin.vo.AdminVO;
+import lmp.admin.vo.BookVO;
+import lmp.admin.vo.CheckOutVO;
+import lmp.admin.vo.MemberVO;
+import lmp.admin.vo.SeatUseDetailVO;
 
 
 public abstract class MenuDao {
 
-	private static String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	private static String user = "mydb";
+	private static String url = "jdbc:oracle:thin:@192.168.0.100:1521:XE";
+	private static String user = "library";
 	private static String pw = "1234";
 	
 	public void add(AdminVO adminVO) throws SQLException {}

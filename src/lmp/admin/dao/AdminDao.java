@@ -1,4 +1,4 @@
-package lmp.db.dao;
+package lmp.admin.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import lmp.db.vo.AdminVO;
+import lmp.admin.vo.AdminVO;
 
 public class AdminDao extends MenuDao{
 

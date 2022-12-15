@@ -1,6 +1,5 @@
-package lmp.db.vo;
+package lmp.members.vo;
 
-import java.util.Date;
 
 public class SeatUseDetailVO {
 

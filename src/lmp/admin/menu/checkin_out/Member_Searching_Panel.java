@@ -27,7 +27,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import lmp.db.dao.MemberDao;
+import lmp.admin.dao.MemberDao;
 
 public class Member_Searching_Panel extends JPanel {
 

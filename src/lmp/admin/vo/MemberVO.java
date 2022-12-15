@@ -1,4 +1,4 @@
-package lmp.db.vo;
+package lmp.admin.vo;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ public class MemberVO {
 	 * 	회원정보
 	 */
 	
-	private	String	num;
+	private	Integer	num;
 	private	String	name;
 	private	String	id;
 	private	String	pw;
@@ -20,6 +20,11 @@ public class MemberVO {
 	private	String	regDate;
 	private	String	note;
 	
+
+	public MemberVO() {
+		
+	}
+	
 	
 	/**
 	 * 회원 로그인시 생성자
@@ -27,8 +32,9 @@ public class MemberVO {
 	 * @param mem_id
 	 * @param mem_pw
 	 */
-	public MemberVO(String mem_id, String mem_pw) {
+	public MemberVO(Integer mem_num, String mem_id, String mem_pw) {
 		
+		this.num = num;
 		this.id = mem_id;
 		this.pw = mem_pw;
 		
@@ -50,7 +56,7 @@ public class MemberVO {
 	 * @param mem_note
 	 */
 	public MemberVO(
-					String	mem_num,
+					Integer	mem_num,
 					String	mem_name,
 					String	mem_id,
 					String	mem_pw,
@@ -77,7 +83,8 @@ public class MemberVO {
 		
 	}
 
-	public String getNum() {
+
+	public Integer getNum() {
 		return num;
 	}
 

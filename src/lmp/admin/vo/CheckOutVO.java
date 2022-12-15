@@ -1,4 +1,4 @@
-package lmp.db.vo;
+package lmp.admin.vo;
 
 import java.util.Date;
 
