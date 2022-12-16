@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import lmp.members.vo.BookVO;
+import lmp.members.vo.MemberLogHistoryVO;
 import lmp.members.vo.MemberVO;
 import lmp.members.vo.SeatUseDetailVO;
 
@@ -16,17 +17,6 @@ public abstract class MenuDao {
 	private static String url = "jdbc:oracle:thin:@192.168.0.100:1521:XE";
 	private static String user = "library";
 	private static String pw = "1234";
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * 전체 회원 목록 가져오기
@@ -151,9 +141,35 @@ public abstract class MenuDao {
 	 * 
 	 * @return ArrayList<SeatUseDetailVO> sudList
 	 */
-	public ArrayList get() throws SQLException {
+	public ArrayList getUse() throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void add(MemberLogHistoryVO memLogVO) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * 회원 정보 수정
+	 * 
+	 * @param memberVO
+	 * @throws SQLException
+	 */
+	public void update(MemberLogHistoryVO memLogVO) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public MemberLogHistoryVO getLog() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void delete(Integer mem_id) throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 
 

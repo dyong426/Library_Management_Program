@@ -81,7 +81,7 @@ public class SeatUseDetailDao extends MenuDao{
 	 * @return ArrayList<SeatUseDetailVO> sudList
 	 */
 	@Override
-	public ArrayList get() throws SQLException {
+	public ArrayList getUse() throws SQLException {
 		String sql = "SELECT * FROM seat_use_details JOIN members USING(mem_num) JOIN readingroom USING(seat_num) WHERE end_time is null";
 		
 		Connection conn = getConnection();
