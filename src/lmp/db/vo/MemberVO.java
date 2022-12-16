@@ -2,13 +2,15 @@ package lmp.db.vo;
 
 import java.util.Date;
 
+import lmp.db.dao.CheckOutDao;
+
 public class MemberVO {
 	
 	/**
 	 * 	회원정보
-	 */
+	*/
 	
-	private	String	num;
+	private	Integer	num;
 	private	String	name;
 	private	String	id;
 	private	String	pw;
@@ -19,6 +21,7 @@ public class MemberVO {
 	private	String	address;
 	private	String	regDate;
 	private	String	note;
+	private String	availability;
 	
 	
 	/**
@@ -50,7 +53,7 @@ public class MemberVO {
 	 * @param mem_note
 	 */
 	public MemberVO(
-					String	mem_num,
+					int		mem_num,
 					String	mem_name,
 					String	mem_id,
 					String	mem_pw,
@@ -74,10 +77,17 @@ public class MemberVO {
 		this.address	=	mem_address;
 		this.regDate	=	mem_registrationDate;
 		this.note		=	mem_note;
-		
+	}
+	
+	public MemberVO(int mem_num, String mem_name, String mem_phone, String mem_email, String mem_address) {
+		this.num = mem_num;
+		this.name = mem_name;
+		this.phone = mem_phone;
+		this.email = mem_email;
+		this.address = mem_address;
 	}
 
-	public String getNum() {
+	public Integer getNum() {
 		return num;
 	}
 
@@ -119,6 +129,24 @@ public class MemberVO {
 
 	public String getNote() {
 		return note;
+	}
+	
+	// 테이블에 데이터 넣기 쉽도록 getList 메서드 생성
+	public Object[] getList() {
+		Object[] list = new Object[11];
+		list[0] = getNum();
+		list[1] = getName();
+		list[2] = getId();
+		list[3] = getPw();
+		list[4] = getBirthDay();
+		list[5] = getSex();
+		list[6] = getPhone();
+		list[7] = getEmail();
+		list[8] = getAddress();
+		list[9] = getRegDate();
+		list[10] = getNote();
+		
+		return list;
 	}
 	
 	@Override

@@ -106,6 +106,25 @@ public class BookVO {
 	public String getNote() {
 		return note;
 	}
+	
+	// 테이블에 데이터를 쉽게 넣기 위해 getList 메서드 생성
+	public Object[] getList() {
+		Object[] list = new Object[11];
+		
+		list[0] = getId();
+		list[1] = getTitle();
+		list[2] = getAuthor();
+		list[3] = getPublisher();
+		list[4] = getIsbn();
+		list[5] = getBias();
+		list[6] = getDuplicates();
+		list[7] = getRegDate();
+		list[8] = getPrice();
+		list[9] = getLocation();
+		list[10] = getNote();
+		
+		return list;
+	}
 
 	@Override
 	public String toString() {

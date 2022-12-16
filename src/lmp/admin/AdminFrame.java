@@ -2,6 +2,7 @@ package lmp.admin;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -19,9 +20,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
+import javax.swing.JScrollPane;
 
+import lmp.admin.menu.book.BookMgmt;
 import lmp.admin.menu.checkin_out.Member_Searching_Panel;
+import lmp.admin.menu.employees.EmployeesMgmt;
+import lmp.admin.menu.member.MemberMgmt;
+import lmp.admin.menu.readingroom.ReadingRoomMgmt;
 
 
 public class AdminFrame extends JFrame{
@@ -29,8 +34,11 @@ public class AdminFrame extends JFrame{
 	JButton bookMgmt, checkIn_Out, employeeMgmt, memberMgmt, readingRoom;
 	
 	JFrame f = this;
+	
 	public AdminFrame() {
 
+		JScrollPane scroll = new JScrollPane();
+		
 		JPanel menuButtonPanel = new JPanel(new GridLayout(1, 5, 100, 0));
 		
 		CardLayout card = new CardLayout();
@@ -60,6 +68,12 @@ public class AdminFrame extends JFrame{
 			// 버튼 생성 메서드 테스트
 			bookMgmt = getButton("도서 관리");
 			bookMgmt.setIcon(new ImageIcon(bookMgmtIcon));
+			bookMgmt.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					card.show(menuCardPanel, "2");
+				}
+			});
 //			bookMgmt = new JButton(new ImageIcon(bookMgmtIcon)) {
 //				{
 //				setBackground(Color.GRAY);
@@ -80,7 +94,7 @@ public class AdminFrame extends JFrame{
 //				});
 //				}
 //			};
-			checkIn_Out = getButton("대출/반납");
+			checkIn_Out = getButton("대출 / 반납");
 			checkIn_Out.setIcon(new ImageIcon(checkIn_OutIcon));
 			checkIn_Out.addActionListener(new ActionListener() {
 				@Override
@@ -91,12 +105,30 @@ public class AdminFrame extends JFrame{
 			
 			employeeMgmt = getButton("직원 관리");
 			employeeMgmt.setIcon(new ImageIcon(employeeMgmtIcon));
+			employeeMgmt.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					card.show(menuCardPanel, "4");
+				}
+			});
 			
 			memberMgmt = getButton("회원 관리");
 			memberMgmt.setIcon(new ImageIcon(memberMgmtIcon));
+			memberMgmt.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					card.show(menuCardPanel, "5");
+				}
+			});
 			
 			readingRoom = getButton("열람실 관리");
 			readingRoom.setIcon(new ImageIcon(readingRoomIcon));
+			readingRoom.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					card.show(menuCardPanel, "6");
+				}
+			});
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -105,9 +137,13 @@ public class AdminFrame extends JFrame{
 		menuButtonPanel.setBounds(90, 40, 1000, 120);
 		menuButtonPanel.setBackground(new Color(49, 82, 91));
 		
-		menuCardPanel.setBounds(17, 200, 1150, 550);
+		menuCardPanel.setBounds(17, 195, 1150, 550);
 		menuCardPanel.add("1", initialLabel());
+		menuCardPanel.add("2", new BookMgmt());
 		menuCardPanel.add("3", new Member_Searching_Panel());
+		menuCardPanel.add("4", new EmployeesMgmt());
+		menuCardPanel.add("5", new MemberMgmt());
+		menuCardPanel.add("6", new ReadingRoomMgmt());
 		
 		menuButtonPanel.add(bookMgmt);
 		menuButtonPanel.add(checkIn_Out);
@@ -153,7 +189,9 @@ public class AdminFrame extends JFrame{
 				setForeground(Color.WHITE);
 				setFont(new Font(null, Font.BOLD, 15));
 				setText(text);
-				setToolTipText(text);
+				if (!getText().equals("")) {
+					setToolTipText(text);
+				}
 				setBorderPainted(false);
 				setFocusPainted(false);
 				setContentAreaFilled(false);
@@ -161,12 +199,14 @@ public class AdminFrame extends JFrame{
 					// 버튼에 마우스 올리면 테두리 생성
 					@Override
 					public void mouseEntered(MouseEvent e) {
-						setBorderPainted(true);
+						Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
+						setCursor(cursor);
 					}
 					// 버튼에서 마우스 떼면 테두리 삭제
 					@Override
 					public void mouseExited(MouseEvent e) {
-						setBorderPainted(false);
+						Cursor cursor = new Cursor(Cursor.DEFAULT_CURSOR);
+						setCursor(cursor);
 					}
 				});
 				}

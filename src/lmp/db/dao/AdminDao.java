@@ -131,12 +131,12 @@ public class AdminDao extends MenuDao{
 	 * @throws SQLException
 	 */
 	@Override
-	public void delete(AdminVO adminVO) throws SQLException {
+	public void delete(String adminNum) throws SQLException {
 		
 		String sql = "DELETE FROM admins WHERE admin_num = ?";
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1,adminVO.getNum());
+		pstmt.setString(1, adminNum);
 		
 		pstmt.executeUpdate();
 		

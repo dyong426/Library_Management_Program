@@ -1,33 +1,34 @@
 package lmp.admin.menu.checkin_out;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
-import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
+import lmp.admin.AdminFrame;
 import lmp.db.dao.MemberDao;
+import lmp.db.vo.MemberVO;
 
 public class Member_Searching_Panel extends JPanel {
 
@@ -38,7 +39,7 @@ public class Member_Searching_Panel extends JPanel {
 	JScrollPane result;
 	JTable table;
 
-	String[] keywordList = {"회원번호", "이름"};
+	String[] keywordList = {"회원번호", "이름", "아이디", "연락처"};
 	
 	// 패널의 열 수는 검색된 정보 수에 따라 다르게 설정 가능
 	// DB에서 회원정보 뽑아서 아래 액션 리스너 내부 조건에 맞는 배열 생성
@@ -46,25 +47,35 @@ public class Member_Searching_Panel extends JPanel {
 	// && 반납 예정일이 지났지만 반납일이 없는 경우 (연체)면 대출 불가능
 	String[] memberColumn = {"회원번호", "이름", "아이디", "비밀번호", "생년월일", "성별", "전화번호", "이메일", "주소", "가입일", "비고"};
 	
-	MemberDao d = new MemberDao();
+	MemberDao memberDao = new MemberDao();
+	ArrayList<MemberVO> memVoList = new ArrayList<>();
+	
 	
 	// 배열의 길이 수정해야함
 	// 임의로 50 넣어놓음
 	String[][] valid = new String[50][memberColumn.length];
 	
-	DefaultTableModel model = new DefaultTableModel(memberColumn, 24);
+	DefaultTableModel model = new DefaultTableModel(memberColumn, 20) {
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		};
+	};
+	
+	public ArrayList<MemberVO> getMemVoList() {
+		return memVoList;
+	}
 	
 	public Member_Searching_Panel() {
 		
 		setLayout(null);
-		setBackground(new Color(49, 82, 91));
+		setBackground(new Color(87, 119, 119));
 		
 		table = new JTable(model);
 		// 테이블 컬럼 이동 안되게 설정
 		table.getTableHeader().setReorderingAllowed(false);
 		// 테이블에서 하나의 행만 선택되게 설정
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
+		table.setRowHeight(25);
 		
 		result = new JScrollPane(table);
 		result.setBounds(0, 156, 1152, 395);
@@ -81,9 +92,15 @@ public class Member_Searching_Panel extends JPanel {
 		keyword.setFont(new Font(null, Font.BOLD, 15));
 		keyword.setBounds(190, 80, 150, 30);
 		
-		button = new JButton("검색하기");
-		button.setFont(new Font(null, Font.BOLD, 15));
-		button.setBounds(840, 80, 100, 30);
+		button = AdminFrame.getButton("검색");
+		try {
+			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/searchButtonIcon.png"));
+			Image image = buffer.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+			button.setIcon(new ImageIcon(image));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		button.setBounds(810, 55, 100, 80);
 		
 		// 텍스트 필드에서 엔터 누르면 버튼 클릭되도록 액션 추가 (검색 버튼 눌러도 되고 텍스트 필드에서 엔터 눌러도 검색됨)
 		searchField = new JTextField();
@@ -105,7 +122,7 @@ public class Member_Searching_Panel extends JPanel {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String[][] valid = new String[50][memberColumn.length];
+//				String[][] valid = new String[50][memberColumn.length];
 				
 				// 체크박스와 동일한 컬럼 인덱스 찾는 과정
 //				int index = 0;
@@ -122,22 +139,35 @@ public class Member_Searching_Panel extends JPanel {
 //					}
 //				}
 				
+				// 조건에 맞는 정보로 회원 조회 후 memVoList에 담기
+				try {
+					memVoList.clear();
+					memVoList.addAll(memberDao.get(keyword.getSelectedIndex() + 1, searchField.getText()));
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+				
+				// 테이블 열 개수 수정
+				model.setRowCount(memVoList.size());
+				// 테이블 데이터 수정 (추가?)
 				// 테이블 수정 안되게 세팅
-				try {
-					model = new DefaultTableModel(d.get(keyword.getItemCount(), searchField.getText()).size(), memberColumn.length) {
-						@Override
-						public boolean isCellEditable(int row, int column) {
-							return false;
-						}
-					};
-				} catch (SQLException e1) {
-					e1.printStackTrace();
+				int num = 0;
+				for (MemberVO list : memVoList) {
+					for (int i = 0; i < list.getList().length; ++i) {
+						model.setValueAt(list.getList()[i], num, i);
+					}
+					++num;
 				}
-				try {
-					model.addRow(d.get(keyword.getItemCount() + 2, searchField.getText()).toArray());
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				
+//				try {
+//					model.setColumnIdentifiers(memberColumn);
+//					for (int i = 0; i < ;) {
+//						
+//					}
+//					model.addRow(d.get(keyword.getItemCount() + 2, searchField.getText()).toArray());
+//				} catch (SQLException e1) {
+//					e1.printStackTrace();
+//				}
 //				for (int i = 0; i < valid.length; ++i) {
 //					for (int j = 0; j < memberColumn.length; ++j) {
 //						model.setValueAt(valid[i][j], i, j);
@@ -152,7 +182,7 @@ public class Member_Searching_Panel extends JPanel {
 //					table.getColumnModel().getColumn(i).setMinWidth(250);
 //				}
 				// 컨테이너 사이즈에 따라 자동으로 테이블 크기 조정 안되게 세팅 (가로 스크롤 나오게 설정)
-				table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+//				table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 				
 				result.setViewportView(table);
 				validate();
@@ -165,8 +195,8 @@ public class Member_Searching_Panel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// 더블 클릭시 값이 들어있는 행만 작동하도록 (행을 검색된 정보 수에 맞게 출력하면 조건 없어도 됨)
-				if (e.getClickCount() == 2 && table.getValueAt(table.getSelectedRow(), 1) != null) {
-					new CheckIn_Out_Frame();
+				if (e.getClickCount() == 2 && table.getValueAt(table.getSelectedRow(), 0) != null) {
+					new CheckIn_Out_Frame(String.valueOf(table.getValueAt(table.getSelectedRow(), 0)));
 				}
 			}
 		});

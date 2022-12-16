@@ -34,7 +34,7 @@ public class SeatUseDetailDao extends MenuDao{
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
-		pstmt.setString(1, sudVO.getMember().getNum());
+		pstmt.setInt(1, sudVO.getMember().getNum());
 		pstmt.setInt(2, sudVO.getReadingroom().getSeatNum());
 			
 		pstmt.executeUpdate();
@@ -53,7 +53,7 @@ public class SeatUseDetailDao extends MenuDao{
 	 * @throws SQLException
 	 */
 	@Override
-	public void update(SeatUseDetailVO sudVO) throws SQLException {
+	public void update(int seatNum) throws SQLException {
 		Connection conn = getConnection();
 		
 		String sql =  "UPDATE"
@@ -65,7 +65,7 @@ public class SeatUseDetailDao extends MenuDao{
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
-		pstmt.setInt(1,sudVO.getUse_id());
+		pstmt.setInt(1, seatNum);
 		
 		pstmt.executeUpdate();
 		
@@ -92,7 +92,7 @@ public class SeatUseDetailDao extends MenuDao{
 						new SeatUseDetailVO(
 							rs.getInt("use_id"),
 							new MemberVO(
-								rs.getString("mem_num"),
+								rs.getInt("mem_num"),
 								rs.getString("mem_name"),
 								rs.getString("mem_id"),
 								rs.getString("mem_pw"),
@@ -150,7 +150,7 @@ public class SeatUseDetailDao extends MenuDao{
 						new SeatUseDetailVO(
 							rs.getInt("use_id"),
 							new MemberVO(
-								rs.getString("mem_num"),
+								rs.getInt("mem_num"),
 								rs.getString("mem_name"),
 								rs.getString("mem_id"),
 								rs.getString("mem_pw"),

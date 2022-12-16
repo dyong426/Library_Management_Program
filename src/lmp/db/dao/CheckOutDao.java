@@ -30,19 +30,20 @@ public class CheckOutDao extends MenuDao{
 	 * @param checkOutVO
 	 * @throws SQLException
 	 */
+	// 모든 도서 중 하나의 도서를 대여 목록에 넣어야 하는데 기존 매개변수(CheckOutVO)로 받으면 모든 도서 중 선택된 도서의 데이터를 찾을 수 없음.
+	// (이미 대여된 도서 중에서만 찾을 수 있음)
 	@Override
-	public void add(CheckOutVO checkOutVO) throws SQLException {
+	public void add(BookVO bookVO, String memberNum) throws SQLException {
 		Connection conn = getConnection();
 		
 		String sql = "INSERT INTO check_out_info(check_out_id, book_id, mem_num) VALUES(check_out_id_seq.nextval,?,?)";
-		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
-		pstmt.setString(1, checkOutVO.getBook().getId());
-		pstmt.setString(2, checkOutVO.getMember().getNum());
-			
+		pstmt.setString(1, bookVO.getId());
+		pstmt.setString(2, memberNum);
+		
 		pstmt.executeUpdate();
-			
+		
 		pstmt.close();
 		conn.close();
 	}
@@ -61,9 +62,9 @@ public class CheckOutDao extends MenuDao{
 		
 		String sql =  "UPDATE"
 					+ " check_out_info"
-					+ "SET "
-					+ " check_in_date = sysdate,"
-					+ "WHERE"
+					+ " SET"
+					+ " check_in_date = sysdate"
+					+ " WHERE"
 					+ " check_out_id = ?";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -98,7 +99,6 @@ public class CheckOutDao extends MenuDao{
 		StringBuilder sql = new StringBuilder(selectSql(header));
 
 		Connection conn = getConnection();
-		System.out.println(conn);
 		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 		pstmt.setString(1, "%"+searchStr+"%");
 		
@@ -114,11 +114,11 @@ public class CheckOutDao extends MenuDao{
 										rs.getString("book_isbn"),
 										rs.getInt("book_bias"),
 										rs.getInt("book_duplicates"),
-										rs.getString("book_registration_date"),
+										rs.getString("book_registrationdate"),
 										rs.getInt("book_price"),
 										new LocationVO(rs.getString("location_id"), rs.getString("location_name")),
 										rs.getString("book_note")),
-								new MemberVO(rs.getString("mem_num"),
+								new MemberVO(rs.getInt("mem_num"),
 										rs.getString("mem_name"),
 										rs.getString("mem_id"),
 										rs.getString("mem_pw"),
@@ -140,6 +140,41 @@ public class CheckOutDao extends MenuDao{
 		return checkOutList;
 	}
 	
+	public ArrayList get(String book_id) throws SQLException {
+		
+		String sql = "SELECT * FROM check_out_info JOIN books USING(book_id) JOIN locations USING(location_id) WHERE book_id LIKE ? AND check_in_date IS NULL";
+
+		Connection conn = getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, book_id);
+		
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<CheckOutVO> checkedOutList = new ArrayList<>();
+		while (rs.next()) {
+			checkedOutList.add(new CheckOutVO(
+								rs.getInt("check_out_id"),
+								new BookVO(rs.getString("book_id"),
+										rs.getString("book_title"),
+										rs.getString("book_author"),
+										rs.getString("book_publisher"),
+										rs.getString("book_isbn"),
+										rs.getInt("book_bias"),
+										rs.getInt("book_duplicates"),
+										rs.getString("book_registrationdate"),
+										rs.getInt("book_price"),
+										new LocationVO(rs.getString("location_id"), rs.getString("location_name")),
+										rs.getString("book_note")),
+								rs.getString("check_out_date"),
+								rs.getString("expect_return_date"),
+								rs.getString("check_in_date")));
+		}
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return checkedOutList;
+	}
+	
 	/**
 	 * 해당하는 조건의 sql문 가져오기
 	 * header
@@ -153,10 +188,10 @@ public class CheckOutDao extends MenuDao{
 	 */
 	public StringBuilder selectSql(int header) {
 		StringBuilder sql = new StringBuilder();
-		String id = "SELECT * FROM check_out_info JOIN members USING(mem_num) JOIN books USING(book_id) JOIN locations USING(location_id) WHERE book_id LIKE ?";
-		String title = "SELECT * FROM check_out_info JOIN members USING(mem_num) JOIN books USING(book_id) JOIN locations USING(location_id) WHERE book_title LIKE ?";
-		String num = "SELECT * FROM check_out_info JOIN members USING(mem_num) JOIN books USING(book_id) JOIN locations USING(location_id) WHERE mem_num LIKE ?";
-		String name = "SELECT * FROM check_out_info JOIN members USING(mem_num) JOIN books USING(book_id) JOIN locations USING(location_id) WHERE mem_name LIKE ?";
+		String id = "SELECT * FROM check_out_info JOIN members USING(mem_num) JOIN books USING(book_id) JOIN locations USING(location_id) WHERE book_id LIKE ? AND check_in_date IS NULL";
+		String title = "SELECT * FROM check_out_info JOIN members USING(mem_num) JOIN books USING(book_id) JOIN locations USING(location_id) WHERE book_title LIKE ? AND check_in_date IS NULL";
+		String num = "SELECT * FROM check_out_info JOIN members USING(mem_num) JOIN books USING(book_id) JOIN locations USING(location_id) WHERE mem_num LIKE ? AND check_in_date IS NULL";
+		String name = "SELECT * FROM check_out_info JOIN members USING(mem_num) JOIN books USING(book_id) JOIN locations USING(location_id) WHERE mem_name LIKE ? AND check_in_date IS NULL";
 		if (header == 1) {
 			sql.append(id);
 		} else if (header == 2) {

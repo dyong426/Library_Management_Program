@@ -90,6 +90,19 @@ public class CheckOutVO {
 		return checkInDate;
 	}
 	
+	// 테이블에 데이터를 쉽게 넣기 위해 getList 메서드 생성
+	public Object[] getList() {
+		Object[] list = new Object[6];
+		list[0] = checkOutID;
+		list[1] = book.getId();
+		list[2] = book.getTitle();
+		list[3] = book.getAuthor();
+		list[4] = checkOutDate;
+		list[5] = expectReturnDate;
+		
+		return list;
+	}
+	
 	@Override
 	public String toString() {
 		

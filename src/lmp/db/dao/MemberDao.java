@@ -115,7 +115,7 @@ public class MemberDao extends MenuDao{
 		ArrayList<MemberVO> memberList = new ArrayList<>();
 		while (rs.next()) {
 			memberList.add(new MemberVO(
-								rs.getString("mem_num"),
+								rs.getInt("mem_num"),
 								rs.getString("mem_name"),
 								rs.getString("mem_id"),
 								rs.getString("mem_pw"),
@@ -156,7 +156,6 @@ public class MemberDao extends MenuDao{
 		StringBuilder sql = new StringBuilder(selectSql(header));
 
 		Connection conn = getConnection();
-		System.out.println(conn);
 		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 		pstmt.setString(1, "%"+searchStr+"%");
 		
@@ -164,7 +163,7 @@ public class MemberDao extends MenuDao{
 		ArrayList<MemberVO> memberList = new ArrayList<>();
 		while (rs.next()) {
 			memberList.add(new MemberVO(
-								rs.getString("mem_num"),
+								rs.getInt("mem_num"),
 								rs.getString("mem_name"),
 								rs.getString("mem_id"),
 								rs.getString("mem_pw"),
@@ -223,7 +222,7 @@ public class MemberDao extends MenuDao{
 		String sql = "DELETE FROM members WHERE mem_num = ?";
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1,memberVO.getNum());
+		pstmt.setInt(1,memberVO.getNum());
 		
 		pstmt.executeUpdate();
 		

@@ -14,8 +14,8 @@ import lmp.db.vo.SeatUseDetailVO;
 
 public abstract class MenuDao {
 
-	private static String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	private static String user = "mydb";
+	private static String url = "jdbc:oracle:thin:@192.168.0.100:1521:XE";
+	private static String user = "library";
 	private static String pw = "1234";
 	
 	public void add(AdminVO adminVO) throws SQLException {}
@@ -28,6 +28,9 @@ public abstract class MenuDao {
 	
 	public void add(SeatUseDetailVO sudVO) throws SQLException {}
 	
+	// 
+	public void add(BookVO bookVO, String memberNum) throws SQLException {}
+	
 	public void update(AdminVO adminVO) throws SQLException {}
 
 	public void update(MemberVO memberVO) throws SQLException {}
@@ -36,7 +39,7 @@ public abstract class MenuDao {
 
 	public void update(CheckOutVO checkOutVO) throws SQLException {}
 
-	public void update(SeatUseDetailVO sudVO) throws SQLException {}
+	public void update(int seatNum) throws SQLException {}
 
 	
 	public ArrayList get() throws SQLException {
@@ -47,11 +50,11 @@ public abstract class MenuDao {
 	}
 	
 	
-	public void delete(AdminVO adminVO) throws SQLException {}
+	public void delete(String adminNum) throws SQLException {}
 	
 	public void delete(MemberVO memberVO) throws SQLException {}
 	
-	public void delete(BookVO bookVO) throws SQLException {}
+	public void delete(int bookNum) throws SQLException {}
 	
 	public void delete() throws SQLException {}
 	

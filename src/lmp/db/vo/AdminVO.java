@@ -16,6 +16,7 @@ public class AdminVO {
 	private String	address;
 	private String	regDate;
 	private String	note;
+	private Object[] list;
 	
 	/**
 	 * 기본 생성자
@@ -64,6 +65,16 @@ public class AdminVO {
 		this.address = admin_address;
 		this.regDate = admin_registrationdate;
 		this.note 	 = admin_note;
+		this.list	 = new Object[] {
+									admin_num,
+									admin_name,
+									admin_pw,
+									admin_phone,
+									admin_email,
+									admin_address,
+									admin_registrationdate,
+									admin_note
+									};
 	}
 
 	public Integer getNum() {
@@ -128,6 +139,10 @@ public class AdminVO {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+	
+	public Object[] getList() {
+		return list;
 	}
 	
 	@Override

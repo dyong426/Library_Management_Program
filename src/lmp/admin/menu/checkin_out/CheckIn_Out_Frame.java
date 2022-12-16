@@ -8,7 +8,13 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -27,6 +33,7 @@ import javax.swing.table.DefaultTableModel;
 import lmp.admin.AdminFrame;
 import lmp.db.dao.BookDao;
 import lmp.db.dao.CheckOutDao;
+import lmp.db.vo.BookVO;
 import lmp.db.vo.CheckOutVO;
 
 public class CheckIn_Out_Frame extends JFrame{
@@ -45,31 +52,36 @@ public class CheckIn_Out_Frame extends JFrame{
 	
 	//	table.getValueAt(table.getSelectedRow(), 0)
 	// 위 코드로 회원번호 뽑아서 DB에서 해당 회원번호에 맞는 정보 가져와서 출력 아래 배열에 저장
-	String[] checkedOutCategory = {"등록번호", "도서명", "저자", "대출 일자", "반납 예정일"};
-	String[][] checkedOutList = {
-			{"BSDF156", "노인과 바다", "헤밍웨이", "2022/12/08", "2022/12/21"},
-			{"QWT2654", "어린왕자", "생텍쥐페리", "2022/12/01", "2022/12/14"},
-			{"QWT2654", "어린왕자", "생텍쥐페리", "2022/12/01", "2022/12/14"}
-	};
+	String[] checkedOutCategory = {"대출번호", "도서 등록번호", "도서명", "저자", "대출 일자", "반납 예정일"};
 	
-	String[] category = {"등록번호", "도서명", "저자", "출판사", "ISBN", "편권수", "복권수", "도서 등록일", "가격", "비고"};
-	
+	String[] category = {"등록번호", "도서명", "저자", "출판사", "ISBN", "편권수", "복권수", "도서 등록일", "가격", "위치", "비고"};
 	
 	String[] keywordList = {"등록번호", "도서명", "저자", "출판사", "ISBN", "위치"};
 	
-	DefaultTableModel model = new DefaultTableModel(category, 7) {
+	DefaultTableModel checkOutModel = new DefaultTableModel(category, 7) {
 		public boolean isCellEditable(int row, int column) {
 			return false;
 		};
 	};
 	
-	BookDao bdao = new BookDao();
-	CheckOutDao cdao = new CheckOutDao();
+	DefaultTableModel checkedOutModel = new DefaultTableModel(checkedOutCategory, 3) {
+		@Override
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		}
+	};
 	
-	public CheckIn_Out_Frame() {
+	CheckOutDao checkOutDao = new CheckOutDao();
+	BookDao bookDao = new BookDao();
+	
+	ArrayList<CheckOutVO> checkedOutList = new ArrayList<>();
+	ArrayList<CheckOutVO> checkedOutRecord = new ArrayList<>();
+	ArrayList<BookVO> bookList = new ArrayList<>();
+	
+	public CheckIn_Out_Frame(String memberNum) {
 		setTitle("회원 대출 관리");
 		
-		checkOutTable = new JTable(model);
+		checkOutTable = new JTable(checkOutModel);
 		checkOutPane = new JScrollPane(checkOutTable);
 		
 		checkOutTable.getTableHeader().setReorderingAllowed(false);
@@ -78,9 +90,6 @@ public class CheckIn_Out_Frame extends JFrame{
 		checkOutPane.setBounds(0, 300, 986, 184);
 		
 
-//		String[] checkOutCategory = new String[5];
-//		String[][] checkOutList = new String[3][5];
-		
 		checkPanel = new JPanel();
 		checkPanel.setLayout(null);
 		
@@ -91,13 +100,10 @@ public class CheckIn_Out_Frame extends JFrame{
 		checkedOutLabel.setForeground(Color.WHITE);
 		
 		
-		// 대출 목록 3행 빈 테이블 넣어두고 DB에서 가져온 데이터로 채우기
-		checkedOutTable = new JTable(new DefaultTableModel(category, 3) {
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		});
+		getCheckedOutList(memberNum);
+		
+		
+		checkedOutTable = new JTable(checkedOutModel);
 		checkedOutPane = new JScrollPane(checkedOutTable);
 		checkedOutTable.getTableHeader().setReorderingAllowed(false);
 		checkedOutTable.setRowHeight(23);
@@ -106,10 +112,16 @@ public class CheckIn_Out_Frame extends JFrame{
 		
 		
 		checkInButton = AdminFrame.getButton("반납");
-//		BufferedImage buffer = ImageIO.read(new File("src/"));
 		checkInButton.setHorizontalTextPosition(JButton.RIGHT);
 		checkInButton.setVerticalTextPosition(JButton.CENTER);
-		checkInButton.setBounds(850, 180, 100, 30);
+		try {
+			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/checkOutImage.png"));
+			Image image = buffer.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+			checkInButton.setIcon(new ImageIcon(image));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		checkInButton.setBounds(850, 168, 120, 70);
 		
 		// 반납 버튼을 누르면 DB에 존재하는 해당 등록번호의 도서 정보 업데이트
 		checkInButton.addActionListener(new ActionListener() {
@@ -117,13 +129,18 @@ public class CheckIn_Out_Frame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				if (checkedOutTable.getSelectedRow() != -1) {
 					if (checkedOutTable.getValueAt(checkedOutTable.getSelectedRow(), 0) != null) {
-						System.out.println(checkedOutTable.getValueAt(checkedOutTable.getSelectedRow(), 0));
+						
+						try {
+							checkOutDao.update(checkedOutList.get(checkedOutTable.getSelectedRow()));
+						} catch (SQLException e1) {
+							e1.printStackTrace();
+						}
 						
 						JOptionPane.showMessageDialog(
 								frame, String.format("등록번호 : %s\n\t반납 완료",
 										checkedOutTable.getValueAt(checkedOutTable.getSelectedRow(), 0)));
-						for (int i = 0; i < category.length; ++i) {
-							checkedOutTable.setValueAt(null, checkedOutTable.getSelectedRow(), i);						
+						for (int i = 0; i < checkedOutCategory.length; ++i) {
+							checkedOutTable.setValueAt(null, checkedOutTable.getSelectedRow(), i);
 						}
 					} else {
 						JOptionPane.showMessageDialog(frame, "반납할 도서를 선택해주세요.");
@@ -147,13 +164,13 @@ public class CheckIn_Out_Frame extends JFrame{
 		keyword.setBounds(120, 250, 120, 30);
 		
 		searchbutton = AdminFrame.getButton("검색");
-//		try {
-//			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/searchButtonIcon.png"));
-//			Image image = buffer.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-//			searchbutton.setIcon(new ImageIcon(image));
-//		} catch (IOException e2) {
-//			e2.printStackTrace();
-//		}
+		try {
+			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/searchButtonIcon.png"));
+			Image image = buffer.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+			searchbutton.setIcon(new ImageIcon(image));
+		} catch (IOException e2) {
+			e2.printStackTrace();
+		}
 		searchbutton.setBounds(720, 230, 70, 70);
 		
 		// 텍스트 필드에서 엔터 누르면 버튼 클릭되도록 액션 추가 (검색 버튼 눌러도 되고 텍스트 필드에서 엔터 눌러도 검색됨)
@@ -164,21 +181,18 @@ public class CheckIn_Out_Frame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				searchbutton.doClick();
 			}
-		});
-		
-		
+		});		
 		
 		checkOutButton = AdminFrame.getButton("대출");
 		checkOutButton.setHorizontalTextPosition(JButton.RIGHT);
 		checkOutButton.setVerticalTextPosition(JButton.CENTER);
-//		BufferedImage buffer;
-//		try {
-//			buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/checkInImage.png"));
-//			Image image = buffer.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-//			checkOutButton.setIcon(new ImageIcon(image));
-//		} catch (IOException e2) {
-//			e2.printStackTrace();
-//		}
+		try {
+			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/checkInImage.png"));
+			Image image = buffer.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+			checkOutButton.setIcon(new ImageIcon(image));
+		} catch (IOException e2) {
+			e2.printStackTrace();
+		}
 		// 버튼을 누르면 VO에 들어있는 현재 회원의 정보, 해당 도서의 정보 업데이트
 		checkOutButton.setBounds(850, 490, 120, 70);
 		
@@ -208,38 +222,85 @@ public class CheckIn_Out_Frame extends JFrame{
 //					}
 //				}
 				try {
-					model.addRow(bdao.get(keyword.getItemCount(), searchField.getText()).toArray());
+					bookList.clear();
+					bookList.addAll(bookDao.get(keyword.getSelectedIndex() + 1, searchField.getText()));
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-				checkOutTable.setModel(model);
+				
+				
+				checkOutModel.setColumnIdentifiers(category);
+				checkOutModel.setRowCount(bookList.size());
+				
+				int num = 0;
+				for (BookVO list : bookList) {
+					for (int i = 0; i < list.getList().length; ++i) {
+						checkOutModel.setValueAt(list.getList()[i], num, i);
+					}
+					++num;
+				}
+				checkOutTable.setModel(checkOutModel);
 				checkPanel.validate();
 				
 				checkOutButton.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						// 행 선택 후 대출 버튼 클릭시 안내문구 출력 (정보가 없는 행 선택 시 다른 안내문구 출력)
-						if (checkOutTable.getValueAt(checkOutTable.getSelectedRow(), 0) != null) {
-//							cdao.add(cdao.);
-							JOptionPane.showMessageDialog(frame, String.format("등록번호 : %s\n\t대출 완료",
-									checkOutTable.getValueAt(checkOutTable.getSelectedRow(), 0)));
-						} else {
-							JOptionPane.showMessageDialog(frame, "대출할 도서를 선택해주세요.");							
-						}
-						// 대출 버튼 클릭시 해당 도서가 대출 목록의 빈 행에 들어가도록 빈 행 찾는 코드
-						int emptyRow = 0;
-						for (int i = 0; i < checkedOutTable.getRowCount(); ++i) {
-							if (checkedOutTable.getValueAt(i, 0) == null) {
-								emptyRow = i;
-								break;
+						
+						// 연체 중인 도서 있으면 안내문구 띄우고 대출 안되게 설정
+						// 회원의 대여 목록을 확인하며 반납 예정일이 지났다면 안내문구 출력
+						for (CheckOutVO list : checkedOutList) {
+							if (LocalDate.parse((list.getExpectReturnDate()), DateTimeFormatter.ofPattern("yy/MM/dd")).compareTo(LocalDate.now()) < 0) {
+								JOptionPane.showMessageDialog(frame, "연체 중인 도서가 존재합니다.");
+								return;
 							}
 						}
-//						for (int i = 0; i < category.length; ++i) {
-//							checkedOutTable.setValueAt(checkOutTable.getValueAt(checkOutTable.getSelectedRow(), i), emptyRow, i);
-//							checkPanel.validate();
-//						}
-						// 대출 완료시 회원 대출 목록 업데이트
 						
+						// 이미 대출된 도서 대출 안되게 거르기
+						try {
+							// 선택된 도서의 대여 기록 뽑아오기
+							checkedOutRecord = checkOutDao.get(bookList.get(checkOutTable.getSelectedRow()).getId());
+						} catch (SQLException e2) {
+							e2.printStackTrace();
+						}
+						// 선택된 도서의 대여 기록을 확인하며 반납일이 없는 (미반납 상태인) 대여 기록이 있다면 안내문구 출력
+						for (CheckOutVO list : checkedOutRecord) {
+							if (list.getCheckInDate() == null) {
+								JOptionPane.showMessageDialog(frame, "대여 중인 도서입니다.");
+								return;
+							}
+						}
+						
+						if (checkedOutList.size() < 3) {
+							// 행 선택 후 대출 버튼 클릭시 안내문구 출력 (정보가 없는 행 선택시 다른 안내문구 출력)
+							if (checkOutTable.getValueAt(checkOutTable.getSelectedRow(), 0) != null) {
+								try {
+									checkOutDao.add(bookList.get(checkOutTable.getSelectedRow()),
+											memberNum);
+								} catch (SQLException e1) {
+									e1.printStackTrace();
+								}
+								getCheckedOutList(memberNum);
+								JOptionPane.showMessageDialog(frame, String.format("등록번호 : %s\n\t대출 완료",
+										checkOutTable.getValueAt(checkOutTable.getSelectedRow(), 0)));
+							} else {
+								JOptionPane.showMessageDialog(frame, "대출할 도서를 선택해주세요.");							
+							}
+							// 대출 버튼 클릭시 해당 도서가 대출 목록의 빈 행에 들어가도록 빈 행 찾는 코드
+							int emptyRow = 0;
+							for (int i = 0; i < checkedOutTable.getRowCount(); ++i) {
+								if (checkedOutTable.getValueAt(i, 0) == null) {
+									emptyRow = i;
+									break;
+								}
+							}
+//							for (int i = 0; i < category.length; ++i) {
+//								checkedOutTable.setValueAt(checkOutTable.getValueAt(checkOutTable.getSelectedRow(), i), emptyRow, i);
+//								checkPanel.validate();
+//							}
+							// 대출 완료시 회원 대출 목록 업데이트
+						} else {
+							JOptionPane.showMessageDialog(frame, "대출 불가능 (풀대출)");
+						}
 					}
 				});
 			}
@@ -265,7 +326,26 @@ public class CheckIn_Out_Frame extends JFrame{
 		
 	}
 	
+	public void getCheckedOutList(String memberNum) {
+		try {
+			checkedOutList.clear();
+			checkedOutList.addAll(checkOutDao.get(3, memberNum));
+		} catch (SQLException e3) {
+			e3.printStackTrace();
+		}
+		
+		int num = 0;
+		if (checkedOutList.size() > 0) {
+			for (CheckOutVO list : checkedOutList) {
+				for (int i = 0; i < list.getList().length; ++i) {
+					checkedOutModel.setValueAt(list.getList()[i], num, i);
+				}
+				++num;
+			}
+		}
+	}
+	
 	public static void main(String[] args) {
-		new CheckIn_Out_Frame();
+//		new CheckIn_Out_Frame();
 	}
 }
