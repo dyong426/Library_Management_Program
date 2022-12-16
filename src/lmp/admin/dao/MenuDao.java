@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import lmp.admin.vo.AdminLogHistoryVO;
 import lmp.admin.vo.AdminVO;
 import lmp.admin.vo.BookVO;
 import lmp.admin.vo.CheckOutVO;
@@ -72,6 +73,32 @@ public abstract class MenuDao {
 			System.out.println("DB 접속 실패");
 		}
 		return null; 
+	}
+
+	public void add(AdminLogHistoryVO adminLogVO) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * 회원 정보 수정
+	 * 
+	 * @param memberVO
+	 * @throws SQLException
+	 */
+	public void update(AdminLogHistoryVO adminLogVO) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public AdminLogHistoryVO getLog() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void delete(Integer mem_id) throws SQLException {
+		// TODO Auto-generated method stub
+		
 	}
 
 

@@ -15,6 +15,7 @@ public class AdminVO {
 	private String	email;
 	private String	address;
 	private String	regDate;
+	private String  updateDate;
 	private String	note;
 	
 	/**
@@ -52,7 +53,8 @@ public class AdminVO {
 					String	admin_phone, 
 					String	admin_email, 
 					String	admin_address, 
-					String	admin_registrationdate, 
+					String	admin_registrationdate,
+					String  admin_updatedate,
 					String	admin_note
 					) {
 		
@@ -63,75 +65,49 @@ public class AdminVO {
 		this.email 	 = admin_email;
 		this.address = admin_address;
 		this.regDate = admin_registrationdate;
+		this.updateDate = admin_updatedate;
 		this.note 	 = admin_note;
 	}
 
+	
 	public Integer getNum() {
 		return num;
-	}
-
-	public void setNum(Integer num) {
-		this.num = num;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getPw() {
 		return pw;
-	}
-
-	public void setPw(String pw) {
-		this.pw = pw;
 	}
 
 	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
 	public String getEmail() {
 		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
 	public String getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(String regDate) {
-		this.regDate = regDate;
+	public String getUpdateDate() {
+		return updateDate;
 	}
 
 	public String getNote() {
 		return note;
 	}
 
-	public void setNote(String note) {
-		this.note = note;
-	}
-	
 	@Override
 	public String toString() {
-		return String.format("%s,%s,%s,%s,%s,%s,%s,%s", this.num,this.name,this.pw,this.phone,this.email,this.address,this.regDate,this.note);
+		return String.format("%d,%s,%s,%s,%s,%s,%s,%s,%s", this.num,this.name,this.pw,this.phone,this.email,this.address,this.regDate,this.updateDate,this.note);
 	}
 }

@@ -114,6 +114,7 @@ public class AdminDao extends MenuDao{
 								rs.getString("admin_email"),
 								rs.getString("admin_address"),
 								rs.getString("admin_registrationdate"),
+								rs.getString("admin_updatedate"),
 								rs.getString("admin_note")));
 		}
 		rs.close();
