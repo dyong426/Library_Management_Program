@@ -18,7 +18,7 @@ import lmp.admin.vo.LocationVO;
 public class FileIO {
 	
 	private static String path = "C:\\javaFullStack_LDH\\repos\\Library_Management_Program\\examplefiles\\BookList.txt";
-	private static String imagePath = "";
+	private static String imageFilePath = "C:\\javaFullStack_LDH\\repos\\Library_Management_Program\\src\\lmp\\image";
 	
 	ExampleDao eDao = new ExampleDao();
 	//  /2/1/이지스퍼블리싱/IT전문서/전자책/Do it! 게임 10개 만들며 배우는 파이썬/벤 포터, 쉬무엘 포터/안동현/44915/376/15000/9791163034278/정상 판매중/
@@ -68,17 +68,25 @@ public class FileIO {
 	}
 	
 	
-	public void imageRead(String imagePath) throws FileNotFoundException, IOException, SQLException {
+	public void imageInsertToDB(String imageFilePath) throws FileNotFoundException, IOException, SQLException {
+		File imageDirectory = new File(imageFilePath);
 		
-		File image = new File(imagePath);
-		eDao.add(image);
+		for (File image : imageDirectory.listFiles()) {
+			eDao.add(image);
+		}
 	}
+	
+	public void imageGetToDB() {
+		
+	}
+	
+	
 	
 
 	public static void main(String[] args) {
 		FileIO t = new FileIO();
 		try {
-			t.imageRead(imagePath);
+			t.imageInsertToDB(imageFilePath);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

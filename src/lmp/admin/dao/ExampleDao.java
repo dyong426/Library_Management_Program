@@ -1,12 +1,19 @@
 package lmp.admin.dao;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import javax.imageio.ImageIO;
 
 import lmp.admin.vo.BookVO;
 
@@ -73,6 +80,21 @@ public void add(BookVO bookVO) throws SQLException {
 		
 		pstmt.close();
 		conn.close();
+	}
+	
+	public void get(String image_name) throws SQLException, FileNotFoundException {
+		Connection conn = getConnection();
+		
+		String sql = "SELECT image_byte_info FROM image_information WHERE image_name = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setString(1, image_name + ".png");
+		
+		ResultSet rs = pstmt.executeQuery();
+		Blob image = rs.getBlob(2);
+		InputStream binstr = image.getBinaryStream();
+		
+		
 	}
 	
 	
