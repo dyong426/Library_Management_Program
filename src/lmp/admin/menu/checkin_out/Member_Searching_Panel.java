@@ -19,11 +19,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.AdminFrame;
@@ -34,11 +36,11 @@ public class Member_Searching_Panel extends JPanel {
 
 	JLabel label;
 	JComboBox keyword;
-	JButton button;
+	JButton searchButton, mgmtButton;
 	JTextField searchField;
 	JScrollPane result;
 	JTable table;
-
+	
 	String[] keywordList = {"회원번호", "이름", "아이디", "연락처"};
 	
 	// 패널의 열 수는 검색된 정보 수에 따라 다르게 설정 가능
@@ -61,6 +63,7 @@ public class Member_Searching_Panel extends JPanel {
 		};
 	};
 	
+	
 	public ArrayList<MemberVO> getMemVoList() {
 		return memVoList;
 	}
@@ -70,37 +73,32 @@ public class Member_Searching_Panel extends JPanel {
 		setLayout(null);
 		setBackground(new Color(87, 119, 119));
 		
-		table = new JTable(model);
-		// 테이블 컬럼 이동 안되게 설정
-		table.getTableHeader().setReorderingAllowed(false);
-		// 테이블에서 하나의 행만 선택되게 설정
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setRowHeight(25);
+		table = AdminFrame.getTable(model);
 		
 		result = new JScrollPane(table);
 		result.setBounds(0, 156, 1152, 395);
 		
-
+		
 		label = new JLabel("회원 검색");
-		label.setFont(new Font(null, Font.BOLD, 20));
+		label.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 20));
 		label.setForeground(Color.WHITE);
 		label.setHorizontalAlignment(JLabel.CENTER);
 		label.setBounds(475, 20, 200, 50);
 		
 		
 		keyword = new JComboBox(keywordList);
-		keyword.setFont(new Font(null, Font.BOLD, 15));
+		keyword.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 15));
 		keyword.setBounds(190, 80, 150, 30);
 		
-		button = AdminFrame.getButton("검색");
+		searchButton = AdminFrame.getButton("검색");
 		try {
 			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/searchButtonIcon.png"));
 			Image image = buffer.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-			button.setIcon(new ImageIcon(image));
+			searchButton.setIcon(new ImageIcon(image));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		button.setBounds(810, 55, 100, 80);
+		searchButton.setBounds(810, 55, 100, 80);
 		
 		// 텍스트 필드에서 엔터 누르면 버튼 클릭되도록 액션 추가 (검색 버튼 눌러도 되고 텍스트 필드에서 엔터 눌러도 검색됨)
 		searchField = new JTextField();
@@ -108,18 +106,40 @@ public class Member_Searching_Panel extends JPanel {
 		searchField.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				button.doClick();
+				searchButton.doClick();
+			}
+		});
+		
+		
+		mgmtButton = AdminFrame.getButton("대출/반납 관리");
+		try {
+			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/checkOutImage.png"));
+			Image image = buffer.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+			mgmtButton.setIcon(new ImageIcon(image));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		mgmtButton.setBounds(1020, 35, 130, 100);
+		mgmtButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (table.getSelectedRow() == -1 || model.getValueAt(table.getSelectedRow(), 0) == null) {
+					JOptionPane.showMessageDialog(null, "회원을 선택해주세요.");
+					return;
+				}
+				new CheckIn_Out_Frame(String.valueOf(table.getValueAt(table.getSelectedRow(), 0)));
 			}
 		});
 		
 		add(label);
 		add(keyword);
 		add(searchField);
-		add(button);
+		add(searchButton);
+		add(mgmtButton);
 		add(result);
 		
 		// 검색 버튼 눌렀을 때 해당 키워드에 맞는 정보 있으면 출력
-		button.addActionListener(new ActionListener() {
+		searchButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 //				String[][] valid = new String[50][memberColumn.length];
@@ -197,6 +217,8 @@ public class Member_Searching_Panel extends JPanel {
 				// 더블 클릭시 값이 들어있는 행만 작동하도록 (행을 검색된 정보 수에 맞게 출력하면 조건 없어도 됨)
 				if (e.getClickCount() == 2 && table.getValueAt(table.getSelectedRow(), 0) != null) {
 					new CheckIn_Out_Frame(String.valueOf(table.getValueAt(table.getSelectedRow(), 0)));
+				} else if (table.getValueAt(table.getSelectedRow(), 0) == null) {
+					JOptionPane.showMessageDialog(null, "회원을 선택해주세요");
 				}
 			}
 		});

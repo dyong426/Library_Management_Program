@@ -84,7 +84,7 @@ public class BookSearchFrame extends JFrame {
 		} catch (IOException e2) {
 			e2.printStackTrace();
 		}
-		label.setFont(new Font(null, Font.BOLD, 20));
+		label.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 20));
 		label.setBounds(530, 20, 150, 150);
 		label.setText("도서 검색");
 		label.setForeground(Color.WHITE);
@@ -93,7 +93,7 @@ public class BookSearchFrame extends JFrame {
 		
 		
 		keyword = new JComboBox(keywordList);
-		keyword.setFont(new Font(null, Font.BOLD, 15));
+		keyword.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 15));
 		keyword.setBounds(220, 200, 150, 30);
 		keyword.setBackground(new Color(126, 151, 148));
 		

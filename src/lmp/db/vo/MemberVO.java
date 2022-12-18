@@ -21,7 +21,7 @@ public class MemberVO {
 	private	String	address;
 	private	String	regDate;
 	private	String	note;
-	private String	availability;
+	private Object[] list;
 	
 	
 	/**
@@ -77,6 +77,19 @@ public class MemberVO {
 		this.address	=	mem_address;
 		this.regDate	=	mem_registrationDate;
 		this.note		=	mem_note;
+		this.list		=	new Object[] {
+										  mem_num,
+										  mem_name,
+										  mem_id,
+										  mem_pw,
+										  mem_birthDay,
+										  mem_sex,
+										  mem_phone,
+										  mem_email,
+										  mem_address,
+										  mem_registrationDate,
+										  mem_note
+										  };
 	}
 	
 	public MemberVO(int mem_num, String mem_name, String mem_phone, String mem_email, String mem_address) {
@@ -132,20 +145,7 @@ public class MemberVO {
 	}
 	
 	// 테이블에 데이터 넣기 쉽도록 getList 메서드 생성
-	public Object[] getList() {
-		Object[] list = new Object[11];
-		list[0] = getNum();
-		list[1] = getName();
-		list[2] = getId();
-		list[3] = getPw();
-		list[4] = getBirthDay();
-		list[5] = getSex();
-		list[6] = getPhone();
-		list[7] = getEmail();
-		list[8] = getAddress();
-		list[9] = getRegDate();
-		list[10] = getNote();
-		
+	public Object[] getList() {		
 		return list;
 	}
 	

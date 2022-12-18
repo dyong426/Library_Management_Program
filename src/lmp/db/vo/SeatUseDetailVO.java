@@ -39,10 +39,12 @@ public class SeatUseDetailVO {
 		this.endTime	 = endTime;
 		this.list		 = new Object[]{
 										use_id,
-									    member,
-									    readingroom,
+										readingroom.getSeatNum(),
+										member.getNum(),
+										member.getName(),
+										member.getPhone(),
+										member.getSex(),
 									    startTime,
-									    endTime
 										};
 		
 	}

@@ -27,7 +27,7 @@ public class LocationVO {
 		this.locID	 = location_id;
 		this.locName = location_name;
 	}
-
+	
 	public String getLocID() {
 		return locID;
 	}

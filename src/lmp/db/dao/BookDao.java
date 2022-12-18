@@ -33,15 +33,15 @@ public class BookDao extends MenuDao{
 		
 		String sql = "INSERT INTO books("
 									  + "book_id,"
-									  + "book_title,"
-									  + "book_authhor,"
-									  + "book_publisher,"
-									  + "book_isbn,"
-									  + "book_bias,"
-									  + "book_duplicates,"
-									  + "book_price,"
-									  + "location_id,"
-									  + "book_note) VALUES('B' | book_id_seq.nextval,?,?,?,?,?,?,?,?,?)";
+									  + " book_title,"
+									  + " book_author,"
+									  + " book_publisher,"
+									  + " book_isbn,"
+									  + " book_bias,"
+									  + " book_duplicates,"
+									  + " book_price,"
+									  + " location_id,"
+									  + " book_note) VALUES(book_id_seq.nextval, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 			
@@ -50,7 +50,17 @@ public class BookDao extends MenuDao{
 		pstmt.setString(3, bookVO.getPublisher());
 		pstmt.setString(4, bookVO.getIsbn());
 		pstmt.setInt(5, bookVO.getBias());
-		pstmt.setInt(6, bookVO.getDuplicates());//복권수 확인 절차
+		// 복권수 확인 절차
+		if (get(bookVO.getTitle(), bookVO.getAuthor()).size() > 0) {
+			
+			ArrayList<BookVO> duplicateList = new ArrayList<BookVO>();
+			duplicateList.addAll(get(bookVO.getTitle(), bookVO.getAuthor()));
+			
+			pstmt.setInt(6, duplicateList.get(0).getDuplicates() + 1);
+			update(duplicateList.get(0).getTitle(), duplicateList.get(0).getAuthor());
+		} else {
+			pstmt.setInt(6, 1);
+		}
 		pstmt.setInt(7, bookVO.getPrice());
 		pstmt.setString(8, bookVO.getLocation().getLocID());
 		pstmt.setString(9, bookVO.getNote());
@@ -77,7 +87,7 @@ public class BookDao extends MenuDao{
 		
 		String sql =  "UPDATE"
 					+ " books"
-					+ "SET "
+					+ " SET"
 					+ " book_title = ?,"
 					+ " book_author = ?,"
 					+ " book_publisher = ?,"
@@ -87,7 +97,7 @@ public class BookDao extends MenuDao{
 					+ " book_price = ?,"
 					+ " location_id = ?,"
 					+ " book_note = ?"
-					+ "WHERE"
+					+ " WHERE"
 					+ " book_id = ?";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -109,6 +119,32 @@ public class BookDao extends MenuDao{
 		pstmt.close();
 		conn.close();
 	}
+	
+	// 같은 도서 등록시 복권수 증가 메서드
+	public void update(String book_title, String book_author) throws SQLException {
+		Connection conn = getConnection();
+		
+		String sql =  "UPDATE"
+					+ " books"
+					+ " SET"
+					+ " book_duplicates = ?"
+					+ " WHERE"
+					+ " book_title = ?"
+					+ " AND"
+					+ " book_author = ?";
+		
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setString(1, "book_duplicates + 1");
+		pstmt.setString(2, book_title);
+		pstmt.setString(3, book_author);
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		conn.close();
+	}
+	
 	
 	/**
 	 * 도서 조건 검색
@@ -135,6 +171,40 @@ public class BookDao extends MenuDao{
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 		pstmt.setString(1, "%"+searchStr+"%");
+		
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<BookVO> bookList = new ArrayList<>();
+		while (rs.next()) {
+			bookList.add(new BookVO(
+								rs.getString("book_id"),
+								rs.getString("book_title"),
+								rs.getString("book_author"),
+								rs.getString("book_publisher"),
+								rs.getString("book_isbn"),
+								rs.getInt("book_bias"),
+								rs.getInt("book_duplicates"),
+								rs.getString("book_registrationdate"),
+								rs.getInt("book_price"),
+								new LocationVO(rs.getString("location_id"), rs.getString("location_name")),
+								rs.getString("book_note")));
+		}
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return bookList;
+	}
+	
+	
+	// 복권수 확인용 메서드
+	public ArrayList get(String book_title, String book_author) throws SQLException {
+		
+		String sql = "SELECT * FROM books JOIN locations USING(location_id) WHERE book_title = ? AND book_author = ?";
+
+		Connection conn = getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, book_title);
+		pstmt.setString(2, book_author);
 		
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<BookVO> bookList = new ArrayList<>();

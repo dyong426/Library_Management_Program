@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -28,8 +29,10 @@ import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.AdminFrame;
 import lmp.admin.menu.book.BookMgmt;
+import lmp.db.dao.CheckOutDao;
 import lmp.db.dao.MemberDao;
 import lmp.db.dao.MenuDao;
+import lmp.db.vo.CheckOutVO;
 import lmp.db.vo.MemberVO;
 
 public class MemberMgmt extends JPanel {
@@ -37,7 +40,11 @@ public class MemberMgmt extends JPanel {
 	// JTable 구성품 
 	String[] header = {"회원번호", "이름", "아이디", "비밀번호", "생년월일", "성별", "전화번호", "이메일", "주소",
 			"등록일", "비고"};
-	DefaultTableModel model = new DefaultTableModel(header, 30);
+	DefaultTableModel model = new DefaultTableModel(header, 30) {
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		};
+	};
 	JTable table;
 	JScrollPane scroll;
 
@@ -51,7 +58,7 @@ public class MemberMgmt extends JPanel {
 
 		// 회원조회 타이틀 설정
 		memberInquiry.setBounds(475, 20, 200, 50);
-		memberInquiry.setFont(new Font(null, Font.BOLD, 20));
+		memberInquiry.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 20));
 		memberInquiry.setForeground(Color.WHITE);
 		memberInquiry.setHorizontalAlignment(JLabel.CENTER);
 		add(memberInquiry);
@@ -106,12 +113,9 @@ public class MemberMgmt extends JPanel {
 		keyword.setFont(new Font(null, Font.BOLD, 15));
 		keyword.setBounds(190, 80, 150, 30);
 		add(keyword);
-
-
-		table = new JTable(model);
-		table.getTableHeader().setReorderingAllowed(false);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setRowHeight(25);
+		
+		
+		table = AdminFrame.getTable(model);
 		scroll = new JScrollPane(table);
 		scroll.setBounds(0, 156, 1152, 395);
 		add(scroll);
@@ -127,9 +131,18 @@ public class MemberMgmt extends JPanel {
 					mems.addAll(mdao.get(keyword.getSelectedIndex() + 1, searchField.getText()));
 					int num = 0;
 					model.setRowCount(mems.size());
-					for (MemberVO mem : mems) {						
+					for (MemberVO mem : mems) {
 						for (int i = 0; i < mem.getList().length; i++) {
-							model.setValueAt(mem.getList()[i], num, i);
+							// DB에서 가져온 성별 데이터에 따라 남/여로 표시
+							if (i == 5) {
+								if (mem.getSex().equals("0")) {
+									model.setValueAt("남", num, i);
+								} else {
+									model.setValueAt("여", num, i);
+								}
+							} else {
+								model.setValueAt(mem.getList()[i], num, i);
+							}
 						}
 						num++;
 					}
@@ -148,8 +161,14 @@ public class MemberMgmt extends JPanel {
 		changeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				if (table.getSelectedRow() == -1 || model.getValueAt(table.getSelectedRow(), 0) == null) {
+					JOptionPane.showMessageDialog(null, "수정할 회원을 선택해주세요.");
+					return;
+				}
+				
 				JFrame j = new JFrame();
-
+				
 				JLabel join = new JLabel("회원수정");
 				JLabel id = new JLabel("아이디");
 				JLabel name = new JLabel("이름");
@@ -173,7 +192,7 @@ public class MemberMgmt extends JPanel {
 						(model.getValueAt(table.getSelectedRow() , 7).toString());
 				JTextField addressField = new JTextField
 						(model.getValueAt(table.getSelectedRow() , 8).toString());
-
+				
 				JButton idcheckBtn = new JButton("중복확인");
 				JButton emailcheckBtn = new JButton("중복확인");
 				JButton joinBtn = new JButton("가입하기");
@@ -181,16 +200,18 @@ public class MemberMgmt extends JPanel {
 				JButton cancelBtn = new JButton("취소");
 
 
-				setlabel2(join, 40, 55, 13);
+				setlabel2(join, 40, 40, 13);
 				j.add(join);
 
 				setlabel2(id, 18, 40, 90);
 				setField(idField, 113);
-				setBtn(idcheckBtn, 13, 400, 113);
+				setBtn(idcheckBtn, 13, 80, 30);
+				idcheckBtn.setLocation(350, 113);
 				checkBtn(idcheckBtn);
 				idField.setEditable(false);
 				j.add(id);
 				j.add(idField);
+				j.add(idcheckBtn);
 
 				setlabel2(name, 18, 40, 140);
 				setField(nameField, 163);
@@ -216,7 +237,8 @@ public class MemberMgmt extends JPanel {
 
 				setlabel2(email, 18, 40, 340);
 				setField(emailField, 363);
-				setBtn2(emailcheckBtn, 13, 350, 363, 80, 30);
+				setBtn(emailcheckBtn, 13, 80, 30);
+				emailcheckBtn.setLocation(350, 363);
 				checkBtn(emailcheckBtn);
 				j.add(email);
 				j.add(emailField);
@@ -227,14 +249,15 @@ public class MemberMgmt extends JPanel {
 				j.add(address);
 				j.add(addressField);
 
-				setBtn2(changeBtn2, 18, 280, 480, 80, 40 );
+				setBtn(changeBtn2, 18, 80, 40);
+				changeBtn2.setLocation(350, 480);
 				j.add(changeBtn2);
 				
 				changeBtn2.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						int var = JOptionPane.showConfirmDialog
-								(null, "수정하시겠습니까?", " ",
+								(null, "수정하시겠습니까?", "수정 확인",
 										JOptionPane.YES_NO_OPTION,
 										JOptionPane.INFORMATION_MESSAGE, null);
 						if (var == JOptionPane.YES_OPTION) {
@@ -245,7 +268,6 @@ public class MemberMgmt extends JPanel {
 									emailField.getText(),
 									addressField.getText()
 									);
-							
 							try {
 								mdao.update(vo);
 								ArrayList<MemberVO> mems = new ArrayList<>();
@@ -272,7 +294,7 @@ public class MemberMgmt extends JPanel {
 
 				j.setLayout(null);
 				j.setBounds(330, 130, 480, 600);
-				j.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				j.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				j.setVisible(true);
 
 			}
@@ -283,24 +305,58 @@ public class MemberMgmt extends JPanel {
 		deleteBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				if (table.getSelectedRow() == -1 || model.getValueAt(table.getSelectedRow(), 0) == null) {
+					JOptionPane.showMessageDialog(null, "탈퇴할 회원을 선택해 주세요");
+					return;
+				}
+				
+				// 삭제 버튼 누르면 제일 먼저 미반납 도서 있는지 확인
+				CheckOutDao checkOutDao = new CheckOutDao();
+				ArrayList<CheckOutVO> checkOutVO = new ArrayList();
+				
+				try {
+					checkOutVO.addAll(checkOutDao.get(3, model.getValueAt(table.getSelectedRow(), 0).toString()));
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+				
+				// 미반납 도서가 존재하면 안내문구 출력 후 삭제 버튼 무효
+				if (checkOutVO.size() != 0) {
+					JOptionPane.showMessageDialog(null, "미반납 도서가 존재합니다.");
+					return;
+				}
+				
+				
 				int var = JOptionPane.showConfirmDialog
-						(null, "탈퇴하시겠습니까?", " ",
+						(null, "삭제 하시겠습니까?", "삭제 확인",
 								JOptionPane.YES_NO_OPTION,
 								JOptionPane.INFORMATION_MESSAGE, null);
 				if (var == JOptionPane.YES_OPTION) {
-					MenuDao mdao = new MemberDao();
+					MemberDao mdao = new MemberDao();
 					try {
-						System.out.println(model.getValueAt(table.getSelectedRow() , 0));
-						mdao.delete(table.getValueAt(table.getSelectedRow(), 0).toString());
-
+						mdao.delete((int)table.getValueAt(table.getSelectedRow(), 0));
+//						mdao.delete(table.getValueAt(table.getSelectedRow(), 0).toString());
+						
 						// 삭제되면 테이블 업데이트
+						model.setRowCount(0);
 						ArrayList<MemberVO> mems = new ArrayList<>();
 						mems.addAll(mdao.get(keyword.getSelectedIndex() + 1, searchField.getText()));
+						model.setRowCount(mems.size());
 						int num = 0;
 						model.setRowCount(mems.size());
-						for (MemberVO mem : mems) {						
+						for (MemberVO mem : mems) {
 							for (int i = 0; i < mem.getList().length; i++) {
-								model.setValueAt(mem.getList()[i], num, i);
+								// DB에서 가져온 성별 데이터 남/여로 표시
+								if (i == 5) {
+									if (mem.getSex().equals("0")) {
+										model.setValueAt("남", num, i);
+									} else {
+										model.setValueAt("여", num, i);
+									}
+								} else {
+									model.setValueAt(mem.getList()[i], num, i);
+								}
 							}
 							num++;
 						}
@@ -338,25 +394,14 @@ public class MemberMgmt extends JPanel {
 	}
 
 	// 버튼 생성 및 설정함수
-	public void setBtn(JButton button , int size, int x, int y) {
-		Font font = new Font("한컴 말랑말랑 Bold", Font.BOLD, size);
-
-		button.setFont(font);
-		button.setBackground(Color.WHITE);
-		button.setForeground(new Color(49, 82, 91));
-		button.setFocusable(false);
-		button.setBounds(x, y, 70, 50);
-		add(button);
-	}
-
-	public void setBtn2(JButton button , int size, int x, int y, int a, int b) {
-		Font font = new Font("한컴 말랑말랑 Bold", Font.BOLD, size);
+	public void setBtn(JButton button , int fontSize, int width, int height) {
+		Font font = new Font("한컴 말랑말랑 Bold", Font.BOLD, fontSize);
 
 		button.setFont(font);
 		button.setBackground(new Color(87, 119, 119));
 		button.setForeground(Color.WHITE);
 		button.setFocusable(false);
-		button.setBounds(x, y, a, b);
+		button.setSize(width, height);
 		add(button);
 	}
 
@@ -374,36 +419,25 @@ public class MemberMgmt extends JPanel {
 		button.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFrame r = new JFrame();
-
-				JLabel delete = new JLabel("사용가능합니다");
-
-				delete.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 20));
-				delete.setBounds(75, 40, 250, 30);
-				r.add(delete);
-
-
-				r.dispose();
-				r.setLayout(null);
-				r.setBounds(450, 350, 300, 150);
-				r.getContentPane().setBackground(Color.WHITE);
-				r.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				r.setVisible(true);
+//				JFrame r = new JFrame();
+//
+//				JLabel delete = new JLabel("사용가능합니다");
+//				
+//				delete.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 20));
+//				delete.setBounds(75, 40, 250, 30);
+//				r.add(delete);
+//				
+//				
+//				r.dispose();
+//				r.setLayout(null);
+//				r.setBounds(450, 350, 300, 150);
+//				r.getContentPane().setBackground(Color.WHITE);
+//				r.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+//				r.setVisible(true);
+				JOptionPane.showMessageDialog(null, "사용 가능");
 
 			}
 		});
 	}
-
-	public static void main(String[] args) {
-		JFrame f = new JFrame();
-
-		f.add(new MemberMgmt());
-
-		f.setLayout(null);
-		f.setBounds(300, 100, 1200, 800);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setVisible(true);
-	}
-
 
 }

@@ -5,6 +5,11 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -19,6 +24,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -27,6 +33,7 @@ import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.AdminFrame;
 import lmp.admin.menu.book.BookMgmt;
+import lmp.admin.menu.member.MemberMgmt;
 import lmp.db.dao.AdminDao;
 import lmp.db.dao.MenuDao;
 import lmp.db.vo.AdminVO;
@@ -36,7 +43,11 @@ public class EmployeesMgmt extends JPanel {
 	
 	// JTable 구성품
 	private String[] header = {"사번", "이름", "비밀번호", "전화번호", "이메일", "주소" ,"입사일", "비고"};
-	private DefaultTableModel model = new DefaultTableModel(header, 20);
+	private DefaultTableModel model = new DefaultTableModel(header, 20) {
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		};
+	};
 	private JTable table;
 	JScrollPane scroll;
 
@@ -52,7 +63,7 @@ public class EmployeesMgmt extends JPanel {
 		
 		// 직원조회 타이틀 설정
 		employeeInquiry.setBounds(475, 20, 200, 50);
-		employeeInquiry.setFont(new Font(null, Font.BOLD, 20));
+		employeeInquiry.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 20));
 		employeeInquiry.setForeground(Color.WHITE);
 		employeeInquiry.setHorizontalAlignment(JLabel.CENTER);
 		add(employeeInquiry);
@@ -76,13 +87,10 @@ public class EmployeesMgmt extends JPanel {
 		String[] keywordList = {"사번", "이름", "전화번호", "입사일"};
 		JComboBox keyword = new JComboBox<>(keywordList);
 		keyword.setBounds(190, 80, 150, 30);
-		keyword.setFont(new Font(null, Font.BOLD, 15));
+		keyword.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 15));
 		add(keyword);
 		
-		table = new JTable(model);
-		table.getTableHeader().setReorderingAllowed(false);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setRowHeight(25);
+		table = AdminFrame.getTable(model);
 		scroll = new JScrollPane(table);
 		scroll.setBounds(0, 156, 1152, 395);
 		add(scroll);
@@ -158,15 +166,11 @@ public class EmployeesMgmt extends JPanel {
 					return;
 				}
 				
-				int var = JOptionPane.showConfirmDialog
-						(null, "삭제하시겠습니까?", " ",
-								JOptionPane.YES_NO_OPTION,
-								JOptionPane.INFORMATION_MESSAGE, null);
+				int var = JOptionPane.showConfirmDialog(null, "삭제하시겠습니까?", "삭제 확인", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				if (var == JOptionPane.YES_OPTION) {
 					AdminDao mdao = new AdminDao();
-
+					
 					try {
-						System.out.println(model.getValueAt(table.getSelectedRow() , 0).toString());
 						mdao.delete(table.getValueAt(table.getSelectedRow(), 0).toString());
 
 						// 삭제되면 테이블 업데이트
@@ -184,6 +188,7 @@ public class EmployeesMgmt extends JPanel {
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
+					JOptionPane.showMessageDialog(null, "삭제가 완료되었습니다.");
 				}
 			}	
 		});		
@@ -199,94 +204,129 @@ public class EmployeesMgmt extends JPanel {
 	public void addEmployee() {
 		JFrame f = new JFrame("직원등록");
 		JLabel addemp = new JLabel("직원등록");
-		JLabel name = new JLabel("이름");
-		JLabel birth = new JLabel("생년월일");
-		JLabel phone = new JLabel("전화번호");
-		JLabel pw = new JLabel("비밀번호");
-		JLabel email = new JLabel("이메일");
-		JLabel address = new JLabel("주소");
+		JLabel name = getLabel("이름");
+		JLabel birth = getLabel("생년월일");
+		JLabel phone = getLabel("전화번호");
+		JLabel pw = getLabel("비밀번호");
+		JLabel email = getLabel("이메일");
+		JLabel address = getLabel("주소");
 
-		JTextField nameField = new JTextField();
-		JTextField birthField = new JTextField();
-		JTextField phoneField = new JTextField();
-		JTextField pwField = new JTextField();
-		JTextField emailField = new JTextField();
-		JTextField addressField = new JTextField();
+		
+		JTextField nameField = EmployeesMgmt.getTextField();
+		JTextField birthField = EmployeesMgmt.getTextField();
+		JTextField phoneField = EmployeesMgmt.getTextField();
+		JTextField pwNoticeField = new JTextField("필수 입력사항입니다.");
+		pwNoticeField.setBounds(130, 140, 150, 30);
+		pwNoticeField.setForeground(Color.RED);
+		pwNoticeField.setVisible(false);
+		JPasswordField pwField = new JPasswordField();
+		// passwordField에서는 안내문구를 띄워도 ***... 로 표시되기 때문에 안내문구 출력용 textField 생성
+		pwField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (new String(pwField.getPassword()).trim().equals("")) {
+					pwField.setText("필수 입력사항입니다.");
+					pwField.setForeground(Color.RED);
+					pwField.setVisible(false);
+					pwNoticeField.setVisible(true);
+				}
+			}
+		});
+		pwNoticeField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				pwField.setText("");
+				pwField.setForeground(Color.BLACK);
+				pwNoticeField.setVisible(false);
+				pwField.setVisible(true);
+				pwField.requestFocus();
+			}
+		});
+		JTextField emailField = EmployeesMgmt.getTextField();
+		JTextField addressField = EmployeesMgmt.getTextField();
 
+		// 반복문으로 유효성 검사를 하기 위해 생성
+		JTextField[] tfList = {nameField, birthField, phoneField, pwField, emailField, addressField};
+		
 		JButton finishBtn = new JButton("완료");
+		finishBtn.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 18));
+		finishBtn.setBackground(new Color(87, 119, 119));
+		finishBtn.setForeground(Color.WHITE);
+		finishBtn.setFocusable(false);
+		
 
+		f.add(pwNoticeField);
+		
+		
 		// 직원등록 타이틀 설정
 
 		addemp.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 30));
-		addemp.setBounds(40, 30, 150, 35);
+		addemp.setForeground(new Color(49, 82, 91));
+		addemp.setBounds(50, 30, 150, 35);
+		addemp.setHorizontalTextPosition(JLabel.CENTER);
 		f.add(addemp);
-
+		
 		// 이름 라벨 , 텍스트필드 설정
 		f.add(name);
 		f.add(nameField);
-		name.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 15));
 		name.setBounds(50, 90, 100, 30);
 		nameField.setBounds(130, 90, 150, 30);
-
+		
 		
 		// 비밀번호 라벨 , 텍스트필드 설정
 		f.add(pw);
 		f.add(pwField);
-		pw.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 15));
 		pw.setBounds(50, 140, 100, 30);
 		pwField.setBounds(130, 140, 150, 30);
 		
 		// 전화번호 라벨 , 텍스트필드 설정
 		f.add(phone);
 		f.add(phoneField);
-		phone.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 15));
 		phone.setBounds(50, 190, 100, 30);
 		phoneField.setBounds(130, 190, 150, 30);
 
 		// 이메일 라벨 , 텍스트필드 설정
 		f.add(email);
 		f.add(emailField);
-		email.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 15));
 		email.setBounds(50, 240, 100, 30);
 		emailField.setBounds(130, 240, 150, 30);
 
 		// 주소 라벨 , 텍스트필드 설정
 		f.add(address);
 		f.add(addressField);
-		address.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 15));
 		address.setBounds(50, 290, 100, 30);
 		addressField.setBounds(130, 290, 150, 30);
 
 		f.add(finishBtn);
-		finishBtn.setBounds(280, 350, 80 ,30);
+		finishBtn.setBounds(290, 340, 70, 40);
 
 		finishBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JFrame j = new JFrame(); 
-				JLabel finish = new JLabel("등록이 완료되었습니다");
-
+				
+				// 입력하지 않은 정보가 있으면 안내문구 출력 후 완료 버튼 무효
+				for (JTextField field : tfList) {
+					if (field.getForeground() == Color.RED) {
+						JOptionPane.showMessageDialog(null, "입력하지 않은 정보가 존재합니다.");
+						return;
+					}
+				}
+				
 				AdminDao dao = new AdminDao();
-				AdminVO vo = new AdminVO(null,nameField.getText(), pwField.getText(),
+				AdminVO vo = new AdminVO(null,nameField.getText(), new String(pwField.getPassword()),
 						phoneField.getText(), emailField.getText(), addressField.getText(),
 						null, null); 
-
+				
 				try {
 					dao.add(vo);
 				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 				
-				j.add(finish);
-				finish.setBounds(55, 65, 350, 30);
-				finish.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 25));
-
-				j.dispose();
-				j.setLayout(null);
-				j.setBounds(500, 400, 400, 200);
-				j.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				j.setVisible(true);
+				int num = JOptionPane.showConfirmDialog(null, "등록 완료", "등록이 완료되었습니다.", JOptionPane.OK_OPTION);
+				if (num == 0) {
+					f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				}
 			}
 		});
 
@@ -296,6 +336,45 @@ public class EmployeesMgmt extends JPanel {
 		f.setBounds(500, 300, 400, 450);
 		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		f.setVisible(true);
+	}
+	
+	
+	public static JLabel getLabel(String text) {
+		JLabel label = new JLabel(text);
+
+		Font font = new Font("한컴 말랑말랑 Regular", Font.BOLD, 15);
+		
+		label.setFont(font);
+		label.setForeground(new Color(49, 82, 91));
+		
+		return label;
+	}
+	
+	
+	// 빈 칸 있으면 안내문구 띄우는 textField 생성 메서드
+	public static JTextField getTextField() {
+		JTextField tf = new JTextField();
+		
+		tf.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (tf.getText().trim().equals("")) {
+					tf.setForeground(Color.RED);
+					tf.setText("필수 입력사항입니다.");
+				}
+			}
+		});
+		tf.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (tf.getForeground() == Color.RED) {
+					tf.setForeground(Color.BLACK);
+					tf.setText("");
+				}
+			}
+		});
+		
+		return tf;
 	}
 	
 }

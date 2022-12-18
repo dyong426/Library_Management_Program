@@ -53,19 +53,19 @@ public class SeatUseDetailDao extends MenuDao{
 	 * @throws SQLException
 	 */
 	@Override
-	public void update(int seatNum) throws SQLException {
+	public void update(int use_id) throws SQLException {
 		Connection conn = getConnection();
 		
 		String sql =  "UPDATE"
 					+ " seat_use_details"
-					+ "SET "
-					+ " end_time = sysdate,"
-					+ "WHERE"
+					+ " SET"
+					+ " end_time = sysdate"
+					+ " WHERE"
 					+ " use_id = ?";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
-		pstmt.setInt(1, seatNum);
+		pstmt.setInt(1, use_id);
 		
 		pstmt.executeUpdate();
 		
@@ -140,7 +140,6 @@ public class SeatUseDetailDao extends MenuDao{
 		StringBuilder sql = new StringBuilder(selectSql(header));
 
 		Connection conn = getConnection();
-		System.out.println(conn);
 		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 		pstmt.setString(1, searchStr);
 		ResultSet rs = pstmt.executeQuery();

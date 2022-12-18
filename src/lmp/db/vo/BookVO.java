@@ -19,7 +19,10 @@ public class BookVO {
 	private Integer	   price;
 	private LocationVO location;
 	private String	   note;
+	private Object[]	list;
 	
+	
+	public BookVO() {}
 	/**
 	 * 도서 등록 / 검색 생성자.
 	 * 
@@ -60,9 +63,22 @@ public class BookVO {
 		this.price		=	book_price;
 		this.location	=	new LocationVO(location);
 		this.note		=	book_note;
+		this.list		=	new Object[] {
+										  book_id,
+										  book_title,
+										  book_author,
+										  book_publisher,
+										  book_isbn,
+										  book_bias,
+										  book_duplicates,
+										  book_registrationdate,
+										  book_price,
+										  location,
+										  book_note
+		};
 		
 	}
-
+	
 	public String getId() {
 		return id;
 	}
@@ -107,22 +123,52 @@ public class BookVO {
 		return note;
 	}
 	
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+
+	public void setBias(Integer bias) {
+		this.bias = bias;
+	}
+
+	public void setDuplicates(Integer duplicates) {
+		this.duplicates = duplicates;
+	}
+
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
+
+	public void setPrice(Integer price) {
+		this.price = price;
+	}
+
+	public void setLocation(LocationVO location) {
+		this.location = location;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
 	// 테이블에 데이터를 쉽게 넣기 위해 getList 메서드 생성
 	public Object[] getList() {
-		Object[] list = new Object[11];
-		
-		list[0] = getId();
-		list[1] = getTitle();
-		list[2] = getAuthor();
-		list[3] = getPublisher();
-		list[4] = getIsbn();
-		list[5] = getBias();
-		list[6] = getDuplicates();
-		list[7] = getRegDate();
-		list[8] = getPrice();
-		list[9] = getLocation();
-		list[10] = getNote();
-		
 		return list;
 	}
 

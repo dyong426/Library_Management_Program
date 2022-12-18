@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import lmp.db.vo.AdminVO;
+import lmp.db.vo.BookVO;
+import lmp.db.vo.CheckOutVO;
+import lmp.db.vo.LocationVO;
+import lmp.db.vo.MemberVO;
 
 public class AdminDao extends MenuDao{
 
@@ -123,6 +127,34 @@ public class AdminDao extends MenuDao{
 		return adminList;
 	}
 	
+	public ArrayList get(int header, String searchStr) throws SQLException {
+		
+		StringBuilder sql = new StringBuilder(selectSql(header));
+
+		Connection conn = getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
+		pstmt.setString(1, "%"+searchStr+"%");
+		
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<AdminVO> adminList = new ArrayList<>();
+		while (rs.next()) {
+			adminList.add(new AdminVO(
+								rs.getInt("admin_num"),
+								rs.getString("admin_name"),
+								rs.getString("admin_pw"),
+								rs.getString("admin_phone"),
+								rs.getString("admin_email"),
+								rs.getString("admin_address"),
+								rs.getString("admin_registrationdate"),
+								rs.getString("admin_note")));
+		}
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return adminList;
+	}
+	
 
 	/**
 	 * 직원 삭제
@@ -143,6 +175,24 @@ public class AdminDao extends MenuDao{
 		pstmt.close();
 		conn.close();
 		
+	}
+	
+	public StringBuilder selectSql(int header) {
+		StringBuilder sql = new StringBuilder();
+		String num = "SELECT * FROM admins WHERE admin_num LIKE ?";
+		String id = "SELECT * FROM admins WHERE admin_id LIKE ?";
+		String phone = "SELECT * FROM admins WHERE admin_phone LIKE ?";
+		String registrationdate = "SELECT * FROM admins WHERE admin_registrationdate LIKE ?";
+		if (header == 1) {
+			sql.append(num);
+		} else if (header == 2) {
+			sql.append(id);
+		} else if (header == 3) {
+			sql.append(phone);
+		} else if (header == 4) {
+			sql.append(registrationdate);
+		}
+		return sql;
 	}
 
 }

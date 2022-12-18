@@ -50,7 +50,7 @@ public class MemberDao extends MenuDao{
 		pstmt.setString(7, memberVO.getEmail());
 		pstmt.setString(8, memberVO.getAddress());
 		pstmt.setString(9, memberVO.getNote());
-			
+		
 		pstmt.executeUpdate();
 			
 		pstmt.close();
@@ -68,33 +68,23 @@ public class MemberDao extends MenuDao{
 		
 		Connection conn = getConnection();
 		
-		String sql =  "Update "
-					+  "members "
-					+ "SET "
-					+ "mem_name = ?,"
-					+ "mem_id = ?,"
-					+ "mem_pw = ?,"
-					+ "mem_birthday = ?,"
-					+ "mem_sex = ?,"
-					+ "mem_phone = ?,"
-					+ "mem_email = ?"
-					+ "mem_address = ?"
-					+ "mem_note = ?"
-					+ "WHERE "
-					+ "mem_num = ?";
+		String sql =  "UPDATE"
+					+ " members"
+					+ " SET"
+					+ " mem_name = ?,"
+					+ " mem_phone = ?,"
+					+ " mem_email = ?,"
+					+ " mem_address = ?"
+					+ " WHERE"
+					+ " mem_num = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-			
-		pstmt.setString(1,memberVO.getName());
-		pstmt.setString(2,memberVO.getId());
-		pstmt.setString(3,memberVO.getPw());
-		pstmt.setString(4,memberVO.getBirthDay());
-		pstmt.setString(5,memberVO.getSex());
-		pstmt.setString(6,memberVO.getPhone());
-		pstmt.setString(7,memberVO.getEmail());
-		pstmt.setString(8,memberVO.getAddress());
-		pstmt.setString(9,memberVO.getNote());
-		pstmt.setString(10,memberVO.getName());
-			
+		
+		pstmt.setString(1, memberVO.getName());
+		pstmt.setString(2, memberVO.getPhone());
+		pstmt.setString(3, memberVO.getEmail());
+		pstmt.setString(4, memberVO.getAddress());
+		pstmt.setInt(5, memberVO.getNum());
+		
 		pstmt.executeUpdate();
 		
 		pstmt.close();
@@ -218,19 +208,17 @@ public class MemberDao extends MenuDao{
 	 * @throws SQLException
 	 */
 	@Override
-	public void delete(MemberVO memberVO) throws SQLException {
+	public void delete(int mem_num) throws SQLException {
 		String sql = "DELETE FROM members WHERE mem_num = ?";
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1,memberVO.getNum());
+		pstmt.setInt(1, mem_num);
 		
 		pstmt.executeUpdate();
 		
 		pstmt.close();
 		conn.close();
 	}
-	
-	
 
 	
 }

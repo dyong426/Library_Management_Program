@@ -3,12 +3,19 @@ package lmp.admin.menu.readingroom;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,18 +29,45 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 
+import lmp.admin.AdminFrame;
 import lmp.db.dao.SeatUseDetailDao;
 import lmp.db.vo.SeatUseDetailVO;
 
-public class ReadingRoomMgmt extends JPanel implements ActionListener{
+public class ReadingRoomMgmt extends JPanel {
 
-	String colNames[] = {"좌석번호","회원번호","회원명","연락처","성별", "시작시간"};
-	DefaultTableModel model = new DefaultTableModel(colNames, 18); // 데이터 저장 부분
-	JTable table = new JTable(model);
+	String colNames[] = {"이용번호", "좌석번호", "회원번호", "회원명", "연락처", "성별", "입실시간"};
+	DefaultTableModel model = new DefaultTableModel(colNames, 18) {
+		// 테이블 셀 수정 불가능하게 설정
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		};
+		// 테이블 정렬 설정 (일반적인 정렬법으로 하면 두자릿수 이상부터 이상하게 정렬됨) - 에러 발생
+//		public java.lang.Class<?> getColumnClass(int columnIndex) {
+//			switch(columnIndex) {
+//				case 0 :
+//					return Integer.class;
+//				case 1 :
+//					return String.class;
+//				case 2 :
+//					return Integer.class;
+//				default :
+//					return String.class;
+//			}
+//		};
+	}; // 데이터 저장 부분
+	JTable table = AdminFrame.getTable(model);
 	JScrollPane scrollPane = new JScrollPane(table);
-	DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer(); // 디폴트테이블셀렌더러를 생성
+	// 컬럼내 데이터 가운데정렬
+	DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer() {
+		{
+			setHorizontalAlignment(SwingConstants.CENTER); // 렌더러의 가로정렬을 CENTER로
+		}
+	};
+	TableColumnModel tcm = table.getColumnModel(); // 정렬할 테이블의 컬럼모델을 가져옴
 
+	
 	int totalSeatCnt = 18;
 	int usingCnt;
 	int remainCnt;
@@ -46,14 +80,16 @@ public class ReadingRoomMgmt extends JPanel implements ActionListener{
 	JLabel exitLb = new JLabel("출구");
 	Font font = new Font("한컴 말랑말랑 Regular", Font.PLAIN, 15);
 
-	public ReadingRoomMgmt() { // 컴포넌트 새성하여 부착
-		
-		table.getTableHeader().setReorderingAllowed(false);
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setRowHeight(25);
-		
-		add(scrollPane, "Center");
+	
 
+	SeatUseDetailDao sudDao = new SeatUseDetailDao();
+	ArrayList<SeatUseDetailVO> sudList =  new ArrayList<>();
+	
+	
+	public ReadingRoomMgmt() { // 컴포넌트 새성하여 부착
+				
+		add(scrollPane, "Center");
+		
 		for (int i = 0; i < totalSeatCnt; i++) {
 			labels[i] = new JLabel("" + (i + 1));
 			labels[i].setOpaque(true);
@@ -94,30 +130,37 @@ public class ReadingRoomMgmt extends JPanel implements ActionListener{
 
 
 		// ★★★★★★★★★★★ 데이터베이스 불러오기 (기본틀!!) ★★★★★★★★★★
-		SeatUseDetailDao sudDao = new SeatUseDetailDao();
-		ArrayList<SeatUseDetailVO> sudList =  new ArrayList<>();
 
 		try {
 			sudList.addAll(sudDao.get());
-
+			
 			int row = 0;
-
+			
 			for (int i = 0; i < totalSeatCnt; i++) {
 				labels[i].setBackground(Color.WHITE);
 			}
 			for (SeatUseDetailVO sud : sudList) {
 
-				model.setRowCount(sudList.size());
+//				model.setRowCount(sudList.size());
 				for (int i = 0; i < sud.getSudList().length; i++) {
-					model.setValueAt(sud.getSudList()[i], row, i);
+					// DB에서 받아온 성별 데이터에 따라 남/여로 표시
+					if (i == 5) {
+						if (sud.getSudList()[i].equals("0")) {
+							model.setValueAt("남", row, i);
+						} else {
+							model.setValueAt("여", row, i);
+						}
+					} else {
+						model.setValueAt(sud.getSudList()[i], row, i);
+					}
 				}
-				row++; 
-
-				usingCnt = model.getRowCount();
+				row++;
+				
+				usingCnt = sudList.size();
 				remainCnt = totalSeatCnt - usingCnt;
 				usingCntTf.setText(usingCnt + "석");
 				remainCntTf.setText(remainCnt + "석");
-
+				
 				if (sud.getMember().getSex().equals("0")) {
 					labels[sud.getReadingroom().getSeatNum() - 1].setBackground(new Color(138, 228, 255)); // 남자
 				} else if (sud.getMember().getSex().equals("1")) {
@@ -126,25 +169,16 @@ public class ReadingRoomMgmt extends JPanel implements ActionListener{
 				table.validate(); // 새로고침 - 버튼 액션으로
 			}
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		// ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+		
 
-		table.getTableHeader().setReorderingAllowed(false); // 테이블 컬럼 이동 불가
-		table.getTableHeader().setResizingAllowed(false); // 테이블 크기 조절 불가
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // 한개의 행만 선택 가능
-		table.getTableHeader().setResizingAllowed(false); // JTable 컬럼의 사이즈 변경 불가
-
-		// 컬럼내 데이터 가운데정렬
-		DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer(); // 디폴트테이블셀렌더러를 생성
-		dtcr.setHorizontalAlignment(SwingConstants.CENTER); // 렌더러의 가로정렬을 CENTER로
-		TableColumnModel tcm = table.getColumnModel(); // 정렬할 테이블의 컬럼모델을 가져옴
-
+		
 		//전체 열을 가운데 정렬
 		for(int i = 0; i < tcm.getColumnCount(); i++) {
 			tcm.getColumn(i).setCellRenderer(dtcr);
-		}	
+		}
 
 		// 패널1
 		JPanel p1 = new JPanel(); 
@@ -177,62 +211,93 @@ public class ReadingRoomMgmt extends JPanel implements ActionListener{
 		mainPanel.setBounds(0, 0,  1150, 550);
 
 
+		JButton refreshBtn = AdminFrame.getButton("");
+		try {
+			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/refreshIcon.png"));
+			Image image = buffer.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+			refreshBtn.setIcon(new ImageIcon(image));
+		} catch (IOException e3) {
+			e3.printStackTrace();
+		}
+		refreshBtn.setBounds(970, 2, 50, 50);
+		refreshBtn.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 15));
+		refreshBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				tableValidate();
+			}
+		});
+		
+		
 		JButton checkOutBtn = new JButton("강제퇴실");
 		checkOutBtn.setBounds(1030, 10, 100, 30);
 		checkOutBtn.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 15));
 		checkOutBtn.setForeground(Color.WHITE);
-		checkOutBtn.setBackground(Color.LIGHT_GRAY);
+		checkOutBtn.setBackground(new Color(227, 94, 79));
 		checkOutBtn.setBorderPainted(false);
-		checkOutBtn.setFocusPainted(false); 
-		checkOutBtn.addActionListener(new ActionListener() {	
+		checkOutBtn.setFocusPainted(false);
+		checkOutBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (table.getSelectedRow() == -1) {
+				if (table.getSelectedRow() == -1 || model.getValueAt(table.getSelectedRow(), 0) == null) {
 					JOptionPane.showMessageDialog(panel, "퇴실할 좌석을 선택해 주세요");
 					return;
 				}
 
 				int result = JOptionPane.showConfirmDialog(scrollPane, "해당 사용자를 퇴실처리 하시겠습니까?", "강제퇴실 확인", JOptionPane.YES_NO_OPTION);
 				if (result == JOptionPane.NO_OPTION) {
-
+					JOptionPane.showMessageDialog(null, "취소합니다.");
 				} else if (result == JOptionPane.YES_OPTION) {
-
-					e.getSource();
-
-
+					
+//					System.out.println("e.getSource()" + e.getSource());
+					
 					int selectRow = table.getSelectedRow();// 선택된 테이블의 행값
-					Object seat_num = table.getValueAt(selectRow, 0); 
-					System.out.println(seat_num);
-
+					Object use_id = table.getValueAt(selectRow, 0);
+					
+					// --------- 데이터베이스 수정하기 --------- 
 					try {
-						sudDao.update((int)seat_num);
+						sudDao.update((int)use_id);
 					} catch (SQLException e2) {
 						e2.printStackTrace();
 					}
-
-
-
-					// --------- 데이터베이스 수정하기 --------- 
-					SeatUseDetailDao sudDao = new SeatUseDetailDao();
-					ArrayList<SeatUseDetailVO> sudList =  new ArrayList<>();
-
+					
+					// 테이블 값 초기화
+					model.setRowCount(0);
+					model.setRowCount(18);
+					
+					sudList.clear();
 					try {
 						sudList.addAll(sudDao.get()); // DB 내용 가져오기
-						model = new DefaultTableModel(colNames,0);
-
+						
+						// 사용자가 없으면 컬럼 내용 없애기
+						if (sudList.size() == 0) {
+							for (int i = 0; i < model.getColumnCount(); ++i) {
+								model.setValueAt(null, 0, i);
+							}
+							return;
+						}
+//						model.setRowCount(sudList.size());
 						for (int i = 0; i < totalSeatCnt; i++) {
 							labels[i].setBackground(Color.WHITE);
 						}
+						
 						int resetRow = 0;
 						for (SeatUseDetailVO sud : sudList) {
-
-							model.setRowCount(sudList.size());
 							for (int i = 0; i < sud.getSudList().length; i++) {
-								model.setValueAt(sud.getSudList()[i], resetRow, i);
+								// DB에서 받아온 성별 데이터에 따라 남/여로 표시
+								if (i == 5) {
+									if (sud.getSudList()[i].equals("0")) {
+										model.setValueAt("남", resetRow, i);
+									} else {							
+										model.setValueAt("여", resetRow, i);
+									}
+								} else {
+									model.setValueAt(sud.getSudList()[i], resetRow, i);
+								}
 							}
-							resetRow++; 
-
+							++resetRow;
+							
 							if (sud.getMember().getSex().equals("0")) {
 								labels[sud.getReadingroom().getSeatNum() - 1].setBackground(new Color(138, 228, 255));
 							} else if (sud.getMember().getSex().equals("1")) {
@@ -240,25 +305,22 @@ public class ReadingRoomMgmt extends JPanel implements ActionListener{
 							}
 						}
 						table.setModel(model);
-
+						
 						//전체 열을 가운데 정렬
 						for(int i = 0; i < tcm.getColumnCount(); i++) {
 							tcm.getColumn(i).setCellRenderer(dtcr);
 						}
-
+						
 						table.validate(); // 새로고침 - 버튼 액션으로
-						usingCnt = model.getRowCount();
+						usingCnt = sudList.size();
 						remainCnt = totalSeatCnt - usingCnt;
 
 						usingCntTf.setText(usingCnt + "석");
 						remainCntTf.setText(remainCnt + "석");
-
-
+						
 						p3.validate();
-
-
+						
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 
@@ -351,7 +413,7 @@ public class ReadingRoomMgmt extends JPanel implements ActionListener{
 		remainLabel.setBounds(120, 430, 100, 30);
 
 		// 라벨 폰트
-		titleLabel.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 30));
+		titleLabel.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 20));
 		totalLabel.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 16));
 		usingLabel.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 16));
 		remainLabel.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 16));
@@ -372,6 +434,7 @@ public class ReadingRoomMgmt extends JPanel implements ActionListener{
 		add(remainLabel);
 		add(remainCntTf);
 		add(exitLb);
+		add(refreshBtn);
 		add(checkOutBtn);
 
 		for (int i = 0; i < labels.length; i++) {			
@@ -392,22 +455,67 @@ public class ReadingRoomMgmt extends JPanel implements ActionListener{
 		//		setResizable(false);// 창 크기 고정
 		//		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
+	
+	public void tableValidate() {
+		model.setRowCount(0);
+		model.setRowCount(18);
+		
+		sudList.clear();
+		try {
+			sudList.addAll(sudDao.get()); // DB 내용 가져오기
+			
+			// 사용자가 없으면 컬럼 내용 없애기
+			if (sudList.size() == 0) {
+				for (int i = 0; i < model.getColumnCount(); ++i) {
+					model.setValueAt(null, 0, i);
+				}
+				return;
+			}
+//			model.setRowCount(sudList.size());
+			for (int i = 0; i < totalSeatCnt; i++) {
+				labels[i].setBackground(Color.WHITE);
+			}
+			
+			int resetRow = 0;
+			for (SeatUseDetailVO sud : sudList) {
+				for (int i = 0; i < sud.getSudList().length; i++) {
+					// DB에서 받아온 성별 데이터에 따라 남/여로 표시
+					if (i == 5) {
+						if (sud.getSudList()[i].equals("0")) {
+							model.setValueAt("남", resetRow, i);
+						} else {							
+							model.setValueAt("여", resetRow, i);
+						}
+					} else {
+						model.setValueAt(sud.getSudList()[i], resetRow, i);
+					}
+				}
+				++resetRow;
+				
+				if (sud.getMember().getSex().equals("0")) {
+					labels[sud.getReadingroom().getSeatNum() - 1].setBackground(new Color(138, 228, 255));
+				} else if (sud.getMember().getSex().equals("1")) {
+					labels[sud.getReadingroom().getSeatNum() - 1].setBackground(new Color(255, 183, 210));
+				}
+			}
+			table.setModel(model);
+			
+			//전체 열을 가운데 정렬
+			for(int i = 0; i < tcm.getColumnCount(); i++) {
+				tcm.getColumn(i).setCellRenderer(dtcr);
+			}
+			
+			table.validate(); // 새로고침 - 버튼 액션으로
+			usingCnt = sudList.size();
+			remainCnt = totalSeatCnt - usingCnt;
 
-
-
-	public void open() {
-		new ReadingRoomMgmt();
+			usingCntTf.setText(usingCnt + "석");
+			remainCntTf.setText(remainCnt + "석");
+			
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 	}
-
-	public static void main(String[] args) {
-		new ReadingRoomMgmt();
-	}
-
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 }
