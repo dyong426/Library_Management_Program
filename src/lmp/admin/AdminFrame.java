@@ -38,9 +38,10 @@ import lmp.admin.menu.checkin_out.Member_Searching_Panel;
 import lmp.admin.menu.employees.EmployeesMgmt;
 import lmp.admin.menu.member.MemberMgmt;
 import lmp.admin.menu.readingroom.ReadingRoomMgmt;
+import lmp.admin.menu.readingroom.ReadingRoomPanel;
 
 
-public class AdminFrame extends JFrame{
+public class AdminFrame extends JFrame {
 
 	JButton bookMgmt, checkIn_Out, employeeMgmt, memberMgmt, readingRoom, homeButton;
 	
@@ -51,11 +52,12 @@ public class AdminFrame extends JFrame{
 	JPanel checkInOutPanel = new Member_Searching_Panel();
 	JPanel employeePanel = new EmployeesMgmt();
 	JPanel memberPanel = new MemberMgmt();
-	JPanel readingRoomPanel = new ReadingRoomMgmt();
+	JPanel readingRoomPanel = new ReadingRoomPanel();
+//	JPanel readingRoomPanel = new ReadingRoomMgmt();
 	
 	
 	public AdminFrame() {
-
+		
 		setTitle("관리자 모드");
 		setLayout(null);
 		
@@ -183,6 +185,8 @@ public class AdminFrame extends JFrame{
 		menuButtonPanel.add(memberMgmt);
 		menuButtonPanel.add(readingRoom);
 		
+		
+//		JPanel panel = new JPanel();
 		
 		add(homeButton);
 		add(menuButtonPanel);

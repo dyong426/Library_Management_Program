@@ -75,8 +75,9 @@ public class CheckIn_Out_Frame extends JFrame{
 	CheckOutDao checkOutDao = new CheckOutDao();
 	BookDao bookDao = new BookDao();
 	
-	
+	// 해당 회원의 대여 내역
 	ArrayList<CheckOutVO> checkedOutList = new ArrayList<>();
+	// 전체 회원의 대여 내역
 	ArrayList<CheckOutVO> checkedOutRecord = new ArrayList<>();
 	ArrayList<BookVO> bookList = new ArrayList<>();
 	
@@ -149,18 +150,13 @@ public class CheckIn_Out_Frame extends JFrame{
 							return;
 					}
 					
-					checkedOutRecord.clear();
-					try {
-						checkedOutRecord.addAll(checkOutDao.get(3, memberNum));
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
+					getCheckedOutList(memberNum);
 					// 대여 목록 테이블 초기화 (초기화 과정 없이 위쪽의 도서를 반납처리 하면 리스트의 길이가 줄어들어 아래쪽 도서가 남아있는 오류 발생)
 					checkedOutModel.setRowCount(0);
 					checkedOutModel.setRowCount(3);
 					
 					int rowCount = 0;
-					for (CheckOutVO checkedList : checkedOutRecord) {
+					for (CheckOutVO checkedList : checkedOutList) {
 						for (int i = 0; i < checkedOutCategory.length; ++i) {
 							checkedOutModel.setValueAt(checkedList.getList()[i], rowCount, i);
 						}
@@ -245,6 +241,8 @@ public class CheckIn_Out_Frame extends JFrame{
 //						model.setValueAt(valid[i][j], i, j);
 //					}
 //				}
+				
+				
 				try {
 					bookList.clear();
 					bookList.addAll(bookDao.get(keyword.getSelectedIndex() + 1, searchField.getText()));
@@ -277,7 +275,7 @@ public class CheckIn_Out_Frame extends JFrame{
 						}
 						// 연체 중인 도서 있으면 안내문구 띄우고 대출 안되게 설정
 						// 회원의 대여 목록을 확인하며 반납 예정일이 지났다면 안내문구 출력
-						for (CheckOutVO list : checkedOutRecord) {
+						for (CheckOutVO list : checkedOutList) {
 							// 반납 예정일이 오늘보다 먼저인가?
 							if (LocalDate.parse((list.getExpectReturnDate()),
 									DateTimeFormatter.ofPattern("yy/MM/dd")).compareTo(LocalDate.now()) < 0) {

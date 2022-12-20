@@ -105,12 +105,12 @@ public class MemberMgmt extends JPanel {
 			e2.printStackTrace();
 		}
 		add(deleteBtn);
-
-
+		
+		
 		// 콤보박스로 검색할내용 선택하기
 		String[] keywordList = {"회원번호", "이름", "아이디", "생년월일", "성별", "전화번호"};
 		JComboBox keyword = new JComboBox<>(keywordList);
-		keyword.setFont(new Font(null, Font.BOLD, 15));
+		keyword.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 15));
 		keyword.setBounds(190, 80, 150, 30);
 		add(keyword);
 		

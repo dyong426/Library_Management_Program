@@ -46,8 +46,8 @@ public class BookModificationFrame extends JFrame implements MouseListener, KeyL
 	private JTextField[] fields_Modify = new JTextField[10];
 	private final static String[] BOOK_LOCATIONS = {"A.철학", "B.종교", "C.사회과학", "D.자연과학", "E.기술과학", "F.예술", "G.언어", "H.문학", "I.역사"};
 	private JScrollPane scrolledTable_Modify;
-	JTable table_Modify;
-	DefaultTableModel model_Modify = new DefaultTableModel(TABLE_COLUMN, 1); // column추가, 행은 1개 지정
+	public JTable table_Modify;
+	public DefaultTableModel model_Modify = new DefaultTableModel(TABLE_COLUMN, 1); // column추가, 행은 1개 지정
 	private JButton overwriteBtn, comebackBtn, saveBtn_Modify;
 	JComboBox cb_Modify = new JComboBox(BOOK_LOCATIONS);
 
@@ -64,7 +64,7 @@ public class BookModificationFrame extends JFrame implements MouseListener, KeyL
 		this.add("Center", scrolledTable_Modify); // 가운데에 JTable 추가
 				
 
-		cb_Modify.setFont(new Font("한컴 말랑말랑 Regular", Font.PLAIN, 12));
+		cb_Modify.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 12));
 		
 		// 상단 패널(정보수정할 내용을 입력하는 텍스트필드 영역)
 		JPanel topPanel = new JPanel(new GridLayout(6, 2, 100, 5));

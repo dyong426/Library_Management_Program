@@ -51,13 +51,13 @@ public class BookDao extends MenuDao{
 		pstmt.setString(4, bookVO.getIsbn());
 		pstmt.setInt(5, bookVO.getBias());
 		// 복권수 확인 절차
-		if (get(bookVO.getTitle(), bookVO.getAuthor()).size() > 0) {
+		if (get(bookVO.getTitle(), bookVO.getAuthor(), bookVO.getBias()).size() > 0) {
 			
 			ArrayList<BookVO> duplicateList = new ArrayList<BookVO>();
-			duplicateList.addAll(get(bookVO.getTitle(), bookVO.getAuthor()));
+			duplicateList.addAll(get(bookVO.getTitle(), bookVO.getAuthor(), bookVO.getBias()));
 			
 			pstmt.setInt(6, duplicateList.get(0).getDuplicates() + 1);
-			update(duplicateList.get(0).getTitle(), duplicateList.get(0).getAuthor());
+			increaseDuplicate(duplicateList.get(0).getTitle(), duplicateList.get(0).getAuthor(), duplicateList.get(0).getBias());
 		} else {
 			pstmt.setInt(6, 1);
 		}
@@ -121,29 +121,59 @@ public class BookDao extends MenuDao{
 	}
 	
 	// 같은 도서 등록시 복권수 증가 메서드
-	public void update(String book_title, String book_author) throws SQLException {
+	public void increaseDuplicate(String book_title, String book_author, int book_bias) throws SQLException {
 		Connection conn = getConnection();
 		
 		String sql =  "UPDATE"
 					+ " books"
 					+ " SET"
-					+ " book_duplicates = ?"
+					+ " book_duplicates = book_duplicates + 1"
 					+ " WHERE"
 					+ " book_title = ?"
 					+ " AND"
-					+ " book_author = ?";
+					+ " book_author = ?"
+					+ " AND"
+					+ " book_bias = ?";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
-		pstmt.setString(1, "book_duplicates + 1");
-		pstmt.setString(2, book_title);
-		pstmt.setString(3, book_author);
+		pstmt.setString(1, book_title);
+		pstmt.setString(2, book_author);
+		pstmt.setInt(3, book_bias);
 		
 		pstmt.executeUpdate();
 		
 		pstmt.close();
 		conn.close();
 	}
+	
+	
+	// 같은 도서 삭제시 복권수 감소 메서드
+		public void decreaseDuplicate(String book_title, String book_author, int book_bias) throws SQLException {
+			Connection conn = getConnection();
+			
+			String sql =  "UPDATE"
+						+ " books"
+						+ " SET"
+						+ " book_duplicates = book_duplicates - 1"
+						+ " WHERE"
+						+ " book_title = ?"
+						+ " AND"
+						+ " book_author = ?"
+						+ " AND"
+						+ " book_bias = ?";
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, book_title);
+			pstmt.setString(2, book_author);
+			pstmt.setInt(3, book_bias);
+			
+			pstmt.executeUpdate();
+			
+			pstmt.close();
+			conn.close();
+		}
 	
 	
 	/**
@@ -197,14 +227,15 @@ public class BookDao extends MenuDao{
 	
 	
 	// 복권수 확인용 메서드
-	public ArrayList get(String book_title, String book_author) throws SQLException {
+	public ArrayList get(String book_title, String book_author, int bias) throws SQLException {
 		
-		String sql = "SELECT * FROM books JOIN locations USING(location_id) WHERE book_title = ? AND book_author = ?";
+		String sql = "SELECT * FROM books JOIN locations USING(location_id) WHERE book_title = ? AND book_author = ? AND book_bias = ?";
 
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, book_title);
 		pstmt.setString(2, book_author);
+		pstmt.setInt(3, bias);
 		
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<BookVO> bookList = new ArrayList<>();

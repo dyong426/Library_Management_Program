@@ -1,8 +1,12 @@
 package lmp.admin.menu.checkin_out;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -68,6 +72,7 @@ public class Member_Searching_Panel extends JPanel {
 		return memVoList;
 	}
 	
+	
 	public Member_Searching_Panel() {
 		
 		setLayout(null);
@@ -101,7 +106,7 @@ public class Member_Searching_Panel extends JPanel {
 		searchButton.setBounds(810, 55, 100, 80);
 		
 		// 텍스트 필드에서 엔터 누르면 버튼 클릭되도록 액션 추가 (검색 버튼 눌러도 되고 텍스트 필드에서 엔터 눌러도 검색됨)
-		searchField = new JTextField();
+		searchField = new JTextField(30);
 		searchField.setBounds(390, 80, 400, 30);
 		searchField.addActionListener(new ActionListener() {
 			@Override
@@ -137,6 +142,7 @@ public class Member_Searching_Panel extends JPanel {
 		add(searchButton);
 		add(mgmtButton);
 		add(result);
+				
 		
 		// 검색 버튼 눌렀을 때 해당 키워드에 맞는 정보 있으면 출력
 		searchButton.addActionListener(new ActionListener() {
