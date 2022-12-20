@@ -172,7 +172,6 @@ public class BookRegistrationFrame extends JFrame implements MouseListener, KeyL
 		++rowCount;
 		model_Regist.setRowCount(rowCount);
 		for (int i = 0; i < labels_Regist.length; i++) {
-			
 			if (i < 6) {
 				if (isInvalidInput(fields_Regist[i].getText())) {
 					JOptionPane.showMessageDialog(this, "입력하지 않은 정보가 있습니다.");
@@ -204,6 +203,12 @@ public class BookRegistrationFrame extends JFrame implements MouseListener, KeyL
 	}
 	
 	public void saveRecord() {
+		
+		if (model_Regist.getRowCount() == 0) {
+			JOptionPane.showMessageDialog(null, "저장할 도서를 추가해주세요.");
+			return;
+		}
+		
 		BookDao bookDao = new BookDao();
 		BookVO bookVo = new BookVO();
 		
@@ -246,6 +251,9 @@ public class BookRegistrationFrame extends JFrame implements MouseListener, KeyL
 		
 		if (src == saveBtn_Regist) {
 			saveRecord();
+			rowCount = 0;
+			model_Regist.setRowCount(rowCount);
+			table_Regist.setModel(model_Regist);
 		}
 
 		// 저장버튼 클릭 시 작동기능 명령(196-216)

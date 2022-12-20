@@ -49,7 +49,6 @@ public class UsageListScrollPane extends JScrollPane{
 		
 		usageListTable = new UsageListTable(model);
 		this.setViewportView(usageListTable);
-		this.setBackground(new Color(87, 119, 119));
 	}
 
 	public UsageListTable getUsageListTable() {

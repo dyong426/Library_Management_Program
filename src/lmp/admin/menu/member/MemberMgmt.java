@@ -57,14 +57,14 @@ public class MemberMgmt extends JPanel {
 		JButton deleteBtn = BookMgmt.getButton("삭제"); // 삭제버튼
 
 		// 회원조회 타이틀 설정
-		memberInquiry.setBounds(475, 20, 200, 50);
-		memberInquiry.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 20));
+		memberInquiry.setBounds(600, 30, 300, 50);
+		memberInquiry.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 40));
 		memberInquiry.setForeground(Color.WHITE);
 		memberInquiry.setHorizontalAlignment(JLabel.CENTER);
 		add(memberInquiry);
 
 		// 텍스트필드 설정
-		searchField.setBounds(390, 80, 400, 30);
+		searchField.setBounds(530, 130, 450, 35);
 		searchField.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -74,10 +74,10 @@ public class MemberMgmt extends JPanel {
 		add(searchField);
 
 		// 검색버튼 설정
-		searchBtn.setBounds(810, 55, 100, 80);
+		searchBtn.setBounds(1010, 100, 120, 100);
 		try {
 			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/searchButtonIcon.png"));
-			Image image = buffer.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+			Image image = buffer.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 			searchBtn.setIcon(new ImageIcon(image));
 		} catch (IOException e3) {
 			e3.printStackTrace();
@@ -85,10 +85,10 @@ public class MemberMgmt extends JPanel {
 		add(searchBtn);
 
 		// 수정버튼 설정
-		changeBtn.setBounds(1020, 20, 120, 40);
+		changeBtn.setBounds(1320, 40, 150, 70);
 		try {
 			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/bookModifyIconImage.png"));
-			Image image = buffer.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+			Image image = buffer.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 			changeBtn.setIcon(new ImageIcon(image));
 		} catch (IOException e2) {
 			e2.printStackTrace();
@@ -96,10 +96,10 @@ public class MemberMgmt extends JPanel {
 		add(changeBtn);
 
 		// 삭제버튼 설정
-		deleteBtn.setBounds(1020, 90, 120, 40);
+		deleteBtn.setBounds(1320, 140, 150, 70);
 		try {
 			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/bookdeleteIconImage.png"));
-			Image image = buffer.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+			Image image = buffer.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 			deleteBtn.setIcon(new ImageIcon(image));
 		} catch (IOException e2) {
 			e2.printStackTrace();
@@ -111,13 +111,13 @@ public class MemberMgmt extends JPanel {
 		String[] keywordList = {"회원번호", "이름", "아이디", "생년월일", "성별", "전화번호"};
 		JComboBox keyword = new JComboBox<>(keywordList);
 		keyword.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 15));
-		keyword.setBounds(190, 80, 150, 30);
+		keyword.setBounds(270, 130, 200, 35);
 		add(keyword);
 		
 		
 		table = AdminFrame.getTable(model);
 		scroll = new JScrollPane(table);
-		scroll.setBounds(0, 156, 1152, 395);
+		scroll.setBounds(0, 250, 1500, 500);
 		add(scroll);
 
 		// 검색 버튼누르면 결과가 JTable로 생성

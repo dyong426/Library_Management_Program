@@ -62,14 +62,14 @@ public class EmployeesMgmt extends JPanel {
 		JButton deleteBtn = BookMgmt.getButton("삭제"); // 삭제 버튼
 		
 		// 직원조회 타이틀 설정
-		employeeInquiry.setBounds(475, 20, 200, 50);
-		employeeInquiry.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 20));
+		employeeInquiry.setBounds(600, 30, 300, 50);
+		employeeInquiry.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 40));
 		employeeInquiry.setForeground(Color.WHITE);
 		employeeInquiry.setHorizontalAlignment(JLabel.CENTER);
 		add(employeeInquiry);
 
 		// "이름" 텍스트필드 설정
-		searchField.setBounds(390, 80, 400, 30);
+		searchField.setBounds(530, 130, 450, 35);
 		searchField.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -79,26 +79,26 @@ public class EmployeesMgmt extends JPanel {
 		add(searchField);
 
 		// 검색버튼 설정
-		searchBtn.setBounds(810, 55, 100, 80);
+		searchBtn.setBounds(1010, 100, 120, 100);
 		add(searchBtn);
 
 
 		// 콤보박스로 검색할내용 선택하기
 		String[] keywordList = {"사번", "이름", "전화번호", "입사일"};
 		JComboBox keyword = new JComboBox<>(keywordList);
-		keyword.setBounds(190, 80, 150, 30);
+		keyword.setBounds(270, 130, 200, 35);
 		keyword.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 15));
 		add(keyword);
 		
 		table = AdminFrame.getTable(model);
 		scroll = new JScrollPane(table);
-		scroll.setBounds(0, 156, 1152, 395);
+		scroll.setBounds(0, 250, 1500, 500);
 		add(scroll);
 		
 		
 		try {
 			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/searchButtonIcon.png"));
-			Image image = buffer.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+			Image image = buffer.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 			searchBtn.setIcon(new ImageIcon(image));
 		} catch (IOException e3) {
 			e3.printStackTrace();
@@ -130,10 +130,10 @@ public class EmployeesMgmt extends JPanel {
 		
 
 		// 추가버튼 설정
-		addBtn.setBounds(1020, 20, 120, 40);
+		addBtn.setBounds(1320, 40, 150, 70);
 		try {
 			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/registrationIcon.png"));
-			Image image = buffer.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+			Image image = buffer.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 			addBtn.setIcon(new ImageIcon(image));
 		} catch (IOException e2) {
 			e2.printStackTrace();
@@ -148,10 +148,10 @@ public class EmployeesMgmt extends JPanel {
 		add(addBtn);
 
 		// 삭제버튼 설정
-		deleteBtn.setBounds(1020, 90, 120, 40);
+		deleteBtn.setBounds(1320, 140, 150, 70);
 		try {
 			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/deleteIcon.png"));
-			Image image = buffer.getScaledInstance(40, 40, Image.SCALE_SMOOTH);
+			Image image = buffer.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 			deleteBtn.setIcon(new ImageIcon(image));
 		} catch (IOException e2) {
 			e2.printStackTrace();
@@ -323,10 +323,8 @@ public class EmployeesMgmt extends JPanel {
 					e1.printStackTrace();
 				}
 				
-				int num = JOptionPane.showConfirmDialog(null, "등록 완료", "등록이 완료되었습니다.", JOptionPane.OK_OPTION);
-				if (num == 0) {
-					f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				}
+				JOptionPane.showMessageDialog(null, "등록이 완료되었습니다.");
+				
 			}
 		});
 

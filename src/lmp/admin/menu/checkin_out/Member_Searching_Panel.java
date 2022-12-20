@@ -2,6 +2,7 @@ package lmp.admin.menu.checkin_out;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -81,33 +82,33 @@ public class Member_Searching_Panel extends JPanel {
 		table = AdminFrame.getTable(model);
 		
 		result = new JScrollPane(table);
-		result.setBounds(0, 156, 1152, 395);
+		result.setBounds(0, 250, 1500, 500);
 		
 		
 		label = new JLabel("회원 검색");
-		label.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 20));
+		label.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 40));
 		label.setForeground(Color.WHITE);
 		label.setHorizontalAlignment(JLabel.CENTER);
-		label.setBounds(475, 20, 200, 50);
+		label.setBounds(600, 30, 300, 50);
 		
 		
 		keyword = new JComboBox(keywordList);
 		keyword.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 15));
-		keyword.setBounds(190, 80, 150, 30);
+		keyword.setBounds(270, 130, 200, 35);
 		
 		searchButton = AdminFrame.getButton("검색");
 		try {
 			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/searchButtonIcon.png"));
-			Image image = buffer.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+			Image image = buffer.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 			searchButton.setIcon(new ImageIcon(image));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		searchButton.setBounds(810, 55, 100, 80);
+		searchButton.setBounds(1010, 100, 120, 100);
 		
 		// 텍스트 필드에서 엔터 누르면 버튼 클릭되도록 액션 추가 (검색 버튼 눌러도 되고 텍스트 필드에서 엔터 눌러도 검색됨)
-		searchField = new JTextField(30);
-		searchField.setBounds(390, 80, 400, 30);
+		searchField = new JTextField();
+		searchField.setBounds(530, 130, 450, 35);
 		searchField.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -119,12 +120,12 @@ public class Member_Searching_Panel extends JPanel {
 		mgmtButton = AdminFrame.getButton("대출/반납 관리");
 		try {
 			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/checkOutImage.png"));
-			Image image = buffer.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+			Image image = buffer.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
 			mgmtButton.setIcon(new ImageIcon(image));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
-		mgmtButton.setBounds(1020, 35, 130, 100);
+		mgmtButton.setBounds(1320, 100, 150, 100);
 		mgmtButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -142,7 +143,7 @@ public class Member_Searching_Panel extends JPanel {
 		add(searchButton);
 		add(mgmtButton);
 		add(result);
-				
+		
 		
 		// 검색 버튼 눌렀을 때 해당 키워드에 맞는 정보 있으면 출력
 		searchButton.addActionListener(new ActionListener() {

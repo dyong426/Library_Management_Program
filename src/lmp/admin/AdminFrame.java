@@ -2,19 +2,13 @@ package lmp.admin;
 
 import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ContainerAdapter;
-import java.awt.event.ContainerEvent;
-import java.awt.event.ContainerListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -28,7 +22,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -37,7 +30,6 @@ import lmp.admin.menu.book.BookMgmt;
 import lmp.admin.menu.checkin_out.Member_Searching_Panel;
 import lmp.admin.menu.employees.EmployeesMgmt;
 import lmp.admin.menu.member.MemberMgmt;
-import lmp.admin.menu.readingroom.ReadingRoomMgmt;
 import lmp.admin.menu.readingroom.ReadingRoomPanel;
 
 
@@ -168,10 +160,10 @@ public class AdminFrame extends JFrame {
 			e.printStackTrace();
 		}
 		
-		menuButtonPanel.setBounds(90, 40, 1000, 120);
+		menuButtonPanel.setBounds(350, 0, 1200, 200);
 		menuButtonPanel.setBackground(new Color(49, 82, 91));
 		
-		menuCardPanel.setBounds(17, 195, 1150, 550);
+		menuCardPanel.setBounds(200, 220, 1500, 750);
 		menuCardPanel.add("1", initialLabel());
 		menuCardPanel.add("2", bookPanel);
 		menuCardPanel.add("3", checkInOutPanel);
@@ -186,15 +178,32 @@ public class AdminFrame extends JFrame {
 		menuButtonPanel.add(readingRoom);
 		
 		
-//		JPanel panel = new JPanel();
+		JPanel panel = new JPanel();
+		panel.setLayout(null);
+		panel.setPreferredSize(new Dimension(1900, 1000));
+		panel.setBackground(new Color(49, 82, 91));
+		panel.add(homeButton);
+		panel.add(menuButtonPanel);
+		panel.add(menuCardPanel);
 		
-		add(homeButton);
-		add(menuButtonPanel);
-		add(menuCardPanel);
+		JScrollPane sp = new JScrollPane();
+//		sp.setPreferredSize(new Dimension(1200, 800));
+//		sp.setBounds(0, 0, 1200, 800);
+//		sp.setViewportView(panel);
+		sp.setViewportView(panel);
+		sp.getVerticalScrollBar().setUnitIncrement(16);
+//		add(homeButton);
+//		add(menuButtonPanel);
+//		add(menuCardPanel);
+		
+//		setExtendedState(MAXIMIZED_BOTH);
+		getContentPane().add(sp);
+		setContentPane(sp);
 		
 		
-		setBounds(300, 100, 1200, 800);
-		getContentPane().setBackground(new Color(49, 82, 91));
+//		setMinimumSize(new Dimension(500, 400));
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+//		setBounds(300, 100, 1200, 800);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 //		setResizable(false);
 		setVisible(true);
@@ -208,12 +217,12 @@ public class AdminFrame extends JFrame {
 		JLabel label = new JLabel();
 		try {
 			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/initialImage.jpg"));
-			Image image = buffer.getScaledInstance(1150, 550, Image.SCALE_SMOOTH);
+			Image image = buffer.getScaledInstance(1500, 750, Image.SCALE_SMOOTH);
 			label.setIcon(new ImageIcon(image));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		label.setSize(1150, 550);
+		label.setSize(1500, 750);
 		
 		initImagePanel.setLayout(null);
 		initImagePanel.add(label);
