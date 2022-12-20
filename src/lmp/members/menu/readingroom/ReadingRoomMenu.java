@@ -1,5 +1,6 @@
 package lmp.members.menu.readingroom;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.JFrame;
@@ -10,12 +11,11 @@ public class ReadingRoomMenu extends JFrame{
 	
 	public ReadingRoomMenu() {
 		setBounds(300, 100, 1200, 800);
-		getContentPane().setBackground(new Color(49, 82, 91));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		setVisible(true);
-		
-		getContentPane().add(new SeatListPanel());
+		setLayout(new BorderLayout());
+		getContentPane().add("Center",new SeatListPanel());
 	}
 	
 	public static void main(String[] args) {
