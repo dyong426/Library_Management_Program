@@ -194,4 +194,9 @@ public class AdminFrame extends JFrame{
 	public static void main(String[] args) {
 		new AdminFrame();
 	}
+
+	public void open() {
+		// TODO Auto-generated method stub
+		
+	}
 }
