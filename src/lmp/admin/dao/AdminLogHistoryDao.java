@@ -17,12 +17,11 @@ public class AdminLogHistoryDao extends MenuDao{
 		
 		Connection conn = getConnection();
 		
-		String sql = "INSERT INTO member_log_histroy VALUES(mem_log_id_seq.nextval,?,sysdate,?)";
+		String sql = "INSERT INTO admin_log_histroy(admin_log_id,admin_num) VALUES(mem_log_id_seq.nextval,?)";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
 		pstmt.setInt(1, adminLogVO.getAdminVO().getNum());
-		pstmt.setString(2, null);
 		
 		pstmt.executeUpdate();
 			
@@ -41,7 +40,7 @@ public class AdminLogHistoryDao extends MenuDao{
 		
 		Connection conn = getConnection();
 		
-		String sql =  "Update members SET logout_time = to_char(sysdate, 'yyyy.mm.dd hh24:mi') WHERE mem_num = ?";
+		String sql =  "UPDATE admin_log_history SET logout_time = to_char(sysdate, 'yyyy.mm.dd hh24:mi') WHERE admin_num = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 			
 		pstmt.setInt(1,adminLogVO.getLog_id());
@@ -54,7 +53,7 @@ public class AdminLogHistoryDao extends MenuDao{
 	
 	@Override
 	public AdminLogHistoryVO getLog() throws SQLException {
-		String sql = "SELECT * FROM members WHERE logout_time IS NULL";
+		String sql = "SELECT * FROM admin_log_history JOIN admins USING(admin_num) WHERE logout_time IS NULL";
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
@@ -71,7 +70,7 @@ public class AdminLogHistoryDao extends MenuDao{
 					rs.getString("admin_registrationdate"),
 					rs.getString("admin_updatedate"),
 					rs.getString("admin_note")), 
-					rs.getString("loginTime"), rs.getString("logoutTime"));
+					rs.getString("login_Time"), rs.getString("logout_Time"));
 		}
 		rs.close();
 		pstmt.close();
@@ -82,7 +81,7 @@ public class AdminLogHistoryDao extends MenuDao{
 
 	@Override
 	public void delete(Integer mem_id) throws SQLException {
-		String sql = "DELETE FROM member_log_history WHERE mem_id = ?";
+		String sql = "DELETE FROM admin_log_history WHERE admin_id = ?";
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, mem_id);

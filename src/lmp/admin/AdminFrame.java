@@ -137,16 +137,18 @@ public class AdminFrame extends JFrame{
 		add(menuButtonPanel);
 		add(menuCardPanel);
 		
-		addWindowListener(new WindowAdapter() {
+		this.addWindowListener(new WindowAdapter() {
 			
 			@Override
-			public void windowClosed(WindowEvent e) {
+			public void windowClosing(WindowEvent e) {
 				try {
+					System.out.println("로그아웃");
 					AdminLogHistoryDao adminLogHistoryDao = new AdminLogHistoryDao();
 					adminLogHistoryDao.update(adminLogHistoryDao.getLog());
-					System.out.println("로그아웃");
 				} catch (SQLException e1) {
+					e1.printStackTrace();
 					System.out.println("로그아웃 실패");
+					
 				}
 			}
 		});

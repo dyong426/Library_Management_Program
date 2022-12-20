@@ -100,7 +100,7 @@ public class AdminLoginFrame extends JFrame{
 						adminLoginFrame.dispose();
 						selectModeFrame.dispose();
 						adminFrame = new AdminFrame();
-						adminFrame.setVisible(true);
+						
 						
 					} else {
 						JOptionPane.showMessageDialog(adminLoginFrame, "사원번호/비밀번호를 확인하세요");	
