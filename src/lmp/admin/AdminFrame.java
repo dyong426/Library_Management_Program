@@ -1,6 +1,5 @@
 package lmp.admin;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -10,9 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -20,8 +22,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
+import lmp.admin.dao.AdminLogHistoryDao;
 import lmp.admin.menu.book.booksearch.BookSearchPanel;
 import lmp.admin.menu.checkin_out.Member_Searching_Panel;
 
@@ -134,7 +136,22 @@ public class AdminFrame extends JFrame{
 		
 		add(menuButtonPanel);
 		add(menuCardPanel);
+		
+		addWindowListener(new WindowAdapter() {
 			
+			@Override
+			public void windowClosed(WindowEvent e) {
+				try {
+					AdminLogHistoryDao adminLogHistoryDao = new AdminLogHistoryDao();
+					adminLogHistoryDao.update(adminLogHistoryDao.getLog());
+					System.out.println("로그아웃");
+				} catch (SQLException e1) {
+					System.out.println("로그아웃 실패");
+				}
+			}
+		});
+		
+		
 		setBounds(300, 100, 1200, 800);
 		getContentPane().setBackground(new Color(49, 82, 91));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -188,15 +205,5 @@ public class AdminFrame extends JFrame{
 				});
 				}
 		 };
-	}
-	
-	
-	public static void main(String[] args) {
-		new AdminFrame();
-	}
-
-	public void open() {
-		// TODO Auto-generated method stub
-		
 	}
 }

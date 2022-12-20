@@ -15,7 +15,7 @@ import lmp.admin.vo.SeatUseDetailVO;
 
 public abstract class MenuDao {
 
-	private static String url = "jdbc:oracle:thin:@192.168.0.100:1521:XE";
+	private static String url = "jdbc:oracle:thin:@192.168.0.23:1521:XE";
 	private static String user = "library";
 	private static String pw = "1234";
 	
@@ -99,6 +99,10 @@ public abstract class MenuDao {
 	public void delete(Integer mem_id) throws SQLException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public ArrayList<AdminVO> get(String searchStr) throws SQLException {
+		return null;
 	}
 
 

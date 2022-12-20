@@ -1,5 +1,6 @@
 package lmp.login;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -14,25 +15,18 @@ import javax.swing.JPanel;
 import lmp.members.MemberFrame;
 
 public class SelectModeFrame extends JFrame{
+	
+	static Font font = new Font("한컴 말랑말랑 Regular", Font.PLAIN, 30);
+	static Color panelColor = new Color(49, 82, 91);
+	static Color btnColor = new Color(204, 139, 101);
 
 		public SelectModeFrame() {
 
 			SelectModeFrame selectModeFrame = this;
-			
-			JPanel panel = new JPanel();
-
-
-			Color panelColor = new Color(49, 82, 91);
-			Color btnColor = new Color(204, 139, 101);
-			panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-			panel.setBackground(panelColor);
-			panel.setSize(500, 400);
-
-			Font font = new Font("한컴 말랑말랑 Regular", Font.PLAIN, 30);
 
 			JButton memberBtn = new JButton("회원") {
 				{
-					setBounds(50, 100, 150, 150);
+					setBounds(80, 50, 100, 60);
 					addActionListener(new ActionListener() {	
 						@Override
 						public void actionPerformed(ActionEvent e) {
@@ -47,12 +41,12 @@ public class SelectModeFrame extends JFrame{
 
 			JButton managerBtn = new JButton("관리자") {
 				{
-					setBounds(280, 100, 150, 150);
+					setBounds(225, 50, 100, 60);
 					addActionListener(new ActionListener() {	
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							AdminLoginFrame adminLoginFrame = new AdminLoginFrame(selectModeFrame);
-							adminLoginFrame.setVisible(true);;
+							adminLoginFrame.setVisible(true);
 						}
 					});
 				}
@@ -72,13 +66,18 @@ public class SelectModeFrame extends JFrame{
 			managerBtn.setBorderPainted(false);
 
 
+			
+			JPanel panel = new JPanel();
+			panel.setLayout(null);
+			panel.setBackground(panelColor);
 			panel.add(memberBtn);
 			panel.add(managerBtn);
-			add(panel);
+			
+			getContentPane().add(panel, BorderLayout.CENTER);
 			setTitle("도서관 관리 프로그램");
 			setVisible(true);
 			setResizable(false);
-			setSize(new Dimension(500, 400));
+			setSize(400,200);
 			setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 			setLocationRelativeTo(null); // 화면 중앙에 띄우기
 		}

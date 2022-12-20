@@ -95,11 +95,13 @@ public class AdminLoginFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				try {
 					System.out.println(managerIdTf.getText() + new String(managerPwTf.getPassword()));
+					System.out.println(checkLogin(managerIdTf.getText(),new String(managerPwTf.getPassword())));
 					if (checkLogin(managerIdTf.getText(),new String(managerPwTf.getPassword()))) {
 						adminLoginFrame.dispose();
-						 selectModeFrame.dispose();
+						selectModeFrame.dispose();
 						adminFrame = new AdminFrame();
-						adminFrame.open();
+						adminFrame.setVisible(true);
+						
 					} else {
 						JOptionPane.showMessageDialog(adminLoginFrame, "사원번호/비밀번호를 확인하세요");	
 					}
@@ -150,14 +152,12 @@ public class AdminLoginFrame extends JFrame{
 	public boolean checkLogin(String admin_num, String admin_pw) {
 		AdminVO adminVO;
 		try {
-			adminVO = (AdminVO) adminDao.get(1, admin_num).get(0);
+			adminVO = adminDao.get(admin_num).get(0);
 			if (adminVO == null) {
 				return false;
 			} else {
 				if (adminVO.getPw().equals(admin_pw)) {
-
-						adminLogHistoryDao.add(adminVO);
-						
+					adminLogHistoryDao.add(adminVO);
 					return true;
 				} else {
 					return false;

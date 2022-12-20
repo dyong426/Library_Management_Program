@@ -44,7 +44,7 @@ public class AdminLogHistoryDao extends MenuDao{
 		String sql =  "Update members SET logout_time = to_char(sysdate, 'yyyy.mm.dd hh24:mi') WHERE mem_num = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 			
-		pstmt.setInt(1,adminLogVO.getAdminVO().getNum());
+		pstmt.setInt(1,adminLogVO.getLog_id());
 			
 		pstmt.executeUpdate();
 		
