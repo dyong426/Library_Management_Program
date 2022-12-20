@@ -29,7 +29,7 @@ public class MemberVO {
 	 */
 	public MemberVO(Integer mem_num, String mem_id, String mem_pw) {
 		
-		this.num = num;
+		this.num = mem_num;
 		this.id = mem_id;
 		this.pw = mem_pw;
 		

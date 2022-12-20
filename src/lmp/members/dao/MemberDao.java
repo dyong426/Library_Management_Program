@@ -115,40 +115,40 @@ public class MemberDao extends MenuDao{
 		return memberVO;
 	}
 
-	/**
-	 * 전체 회원 목록 가져오기
-	 * 
-	 * @return ArrayList<MemberVO> memberList
-	 */
-	@Override
-	public ArrayList<MemberVO> get(int mem_num) throws SQLException {
-		String sql = "SELECT * FROM members WHERE mem_num = ?";
-		Connection conn = getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, mem_num);
-		ResultSet rs = pstmt.executeQuery();
-		ArrayList<MemberVO> memberList = new ArrayList<>();
-		while (rs.next()) {
-			memberList.add(new MemberVO(
-								rs.getInt("mem_num"),
-								rs.getString("mem_name"),
-								rs.getString("mem_id"),
-								rs.getString("mem_pw"),
-								rs.getString("mem_birthday"),
-								rs.getString("mem_sex"),
-								rs.getString("mem_phone"),
-								rs.getString("mem_email"),
-								rs.getString("mem_address"),
-								rs.getString("mem_registrationdate"),
-								rs.getString("mem_note")));
-		}
-		rs.close();
-		pstmt.close();
-		conn.close();
-		
-		return memberList;
-	}
-	
+//	/**
+//	 * 전체 회원 목록 가져오기
+//	 * 
+//	 * @return ArrayList<MemberVO> memberList
+//	 */
+//	@Override
+//	public ArrayList<MemberVO> get(int mem_id) throws SQLException {
+//		String sql = "SELECT * FROM members WHERE mem_id = ?";
+//		Connection conn = getConnection();
+//		PreparedStatement pstmt = conn.prepareStatement(sql);
+//		pstmt.setInt(1, mem_id);
+//		ResultSet rs = pstmt.executeQuery();
+//		ArrayList<MemberVO> memberList = new ArrayList<>();
+//		while (rs.next()) {
+//			memberList.add(new MemberVO(
+//								rs.getInt("mem_num"),
+//								rs.getString("mem_name"),
+//								rs.getString("mem_id"),
+//								rs.getString("mem_pw"),
+//								rs.getString("mem_birthday"),
+//								rs.getString("mem_sex"),
+//								rs.getString("mem_phone"),
+//								rs.getString("mem_email"),
+//								rs.getString("mem_address"),
+//								rs.getString("mem_registrationdate"),
+//								rs.getString("mem_note")));
+//		}
+//		rs.close();
+//		pstmt.close();
+//		conn.close();
+//		
+//		return memberList;
+//	}
+//	
 	/**
 	 * 회원 삭제
 	 * 

@@ -88,10 +88,6 @@ public class MemberLoginFrame extends JFrame {
 		findIDLabel.setBounds(50, 236, 70, 15);
 		loginPanel.add(findIDLabel);
 
-		JLabel findPWLabel = new JLabel("비밀번호 찾기");
-		findPWLabel.setBounds(160, 236, 80, 15);
-		loginPanel.add(findPWLabel);
-
 		JLabel joinLabel = new JLabel("회원가입");
 		joinLabel.setBounds(290, 236, 50, 15);
 		loginPanel.add(joinLabel);
@@ -154,7 +150,6 @@ public class MemberLoginFrame extends JFrame {
 						memberLoginFrame.dispose();
 					} else {
 						JOptionPane.showMessageDialog(memberLoginFrame, "아이디/비밀번호를 확인하세요");
-						
 					}
 				} catch (HeadlessException e1) {
 					e1.printStackTrace();
@@ -163,15 +158,6 @@ public class MemberLoginFrame extends JFrame {
 		});
 
 		findIDLabel.addMouseListener(new MouseAdapter() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				super.mouseClicked(e);
-			}
-		});
-		
-		findPWLabel.addMouseListener(new MouseAdapter() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -194,7 +180,8 @@ public class MemberLoginFrame extends JFrame {
 		
 		MemberVO memberVO = null;
 		try {
-			memberVO = (MemberVO) memberDao.get(3,mem_id).get(0);
+			memberVO = (MemberVO) memberDao.get(mem_id);
+			System.out.println(memberVO);
 			if (memberVO == null) {
 				return false;
 			} else {
@@ -206,6 +193,7 @@ public class MemberLoginFrame extends JFrame {
 				}
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			return false;
 		}
 	}

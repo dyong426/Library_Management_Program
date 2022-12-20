@@ -16,7 +16,7 @@ public class MemberLogHistoryDao extends MenuDao{
 		
 		Connection conn = getConnection();
 		
-		String sql = "INSERT INTO member_log_history(mem_log_id, mem_id) VALUES(mem_log_id_seq.nextval,?)";
+		String sql = "INSERT INTO member_log_history(mem_log_id, mem_num) VALUES(mem_log_id_seq.nextval,?)";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
