@@ -32,9 +32,9 @@ import lmp.admin.menu.readingroom.seatlist.panel.StatusPanel;
 import lmp.admin.menu.readingroom.usagelist.UsageListPanel;
 import lmp.admin.menu.readingroom.usagelist.scrollpane.UsageListScrollPane;
 import lmp.admin.menu.readingroom.usagelist.scrollpane.table.UsageListTable;
-import lmp.db.dao.ReadingRoomDao;
-import lmp.db.dao.SeatUseDetailDao;
-import lmp.db.vo.SeatUseDetailVO;
+import lmp.admin.dao.ReadingRoomDao;
+import lmp.admin.dao.SeatUseDetailDao;
+import lmp.admin.vo.SeatUseDetailVO;
 
 public class UsageListCheckOutButton extends JPanel {
 	

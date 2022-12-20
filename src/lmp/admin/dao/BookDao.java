@@ -1,4 +1,4 @@
-package lmp.db.dao;
+package lmp.admin.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import lmp.db.vo.BookVO;
-import lmp.db.vo.LocationVO;
+import lmp.admin.vo.BookVO;
+import lmp.admin.vo.LocationVO;
 
 public class BookDao extends MenuDao{
 

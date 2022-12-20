@@ -1,15 +1,16 @@
-package lmp.db.dao;
+package lmp.admin.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import lmp.db.vo.AdminVO;
-import lmp.db.vo.BookVO;
-import lmp.db.vo.CheckOutVO;
-import lmp.db.vo.MemberVO;
-import lmp.db.vo.SeatUseDetailVO;
+import lmp.admin.vo.AdminLogHistoryVO;
+import lmp.admin.vo.AdminVO;
+import lmp.admin.vo.BookVO;
+import lmp.admin.vo.CheckOutVO;
+import lmp.admin.vo.MemberVO;
+import lmp.admin.vo.SeatUseDetailVO;
 
 
 public abstract class MenuDao {
@@ -76,6 +77,28 @@ public abstract class MenuDao {
 		} catch (SQLException e) {
 			System.out.println("DB 접속 실패");
 		}
+		return null;
+	}
+
+	/**
+	 * 회원 정보 수정
+	 * 
+	 * @param memberVO
+	 * @throws SQLException
+	 */
+	public void update(AdminLogHistoryVO adminLogVO) throws SQLException {}
+
+	public AdminLogHistoryVO getLog() throws SQLException {
+		return null;
+	}
+
+	public void delete(Integer admin_num) throws SQLException {}
+
+	public ArrayList get(int admin_num) throws SQLException {
+		return null;
+	}
+
+	public AdminVO getAdminInfo(int admin_num) throws SQLException {
 		return null;
 	}
 

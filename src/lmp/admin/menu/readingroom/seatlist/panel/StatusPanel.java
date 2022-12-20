@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import lmp.admin.menu.readingroom.seatlist.label.StatusLabel;
-import lmp.db.vo.SeatUseDetailVO;
+import lmp.admin.vo.SeatUseDetailVO;
 
 public class StatusPanel extends JPanel{
 

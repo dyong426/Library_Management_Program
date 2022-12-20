@@ -32,10 +32,10 @@ import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.AdminFrame;
 import lmp.admin.menu.book.BookMgmt;
-import lmp.db.dao.BookDao;
-import lmp.db.dao.CheckOutDao;
-import lmp.db.vo.BookVO;
-import lmp.db.vo.CheckOutVO;
+import lmp.admin.dao.BookDao;
+import lmp.admin.dao.CheckOutDao;
+import lmp.admin.vo.BookVO;
+import lmp.admin.vo.CheckOutVO;
 
 public class CheckIn_Out_Frame extends JFrame{
 

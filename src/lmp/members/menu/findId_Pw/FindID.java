@@ -6,15 +6,23 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+
+import lmp.admin.dao.MemberDao;
+import lmp.admin.vo.MemberVO;
 
 public class FindID extends JFrame {
 
@@ -65,7 +73,9 @@ public class FindID extends JFrame {
       panel.setBackground(new Color(186, 206, 194));
       
       JButton btnNewButton = new JButton("다음");
-      btnNewButton.setBounds(48, 356, 302, 40);
+      btnNewButton.setFont(font);
+      btnNewButton.setBounds(260, 350, 100, 50);
+      btnNewButton.setBackground(new Color(144, 180, 148));
       btnNewButton.setFocusPainted(false);
       panel.add(btnNewButton);
       
@@ -98,6 +108,13 @@ public class FindID extends JFrame {
       textField_1 = new JTextField();
       textField_1.setColumns(10);
       textField_1.setBounds(100, 55, 210, 30);
+      textField_1.setText("\"-\"를 포함해 입력해주세요.");
+      textField_1.addFocusListener(new FocusAdapter() {
+    	@Override
+    	public void focusGained(FocusEvent e) {
+    		textField_1.setText("");
+    	}
+      });
       panel_1.add(textField_1);
       
       JLabel lblNewLabel = new JLabel("이름");
@@ -161,6 +178,40 @@ public class FindID extends JFrame {
       lblNewLabel_4.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 25));
       lblNewLabel_4.setBounds(130, 0, 200, 50);
       panel.add(lblNewLabel_4);
+      
+      
+      btnNewButton.addActionListener(new ActionListener() {
+  		@Override
+  		public void actionPerformed(ActionEvent e) {
+  			if (rdbtnNewRadioButton.isSelected()) {
+  				System.out.println("버튼 선택 확인");
+  				MemberDao memDao = new MemberDao();
+  				ArrayList<MemberVO> memVo = new ArrayList<>();
+  				
+  				try {
+					memVo.addAll(memDao.get(2, textField.getText()));
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+  				if (memVo.size() != 0) {
+  					System.out.println("회원 이름 존재");
+  					for (MemberVO mem : memVo) {
+  						System.out.println("for문 도는중");
+  						if (mem.getPhone().equals(textField_1.getText())) {
+  							JOptionPane.showMessageDialog(null, "아이디 : " + mem.getId());
+  							return;
+  						}
+  					}
+  					System.out.println("for문 끝");
+  				} else {
+  					System.out.println("배열 길이 1");
+  					JOptionPane.showMessageDialog(null, "일치하는 정보가 없습니다.");
+  				}
+  				System.out.println("배열 길이 0");
+  			}
+  		}
+      });
+      
    }
    
 }

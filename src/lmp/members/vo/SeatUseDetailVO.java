@@ -1,6 +1,5 @@
-package lmp.db.vo;
+package lmp.members.vo;
 
-import java.util.Date;
 
 public class SeatUseDetailVO {
 
@@ -15,7 +14,6 @@ public class SeatUseDetailVO {
 	private ReadingRoomVO readingroom;
 	private String startTime;
 	private String endTime;
-	private Object[] list;
 	
 	/**
 	 * 열람실 이용내역 정보 생성자
@@ -37,15 +35,6 @@ public class SeatUseDetailVO {
 		this.readingroom = readingroom;
 		this.startTime	 = startTime;
 		this.endTime	 = endTime;
-		this.list		 = new Object[]{
-										use_id,
-										readingroom.getSeatNum(),
-										member.getNum(),
-										member.getName(),
-										member.getPhone(),
-										member.getSex(),
-									    startTime,
-										};
 		
 	}
 
@@ -67,10 +56,6 @@ public class SeatUseDetailVO {
 
 	public String getEndTime() {
 		return endTime;
-	}
-	
-	public Object[] getSudList() {
-		return list;
 	}
 	
 	@Override

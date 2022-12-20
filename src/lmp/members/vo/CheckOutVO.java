@@ -1,8 +1,8 @@
-package lmp.db.vo;
+package lmp.members.vo;
 
-import java.util.Date;
 
 public class CheckOutVO {
+
 	/**
 	 * 대여 정보 VO
 	 * 
@@ -90,22 +90,10 @@ public class CheckOutVO {
 		return checkInDate;
 	}
 	
-	// 테이블에 데이터를 쉽게 넣기 위해 getList 메서드 생성
-	public Object[] getList() {
-		Object[] list = new Object[6];
-		list[0] = checkOutID;
-		list[1] = book.getId();
-		list[2] = book.getTitle();
-		list[3] = book.getAuthor();
-		list[4] = checkOutDate;
-		list[5] = expectReturnDate;
-		
-		return list;
-	}
-	
 	@Override
 	public String toString() {
 		
-		return String.format("%s%s%s%s", this.checkOutID, this.book, this.member, this.checkOutID, this.expectReturnDate, this.checkInDate);
+		return String.format("%d%s%s%s", this.checkOutID, this.book, this.member, this.checkOutID, this.expectReturnDate, this.checkInDate);
 	}
+	
 }

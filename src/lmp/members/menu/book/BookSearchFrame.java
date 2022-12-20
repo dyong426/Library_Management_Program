@@ -32,8 +32,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.AdminFrame;
-import lmp.db.dao.BookDao;
-import lmp.db.vo.BookVO;
+import lmp.admin.dao.BookDao;
+import lmp.admin.vo.BookVO;
 
 public class BookSearchFrame extends JFrame {
 

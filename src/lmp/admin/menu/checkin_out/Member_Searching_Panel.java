@@ -34,8 +34,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.AdminFrame;
-import lmp.db.dao.MemberDao;
-import lmp.db.vo.MemberVO;
+import lmp.admin.dao.MemberDao;
+import lmp.admin.vo.MemberVO;
 
 public class Member_Searching_Panel extends JPanel {
 

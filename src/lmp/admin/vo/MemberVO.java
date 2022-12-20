@@ -1,8 +1,8 @@
-package lmp.db.vo;
+package lmp.admin.vo;
 
 import java.util.Date;
 
-import lmp.db.dao.CheckOutDao;
+import lmp.admin.dao.CheckOutDao;
 
 public class MemberVO {
 	

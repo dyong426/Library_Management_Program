@@ -32,8 +32,8 @@ import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
 import lmp.admin.AdminFrame;
-import lmp.db.dao.SeatUseDetailDao;
-import lmp.db.vo.SeatUseDetailVO;
+import lmp.admin.dao.SeatUseDetailDao;
+import lmp.admin.vo.SeatUseDetailVO;
 
 public class ReadingRoomMgmt extends JPanel {
 

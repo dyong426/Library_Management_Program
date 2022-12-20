@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import lmp.admin.menu.readingroom.seatlist.label.SeatLabel;
-import lmp.db.vo.SeatUseDetailVO;
+import lmp.admin.vo.SeatUseDetailVO;
 
 public class SeatPanel extends JPanel{
 

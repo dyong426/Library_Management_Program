@@ -1,4 +1,4 @@
-package lmp.db.vo;
+package lmp.admin.vo;
 
 import java.util.Date;
 
@@ -75,6 +75,10 @@ public class AdminVO {
 									admin_registrationdate,
 									admin_note
 									};
+	}
+
+	public AdminVO(int int1, String string, String string2, String string3, String string4, String string5,
+			String string6, String string7, String string8) {
 	}
 
 	public Integer getNum() {

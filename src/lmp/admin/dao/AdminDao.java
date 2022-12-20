@@ -1,4 +1,4 @@
-package lmp.db.dao;
+package lmp.admin.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import lmp.db.vo.AdminVO;
-import lmp.db.vo.BookVO;
-import lmp.db.vo.CheckOutVO;
-import lmp.db.vo.LocationVO;
-import lmp.db.vo.MemberVO;
+import lmp.admin.vo.AdminVO;
+import lmp.admin.vo.BookVO;
+import lmp.admin.vo.CheckOutVO;
+import lmp.admin.vo.LocationVO;
+import lmp.admin.vo.MemberVO;
 
 public class AdminDao extends MenuDao{
 
@@ -70,14 +70,14 @@ public class AdminDao extends MenuDao{
 		Connection conn = getConnection();
 		
 		String sql =  "UPDATE"
-					+ " admins"
-					+ "SET "
+					+ " admins "
+					+ "SET"
 					+ " admin_name = ?,"
 					+ " admin_pw = ?,"
 					+ " admin_phone = ?,"
 					+ " admin_email = ?,"
 					+ " admin_address = ?,"
-					+ " admin_note = ?"
+					+ " admin_note = ? "
 					+ "WHERE"
 					+ " admin_num = ?";
 		
@@ -126,6 +126,34 @@ public class AdminDao extends MenuDao{
 		
 		return adminList;
 	}
+	
+	
+	@Override
+	public AdminVO getAdminInfo(int admin_num) throws SQLException {
+		String sql = "SELECT * FROM Admins WHERE amdin_num = ?";
+		Connection conn = getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, admin_num);
+		ResultSet rs = pstmt.executeQuery();
+		AdminVO adminVO = null;
+		while (rs.next()) {
+			adminVO = new AdminVO(
+								rs.getInt("admin_num"),
+								rs.getString("admin_name"),
+								rs.getString("admin_pw"),
+								rs.getString("admin_phone"),
+								rs.getString("admin_email"),
+								rs.getString("admin_address"),
+								rs.getString("admin_registrationdate"),
+								rs.getString("admin_note"));
+		}
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return adminVO;
+	}
+	
 	
 	public ArrayList get(int header, String searchStr) throws SQLException {
 		
@@ -179,7 +207,7 @@ public class AdminDao extends MenuDao{
 	
 	public StringBuilder selectSql(int header) {
 		StringBuilder sql = new StringBuilder();
-		String num = "SELECT * FROM admins WHERE admin_num LIKE ?";
+		String num = "SELECT * FROM admins WHERE admin_num = ?";
 		String name = "SELECT * FROM admins WHERE admin_name LIKE ?";
 		String phone = "SELECT * FROM admins WHERE admin_phone LIKE ?";
 		String registrationdate = "SELECT * FROM admins WHERE admin_registrationdate LIKE ?";

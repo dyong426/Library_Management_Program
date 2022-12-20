@@ -16,9 +16,9 @@ import lmp.admin.menu.readingroom.ReadingRoomPanel;
 import lmp.admin.menu.readingroom.seatlist.SeatListPanel;
 import lmp.admin.menu.readingroom.usagelist.UsageListPanel;
 import lmp.admin.menu.readingroom.usagelist.scrollpane.table.UsageListTable;
-import lmp.db.dao.ReadingRoomDao;
-import lmp.db.dao.SeatUseDetailDao;
-import lmp.db.vo.SeatUseDetailVO;
+import lmp.admin.dao.ReadingRoomDao;
+import lmp.admin.dao.SeatUseDetailDao;
+import lmp.admin.vo.SeatUseDetailVO;
 
 public class UsageListCheckOutLabel extends JLabel{
 	

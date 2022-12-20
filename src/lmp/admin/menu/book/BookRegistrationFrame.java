@@ -36,9 +36,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import lmp.db.dao.BookDao;
-import lmp.db.vo.BookVO;
-import lmp.db.vo.LocationVO;
+import lmp.admin.dao.BookDao;
+import lmp.admin.vo.BookVO;
+import lmp.admin.vo.LocationVO;
 
 public class BookRegistrationFrame extends JFrame implements MouseListener, KeyListener {
 

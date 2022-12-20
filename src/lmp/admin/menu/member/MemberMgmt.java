@@ -29,11 +29,11 @@ import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.AdminFrame;
 import lmp.admin.menu.book.BookMgmt;
-import lmp.db.dao.CheckOutDao;
-import lmp.db.dao.MemberDao;
-import lmp.db.dao.MenuDao;
-import lmp.db.vo.CheckOutVO;
-import lmp.db.vo.MemberVO;
+import lmp.admin.dao.CheckOutDao;
+import lmp.admin.dao.MemberDao;
+import lmp.admin.dao.MenuDao;
+import lmp.admin.vo.CheckOutVO;
+import lmp.admin.vo.MemberVO;
 
 public class MemberMgmt extends JPanel {
 
