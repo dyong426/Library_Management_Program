@@ -167,36 +167,56 @@ public class BookRegistrationFrame extends JFrame implements MouseListener, KeyL
 		model.removeRow(index);
 	}
 
-	public void addRecord() {		
-//		DefaultTableModel model_Regist = (DefaultTableModel) table_Regist.getModel();
+	public void addRecord() {
+		
+		// 정보 없는 칸 있으면 거르기
+		for (int i = 0; i < labels_Regist.length; ++i) {
+			if (!(labels_Regist[i].equals("위치") || labels_Regist[i].equals("비고"))) {
+				if (isInvalidInput(fields_Regist[i].getText())) {
+					JOptionPane.showMessageDialog(this, "입력하지 않은 정보가 있습니다.");
+					return;
+				} else if (labels_Regist[i].equals("편권수")) {
+					try {
+						if (Integer.parseInt(fields_Regist[i].getText()) <= 0) {
+							JOptionPane.showMessageDialog(null, "편권수에 1이상의 수를 입력해주세요.");
+							return;
+						}
+					} catch (NumberFormatException e) {
+						JOptionPane.showMessageDialog(null, "편권수를 숫자로 입력해주세요.");
+						return;
+					}
+				} else if (labels_Regist[i].equals("가격")) {
+					try {
+						if (Integer.parseInt(fields_Regist[i].getText()) <= 0) {
+							JOptionPane.showMessageDialog(null, "가격에 1이상의 수를 입력해주세요.");
+							return;
+						}
+					} catch (NumberFormatException e) {
+						JOptionPane.showMessageDialog(null, "가격을 숫자로 입력해주세요.");
+						return;
+					}
+				}
+			}
+		}
+		
 		++rowCount;
 		model_Regist.setRowCount(rowCount);
 		for (int i = 0; i < labels_Regist.length; i++) {
-			if (i < 6) {
-				if (isInvalidInput(fields_Regist[i].getText())) {
-					JOptionPane.showMessageDialog(this, "입력하지 않은 정보가 있습니다.");
-					return;						
-				} else {
-//					if (fields_Regist[i].getText().trim().equals("")) {
-//						continue;
-//					} else { // !fields_Regist[i].getText().equals(model_Regist.getValueAt(rowCount - 1, i)) && (i != 6)) { // && fields[i] == null
-						model_Regist.setValueAt(fields_Regist[i].getText(), rowCount - 1, i);
-//					}
-				}
-			} else if (i == 6) {
-				model_Regist.setValueAt(cb_Regist.getSelectedItem(), rowCount - 1, i);
+			if (!labels_Regist[i].equals("위치")) {
+					model_Regist.setValueAt(fields_Regist[i].getText(), rowCount - 1, i);
+				
 			} else {
-				model_Regist.setValueAt(fields_Regist[i].getText(), rowCount - 1, i);
+				model_Regist.setValueAt(cb_Regist.getSelectedItem(), rowCount - 1, i);
 			}
 		}
-			
+		
 		
 //		++rowCount;
 //		model_Regist.setRowCount(rowCount);
 		table_Regist.setModel(model_Regist);
 		scrolledTable_Regist.validate();
 		// 모든 TextField 비우기
-		for (int i = 0; i < labels_Regist.length; i++) 
+		for (int i = 0; i < labels_Regist.length; i++)
 			fields_Regist[i].setText("");
 		fields_Regist[0].requestFocus();
 		

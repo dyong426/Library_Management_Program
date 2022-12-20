@@ -18,6 +18,7 @@ public class UsageListScrollPane extends JScrollPane{
 	
 	UsageListTable usageListTable;
 
+	// 열람실 이용 회원 테이블 부모 스크롤팬
 	public UsageListScrollPane() throws SQLException {
 		
 		SeatUseDetailDao sudDao = new SeatUseDetailDao();
@@ -49,6 +50,7 @@ public class UsageListScrollPane extends JScrollPane{
 		
 		usageListTable = new UsageListTable(model);
 		this.setViewportView(usageListTable);
+		this.setBackground(new Color(87, 119, 119));
 	}
 
 	public UsageListTable getUsageListTable() {

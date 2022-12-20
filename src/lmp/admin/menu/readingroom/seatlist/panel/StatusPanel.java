@@ -16,7 +16,7 @@ public class StatusPanel extends JPanel{
 	GridLayout gridLayout = new GridLayout(6, 1);
 	private static JLabel[] LABELS = new JLabel[6]; 
 	
-	
+	// 좌석수 라벨 덩어리 패널
 	public StatusPanel(ArrayList<SeatUseDetailVO> sudVO) {
 		
 		setLayout(gridLayout);

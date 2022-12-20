@@ -9,6 +9,7 @@ import javax.swing.border.LineBorder;
 
 public class SeatLabel extends JLabel{
 
+	// 열람실 각 좌석
 	public SeatLabel(int seatNum) {
 		
 		setText(Integer.toString(seatNum));

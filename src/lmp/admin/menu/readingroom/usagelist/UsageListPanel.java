@@ -19,6 +19,7 @@ public class UsageListPanel extends JPanel{
 	UsageListScrollPane usageListScrollPane;
 	UsageListTitlePanel usagListTitlePanel;
 	
+	// 타이틀, 버튼, 이용 회원 테이블 부모 패널
 	public UsageListPanel() {
 		
 		this.setLayout(borderLayout);

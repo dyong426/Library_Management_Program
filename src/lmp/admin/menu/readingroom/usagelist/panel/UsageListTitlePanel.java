@@ -16,7 +16,7 @@ public class UsageListTitlePanel extends JPanel{
 	UsageListTitleLabel usageListTitleLabel;
 	UsageListCheckOutButton usageListCheckOutButton;
 	
-	
+	// 타이틀, 버튼 부모 패널
 	public UsageListTitlePanel(ReadingRoomPanel readingRoomPanel) {
 		
 		usageListCheckOutButton = new UsageListCheckOutButton(readingRoomPanel);

@@ -180,13 +180,13 @@ public class AdminDao extends MenuDao{
 	public StringBuilder selectSql(int header) {
 		StringBuilder sql = new StringBuilder();
 		String num = "SELECT * FROM admins WHERE admin_num LIKE ?";
-		String id = "SELECT * FROM admins WHERE admin_id LIKE ?";
+		String name = "SELECT * FROM admins WHERE admin_name LIKE ?";
 		String phone = "SELECT * FROM admins WHERE admin_phone LIKE ?";
 		String registrationdate = "SELECT * FROM admins WHERE admin_registrationdate LIKE ?";
 		if (header == 1) {
 			sql.append(num);
 		} else if (header == 2) {
-			sql.append(id);
+			sql.append(name);
 		} else if (header == 3) {
 			sql.append(phone);
 		} else if (header == 4) {

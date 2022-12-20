@@ -73,7 +73,7 @@ public class BookModificationFrame extends JFrame implements MouseListener, KeyL
 			label.setForeground(Color.WHITE);
 			topPanel.add(label);
 			fields_Modify[i] = new JTextField(100);
-			if (i == 8) {
+			if (TABLE_COLUMN[i].equals("위치")) {
 				// 콤보박스 초기값을 수정 도서의 위치로 설정
 				cb_Modify.setSelectedIndex(
 						BookMgmt.model_BookMgmt.getValueAt(
@@ -84,7 +84,8 @@ public class BookModificationFrame extends JFrame implements MouseListener, KeyL
 					fields_Modify[i].setText("");
 				} else {
 					fields_Modify[i].setText(
-						String.valueOf(BookMgmt.model_BookMgmt.getValueAt(BookMgmt.table_BookMgmt.getSelectedRow(), i + 1)));
+						String.valueOf(BookMgmt.model_BookMgmt.getValueAt(
+								BookMgmt.table_BookMgmt.getSelectedRow(), i + 1)));
 				}
 				topPanel.add(fields_Modify[i]);
 			}
@@ -213,14 +214,35 @@ public class BookModificationFrame extends JFrame implements MouseListener, KeyL
 	public void overwriteRecord() {
 		DefaultTableModel model_Modify = (DefaultTableModel) table_Modify.getModel();
 		for (int i = 0; i < TABLE_COLUMN.length; i++) {
-
-			// 아무것도 없으면 아래 코드 패스
-			if (i == 8) {
+			// 위치 정보는 textField가 아니기 때문에 반복문에서 제외
+			if (TABLE_COLUMN[i].equals("위치")) {
 				model_Modify.setValueAt(cb_Modify.getSelectedItem(), 0, i);
+				// 아무것도 없으면 아래 코드 패스
 			} else if (fields_Modify[i].getText().trim().equals("")) {
 				continue;
 			// fields에 무언가 있을 때 테이블에 있는 정보와 비교해서 다르면 정보 수정
-			} else if (!fields_Modify[i].getText().equals(model_Modify.getValueAt(0, i)) && (i != 8)) { // && fields[i] == null
+			} else if (TABLE_COLUMN[i].equals("편권수")) {
+				try {
+					if (Integer.parseInt(fields_Modify[i].getText()) <= 0) {
+						JOptionPane.showMessageDialog(null, "편권수에 1이상의 수를 입력해주세요.");
+						return;
+					}
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "편권수를 숫자로 입력해주세요.");
+					return;
+				}
+			} else if (TABLE_COLUMN[i].equals("가격")) {
+				try {
+					if (Integer.parseInt(fields_Modify[i].getText()) <= 0) {
+						JOptionPane.showMessageDialog(null, "가격에 1이상의 수를 입력해주세요.");
+						return;
+					}
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "가격을 숫자로 입력해주세요.");
+					return;
+				}
+			} else if (!fields_Modify[i].getText().equals(model_Modify.getValueAt(0, i)) &&
+					(!TABLE_COLUMN[i].equals("위치"))) {
 				model_Modify.setValueAt(fields_Modify[i].getText(), 0, i);
 			}
 		}

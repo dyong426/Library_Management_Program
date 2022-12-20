@@ -200,7 +200,12 @@ public class BookDao extends MenuDao{
 
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
-		pstmt.setString(1, "%"+searchStr+"%");
+		if (header != 6) {
+			pstmt.setString(1, "%" + searchStr + "%");
+		} else {
+			pstmt.setString(1, "%" + searchStr + "%");
+			pstmt.setString(2, "%" + searchStr + "%");
+		}
 		
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<BookVO> bookList = new ArrayList<>();
@@ -268,7 +273,7 @@ public class BookDao extends MenuDao{
 		String author = "SELECT * FROM books JOIN locations USING(location_id) WHERE book_author LIKE ?";
 		String publisher = "SELECT * FROM books JOIN locations USING(location_id) WHERE book_publisher LIKE ?";
 		String isbn = "SELECT * FROM books JOIN locations USING(location_id) WHERE book_isbn LIKE ?";
-		String location = "SELECT * FROM books JOIN locations USING(location_id) WHERE location_id LIKE ?";
+		String location = "SELECT * FROM books JOIN locations USING(location_id) WHERE location_id LIKE ? OR location_name LIKE ?";
 		if (header == 1) {
 			sql.append(id);
 		} else if (header == 2) {

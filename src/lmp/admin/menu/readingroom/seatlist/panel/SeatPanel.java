@@ -15,8 +15,10 @@ public class SeatPanel extends JPanel{
 
 	GridLayout gridLayout = new GridLayout(5, 2);
 	SeatLabel[] seatLabels = new SeatLabel[gridLayout.getRows() * gridLayout.getColumns()];
+	// 좌석 수 gridLayout으로 10개씩 묶음. 한 묶음 끝나고 좌석 수 이어가기 위한 변수
 	int tens;
 	
+	// 각 좌석 덩어리 패널
 	public SeatPanel(ArrayList<SeatUseDetailVO> sudVOs, int tensDigit) {
 		
 		this.setLayout(gridLayout);

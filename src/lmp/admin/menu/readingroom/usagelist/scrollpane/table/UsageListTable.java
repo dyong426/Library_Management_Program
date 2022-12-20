@@ -13,14 +13,14 @@ public class UsageListTable extends JTable{
 	
 	DefaultTableCellRenderer dtcr = new DefaultTableCellRenderer(); // 디폴트테이블셀렌더러를 생성
 	
+	// 열람실 이용 회원 테이블
 	public UsageListTable(DefaultTableModel model) {
 		
-		this.getTableHeader().setReorderingAllowed(false); // 테이블 컬럼 이동 불가
-		this.getTableHeader().setResizingAllowed(false); // 테이블 크기 조절 불가
-		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // 한개의 행만 선택 가능
-		this.getTableHeader().setResizingAllowed(false); // JTable 컬럼의 사이즈 변경 불가
-		this.setRowHeight(30);
 		this.setModel(model);
+		this.getTableHeader().setReorderingAllowed(false); // 테이블 컬럼 이동 불가
+		this.getTableHeader().setResizingAllowed(false); // 테이블 컬럼 사이즈 변경 불가
+		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // 한개의 행만 선택 가능
+		this.setRowHeight(30);
 		this.setFont(new Font("한컴 말랑말랑 Regular", Font.PLAIN, 15));
 		
 

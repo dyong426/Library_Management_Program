@@ -21,7 +21,7 @@ public class ReadingRoomPanel extends JPanel {
 	UsageListPanel usageListPanel;
 	UsageListScrollPane usageListScrollPane;
 	UsageListTitlePanel usageListTitlePanel;
-
+	
 	GridLayout gridLayout = new GridLayout(2, 1, 0, 30);
 	
 	

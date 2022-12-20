@@ -15,7 +15,6 @@ import lmp.db.dao.SeatUseDetailDao;
 import lmp.db.vo.SeatUseDetailVO;
 
 
-
 public class SeatListPanel extends JPanel{
 	
 	GridLayout gridLayout = new GridLayout(1, 5, 30, 0);
@@ -26,6 +25,8 @@ public class SeatListPanel extends JPanel{
 	
 	SeatUseDetailDao sudDao = new SeatUseDetailDao();
 	ArrayList<SeatUseDetailVO> sudVO;
+	
+	// 좌석 이미지로 표시되는 패널
 	public SeatListPanel() {
 		
 		setLayout(gridLayout);

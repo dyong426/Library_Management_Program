@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 
 public class StatusLabel extends JLabel{
 	
+	// 좌석수 표시 라벨
 	public StatusLabel() {
 		
 		this.setOpaque(true);
