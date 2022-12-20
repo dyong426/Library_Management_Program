@@ -164,7 +164,6 @@ public class AdminLoginFrame extends JFrame{
 				}
 			} 
 		}catch (SQLException e) {
-			e.printStackTrace();
 			return false;
 		}
 	}
