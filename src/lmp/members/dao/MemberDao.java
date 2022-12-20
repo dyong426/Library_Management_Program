@@ -121,7 +121,7 @@ public class MemberDao extends MenuDao{
 	 * @return ArrayList<MemberVO> memberList
 	 */
 	@Override
-	public ArrayList get(int mem_num) throws SQLException {
+	public ArrayList<MemberVO> get(int mem_num) throws SQLException {
 		String sql = "SELECT * FROM members WHERE mem_num = ?";
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);

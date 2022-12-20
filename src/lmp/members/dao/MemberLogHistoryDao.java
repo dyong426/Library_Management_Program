@@ -6,21 +6,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import lmp.members.vo.MemberLogHistoryVO;
+import lmp.members.vo.MemberVO;
 
-public class MemberLogHistroyDao extends MenuDao{
+public class MemberLogHistoryDao extends MenuDao{
 
 	
 	@Override
-	public void add(MemberLogHistoryVO memLogVO) throws SQLException{
+	public void add(MemberVO memberVO) throws SQLException{
 		
 		Connection conn = getConnection();
 		
-		String sql = "INSERT INTO member_log_histroy VALUES(mem_log_id_seq.nextval,?,sysdate,?)";
+		String sql = "INSERT INTO member_log_history(mem_log_id, mem_id) VALUES(mem_log_id_seq.nextval,?)";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
-		pstmt.setInt(1, memLogVO.getMem_num());
-		pstmt.setString(2, null);
+		pstmt.setInt(1, memberVO.getNum());
 		
 		pstmt.executeUpdate();
 			

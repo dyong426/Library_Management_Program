@@ -151,7 +151,7 @@ public class MemberDao extends MenuDao{
 	 * @return ArrayList<MemberVO> memberList
 	 */
 	@Override
-	public ArrayList get(int header, String searchStr) throws SQLException {
+	public ArrayList<MemberVO> get(int header, String searchStr) throws SQLException {
 		
 		StringBuilder sql = new StringBuilder(selectSql(header));
 

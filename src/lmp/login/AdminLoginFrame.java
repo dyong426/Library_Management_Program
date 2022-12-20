@@ -82,34 +82,32 @@ public class AdminLoginFrame extends JFrame{
 		});
 
 		JButton loginBtn = new JButton("로그인");
-		
-		
+
 		loginBtn.setBounds(90, 180, 80, 30);
 		loginBtn.setFont(font);
 		loginBtn.setBackground(Color.WHITE);
 		loginBtn.setForeground(Color.GRAY);
 		loginBtn.setBorderPainted(false);
-		loginBtn.addActionListener(new ActionListener () {
-			
+		loginBtn.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					System.out.println(managerIdTf.getText() + new String(managerPwTf.getPassword()));
-					System.out.println(checkLogin(managerIdTf.getText(),new String(managerPwTf.getPassword())));
-					if (checkLogin(managerIdTf.getText(),new String(managerPwTf.getPassword()))) {
+					System.out.println(checkLogin(managerIdTf.getText(), new String(managerPwTf.getPassword())));
+					if (checkLogin(managerIdTf.getText(), new String(managerPwTf.getPassword()))) {
 						adminLoginFrame.dispose();
 						selectModeFrame.dispose();
 						adminFrame = new AdminFrame();
-						
-						
+
 					} else {
-						JOptionPane.showMessageDialog(adminLoginFrame, "사원번호/비밀번호를 확인하세요");	
+						JOptionPane.showMessageDialog(adminLoginFrame, "사원번호/비밀번호를 확인하세요");
 					}
 				} catch (HeadlessException e1) {
 					e1.printStackTrace();
 				}
 			}
-			
+
 		});
 
 		JButton cancelBtn = new JButton("취소") {
