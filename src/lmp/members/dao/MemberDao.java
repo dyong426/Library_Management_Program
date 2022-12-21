@@ -97,6 +97,7 @@ public class MemberDao extends MenuDao{
 	public MemberVO get(String mem_id) throws SQLException {
 		String sql = "SELECT * FROM members WHERE mem_id = ?";
 		Connection conn = getConnection();
+		System.out.println(conn);
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, mem_id);
 		ResultSet rs = pstmt.executeQuery();

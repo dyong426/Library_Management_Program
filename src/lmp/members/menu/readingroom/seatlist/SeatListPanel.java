@@ -26,6 +26,8 @@ public class SeatListPanel extends JPanel{
 	ArrayList<SeatUseDetailVO> sudVO;
 	public SeatListPanel() {
 		
+		System.out.println("seatlistpanel");
+		
 		setLayout(gridLayout);
 //		setBorder(new TitledBorder(new LineBorder(new Color(49, 82, 91), 30)));
 		setBackground(new Color(87, 119, 119));

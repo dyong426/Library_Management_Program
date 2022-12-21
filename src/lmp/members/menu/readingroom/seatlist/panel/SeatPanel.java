@@ -17,7 +17,7 @@ public class SeatPanel extends JPanel{
 	int tens;
 	
 	public SeatPanel(ArrayList<SeatUseDetailVO> sudVOs, int tensDigit) {
-		
+		System.out.println("seatPanel");
 		this.setLayout(gridLayout);
 		this.tens = tensDigit * 10;
 		
