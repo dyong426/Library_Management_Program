@@ -11,7 +11,7 @@ import lmp.members.dao.MemberDao;
 import lmp.members.dao.MemberLogHistoryDao;
 import lmp.members.dao.SeatUseDetailDao;
 import lmp.members.menu.readingroom.ReadingRoomPanel;
-import lmp.members.menu.readingroom.seatlist.label.SeatLabel;
+import lmp.members.menu.readingroom.seatlist.SeatListPanel;
 import lmp.members.vo.MemberLogHistoryVO;
 import lmp.members.vo.MemberVO;
 import lmp.members.vo.SeatUseDetailVO;
@@ -29,6 +29,7 @@ public class CheckOutMouseAdapter extends MouseAdapter {
 	
 	
 	public CheckOutMouseAdapter(ReadingRoomPanel readingRoomPanel) {
+		this.readingRoomPanel = readingRoomPanel; 
 	}
 	
 	@Override
@@ -61,7 +62,8 @@ public class CheckOutMouseAdapter extends MouseAdapter {
 										sudVO.getMember().getName(),
 										sudVO.getStartTime().substring(11),
 										sudVO.getEndTime().substring(11)),"퇴실확인", 0);
-								readingRoomPanel.getSeatListPanel().refresh(sudDao.getUse());
+								
+								readingRoomPanel.refresh();
 						}
 					}
 				}

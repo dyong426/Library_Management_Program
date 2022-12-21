@@ -10,6 +10,7 @@ import lmp.login.MemberLoginFrame;
 import lmp.members.dao.MemberDao;
 import lmp.members.dao.MemberLogHistoryDao;
 import lmp.members.dao.SeatUseDetailDao;
+import lmp.members.menu.readingroom.ReadingRoomPanel;
 import lmp.members.menu.readingroom.seatlist.label.SeatLabel;
 import lmp.members.vo.MemberLogHistoryVO;
 import lmp.members.vo.MemberVO;
@@ -24,12 +25,16 @@ public class SeatMouseAdapter extends MouseAdapter{
 	MemberLogHistoryVO memLogVO;
 	MemberVO memberVO;
 	MemberLoginFrame memLogFrame = new MemberLoginFrame();
+	ReadingRoomPanel readingRoomPanel;
+	public SeatMouseAdapter(ReadingRoomPanel readingRoomPanel) {
+		this.readingRoomPanel = readingRoomPanel;
+	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
 		SeatLabel seatLabel = (SeatLabel) e.getSource();
-		int seat_num = Integer.parseInt(seatLabel.getText());
+		int seat_num = Integer.parseInt(seatLabel.getText().replace("|",""));
 		try {
 			
 			sudVO = sudDao.searchSeat(seat_num);
@@ -54,14 +59,20 @@ public class SeatMouseAdapter extends MouseAdapter{
 						System.out.println("발권");
 						sudVO = sudDao.getUsingInfo(memLogVO.getMem_num());
 						if (sudVO != null) {
-							JOptionPane.showMessageDialog(null, "이미 사용중 입니다.", "Message", 0);
+							JOptionPane.showMessageDialog(null, String.format("이미 사용중 입니다.\n좌석번호 : %d\n회원이름 : %s\n사용시작시간 : %s",
+																				sudVO.getReadingroom().getSeatNum(),
+																				sudVO.getMember().getName(),
+																				sudVO.getStartTime()), "사용중인 자리 확인", 0);	
 						} else {
 							sudDao.add(memLogVO.getMem_num(),seat_num);
 							sudVO = sudDao.getUsingInfo(memLogVO.getMem_num());
 							JOptionPane.showMessageDialog(null, String.format("좌석번호 : %d\n회원이름 : %s\n사용시작시간 : %s",
 																				sudVO.getReadingroom().getSeatNum(),
 																				sudVO.getMember().getName(),
-																				sudVO.getStartTime()), "발권확인", 0);							
+																				sudVO.getStartTime()), "발권확인", 0);	
+							
+							readingRoomPanel.refresh();
+							
 						}
 						
 					}

@@ -13,10 +13,9 @@ public class GenderLabel  extends JLabel {
 	
 	JLabel genderImgLabel;
 	
-	public GenderLabel(ReadingRoomPanel readingRoomPanel) {
-		
-		System.out.println("Changing the color of the seat by gender");
-		ImageIcon icon = new ImageIcon("C:\\JavaFullStack\\lmpRepos\\Library_Management_Program\\src\\lmp\\members\\menu\\readingroom\\sj\\seatlist\\label\\gender.png");
+	public GenderLabel() {
+	
+		ImageIcon icon = new ImageIcon("C:\\javaFullStack_LDH\\repos\\Library_Management_Program\\src\\lmp\\members\\menu\\readingroom\\seatlist\\label\\gender.png");
 		Image img = icon.getImage();
 		Image changeImg = img.getScaledInstance(120, 50, Image.SCALE_SMOOTH);
 		ImageIcon changeIcon = new ImageIcon(changeImg);
@@ -24,7 +23,7 @@ public class GenderLabel  extends JLabel {
 		//		genderImgLabel = new JLabel("", genderImg, JLabel.CENTER);
 		
 //		this.setText("성별");
-		this.setIcon(new ImageIcon("C:\\JavaFullStack\\lmpRepos\\Library_Management_Program\\src\\lmp\\members\\menu\\readingroom\\sj\\seatlist\\label\\gender.png"));
+		this.setIcon(new ImageIcon("C:\\javaFullStack_LDH\\repos\\Library_Management_Program\\src\\lmp\\members\\menu\\readingroom\\seatlist\\label\\gender.png"));
 		this.setHorizontalAlignment(JLabel.CENTER);
 		this.setFont(new Font("한컴 말랑말랑 Regular", Font.PLAIN, 15));
 //		this.setBorder(BorderFactory.createLineBorder(null));

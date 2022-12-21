@@ -10,7 +10,6 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import lmp.admin.AdminFrame;
 import lmp.members.dao.MemberDao;
 import lmp.members.dao.MemberLogHistoryDao;
 import lmp.members.vo.MemberVO;

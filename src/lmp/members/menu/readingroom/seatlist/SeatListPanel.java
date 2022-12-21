@@ -10,45 +10,37 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import lmp.members.dao.SeatUseDetailDao;
+import lmp.members.menu.readingroom.ReadingRoomPanel;
 import lmp.members.menu.readingroom.seatlist.panel.SeatPanel;
 import lmp.members.vo.SeatUseDetailVO;
 
 public class SeatListPanel extends JPanel{
 	
-	GridLayout gridLayout = new GridLayout(1,5,30,0);
+	public GridLayout gridLayout = new GridLayout(1,6,30,0);
 
 //	StatusPanel statusPanel;
-	SeatPanel[]	seatPanels = new SeatPanel[gridLayout.getColumns() -1 ];
+	SeatPanel[]	seatPanels = new SeatPanel[gridLayout.getColumns()];
 	
-	SeatUseDetailDao sudDao = new SeatUseDetailDao();
-	ArrayList<SeatUseDetailVO> sudVO;
+	ReadingRoomPanel readingRoomPanel;
+	
+	public SeatListPanel() {}
 		
-	public SeatListPanel() {
-		System.out.println("seatlistpanel");
+	public SeatListPanel(ReadingRoomPanel readingRoomPanel) throws SQLException {
+		this.readingRoomPanel = readingRoomPanel;
 		setLayout(gridLayout);
-		setBorder(new TitledBorder(new LineBorder(new Color(126, 151, 148),20)));
+		setBorder(new TitledBorder(new LineBorder(new Color(126, 151, 148), 20)));
 		setBackground(new Color(126, 151, 148));
-	
-		try {
-			sudVO = sudDao.getUse();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
-//		statusPanel = new StatusPanel(sudVO);
-//		add(statusPanel);
-		
-		for (int i = 0; i < gridLayout.getColumns() -1 ; i++) {
-			seatPanels[i] = new SeatPanel(sudVO,i);
+
+		for (int i = 0; i < gridLayout.getColumns(); i++) {
+			seatPanels[i] = new SeatPanel(readingRoomPanel, i);
 			add(seatPanels[i]);
 		}
-		
+
 	}
-	
-	public void refresh(ArrayList<SeatUseDetailVO> sudVO) {
-//		statusPanel.refresh(sudVO);
+
+	public void refresh() throws SQLException {
 		for (SeatPanel seatPanel : seatPanels) {
-			seatPanel.refresh(sudVO);
+			seatPanel.initialize();
 		}
 		this.validate();
 	}

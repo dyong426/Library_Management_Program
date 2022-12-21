@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import lmp.members.vo.MemberVO;
 import lmp.members.vo.ReadingRoomVO;
@@ -72,6 +73,29 @@ public class SeatUseDetailDao extends MenuDao{
 		
 		pstmt.close();
 		conn.close();
+		
+	}
+	
+	
+	@Override
+	public ArrayList<ReadingRoomVO> getRoomInfo() throws SQLException {
+		
+		String sql = "SELECT * FROM readingroom";
+		
+		Connection conn = getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		
+		ArrayList<ReadingRoomVO> seatList = new ArrayList<>();
+		while (rs.next()) {
+			
+			seatList.add(new ReadingRoomVO(rs.getInt("seat_num"),rs.getString("table_divider")));
+			
+		}
+		
+		Collections.sort(seatList);
+		
+		return seatList;
 		
 	}
 	
@@ -214,5 +238,7 @@ public class SeatUseDetailDao extends MenuDao{
 		
 		return sudVO;
 	}
+	
+	
 
 }
