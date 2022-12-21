@@ -177,5 +177,10 @@ public abstract class MenuDao {
 		return null;
 	}
 
+	public MemberVO getNum(int mem_num) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

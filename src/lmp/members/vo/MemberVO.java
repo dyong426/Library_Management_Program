@@ -27,6 +27,11 @@ public class MemberVO {
 	 * @param mem_id
 	 * @param mem_pw
 	 */
+	public MemberVO(Integer mem_num,String mem_name) {
+		this.num = mem_num;
+		this.name = mem_name;
+	}
+	
 	public MemberVO(Integer mem_num, String mem_id, String mem_pw) {
 		
 		this.num = mem_num;

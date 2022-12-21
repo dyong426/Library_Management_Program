@@ -115,6 +115,28 @@ public class MemberDao extends MenuDao{
 		
 		return memberVO;
 	}
+	
+	@Override
+	public MemberVO getNum(int mem_num) throws SQLException {
+		String sql = "SELECT * FROM members WHERE mem_num = ?";
+		Connection conn = getConnection();
+		System.out.println(conn);
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, mem_num);
+		ResultSet rs = pstmt.executeQuery();
+		MemberVO memberVO = new MemberVO();
+		while (rs.next()) {
+			memberVO = new MemberVO(
+								rs.getInt("mem_num"),
+								rs.getString("mem_name")
+								);
+		}
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return memberVO;
+	}
 
 //	/**
 //	 * 전체 회원 목록 가져오기

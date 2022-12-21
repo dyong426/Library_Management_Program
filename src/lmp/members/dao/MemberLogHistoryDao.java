@@ -66,6 +66,8 @@ public class MemberLogHistoryDao extends MenuDao{
 		
 		return memLogVO;
 	}
+	
+	
 
 	@Override
 	public void delete(Integer mem_id) throws SQLException {
