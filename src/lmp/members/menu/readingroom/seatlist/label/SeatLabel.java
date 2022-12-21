@@ -6,7 +6,7 @@ import java.awt.Font;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
-import lmp.members.menu.readingroom.seatlist.listener.SeatMouseListener;
+import lmp.members.menu.readingroom.seatlist.listener.SeatMouseAdapter;
 
 public class SeatLabel extends JLabel{
 
@@ -20,7 +20,7 @@ public class SeatLabel extends JLabel{
 		setHorizontalAlignment(JLabel.CENTER);
 		setFont(new Font("한컴 말랑말랑 Regular", Font.PLAIN, 15));
 		
-		addMouseListener(new SeatMouseListener());
+		addMouseListener(new SeatMouseAdapter());
 	}
 	
 }

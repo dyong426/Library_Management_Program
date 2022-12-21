@@ -50,7 +50,6 @@ public class SeatListPanel extends JPanel{
 		for (SeatPanel seatPanel : seatPanels) {
 			seatPanel.refresh(sudVO);
 		}
-		
 		this.validate();
 	}
 	

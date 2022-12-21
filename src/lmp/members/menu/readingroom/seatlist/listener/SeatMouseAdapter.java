@@ -15,7 +15,7 @@ import lmp.members.vo.MemberLogHistoryVO;
 import lmp.members.vo.MemberVO;
 import lmp.members.vo.SeatUseDetailVO;
 
-public class SeatMouseListener extends MouseAdapter{
+public class SeatMouseAdapter extends MouseAdapter{
 	
 	SeatUseDetailDao sudDao = new SeatUseDetailDao();
 	SeatUseDetailVO  sudVO;
@@ -48,16 +48,28 @@ public class SeatMouseListener extends MouseAdapter{
 					memLogFrame.setVisible(true);
 				} else {
 					memberVO = memberDao.getNum(memLogVO.getMem_num());
-					JOptionPane.showMessageDialog(null, String.format("좌석번호 : %d",seat_num), "열람실 자리 발권 확인", JOptionPane.YES_NO_OPTION);
-					if (JOptionPane.YES_OPTION)
+					
+					// 발권 여부 확인
+					if (JOptionPane.showConfirmDialog(null, String.format("좌석번호 : %d",seat_num), "열람실 자리 발권 확인", JOptionPane.YES_NO_OPTION) == 0) {
+						System.out.println("발권");
+						sudVO = sudDao.getUsingInfo(memLogVO.getMem_num());
+						if (sudVO != null) {
+							JOptionPane.showMessageDialog(null, "이미 사용중 입니다.", "Message", 0);
+						} else {
+							sudDao.add(memLogVO.getMem_num(),seat_num);
+							sudVO = sudDao.getUsingInfo(memLogVO.getMem_num());
+							JOptionPane.showMessageDialog(null, String.format("좌석번호 : %d\n회원이름 : %s\n사용시작시간 : %s",
+																				sudVO.getReadingroom().getSeatNum(),
+																				sudVO.getMember().getName(),
+																				sudVO.getStartTime()), "발권확인", 0);							
+						}
+						
+					}
 				}
-				
-				
 			}
 			
 			
 		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		

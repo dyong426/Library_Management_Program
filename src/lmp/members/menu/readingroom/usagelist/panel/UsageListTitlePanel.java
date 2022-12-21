@@ -40,38 +40,6 @@ public class UsageListTitlePanel extends JPanel{
 		this.add(usageListCheckOutLabel, "East");
 		this.add(genderLabel, "West");
 
-	
-		usageListCheckOutLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				super.mouseClicked(e);
-				int result = JOptionPane.showConfirmDialog(null, "해당 좌석에서 퇴실하겠습니까?", "Confirm", JOptionPane.YES_NO_OPTION);
-				if (result == JOptionPane.NO_OPTION) {
-					setVisible(true);
-				} else if (result == JOptionPane.YES_OPTION) {
-
-					SeatUseDetailDao sudDao = new SeatUseDetailDao();
-					ArrayList<SeatUseDetailVO> sudList=  new ArrayList<>();
-
-					try {
-						sudList.addAll(sudDao.getUse());
-						for (SeatUseDetailVO sud : sudList) {
-							// 로그인정보 필요...ㅠ
-							// Yes option -> 종료시간 입력되면서 퇴실처리
-							
-							
-							
-						}
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-					JOptionPane.showMessageDialog(null, "퇴실처리가 완료되었습니다.", "Message", 1);
-
-				}	
-			}
-
-		});
-
 	}
 
 }

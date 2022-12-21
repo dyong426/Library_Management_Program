@@ -109,20 +109,6 @@ public abstract class MenuDao {
 	}
 
 	/**
-	 * 열람실 이용내역 추가
-	 * use_id, mem_num, seat_num 등록
-	 * 
-	 * start_time default 현재시간으로 등록
-	 * 
-	 * @param sudVO
-	 * @throws SQLException
-	 */
-	public void add(SeatUseDetailVO sudVO) throws SQLException {
-		// TODO Auto-generated method stub
-		
-	}
-
-	/**
 	 * 열람실 이용내역 업데이트
 	 * 
 	 * 퇴실 , 강제퇴실 할경우
@@ -178,6 +164,30 @@ public abstract class MenuDao {
 	}
 
 	public MemberVO getNum(int mem_num) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/**
+	 * 열람실 이용내역 추가
+	 * use_id, mem_num, seat_num 등록
+	 * 
+	 * start_time default 현재시간으로 등록
+	 * 
+	 * @param sudVO
+	 * @throws SQLException
+	 */
+	public void add(Integer mem_num, Integer seat_num) throws SQLException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public SeatUseDetailVO getUsingInfo(Integer mem_num) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public SeatUseDetailVO getCheckOutInfo(Integer mem_num) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}
