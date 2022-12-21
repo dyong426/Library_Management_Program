@@ -48,7 +48,8 @@ public class SeatMouseListener extends MouseAdapter{
 					memLogFrame.setVisible(true);
 				} else {
 					memberVO = memberDao.getNum(memLogVO.getMem_num());
-					JOptionPane.showMessageDialog(null, String.format("좌석번호 : %d",seat_num), "열람실 자리 발권 확인", 0);
+					JOptionPane.showMessageDialog(null, String.format("좌석번호 : %d",seat_num), "열람실 자리 발권 확인", JOptionPane.YES_NO_OPTION);
+					if (JOptionPane.YES_OPTION)
 				}
 				
 				
