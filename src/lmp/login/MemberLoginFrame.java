@@ -42,7 +42,7 @@ public class MemberLoginFrame extends JFrame {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize() {
 		memberLoginFrame = this;
 		setAutoRequestFocus(false);
 		setBounds(100, 100, 400, 300);
@@ -197,11 +197,4 @@ public class MemberLoginFrame extends JFrame {
 			return false;
 		}
 	}
-
-	public static void main(String[] args) {
-		MemberLoginFrame ml = new MemberLoginFrame();
-		ml.setVisible(true);
-		
-	}
-	
 }

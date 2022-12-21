@@ -32,4 +32,10 @@ public class MemberLogHistoryVO {
 		return logoutTime;
 	}
 	
+	@Override
+	public String toString() {
+		
+		return String.format("%d,%d,%s,%s",log_id, mem_num, loginTime,logoutTime);
+	}
+	
 }

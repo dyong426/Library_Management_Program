@@ -1,28 +1,30 @@
 package lmp.members.menu.readingroom;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 
-import lmp.members.menu.readingroom.seatlist.SeatListPanel;
-
 public class ReadingRoomMenu extends JFrame{ 
 	
-	SeatListPanel seatListPanel = new SeatListPanel();
 	
-	public ReadingRoomMenu() {
+	
+	public ReadingRoomMenu() throws SQLException {
 		System.out.println("실행");
-//		add("Center",seatListPanel);
+		add(new ReadingRoomPanel());
 		setBounds(300, 100, 1200, 800);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		setVisible(true);
-		setLayout(new BorderLayout());
+		setLayout(null);
 	}
 	
 	public static void main(String[] args) {
-		new ReadingRoomMenu();
+		try {
+			new ReadingRoomMenu();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

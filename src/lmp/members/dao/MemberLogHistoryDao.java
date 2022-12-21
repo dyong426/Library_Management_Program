@@ -39,7 +39,7 @@ public class MemberLogHistoryDao extends MenuDao{
 		
 		Connection conn = getConnection();
 		
-		String sql =  "Update members SET logout_time = to_char(sysdate, 'yyyy.mm.dd hh24:mi') WHERE mem_num = ?";
+		String sql =  "Update member_log_history SET logout_time = to_char(sysdate, 'yyyy.mm.dd hh24:mi') WHERE mem_num = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 			
 		pstmt.setInt(1,memLogVO.getMem_num());
@@ -52,13 +52,13 @@ public class MemberLogHistoryDao extends MenuDao{
 	
 	@Override
 	public MemberLogHistoryVO getLog() throws SQLException {
-		String sql = "SELECT * FROM members WHERE logout_time IS NULL";
+		String sql = "SELECT * FROM member_log_history WHERE logout_time IS NULL";
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		MemberLogHistoryVO memLogVO = null;
 		while (rs.next()) {
-			memLogVO = new MemberLogHistoryVO(rs.getInt(0), rs.getInt(1), rs.getString(2), rs.getString(3));
+			memLogVO = new MemberLogHistoryVO(rs.getInt("mem_log_id"), rs.getInt("mem_num"), rs.getString("login_time"), rs.getString("logout_time"));
 		}
 		rs.close();
 		pstmt.close();

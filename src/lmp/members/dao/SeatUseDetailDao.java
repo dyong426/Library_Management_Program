@@ -120,5 +120,45 @@ public class SeatUseDetailDao extends MenuDao{
 		
 		return sudList;
 	}
+	
+	@Override
+	public SeatUseDetailVO searchSeat(int seat_num) throws SQLException {
+		String sql = "SELECT * FROM seat_use_details JOIN members USING(mem_num) JOIN readingroom USING(seat_num) WHERE seat_num = ? AND end_time is null";
+		
+		Connection conn = getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, seat_num);
+		ResultSet rs = pstmt.executeQuery();
+		SeatUseDetailVO sudVO = null;
+		while (rs.next()) {
+				sudVO =	new SeatUseDetailVO(
+							rs.getInt("use_id"),
+							new MemberVO(
+								rs.getInt("mem_num"),
+								rs.getString("mem_name"),
+								rs.getString("mem_id"),
+								rs.getString("mem_pw"),
+								rs.getString("mem_birthday"),
+								rs.getString("mem_sex"),
+								rs.getString("mem_phone"),
+								rs.getString("mem_email"),
+								rs.getString("mem_address"),
+								rs.getString("mem_registrationdate"),
+								rs.getString("mem_note")
+								),
+							new ReadingRoomVO(
+								rs.getInt("seat_num"),
+								rs.getString("table_divider")
+								),
+							rs.getString("start_time"),
+							rs.getString("end_time")
+							);
+		}
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return sudVO;
+	}
 
 }

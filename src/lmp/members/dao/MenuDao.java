@@ -172,5 +172,10 @@ public abstract class MenuDao {
 		
 	}
 
+	public SeatUseDetailVO searchSeat(int seat_num) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }
