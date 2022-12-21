@@ -10,6 +10,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -189,25 +190,27 @@ public class FindID extends JFrame {
   				ArrayList<MemberVO> memVo = new ArrayList<>();
   				
   				try {
+  					memVo.clear();
+  					System.out.println("배열 초기화 완료");
 					memVo.addAll(memDao.get(2, textField.getText()));
+					System.out.println("정보 얻어옴");
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
   				if (memVo.size() != 0) {
-  					System.out.println("회원 이름 존재");
-  					for (MemberVO mem : memVo) {
-  						System.out.println("for문 도는중");
-  						if (mem.getPhone().equals(textField_1.getText())) {
-  							JOptionPane.showMessageDialog(null, "아이디 : " + mem.getId());
-  							return;
-  						}
-  					}
-  					System.out.println("for문 끝");
+					for (MemberVO mem : memVo) {
+						System.out.println("리스트 하나씩 꺼내보는 중");
+						if (mem.getPhone().equals(textField_1.getText())) {
+							System.out.println("해당 이름 정보 발견");
+							JOptionPane.showMessageDialog(null, "아이디 : " + mem.getId());
+							return;
+						}
+						System.out.println("리스트 한 개 확인 완료");
+					}
+					JOptionPane.showMessageDialog(null, "일치하는 정보가 없습니다.");
   				} else {
-  					System.out.println("배열 길이 1");
   					JOptionPane.showMessageDialog(null, "일치하는 정보가 없습니다.");
   				}
-  				System.out.println("배열 길이 0");
   			}
   		}
       });
