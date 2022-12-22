@@ -118,6 +118,7 @@ public class AdminDao extends MenuDao{
 								rs.getString("admin_email"),
 								rs.getString("admin_address"),
 								rs.getString("admin_registrationdate"),
+								rs.getString("admin_updatedate"),
 								rs.getString("admin_note")));
 		}
 		rs.close();
@@ -130,7 +131,8 @@ public class AdminDao extends MenuDao{
 	
 	@Override
 	public AdminVO getAdminInfo(int admin_num) throws SQLException {
-		String sql = "SELECT * FROM Admins WHERE amdin_num = ?";
+		String sql = "SELECT * FROM admins WHERE admin_num = ?";
+		System.out.println(admin_num);
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, admin_num);
@@ -145,6 +147,7 @@ public class AdminDao extends MenuDao{
 								rs.getString("admin_email"),
 								rs.getString("admin_address"),
 								rs.getString("admin_registrationdate"),
+								rs.getString("admin_updatedate"),
 								rs.getString("admin_note"));
 		}
 		rs.close();
@@ -174,6 +177,7 @@ public class AdminDao extends MenuDao{
 								rs.getString("admin_email"),
 								rs.getString("admin_address"),
 								rs.getString("admin_registrationdate"),
+								rs.getString("admin_updatedate"),
 								rs.getString("admin_note")));
 		}
 		rs.close();

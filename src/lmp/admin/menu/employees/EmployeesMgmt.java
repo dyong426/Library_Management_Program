@@ -315,7 +315,7 @@ public class EmployeesMgmt extends JPanel {
 				AdminDao dao = new AdminDao();
 				AdminVO vo = new AdminVO(null,nameField.getText(), new String(pwField.getPassword()),
 						phoneField.getText(), emailField.getText(), addressField.getText(),
-						null, null); 
+						null, null,null); 
 				
 				try {
 					dao.add(vo);

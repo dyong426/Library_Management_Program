@@ -196,7 +196,6 @@ public abstract class MenuDao {
 	public ArrayList<ReadingRoomVO> getRoomInfo() throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
->>>>>>> refs/heads/logingsub
 	}
 
 

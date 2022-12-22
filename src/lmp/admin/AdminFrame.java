@@ -29,7 +29,9 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import lmp.admin.dao.AdminLogHistoryDao;
 import lmp.admin.menu.book.BookMgmt;
+import lmp.admin.menu.book.booksearch.BookSearchPanel;
 import lmp.admin.menu.checkin_out.Member_Searching_Panel;
 import lmp.admin.menu.employees.EmployeesMgmt;
 import lmp.admin.menu.member.MemberMgmt;
@@ -186,24 +188,6 @@ public class AdminFrame extends JFrame {
 		menuButtonPanel.add(memberMgmt);
 		menuButtonPanel.add(readingRoom);
 		
-		
-		this.addWindowListener(new WindowAdapter() {
-			
-			@Override
-			public void windowClosing(WindowEvent e) {
-				try {
-					System.out.println("로그아웃");
-					AdminLogHistoryDao adminLogHistoryDao = new AdminLogHistoryDao();
-					adminLogHistoryDao.update(adminLogHistoryDao.getLog());
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-					System.out.println("로그아웃 실패");
-					
-				}
-			}
-		});
-		
-		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setPreferredSize(new Dimension(1900, 1000));
@@ -223,8 +207,27 @@ public class AdminFrame extends JFrame {
 //		add(menuCardPanel);
 		
 //		setExtendedState(MAXIMIZED_BOTH);
+
+		this.addWindowListener(new WindowAdapter() {
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				try {
+					System.out.println("로그아웃");
+					AdminLogHistoryDao adminLogHistoryDao = new AdminLogHistoryDao();
+					adminLogHistoryDao.update(adminLogHistoryDao.getLog());
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+					System.out.println("로그아웃 실패");
+					
+				}
+			}
+		});
+		
+		
 		getContentPane().add(sp);
 		setContentPane(sp);
+		
 		
 		
 //		setMinimumSize(new Dimension(500, 400));

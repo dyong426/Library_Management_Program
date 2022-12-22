@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
+import java.text.ParseException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -27,7 +28,7 @@ import lmp.admin.vo.AdminVO;
 
 public class AdminLoginFrame extends JFrame{
 
-	SelectModeFrame selectModeFrame;
+
 	AdminLoginFrame adminLoginFrame;
 	AdminFrame adminFrame;						
 	
@@ -36,7 +37,6 @@ public class AdminLoginFrame extends JFrame{
 
 	public AdminLoginFrame(SelectModeFrame selectModeFrame) {
 
-		this.selectModeFrame = selectModeFrame;
 		adminLoginFrame = this;
 		
 		JPanel panel = new JPanel();
@@ -151,7 +151,9 @@ public class AdminLoginFrame extends JFrame{
 	public boolean checkLogin(String admin_num, String admin_pw) {
 		AdminVO adminVO;
 		try {
-			adminVO = adminDao.get(admin_num).get(0);
+			
+			adminVO = adminDao.getAdminInfo(Integer.parseInt(admin_num));
+			System.out.println(adminVO);
 			if (adminVO == null) {
 				return false;
 			} else {
@@ -161,8 +163,14 @@ public class AdminLoginFrame extends JFrame{
 				} else {
 					return false;
 				}
-			} 
+			}
+			
+		}catch (NumberFormatException nfe) {
+			System.out.println("사원번호 확인");
+			return false;
 		}catch (SQLException e) {
+			e.printStackTrace();
+			System.out.println("sql exception");
 			return false;
 		}
 	}

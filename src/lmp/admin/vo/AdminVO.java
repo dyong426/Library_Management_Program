@@ -17,6 +17,7 @@ public class AdminVO {
 	private String	regDate;
 	private String  updateDate;
 	private String	note;
+	private Object[] list;
 	
 	/**
 	 * 기본 생성자
@@ -53,7 +54,8 @@ public class AdminVO {
 					String	admin_phone, 
 					String	admin_email, 
 					String	admin_address, 
-					String	admin_registrationdate, 
+					String	admin_registrationdate,
+					String  admin_updatedate,
 					String	admin_note
 					) {
 		
@@ -64,6 +66,7 @@ public class AdminVO {
 		this.email 	 = admin_email;
 		this.address = admin_address;
 		this.regDate = admin_registrationdate;
+		this.updateDate = admin_updatedate;
 		this.note 	 = admin_note;
 		this.list	 = new Object[] {
 									admin_num,

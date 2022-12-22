@@ -33,13 +33,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-<<<<<<< HEAD
 import lmp.admin.AdminFrame;
 import lmp.admin.dao.MemberDao;
 import lmp.admin.vo.MemberVO;
-=======
-import lmp.admin.dao.MemberDao;
->>>>>>> refs/heads/logingsub
+
 
 public class Member_Searching_Panel extends JPanel {
 
@@ -212,13 +209,9 @@ public class Member_Searching_Panel extends JPanel {
 //				for (int i = 0; i < category.length; ++i) {
 //					table.getColumnModel().getColumn(i).setMinWidth(250); 
 //				}
-<<<<<<< HEAD
 				// 컨테이너 사이즈에 따라 자동으로 테이블 크기 조정 안되게 세팅 (가로 스크롤 나오게 설정)
 //				table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-=======
-				// 컨테이너 사이즈에 따라 자동으로 테이블 크기 조정 안되게 세팅 (가로 스크롤 나오게 설정) 
-				table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF); 
->>>>>>> refs/heads/logingsub
+
 				
 				result.setViewportView(table); 
 				validate();

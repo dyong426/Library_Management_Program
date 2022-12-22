@@ -20,6 +20,7 @@ public class SelectModeFrame extends JFrame{
 	static Color panelColor = new Color(49, 82, 91);
 	static Color btnColor = new Color(204, 139, 101);
 
+	AdminLoginFrame adminLogFrame;
 		public SelectModeFrame() {
 
 			SelectModeFrame selectModeFrame = this;
@@ -30,9 +31,8 @@ public class SelectModeFrame extends JFrame{
 					addActionListener(new ActionListener() {	
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							MemberFrame memberframe = new MemberFrame();
+							adminLogFrame = new AdminLoginFrame(selectModeFrame);
 							selectModeFrame.setVisible(false);
-							memberframe.open();
 						}
 					});
 				}

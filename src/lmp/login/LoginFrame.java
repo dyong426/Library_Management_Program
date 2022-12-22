@@ -1,5 +1,5 @@
 package lmp.login;
-
+/*
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -98,3 +98,4 @@ public class LoginFrame extends JFrame{
 		
 	}
 }
+*/
