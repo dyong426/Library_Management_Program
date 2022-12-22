@@ -26,11 +26,10 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-import lmp.members.menu.book.BookMgmt;
-import lmp.members.menu.checkin_out.Member_Searching_Panel;
-import lmp.members.menu.employees.EmployeesMgmt;
-import lmp.members.menu.member.MemberMgmt;
-import lmp.members.menu.readingroom.ReadingRoomPanel;
+import lmp.admin.menu.book.BookMgmt;
+import lmp.admin.menu.checkin_out.Member_Searching_Panel;
+import lmp.admin.menu.member.MemberMgmt;
+import lmp.admin.menu.readingroom.ReadingRoomPanel;
 
 public class MemberFrame extends JFrame {
 
@@ -165,7 +164,7 @@ public class MemberFrame extends JFrame {
 		menuCardPanel.add("1", initialLabel());
 		menuCardPanel.add("2", bookPanel);
 		menuCardPanel.add("3", checkInOutPanel);
-		menuCardPanel.add("4", employeePanel);
+//		menuCardPanel.add("4", employeePanel);
 		menuCardPanel.add("5", memberPanel);
 		menuCardPanel.add("6", readingRoomPanel);
 		
