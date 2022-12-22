@@ -109,7 +109,7 @@ public class EmployeesMgmt extends JPanel {
 				AdminDao mdao = new AdminDao();
 				try {
 					ArrayList<AdminVO> admins = new ArrayList<>();
-					
+					System.out.println(keyword.getSelectedIndex() + 1);
 					admins.addAll(mdao.get(keyword.getSelectedIndex() + 1, searchField.getText()));
 					int num = 0;
 					model.setRowCount(admins.size());

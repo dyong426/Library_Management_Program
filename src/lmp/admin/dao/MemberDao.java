@@ -91,6 +91,27 @@ public class MemberDao extends MenuDao{
 		conn.close();
 	}
 	
+	
+	public void resetPassword(String mem_num) throws SQLException {
+		
+		Connection conn = getConnection();
+		
+		String sql =  "UPDATE"
+					+ " members"
+					+ " SET"
+					+ " mem_pw = 'A123456789!'"
+					+ " WHERE"
+					+ " mem_num = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		pstmt.setString(1, mem_num);
+		
+		pstmt.executeUpdate();
+		
+		pstmt.close();
+		conn.close();
+	}
+	
 	/**
 	 * 전체 회원 목록 가져오기
 	 * 

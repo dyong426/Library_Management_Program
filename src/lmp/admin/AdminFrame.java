@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -35,7 +36,7 @@ import lmp.admin.menu.readingroom.ReadingRoomPanel;
 
 public class AdminFrame extends JFrame {
 
-	JButton bookMgmt, checkIn_Out, employeeMgmt, memberMgmt, readingRoom, homeButton;
+	JButton bookMgmt, checkIn_Out, employeeMgmt, memberMgmt, readingRoom, homeButton, logoutButton;
 	
 	JFrame f = this;
 	
@@ -156,6 +157,26 @@ public class AdminFrame extends JFrame {
 				}
 			});
 			
+			logoutButton = getButton("로그아웃");
+			logoutButton.setOpaque(true);
+			logoutButton.setBackground(new Color(87, 119, 119));
+			logoutButton.setBounds(1800, 10, 100, 30);
+			logoutButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					int num = JOptionPane.showConfirmDialog(
+							f, "로그아웃 하시겠습니까?", "로그아웃 확인", JOptionPane.YES_NO_OPTION);
+					switch (num) {
+					case 0 :
+						// 로그아웃
+						break;
+					case 1 :
+						JOptionPane.showMessageDialog(f, "취소합니다.");
+						break;
+					}
+				}
+			});
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -183,6 +204,7 @@ public class AdminFrame extends JFrame {
 		panel.setPreferredSize(new Dimension(1900, 1000));
 		panel.setBackground(new Color(49, 82, 91));
 		panel.add(homeButton);
+		panel.add(logoutButton);
 		panel.add(menuButtonPanel);
 		panel.add(menuCardPanel);
 		
@@ -191,6 +213,7 @@ public class AdminFrame extends JFrame {
 //		sp.setBounds(0, 0, 1200, 800);
 //		sp.setViewportView(panel);
 		sp.setViewportView(panel);
+		// 스크롤 속도 조절
 		sp.getVerticalScrollBar().setUnitIncrement(16);
 //		add(homeButton);
 //		add(menuButtonPanel);
@@ -202,6 +225,7 @@ public class AdminFrame extends JFrame {
 		
 		
 //		setMinimumSize(new Dimension(500, 400));
+		// 최대화 사이즈 모니터 최대 사이즈에 맞추기
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 //		setBounds(300, 100, 1200, 800);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

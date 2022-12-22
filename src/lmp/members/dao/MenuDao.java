@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import lmp.members.vo.BookVO;
 import lmp.members.vo.MemberLogHistoryVO;
 import lmp.members.vo.MemberVO;
+import lmp.members.vo.ReadingRoomVO;
 import lmp.members.vo.SeatUseDetailVO;
 
 
@@ -170,6 +171,11 @@ public abstract class MenuDao {
 	public void delete(Integer mem_id) throws SQLException {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public ArrayList<ReadingRoomVO> get() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

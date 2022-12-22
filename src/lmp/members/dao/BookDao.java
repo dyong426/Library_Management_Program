@@ -16,10 +16,6 @@ public class BookDao extends MenuDao{
 	 * 도서 dao
 	 */
 	
-
-
-	
-	
 	/**
 	 * 도서 조건 검색
 	 * 
@@ -43,7 +39,6 @@ public class BookDao extends MenuDao{
 		StringBuilder sql = new StringBuilder(selectSql(header));
 
 		Connection conn = getConnection();
-		System.out.println(conn);
 		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 		pstmt.setString(1, "%"+searchStr+"%");
 		
@@ -58,7 +53,7 @@ public class BookDao extends MenuDao{
 								rs.getString("book_isbn"),
 								rs.getInt("book_bias"),
 								rs.getInt("book_duplicates"),
-								rs.getString("book_registration_date"),
+								rs.getString("book_registrationdate"),
 								rs.getInt("book_price"),
 								new LocationVO(rs.getString("location_id"), rs.getString("location_name")),
 								rs.getString("book_note")));

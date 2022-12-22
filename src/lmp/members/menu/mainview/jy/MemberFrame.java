@@ -126,5 +126,4 @@ public class MemberFrame {
 	public void open() {
 		this.MemberFrame();
 	}
-
 }

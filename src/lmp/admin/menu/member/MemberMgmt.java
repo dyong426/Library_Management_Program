@@ -38,7 +38,7 @@ import lmp.admin.vo.MemberVO;
 public class MemberMgmt extends JPanel {
 
 	// JTable 구성품 
-	String[] header = {"회원번호", "이름", "아이디", "비밀번호", "생년월일", "성별", "전화번호", "이메일", "주소",
+	String[] header = {"회원번호", "이름", "아이디", "생년월일", "성별", "전화번호", "이메일", "주소",
 			"등록일", "비고"};
 	DefaultTableModel model = new DefaultTableModel(header, 30) {
 		public boolean isCellEditable(int row, int column) {
@@ -55,6 +55,7 @@ public class MemberMgmt extends JPanel {
 		JButton searchBtn = AdminFrame.getButton("검색"); // 검색버튼
 		JButton changeBtn = BookMgmt.getButton("수정"); // 수정버튼
 		JButton deleteBtn = BookMgmt.getButton("삭제"); // 삭제버튼
+		JButton resetPasswordBtn = new JButton("비밀번호 초기화");
 
 		// 회원조회 타이틀 설정
 		memberInquiry.setBounds(600, 30, 300, 50);
@@ -85,7 +86,7 @@ public class MemberMgmt extends JPanel {
 		add(searchBtn);
 
 		// 수정버튼 설정
-		changeBtn.setBounds(1320, 40, 150, 70);
+		changeBtn.setBounds(1320, 15, 150, 70);
 		try {
 			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/bookModifyIconImage.png"));
 			Image image = buffer.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
@@ -96,7 +97,7 @@ public class MemberMgmt extends JPanel {
 		add(changeBtn);
 
 		// 삭제버튼 설정
-		deleteBtn.setBounds(1320, 140, 150, 70);
+		deleteBtn.setBounds(1320, 95, 150, 70);
 		try {
 			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/bookdeleteIconImage.png"));
 			Image image = buffer.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
@@ -105,6 +106,45 @@ public class MemberMgmt extends JPanel {
 			e2.printStackTrace();
 		}
 		add(deleteBtn);
+		
+		// 비밀번호 초기화 설정
+		resetPasswordBtn.setBounds(1340, 175, 120, 50);
+		resetPasswordBtn.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 13));
+		resetPasswordBtn.setBackground(new Color(227, 94, 79));
+		resetPasswordBtn.setForeground(Color.WHITE);
+		resetPasswordBtn.setFocusable(false);
+		
+		resetPasswordBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String mem_num = model.getValueAt(table.getSelectedRow(), 0).toString();
+				int num = JOptionPane.showConfirmDialog(
+						null,
+						"회원 번호 : " + mem_num + "\n비밀번호를 초기화 하시겠습니까?",
+						"비밀번호 초기화 확인",
+						JOptionPane.YES_NO_OPTION);
+				
+				switch (num) {
+				case 0 :
+					MemberDao memDao = new MemberDao();
+					
+					try {
+						memDao.resetPassword(mem_num);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+					
+					JOptionPane.showMessageDialog(null, "비밀번호 초기화 완료.");
+					
+					break;
+				case 1 :					
+					JOptionPane.showMessageDialog(null, "취소되었습니다.");
+					break;
+				}
+			}
+		});
+		
+		add(resetPasswordBtn);
 		
 		
 		// 콤보박스로 검색할내용 선택하기
@@ -127,14 +167,14 @@ public class MemberMgmt extends JPanel {
 				MemberDao mdao = new MemberDao();
 				try {
 					ArrayList<MemberVO> mems = new ArrayList<>();
-
+					
 					mems.addAll(mdao.get(keyword.getSelectedIndex() + 1, searchField.getText()));
 					int num = 0;
 					model.setRowCount(mems.size());
 					for (MemberVO mem : mems) {
 						for (int i = 0; i < mem.getList().length; i++) {
 							// DB에서 가져온 성별 데이터에 따라 남/여로 표시
-							if (i == 5) {
+							if (header[i].equals("성별")) {
 								if (mem.getSex().equals("0")) {
 									model.setValueAt("남", num, i);
 								} else {
@@ -360,7 +400,7 @@ public class MemberMgmt extends JPanel {
 							}
 							num++;
 						}
-
+						JOptionPane.showMessageDialog(null, "삭제가 완료되었습니다.");
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}

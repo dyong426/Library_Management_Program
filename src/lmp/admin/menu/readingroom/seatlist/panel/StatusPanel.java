@@ -24,7 +24,7 @@ public class StatusPanel extends JPanel{
 			LABELS[i] = new StatusLabel();
 		}
 		LABELS[0].setText("총 자리");
-		LABELS[1].setText("40");
+		LABELS[1].setText("60");
 		LABELS[2].setText("이용중인 자리");
 		LABELS[3].setText("" + sudVO.size());
 		LABELS[4].setText("남은 자리");
@@ -39,7 +39,7 @@ public class StatusPanel extends JPanel{
 	public void refresh(ArrayList<SeatUseDetailVO> sudVO) {
 		
 		LABELS[3].setText("" + sudVO.size());
-		LABELS[5].setText("" + (40 - sudVO.size()));
+		LABELS[5].setText("" + (60 - sudVO.size()));
 		this.validate();
 	}
 	
