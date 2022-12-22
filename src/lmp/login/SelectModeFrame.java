@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -33,7 +34,12 @@ public class SelectModeFrame extends JFrame{
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							selectModeFrame.dispose();
-							MemberFrame memberFrame = new MemberFrame();
+							try {
+								MemberFrame memberFrame = new MemberFrame();
+							} catch (SQLException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 						}
 					});
 				}

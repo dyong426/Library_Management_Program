@@ -401,7 +401,6 @@ public class MemberMenu extends JPanel {
 				});
 
 				j.setLayout(null);
-				j.setBounds(330, 130, 550, 700);
 				j.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				j.setVisible(true);
 			}

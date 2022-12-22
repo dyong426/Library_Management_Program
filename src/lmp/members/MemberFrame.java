@@ -24,6 +24,7 @@ import javax.swing.JPanel;
 import lmp.db.dao.MemberLogHistoryDao;
 import lmp.db.vo.MemberLogHistoryVO;
 import lmp.members.menu.member.MemberMenu;
+import lmp.members.menu.readingroom.ReadingRoomPanel;
 
 public class MemberFrame extends JFrame {
 
@@ -41,6 +42,8 @@ public class MemberFrame extends JFrame {
 	MemberLogHistoryDao memLogDao = new MemberLogHistoryDao();
 	MemberLogHistoryVO memLogVO;
 	
+	ReadingRoomPanel readingroomPanel = new ReadingRoomPanel();
+	MemberMenu memberMenu = new MemberMenu();
 	
 	
 	public MemberFrame() throws SQLException {
@@ -49,8 +52,6 @@ public class MemberFrame extends JFrame {
 
 		setTitle("회원 모드");
 		setLayout(null);
-		MemberMenu memberMenu = new MemberMenu();
-		memberMenu.initialize();
 
 		BufferedImage bufferedHome = null;
 		BufferedImage bufferedBookMgmt = null;
@@ -95,8 +96,7 @@ public class MemberFrame extends JFrame {
 			readingRoom.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// 열람실 좌석도로 넘어간 후 좌석누를때 회원로그인창
-					//new MemberLoginFrame();   
+					card.show(menuCardPanel, "3");
 				}
 			});
 
@@ -109,7 +109,7 @@ public class MemberFrame extends JFrame {
 						if (memLogDao.getLog() != null) {
 							memberMenu.refresh();
 							memberMenu.validate();
-							card.show(menuCardPanel, "3");
+							card.show(menuCardPanel, "4");
 						} else {
 							MemberLoginFrame mlogFrame =new MemberLoginFrame();
 							mlogFrame.setVisible(true);
@@ -123,7 +123,7 @@ public class MemberFrame extends JFrame {
 										if (memLogDao.getLog() != null) {
 											memberMenu.refresh();
 											memberMenu.validate();
-											card.show(menuCardPanel, "3");
+											card.show(menuCardPanel, "4");
 										}
 									} catch (SQLException e1) {
 										e1.printStackTrace();
@@ -141,13 +141,15 @@ public class MemberFrame extends JFrame {
 			e.printStackTrace();
 		}         
 
-		menuButtonPanel.setBounds(90, 25, 1000, 120);
+		menuButtonPanel.setBounds(350, 0, 1200, 200);
 		menuButtonPanel.setBackground(new Color(42, 64, 61));
 
-		menuCardPanel.setBounds(17, 150, 1150, 600);
+		menuCardPanel.setBounds(200, 220, 1500, 750);
 		menuCardPanel.add("1", initialLabel());
 //		menuCardPanel.add("2", new BookSearchFrame());
-		menuCardPanel.add("3", memberMenu);
+		
+		menuCardPanel.add("3", readingroomPanel);
+		menuCardPanel.add("4", memberMenu);
 		
 
 
@@ -164,6 +166,7 @@ public class MemberFrame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setResizable(false);
 		setVisible(true);
+		setExtendedState(this.MAXIMIZED_BOTH);
 		
 		// 창 종료시 로그아웃
 		this.addWindowListener(new WindowAdapter() {
@@ -187,19 +190,17 @@ public class MemberFrame extends JFrame {
 		JLabel label = new JLabel();
 		try {
 			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/initialImage.jpg"));
-			Image image = buffer.getScaledInstance(1150, 600, Image.SCALE_SMOOTH);
+			Image image = buffer.getScaledInstance(1500, 750, Image.SCALE_SMOOTH);
 			label.setIcon(new ImageIcon(image));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		label.setSize(1150, 600);
+		label.setSize(1500, 750);
 
 		initImagePanel.setLayout(null);
 		initImagePanel.add(label);
 
 		return initImagePanel;
-		
-		
 	}
 
 	// 버튼 생성 및 설정 메서드
