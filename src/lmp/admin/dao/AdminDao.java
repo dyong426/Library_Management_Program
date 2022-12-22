@@ -211,7 +211,7 @@ public class AdminDao extends MenuDao{
 	
 	public StringBuilder selectSql(int header) {
 		StringBuilder sql = new StringBuilder();
-		String num = "SELECT * FROM admins WHERE admin_num = ?";
+		String num = "SELECT * FROM admins WHERE admin_num LIKE ?";
 		String name = "SELECT * FROM admins WHERE admin_name LIKE ?";
 		String phone = "SELECT * FROM admins WHERE admin_phone LIKE ?";
 		String registrationdate = "SELECT * FROM admins WHERE admin_registrationdate LIKE ?";

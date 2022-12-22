@@ -68,14 +68,14 @@ public class UsageListCheckOutButton extends JPanel {
 					sudList.addAll(sudDao.get()); // DB 내용 가져오기
 					DefaultTableModel model = readingRoomPanel.getUsageListScrollPane().getModel();
 					
-					int totalSeat = roomDao.get().size();
+					int totalSeat = usageListTable.getRowCount();
 					
 					model.setRowCount(0);
 					model.setRowCount(totalSeat);
 					
 					int resetRow = 0;
 					for (SeatUseDetailVO sud : sudList) {
-							
+						
 						for (int i = 0; i < sud.getSudList().length; i++) {
 							if (i == 5) {
 								if (sud.getMember().getSex().equals("0")) {

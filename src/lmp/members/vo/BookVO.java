@@ -19,6 +19,7 @@ public class BookVO {
 	private Integer	   price;
 	private LocationVO location;
 	private String	   note;
+	private Object[]	list;
 	
 	/**
 	 * 도서 등록 / 검색 생성자.
@@ -60,7 +61,15 @@ public class BookVO {
 		this.price		=	book_price;
 		this.location	=	new LocationVO(location);
 		this.note		=	book_note;
-		
+		this.list		=	new Object[] {
+										 book_title,
+										 book_author,
+										 book_publisher,
+										 book_isbn,
+										 book_bias,
+										 book_price,
+										 location
+										 };
 	}
 	
 	
@@ -108,7 +117,11 @@ public class BookVO {
 	public String getNote() {
 		return note;
 	}
-
+	
+	public Object[] getList() {
+		return list;
+	}
+	
 	@Override
 	public String toString() {
 		

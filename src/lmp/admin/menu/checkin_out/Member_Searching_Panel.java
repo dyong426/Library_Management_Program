@@ -182,7 +182,16 @@ public class Member_Searching_Panel extends JPanel {
 				int num = 0;
 				for (MemberVO list : memVoList) {
 					for (int i = 0; i < list.getList().length; ++i) {
-						model.setValueAt(list.getList()[i], num, i);
+						// DB에서 가져온 성별 데이터 남/여로 표시
+						if (i == 5) {
+							if (list.getSex().equals("0")) {
+								model.setValueAt("남", num, i);
+							} else {
+								model.setValueAt("여", num, i);
+							}
+						} else {
+							model.setValueAt(list.getList()[i], num, i);
+						}
 					}
 					++num;
 				}
