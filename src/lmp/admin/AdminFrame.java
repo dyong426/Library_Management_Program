@@ -305,7 +305,6 @@ public class AdminFrame extends JFrame {
 		return table;
 	}
 	
-	
 	public static void main(String[] args) {
 		new AdminFrame();
 	}

@@ -33,7 +33,7 @@ public class SeatPanel extends JPanel {
 		
 		
 		try {
-			rVo.addAll(rDao.get());
+			rVo.addAll(rDao.getRoomInfo());
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

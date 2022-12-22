@@ -11,7 +11,7 @@ import lmp.members.vo.ReadingRoomVO;
 public class ReadingRoomDao extends MenuDao{
 
 	@Override
-	public ArrayList<ReadingRoomVO> get() throws SQLException {
+	public ArrayList<ReadingRoomVO> getRoomInfo() throws SQLException {
 		String sql = "SELECT * FROM readingroom";
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
