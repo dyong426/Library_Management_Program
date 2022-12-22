@@ -15,8 +15,8 @@ public class AdminVO {
 	private String	email;
 	private String	address;
 	private String	regDate;
+	private String  updateDate;
 	private String	note;
-	private Object[] list;
 	
 	/**
 	 * 기본 생성자
@@ -77,80 +77,49 @@ public class AdminVO {
 									};
 	}
 
-	public AdminVO(int int1, String string, String string2, String string3, String string4, String string5,
-			String string6, String string7, String string8) {
-	}
-
+	
 	public Integer getNum() {
 		return num;
-	}
-
-	public void setNum(Integer num) {
-		this.num = num;
 	}
 
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getPw() {
 		return pw;
-	}
-
-	public void setPw(String pw) {
-		this.pw = pw;
 	}
 
 	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
 	public String getEmail() {
 		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getAddress() {
 		return address;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
 	public String getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(String regDate) {
-		this.regDate = regDate;
+	public String getUpdateDate() {
+		return updateDate;
 	}
 
 	public String getNote() {
 		return note;
 	}
-
-	public void setNote(String note) {
-		this.note = note;
-	}
 	
 	public Object[] getList() {
 		return list;
 	}
-	
+
 	@Override
 	public String toString() {
-		return String.format("%s,%s,%s,%s,%s,%s,%s,%s", this.num,this.name,this.pw,this.phone,this.email,this.address,this.regDate,this.note);
+		return String.format("%d,%s,%s,%s,%s,%s,%s,%s,%s", this.num,this.name,this.pw,this.phone,this.email,this.address,this.regDate,this.updateDate,this.note);
 	}
 }

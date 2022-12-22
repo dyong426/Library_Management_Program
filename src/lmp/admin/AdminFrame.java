@@ -11,9 +11,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -171,11 +174,34 @@ public class AdminFrame extends JFrame {
 		menuCardPanel.add("5", memberPanel);
 		menuCardPanel.add("6", readingRoomPanel);
 		
+		menuCardPanel.setBounds(17, 200, 1150, 550);
+		menuCardPanel.add("1", initialLabel());
+		menuCardPanel.add("2", new BookSearchPanel());
+		
+		
+		
 		menuButtonPanel.add(bookMgmt);
 		menuButtonPanel.add(checkIn_Out);
 		menuButtonPanel.add(employeeMgmt);
 		menuButtonPanel.add(memberMgmt);
 		menuButtonPanel.add(readingRoom);
+		
+		
+		this.addWindowListener(new WindowAdapter() {
+			
+			@Override
+			public void windowClosing(WindowEvent e) {
+				try {
+					System.out.println("로그아웃");
+					AdminLogHistoryDao adminLogHistoryDao = new AdminLogHistoryDao();
+					adminLogHistoryDao.update(adminLogHistoryDao.getLog());
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+					System.out.println("로그아웃 실패");
+					
+				}
+			}
+		});
 		
 		
 		JPanel panel = new JPanel();

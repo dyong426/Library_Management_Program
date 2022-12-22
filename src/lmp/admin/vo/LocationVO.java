@@ -4,6 +4,7 @@ public class LocationVO {
 	/**
 	 * 도서 위치 정보
 	 */
+
 	private String	locID;
 	private String	locName;
 	

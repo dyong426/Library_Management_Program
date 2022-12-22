@@ -8,6 +8,7 @@ public class BookVO {
 	 * 도서 정보
 	 */
 	
+
 	private String	   id;
 	private String	   title;
 	private String	   author;

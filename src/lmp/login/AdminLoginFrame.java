@@ -19,23 +19,24 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+
+import lmp.admin.AdminFrame;
 import lmp.admin.dao.AdminDao;
 import lmp.admin.dao.AdminLogHistoryDao;
 import lmp.admin.vo.AdminVO;
-import lmp.members.menu.mainview.jy.ManagerFrame;
 
 public class AdminLoginFrame extends JFrame{
 
-	LoginFrame loginFrame;
+	SelectModeFrame selectModeFrame;
 	AdminLoginFrame adminLoginFrame;
-	ManagerFrame managerframe;						
+	AdminFrame adminFrame;						
 	
 	AdminDao adminDao = new AdminDao();
 	AdminLogHistoryDao adminLogHistoryDao = new AdminLogHistoryDao();
 
-	public AdminLoginFrame(LoginFrame loginFrame) {
+	public AdminLoginFrame(SelectModeFrame selectModeFrame) {
 
-		this.loginFrame = loginFrame;
+		this.selectModeFrame = selectModeFrame;
 		adminLoginFrame = this;
 		
 		JPanel panel = new JPanel();
@@ -73,41 +74,41 @@ public class AdminLoginFrame extends JFrame{
 				managerIdTf.setText("");
 			}
 		});
-		
+
 		managerPwTf.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				managerPwTf.setText("");
 			}
 		});
-		
+
 		JButton loginBtn = new JButton("로그인");
-		
-		
+
 		loginBtn.setBounds(90, 180, 80, 30);
 		loginBtn.setFont(font);
 		loginBtn.setBackground(Color.WHITE);
 		loginBtn.setForeground(Color.GRAY);
 		loginBtn.setBorderPainted(false);
-		loginBtn.addActionListener(new ActionListener () {
-			
+		loginBtn.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					System.out.println(managerIdTf.getText() + new String(managerPwTf.getPassword()));
-					if (checkLogin(managerIdTf.getText(),new String(managerPwTf.getPassword()))) {
+					System.out.println(checkLogin(managerIdTf.getText(), new String(managerPwTf.getPassword())));
+					if (checkLogin(managerIdTf.getText(), new String(managerPwTf.getPassword()))) {
 						adminLoginFrame.dispose();
-						loginFrame.dispose();
-						managerframe = new ManagerFrame();
-						managerframe.open();
+						selectModeFrame.dispose();
+						adminFrame = new AdminFrame();
+
 					} else {
-						JOptionPane.showMessageDialog(adminLoginFrame, "사원번호/비밀번호를 확인하세요");	
+						JOptionPane.showMessageDialog(adminLoginFrame, "사원번호/비밀번호를 확인하세요");
 					}
 				} catch (HeadlessException e1) {
 					e1.printStackTrace();
 				}
 			}
-			
+
 		});
 
 		JButton cancelBtn = new JButton("취소") {
@@ -146,29 +147,22 @@ public class AdminLoginFrame extends JFrame{
 		setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null); // 화면 중앙에 띄우기
 	}
-
-	public void visible(boolean visible) {
-		setVisible(visible);
-	}
 	
 	public boolean checkLogin(String admin_num, String admin_pw) {
 		AdminVO adminVO;
 		try {
-			adminVO = adminDao.getAdminInfo(Integer.parseInt(admin_num));
+			adminVO = adminDao.get(admin_num).get(0);
 			if (adminVO == null) {
 				return false;
 			} else {
 				if (adminVO.getPw().equals(admin_pw)) {
-
-						adminLogHistoryDao.add(adminVO);
-						
+					adminLogHistoryDao.add(adminVO);
 					return true;
 				} else {
 					return false;
 				}
 			} 
 		}catch (SQLException e) {
-			e.printStackTrace();
 			return false;
 		}
 	}

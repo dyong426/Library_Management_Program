@@ -100,7 +100,8 @@ public class MemberDao extends MenuDao{
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, mem_id);
 		ResultSet rs = pstmt.executeQuery();
-		MemberVO memberVO = new MemberVO();
+
+		MemberVO memberVO = null;
 		while (rs.next()) {
 			memberVO = new MemberVO(
 								rs.getInt("mem_num"),

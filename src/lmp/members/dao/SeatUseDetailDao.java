@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import java.util.Collections;
+
 import lmp.members.vo.MemberVO;
 import lmp.members.vo.ReadingRoomVO;
 import lmp.members.vo.SeatUseDetailVO;
@@ -28,15 +30,15 @@ public class SeatUseDetailDao extends MenuDao{
 	 * @throws SQLException
 	 */
 	@Override
-	public void add(SeatUseDetailVO sudVO) throws SQLException{
+	public void add(Integer mem_num, Integer seat_num) throws SQLException{
 		Connection conn = getConnection();
 		
-		String sql = "INSERT INTO check_out_info(use_id, mem_num, seat_num) VALUES(check_out_id_seq.nextval,?,?)";
+		String sql = "INSERT INTO seat_use_details (use_id, mem_num, seat_num) VALUES(check_out_id_seq.nextval,?,?)";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
-		pstmt.setInt(1, sudVO.getMember().getNum());
-		pstmt.setInt(2, sudVO.getReadingroom().getSeatNum());
+		pstmt.setInt(1, mem_num);
+		pstmt.setInt(2, seat_num);
 			
 		pstmt.executeUpdate();
 			
@@ -58,9 +60,9 @@ public class SeatUseDetailDao extends MenuDao{
 		Connection conn = getConnection();
 		
 		String sql =  "UPDATE"
-					+ " seat_use_details"
+					+ " seat_use_details "
 					+ "SET"
-					+ " end_time = sysdate,"
+					+ " end_time = to_char(sysdate, 'yyyy.mm.dd hh:mi') "
 					+ "WHERE"
 					+ " use_id = ?";
 		
@@ -72,6 +74,29 @@ public class SeatUseDetailDao extends MenuDao{
 		
 		pstmt.close();
 		conn.close();
+		
+	}
+	
+	
+	@Override
+	public ArrayList<ReadingRoomVO> getRoomInfo() throws SQLException {
+		
+		String sql = "SELECT * FROM readingroom";
+		
+		Connection conn = getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		
+		ArrayList<ReadingRoomVO> seatList = new ArrayList<>();
+		while (rs.next()) {
+			
+			seatList.add(new ReadingRoomVO(rs.getInt("seat_num"),rs.getString("table_divider")));
+			
+		}
+		
+		Collections.sort(seatList);
+		
+		return seatList;
 		
 	}
 	
@@ -119,6 +144,100 @@ public class SeatUseDetailDao extends MenuDao{
 		conn.close();
 		
 		return sudList;
+	}
+	
+	@Override
+	public SeatUseDetailVO searchSeat(int seat_num) throws SQLException {
+		String sql = "SELECT * FROM seat_use_details JOIN members USING(mem_num) JOIN readingroom USING(seat_num) WHERE seat_num = ? AND end_time is null";
+		
+		Connection conn = getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, seat_num);
+		ResultSet rs = pstmt.executeQuery();
+		SeatUseDetailVO sudVO = null;
+		while (rs.next()) {
+				sudVO =	new SeatUseDetailVO(
+							rs.getInt("use_id"),
+							new MemberVO(
+								rs.getInt("mem_num"),
+								rs.getString("mem_name")
+								),
+							new ReadingRoomVO(
+								rs.getInt("seat_num"),
+								rs.getString("table_divider")
+								),
+							rs.getString("start_time"),
+							rs.getString("end_time")
+							);
+		}
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return sudVO;
+	}
+	
+	
+	@Override
+	public SeatUseDetailVO getUsingInfo(Integer mem_num) throws SQLException {
+		String sql = "SELECT * FROM seat_use_details JOIN members USING(mem_num) JOIN readingroom USING(seat_num) WHERE mem_num = ? AND end_time is null";
+		
+		Connection conn = getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, mem_num);
+		ResultSet rs = pstmt.executeQuery();
+		SeatUseDetailVO sudVO = null;
+		while (rs.next()) {
+				sudVO = new SeatUseDetailVO(
+							rs.getInt("use_id"),
+							new MemberVO(
+								rs.getInt("mem_num"),
+								rs.getString("mem_name")
+								),
+							new ReadingRoomVO(
+								rs.getInt("seat_num"),
+								rs.getString("table_divider")
+								),
+							rs.getString("start_time"),
+							rs.getString("end_time")
+							);
+		}
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return sudVO;
+	}
+	
+	@Override
+	public SeatUseDetailVO getCheckOutInfo(Integer use_id) throws SQLException {
+		String sql = "SELECT * FROM seat_use_details JOIN members USING(mem_num) JOIN readingroom USING(seat_num) WHERE use_id = ?";
+		
+		Connection conn = getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, use_id);
+		ResultSet rs = pstmt.executeQuery();
+		SeatUseDetailVO sudVO = null;
+		while (rs.next()) {
+				sudVO = new SeatUseDetailVO(
+							rs.getInt("use_id"),
+							new MemberVO(
+								rs.getInt("mem_num"),
+								rs.getString("mem_name")
+								),
+							new ReadingRoomVO(
+								rs.getInt("seat_num"),
+								rs.getString("table_divider")
+								),
+							rs.getString("start_time"),
+							rs.getString("end_time")
+							);
+		}
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return sudVO;
 	}
 
 }
