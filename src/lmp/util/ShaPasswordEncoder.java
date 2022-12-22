@@ -1,31 +1,43 @@
 package lmp.util;
 
 import java.security.MessageDigest;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
-public class ShaPasswordEncoder {
+import lmp.db.dao.MenuDao;
+import lmp.db.vo.MemberVO;
 
-    public static String encrypt(String txt) throws Exception{
-    	
-        StringBuffer sbuf = new StringBuffer();
+public class ShaPasswordEncoder  {
 
-        MessageDigest mDigest = MessageDigest.getInstance("SHA-256");
-        mDigest.update(txt.getBytes());
+	public static String encrypt(String txt) throws Exception{
 
-        byte[] msgStr = mDigest.digest() ;
+		StringBuffer sbuf = new StringBuffer();
 
-        for (byte b : msgStr) {
-            sbuf.append(String.format("%02x",b));
-        }
+		MessageDigest mDigest = MessageDigest.getInstance("SHA-256");
+		mDigest.update(txt.getBytes());
 
-        return sbuf.toString();
-    }
+		byte[] msgStr = mDigest.digest() ;
 
-    public static boolean matches(String pw, String encryptPassword) throws Exception {
-        if (encryptPassword.equals(encrypt(pw))) {
+		for (byte b : msgStr) {
+			sbuf.append(String.format("%02x",b));
+		}
+
+		return sbuf.toString();
+	}
+
+	public static boolean matches(String pw, String encryptPassword ) throws Exception {
+		
+		
+		if (encryptPassword.equals(encrypt(pw))) {
             return true;
         } else {
             return false;
         }
-    }
+
+	}
+
+	
 
 }
+

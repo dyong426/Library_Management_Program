@@ -21,12 +21,12 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
-import lmp.admin.dao.MemberDao;
-import lmp.admin.vo.MemberVO;
+import lmp.db.dao.MemberDao;
+import lmp.db.vo.MemberVO;
 
 public class FindID extends JFrame {
 
-   private JFrame frame = this;
+   private JFrame frame;
 
    private Font font = new Font("한컴 말랑말랑 Regular", Font.BOLD, 15);
    private JTextField textField;
@@ -180,48 +180,36 @@ public class FindID extends JFrame {
       panel.add(lblNewLabel_4);
       
       
-      MemberDao memDao = new MemberDao();
-      ArrayList<MemberVO> memVo = new ArrayList<>();
       btnNewButton.addActionListener(new ActionListener() {
   		@Override
   		public void actionPerformed(ActionEvent e) {
   			if (rdbtnNewRadioButton.isSelected()) {
+  				System.out.println("버튼 선택 확인");
+  				MemberDao memDao = new MemberDao();
+  				ArrayList<MemberVO> memVo = new ArrayList<>();
   				
   				try {
-  					memVo.clear();
 					memVo.addAll(memDao.get(2, textField.getText()));
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
   				if (memVo.size() != 0) {
-					for (MemberVO mem : memVo) {
-						if (mem.getPhone().equals(textField_1.getText())) {
-							JOptionPane.showMessageDialog(frame, "아이디  : " + mem.getId());
-							return;
-						}
-					}
+  					System.out.println("회원 이름 존재");
+  					for (MemberVO mem : memVo) {
+  						System.out.println("for문 도는중");
+  						if (mem.getPhone().equals(textField_1.getText())) {
+  							JOptionPane.showMessageDialog(null, "아이디 : " + mem.getId());
+  							return;
+  						}
+  					}
+  					System.out.println("for문 끝");
+  				} else {
+  					System.out.println("배열 길이 1");
+  					JOptionPane.showMessageDialog(null, "일치하는 정보가 없습니다.");
   				}
-  				JOptionPane.showMessageDialog(frame, "일치하는 정보가 없습니다.");
-  				
-  			} else {
-  				try {
-  					memVo.clear();
-					memVo.addAll(memDao.get(2, textField_2.getText()));
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-  				if (memVo.size() != 0) {
-					for (MemberVO mem : memVo) {
-						if (mem.getEmail().equals(textField_3.getText())) {
-							JOptionPane.showMessageDialog(frame, "아이디  : " + mem.getId());
-							return;
-						}
-					}
-  				}
-  				JOptionPane.showMessageDialog(frame, "일치하는 정보가 없습니다.");
+  				System.out.println("배열 길이 0");
   			}
   		}
-  		
       });
       
    }

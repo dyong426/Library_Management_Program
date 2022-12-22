@@ -11,7 +11,7 @@ import lmp.admin.menu.readingroom.seatlist.SeatListPanel;
 import lmp.admin.menu.readingroom.usagelist.UsageListPanel;
 import lmp.admin.menu.readingroom.usagelist.panel.UsageListTitlePanel;
 import lmp.admin.menu.readingroom.usagelist.scrollpane.UsageListScrollPane;
-import lmp.admin.dao.SeatUseDetailDao;
+import lmp.db.dao.SeatUseDetailDao;
 
 public class ReadingRoomPanel extends JPanel {
 	

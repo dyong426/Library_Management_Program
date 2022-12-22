@@ -32,9 +32,9 @@ import lmp.admin.menu.readingroom.seatlist.panel.StatusPanel;
 import lmp.admin.menu.readingroom.usagelist.UsageListPanel;
 import lmp.admin.menu.readingroom.usagelist.scrollpane.UsageListScrollPane;
 import lmp.admin.menu.readingroom.usagelist.scrollpane.table.UsageListTable;
-import lmp.admin.dao.ReadingRoomDao;
-import lmp.admin.dao.SeatUseDetailDao;
-import lmp.admin.vo.SeatUseDetailVO;
+import lmp.db.dao.ReadingRoomDao;
+import lmp.db.dao.SeatUseDetailDao;
+import lmp.db.vo.SeatUseDetailVO;
 
 public class UsageListCheckOutButton extends JPanel {
 	
@@ -68,14 +68,14 @@ public class UsageListCheckOutButton extends JPanel {
 					sudList.addAll(sudDao.get()); // DB 내용 가져오기
 					DefaultTableModel model = readingRoomPanel.getUsageListScrollPane().getModel();
 					
-					int totalSeat = usageListTable.getRowCount();
+					int totalSeat = roomDao.get().size();
 					
 					model.setRowCount(0);
 					model.setRowCount(totalSeat);
 					
 					int resetRow = 0;
 					for (SeatUseDetailVO sud : sudList) {
-						
+							
 						for (int i = 0; i < sud.getSudList().length; i++) {
 							if (i == 5) {
 								if (sud.getMember().getSex().equals("0")) {

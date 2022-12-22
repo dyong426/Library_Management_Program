@@ -34,9 +34,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.AdminFrame;
-import lmp.admin.dao.MemberDao;
-import lmp.admin.vo.MemberVO;
-
+import lmp.db.dao.MemberDao;
+import lmp.db.vo.MemberVO;
 
 public class Member_Searching_Panel extends JPanel {
 
@@ -182,16 +181,7 @@ public class Member_Searching_Panel extends JPanel {
 				int num = 0;
 				for (MemberVO list : memVoList) {
 					for (int i = 0; i < list.getList().length; ++i) {
-						// DB에서 가져온 성별 데이터 남/여로 표시
-						if (i == 5) {
-							if (list.getSex().equals("0")) {
-								model.setValueAt("남", num, i);
-							} else {
-								model.setValueAt("여", num, i);
-							}
-						} else {
-							model.setValueAt(list.getList()[i], num, i);
-						}
+						model.setValueAt(list.getList()[i], num, i);
 					}
 					++num;
 				}
@@ -216,13 +206,12 @@ public class Member_Searching_Panel extends JPanel {
 				
 				// 컬럼별 최소 너비 설정
 //				for (int i = 0; i < category.length; ++i) {
-//					table.getColumnModel().getColumn(i).setMinWidth(250); 
+//					table.getColumnModel().getColumn(i).setMinWidth(250);
 //				}
 				// 컨테이너 사이즈에 따라 자동으로 테이블 크기 조정 안되게 세팅 (가로 스크롤 나오게 설정)
 //				table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
 				
-				result.setViewportView(table); 
+				result.setViewportView(table);
 				validate();
 				
 			}

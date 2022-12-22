@@ -8,8 +8,8 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.menu.readingroom.usagelist.scrollpane.table.UsageListTable;
-import lmp.admin.dao.SeatUseDetailDao;
-import lmp.admin.vo.SeatUseDetailVO;
+import lmp.db.dao.SeatUseDetailDao;
+import lmp.db.vo.SeatUseDetailVO;
 
 public class UsageListScrollPane extends JScrollPane{
 	
@@ -26,7 +26,7 @@ public class UsageListScrollPane extends JScrollPane{
 		
 		sudList.addAll(sudDao.get());
 		int resetRow = 0;
-		model = new DefaultTableModel(colNames, 60) {
+		model = new DefaultTableModel(colNames, 30) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
@@ -50,6 +50,7 @@ public class UsageListScrollPane extends JScrollPane{
 		
 		usageListTable = new UsageListTable(model);
 		this.setViewportView(usageListTable);
+		this.setBackground(new Color(87, 119, 119));
 	}
 
 	public UsageListTable getUsageListTable() {
@@ -59,6 +60,8 @@ public class UsageListScrollPane extends JScrollPane{
 	public DefaultTableModel getModel() {
 		return model;
 	}
+	
+	
 	
 	
 

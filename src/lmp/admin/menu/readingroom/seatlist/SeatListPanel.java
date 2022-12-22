@@ -11,13 +11,13 @@ import javax.swing.border.TitledBorder;
 
 import lmp.admin.menu.readingroom.seatlist.panel.SeatPanel;
 import lmp.admin.menu.readingroom.seatlist.panel.StatusPanel;
-import lmp.admin.dao.SeatUseDetailDao;
-import lmp.admin.vo.SeatUseDetailVO;
+import lmp.db.dao.SeatUseDetailDao;
+import lmp.db.vo.SeatUseDetailVO;
 
 
 public class SeatListPanel extends JPanel{
 	
-	GridLayout gridLayout = new GridLayout(1, 7, 30, 0);
+	GridLayout gridLayout = new GridLayout(1, 5, 30, 0);
 
 	StatusPanel statusPanel;
 	SeatPanel[]	seatPanels = new SeatPanel[gridLayout.getColumns() - 1];

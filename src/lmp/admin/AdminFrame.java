@@ -11,12 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -27,12 +24,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.plaf.basic.DefaultMenuLayout;
 import javax.swing.table.DefaultTableModel;
 
-import lmp.admin.dao.AdminLogHistoryDao;
 import lmp.admin.menu.book.BookMgmt;
-import lmp.admin.menu.book.booksearch.BookSearchPanel;
 import lmp.admin.menu.checkin_out.Member_Searching_Panel;
 import lmp.admin.menu.employees.EmployeesMgmt;
 import lmp.admin.menu.member.MemberMgmt;
@@ -175,13 +169,14 @@ public class AdminFrame extends JFrame {
 		menuCardPanel.add("3", checkInOutPanel);
 		menuCardPanel.add("4", employeePanel);
 		menuCardPanel.add("5", memberPanel);
-		menuCardPanel.add("6", readingRoomPanel);		
+		menuCardPanel.add("6", readingRoomPanel);
 		
 		menuButtonPanel.add(bookMgmt);
 		menuButtonPanel.add(checkIn_Out);
 		menuButtonPanel.add(employeeMgmt);
 		menuButtonPanel.add(memberMgmt);
 		menuButtonPanel.add(readingRoom);
+		
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -202,28 +197,8 @@ public class AdminFrame extends JFrame {
 //		add(menuCardPanel);
 		
 //		setExtendedState(MAXIMIZED_BOTH);
-
-		this.addWindowListener(new WindowAdapter() {
-			
-			@Override
-			public void windowClosing(WindowEvent e) {
-				try {
-					System.out.println("로그아웃");
-					AdminLogHistoryDao adminLogHistoryDao = new AdminLogHistoryDao();
-					adminLogHistoryDao.update(adminLogHistoryDao.getLog());
-				}catch (NullPointerException npe) {
-					System.out.println("로그인 정보 없음");
-				} catch (SQLException sqle) {
-					sqle.printStackTrace();
-					System.out.println("로그아웃 실패");
-				} 
-			}
-		});
-		
-		
 		getContentPane().add(sp);
 		setContentPane(sp);
-		
 		
 		
 //		setMinimumSize(new Dimension(500, 400));
@@ -232,8 +207,7 @@ public class AdminFrame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 //		setResizable(false);
 		setVisible(true);
-		setMinimumSize(new Dimension(400, 200));
-		setPreferredSize(new Dimension(800,300));
+		
 		
 	}
 	
@@ -300,5 +274,10 @@ public class AdminFrame extends JFrame {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		return table;
+	}
+	
+	
+	public static void main(String[] args) {
+		new AdminFrame();
 	}
 }

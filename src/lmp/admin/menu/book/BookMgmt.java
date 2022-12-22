@@ -3,6 +3,9 @@ package lmp.admin.menu.book;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,19 +21,22 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.AdminFrame;
-import lmp.admin.dao.BookDao;
-import lmp.admin.dao.CheckOutDao;
-import lmp.admin.vo.BookVO;
-import lmp.admin.vo.CheckOutVO;
+import lmp.db.dao.BookDao;
+import lmp.db.dao.CheckOutDao;
+import lmp.db.vo.BookVO;
+import lmp.db.vo.CheckOutVO;
 
 public class BookMgmt extends JPanel {
 
@@ -163,6 +169,7 @@ public class BookMgmt extends JPanel {
 				int resetRow = 0;
 				for (BookVO book : bookVO) {
 					for (int i = 0; i < book.getList().length; ++i) {
+
 						model_BookMgmt.setValueAt(book.getList()[i], resetRow, i);
 					}
 					++resetRow;
