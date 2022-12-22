@@ -127,42 +127,41 @@ public class MemberMenu extends JPanel {
 		logoutBtn = new JButton("로그아웃");
 
 
-		setlabel(memberInfo, 25, 30, 30);
+		setlabel(memberInfo, 35, 30, 30);
 
-		setlabel(membernum, 20, 100 ,100);
-		setlabel(membernum2, 20, 300 ,100);
+		setlabel(membernum, 30, 200, 150);
+		setlabel(membernum2, 30, 450, 150);
 
-		setlabel(membername, 20, 130, 180);
-		setlabel(membername2, 20, 300, 180);
+		setlabel(membername, 30, 250, 250);
+		setlabel(membername2, 30, 450, 250);
 
-		setlabel(memberId, 20, 120, 260);
-		setlabel(memberId2, 20, 300, 260);
+		setlabel(memberId, 30, 230, 350);
+		setlabel(memberId2, 30, 450, 350);
 
-		setlabel(memberbirth, 20, 100, 340);
-		setlabel(memberbirth2, 20, 300, 340);
+		setlabel(memberbirth, 30, 200, 450);
+		setlabel(memberbirth2, 30, 450, 450);
 
-		setlabel(membersex, 20, 130, 420);
-		setlabel(membersex2, 20, 300, 420);
+		setlabel(membersex, 30, 250, 550);
+		setlabel(membersex2, 30, 450, 550);
 
-		setlabel(memberphone, 20, 600, 100);
-		setlabel(memberphone2, 20, 800, 100);
+		setlabel(memberphone, 30, 750, 150);
+		setlabel(memberphone2, 30, 980, 150);
 
-		setlabel(memberemail, 20, 620, 180);
-		setlabel(memberemail2, 20, 800, 180);
+		setlabel(memberemail, 30, 780, 250);
+		setlabel(memberemail2, 30, 980, 250);
 
-		setlabel(memberaddress, 20, 630, 260);
-		setlabel(memberaddress2, 20, 800, 260);
+		setlabel(memberaddress, 30, 800, 350);
+		setlabel(memberaddress2, 30, 980, 350);
 
-		setBtn(changeBtn, 20, 950, 530);
+		setBtn(changeBtn, 23, 1200, 660);
 
-		setBtn(deleteBtn, 20, 1050, 530);
-		
-		setBtn(logoutBtn, 10, 1050, 30);
-		logoutBtn.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 15));
+		setBtn(deleteBtn, 23, 1350, 660);
+
+		logoutBtn.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 20));
 		logoutBtn.setBackground(Color.WHITE);
 		logoutBtn.setForeground(Color.RED);
 		logoutBtn.setFocusable(false);
-		logoutBtn.setBounds(1030, 30, 100, 50);
+		logoutBtn.setBounds(1350, 30, 120, 50);
 		add(logoutBtn);
 
 		logoutBtn.addActionListener(new ActionListener() {
@@ -224,7 +223,7 @@ public class MemberMenu extends JPanel {
 				JButton cancelBtn = new JButton("취소");
 
 
-
+				
 				setlabel2(join, 40, 55, 13);
 				j.add(join);
 

@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import lmp.members.dao.MemberDao;
 import lmp.members.dao.MemberLogHistoryDao;
 import lmp.members.vo.MemberVO;
+import lmp.util.ShaPasswordEncoder;
 
 public class MemberLoginFrame extends JFrame {
 	
@@ -32,6 +33,8 @@ public class MemberLoginFrame extends JFrame {
 	MemberDao memberDao = new MemberDao();
 	MemberLogHistoryDao memberLogHistoryDao = new MemberLogHistoryDao();
 
+	ShaPasswordEncoder pwEncoder = new ShaPasswordEncoder();
+	
 	public MemberLoginFrame() {
 		initialize();
 	}
@@ -140,9 +143,6 @@ public class MemberLoginFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					System.out.println(idField.getText() + new String(pwField.getPassword()));
-					System.out.println(checkLogin(idField.getText(), new String(pwField.getPassword())));
-
 					if (checkLogin(idField.getText(), new String(pwField.getPassword()))) {
 						memberLoginFrame.dispose();
 					} else {
@@ -178,11 +178,10 @@ public class MemberLoginFrame extends JFrame {
 		MemberVO memberVO = null;
 		try {
 			memberVO = (MemberVO) memberDao.get(mem_id);
-			System.out.println(memberVO);
 			if (memberVO == null) {
 				return false;
 			} else {
-				if (memberVO.getPw().equals(mem_pw)) {
+				if (pwEncoder.matches(mem_pw, memberVO.getPw())) {
 					memberLogHistoryDao.add(memberVO);
 					return true;
 				} else {

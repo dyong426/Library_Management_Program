@@ -28,28 +28,19 @@ public class ReadingRoomPanel extends JPanel {
 		seatListPanel = new SeatListPanel(this);
 		usageListTitlePanel = new UsageListTitlePanel(this);
 		
-		setBorder(new TitledBorder(new LineBorder(new Color(49, 82, 91),20)));
-//		setBorder(new TitledBorder(new LineBorder(Color.BLUE)));
 		setBackground(new Color(126, 151, 148));  //--> 사이즈 수정 필요
-//		seatListPanel.setBackground(Color.BLUE);
-		
-		
-		usageListPanel.add(usageListTitlePanel);
-//		setLayout(gridLayout);
-//		usageListTitlaPanel.setBounds(100, 0, 500, 50);
 		setLayout(null);
-		add(usageListPanel);
-		usageListPanel.setBounds(80, 50, 1000, 80);
+
 		JLabel label = new JLabel("| | : 칸막이");
 		label.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 20));
 		label.setForeground(Color.WHITE);
 		label.setBounds(100,100,200,150);
+
 		add(label);
+		usageListPanel.add(usageListTitlePanel);
+		add(usageListPanel);
 		add(statusPanel);
-		statusPanel.setBounds(300,180, 630, 50);
-		
 		add(seatListPanel);
-		seatListPanel.setBounds(20,280, 1140, 400);
 	}
 	
 	public SeatListPanel getSeatListPanel() {

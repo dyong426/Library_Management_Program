@@ -5,8 +5,8 @@ public class LocationVO {
 	/**
 	 * 도서 위치 정보
 	 */
-	private static String	locID;
-	private static String	locName;
+	private String	locID;
+	private String	locName;
 	
 	/**
 	 * join을 위한 생성자
@@ -29,11 +29,11 @@ public class LocationVO {
 		this.locName = location_name;
 	}
 
-	public static String getLocID() {
+	public String getLocID() {
 			return locID;
 	}
 
-	public static String getLocName() {
+	public String getLocName() {
 		return locName;
 	}
 	

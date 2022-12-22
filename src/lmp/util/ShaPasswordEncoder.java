@@ -10,7 +10,7 @@ import lmp.db.vo.MemberVO;
 
 public class ShaPasswordEncoder  {
 
-	public static String encrypt(String txt) throws Exception{
+	public String encrypt(String txt) throws Exception{
 
 		StringBuffer sbuf = new StringBuffer();
 
@@ -26,7 +26,7 @@ public class ShaPasswordEncoder  {
 		return sbuf.toString();
 	}
 
-	public static boolean matches(String pw, String encryptPassword ) throws Exception {
+	public boolean matches(String pw, String encryptPassword ) throws Exception {
 		
 		
 		if (encryptPassword.equals(encrypt(pw))) {

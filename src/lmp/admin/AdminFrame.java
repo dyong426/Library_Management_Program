@@ -186,26 +186,23 @@ public class AdminFrame extends JFrame {
 		panel.add(menuButtonPanel);
 		panel.add(menuCardPanel);
 		
-		JScrollPane sp = new JScrollPane();
 //		sp.setPreferredSize(new Dimension(1200, 800));
 //		sp.setBounds(0, 0, 1200, 800);
 //		sp.setViewportView(panel);
-		sp.setViewportView(panel);
-		sp.getVerticalScrollBar().setUnitIncrement(16);
 //		add(homeButton);
 //		add(menuButtonPanel);
 //		add(menuCardPanel);
 		
 //		setExtendedState(MAXIMIZED_BOTH);
+		JScrollPane sp = new JScrollPane();
+		sp.setViewportView(panel);
+		sp.getVerticalScrollBar().setUnitIncrement(16);
 		getContentPane().add(sp);
 		setContentPane(sp);
 		
-		
-//		setMinimumSize(new Dimension(500, 400));
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-//		setBounds(300, 100, 1200, 800);
+		setBounds(300, 100, 1200, 800);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-//		setResizable(false);
 		setVisible(true);
 		
 		

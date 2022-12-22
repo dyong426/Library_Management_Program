@@ -1,6 +1,7 @@
 package lmp.members.menu.readingroom.seatlist.panel;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ public class StatusPanel extends JPanel{
 	public StatusPanel() throws SQLException {
 		
 		setLayout(gridLayout);
+		setBounds(250,180, 1000, 50);
+		setBackground(Color.WHITE);
 		for (int i = 0; i < LABELS.length; i++) {
 			LABELS[i] = new StatusLabel();
 		}

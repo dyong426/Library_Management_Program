@@ -46,7 +46,7 @@ public class BookSearchPanel extends JPanel {
 
 	JPanel panel = this;
 
-	public static DefaultTableModel model_BookMgmt = new DefaultTableModel(bookColumn, 30) {
+	public DefaultTableModel model_BookMgmt = new DefaultTableModel(bookColumn, 30) {
 		public boolean isCellEditable(int row, int column) {
 			return false;
 		};
@@ -59,7 +59,7 @@ public class BookSearchPanel extends JPanel {
 	public static BookDao bookDao = new BookDao();
 	public static ArrayList<BookVO> bookVO;
 	// 도서현황 검색 창 초기화면 테이블
-	public static JTable table_BookMgmt = AdminFrame.getTable(model_BookMgmt);
+	public JTable table_BookMgmt = AdminFrame.getTable(model_BookMgmt);
 
 	public static JButton getButton(String text) {
 		return new JButton() {
@@ -178,6 +178,7 @@ public class BookSearchPanel extends JPanel {
 								e1.printStackTrace();
 							}
 						} else {
+							System.out.println(book.getList()[i]);
 							model_BookMgmt.setValueAt(book.getList()[i], resetRow, i);
 						}
 					}
@@ -214,7 +215,7 @@ public class BookSearchPanel extends JPanel {
 	}
 
 	// 메인 검색 테이블 새로고침 메서드
-	public static void tableValidate() {
+	public void tableValidate() {
 		try {
 			bookVO = new ArrayList<>();
 

@@ -62,7 +62,7 @@ public class SeatUseDetailDao extends MenuDao{
 		String sql =  "UPDATE"
 					+ " seat_use_details "
 					+ "SET"
-					+ " end_time = to_char(sysdate, 'yyyy.mm.dd hh:mi') "
+					+ " end_time = to_char(sysdate, 'yyyy.mm.dd hh24:mi') "
 					+ "WHERE"
 					+ " use_id = ?";
 		

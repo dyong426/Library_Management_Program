@@ -30,7 +30,8 @@ public class SeatListPanel extends JPanel{
 		setLayout(gridLayout);
 		setBorder(new TitledBorder(new LineBorder(new Color(126, 151, 148), 20)));
 		setBackground(new Color(126, 151, 148));
-
+		setBounds(20,280, 1460, 400);
+		
 		for (int i = 0; i < gridLayout.getColumns(); i++) {
 			seatPanels[i] = new SeatPanel(readingRoomPanel, i);
 			add(seatPanels[i]);

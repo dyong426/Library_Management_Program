@@ -44,7 +44,6 @@ public class SeatMouseAdapter extends MouseAdapter{
 				JOptionPane.showMessageDialog(null, "이미 사용중인 자리입니다.", "Message", 0);
 			} else {
 				memLogVO = memLogDao.getLog();
-				System.out.println(memLogVO);
 				
 				// 로그인 여부 확인
 				if (memLogVO == null) {
@@ -56,7 +55,6 @@ public class SeatMouseAdapter extends MouseAdapter{
 					
 					// 발권 여부 확인
 					if (JOptionPane.showConfirmDialog(null, String.format("좌석번호 : %d",seat_num), "열람실 자리 발권 확인", JOptionPane.YES_NO_OPTION) == 0) {
-						System.out.println("발권");
 						sudVO = sudDao.getUsingInfo(memLogVO.getMem_num());
 						if (sudVO != null) {
 							JOptionPane.showMessageDialog(null, String.format("이미 사용중 입니다.\n좌석번호 : %d\n회원이름 : %s\n사용시작시간 : %s",
@@ -69,7 +67,7 @@ public class SeatMouseAdapter extends MouseAdapter{
 							JOptionPane.showMessageDialog(null, String.format("좌석번호 : %d\n회원이름 : %s\n사용시작시간 : %s",
 																				sudVO.getReadingroom().getSeatNum(),
 																				sudVO.getMember().getName(),
-																				sudVO.getStartTime()), "발권확인", 0);	
+																				sudVO.getStartTime().substring(11)), "발권확인", 0);	
 							
 							readingRoomPanel.refresh();
 							

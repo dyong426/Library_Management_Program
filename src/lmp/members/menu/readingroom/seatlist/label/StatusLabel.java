@@ -11,10 +11,10 @@ public class StatusLabel extends JLabel{
 	public StatusLabel() {
 
 		this.setOpaque(true);
-		this.setBackground(new Color(126, 151, 148));
+		this.setBackground(Color.WHITE);
 		this.setHorizontalAlignment(JLabel.CENTER);
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		this.setForeground(Color.WHITE);
+		this.setForeground(Color.BLACK);
 		this.setFont(new Font("한컴 말랑말랑 Regular", Font.PLAIN, 15));
 	}
 

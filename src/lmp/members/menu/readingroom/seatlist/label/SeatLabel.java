@@ -21,6 +21,7 @@ public class SeatLabel extends JLabel{
 
 	
 	public SeatLabel(ReadingRoomPanel readingRoomPanel,int seatNum) throws SQLException {
+		
 		seatList = sudDao.getRoomInfo();
 		
 		if (seatList.get(seatNum -1).getTableDivider().equals("0")) {
