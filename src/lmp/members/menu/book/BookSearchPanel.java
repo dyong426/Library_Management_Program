@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -128,6 +129,7 @@ public class BookSearchPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				// 검색 키워드로 검새된 결과 받아오기
 				try {
 					bookVO = new ArrayList<>();
 					
@@ -137,12 +139,12 @@ public class BookSearchPanel extends JPanel {
 					e1.printStackTrace();
 				}
 				model_BookMgmt.setRowCount(bookVO.size());
-				model_BookMgmt.setColumnIdentifiers(bookColumn);
 				
 				CheckOutDao cDao = new CheckOutDao();
 				ArrayList<CheckOutVO> cVo = new ArrayList<>();
 				
 				int resetRow = 0;
+				// 한 권씩 정보 모델에 넣기
 				for (BookVO book : bookVO) {
 					for (int i = 0; i < bookColumn.length; ++i) {
 						if (bookColumn[i].equals("대출 가능 여부")) {
@@ -153,14 +155,24 @@ public class BookSearchPanel extends JPanel {
 								
 								// 대출 내역이 존재하는 도서 중
 								if (cVo.size() != 0) {
-									// 반납일이 없거나 비고가 채워져 있는 도서는 대출 불가
-									if (cVo.get(0).getCheckInDate() == null || book.getNote() != null) {
+									// 반납일이 없는 도서 대출 불가 표시
+									if (cVo.get(0).getCheckInDate() == null) {
 										model_BookMgmt.setValueAt("대출 불가", resetRow, i);
 									} else {
 										model_BookMgmt.setValueAt("대출 가능", resetRow, i);
 									}
 								} else {
 									model_BookMgmt.setValueAt("대출 가능", resetRow, i);
+								}
+								// 비고가 null이 아닌 도서 중
+								if (book.getNote() != null) {
+									// 훼손 / 분실 관련 도서 대출 불가 표시
+									if (book.getNote().contains("훼손") ||
+										book.getNote().contains("분실")) {
+										model_BookMgmt.setValueAt("대출 불가", resetRow, i);
+									} else {
+										model_BookMgmt.setValueAt("대출 가능", resetRow, i);
+									}
 								}
 							} catch (SQLException e1) {
 								e1.printStackTrace();
