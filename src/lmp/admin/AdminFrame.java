@@ -27,6 +27,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.plaf.basic.DefaultMenuLayout;
 import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.dao.AdminLogHistoryDao;
@@ -174,13 +175,7 @@ public class AdminFrame extends JFrame {
 		menuCardPanel.add("3", checkInOutPanel);
 		menuCardPanel.add("4", employeePanel);
 		menuCardPanel.add("5", memberPanel);
-		menuCardPanel.add("6", readingRoomPanel);
-		
-		menuCardPanel.setBounds(17, 200, 1150, 550);
-		menuCardPanel.add("1", initialLabel());
-		menuCardPanel.add("2", new BookSearchPanel());
-		
-		
+		menuCardPanel.add("6", readingRoomPanel);		
 		
 		menuButtonPanel.add(bookMgmt);
 		menuButtonPanel.add(checkIn_Out);
@@ -216,11 +211,12 @@ public class AdminFrame extends JFrame {
 					System.out.println("로그아웃");
 					AdminLogHistoryDao adminLogHistoryDao = new AdminLogHistoryDao();
 					adminLogHistoryDao.update(adminLogHistoryDao.getLog());
-				} catch (SQLException e1) {
-					e1.printStackTrace();
+				}catch (NullPointerException npe) {
+					System.out.println("로그인 정보 없음");
+				} catch (SQLException sqle) {
+					sqle.printStackTrace();
 					System.out.println("로그아웃 실패");
-					
-				}
+				} 
 			}
 		});
 		
@@ -236,7 +232,8 @@ public class AdminFrame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 //		setResizable(false);
 		setVisible(true);
-		
+		setMinimumSize(new Dimension(400, 200));
+		setPreferredSize(new Dimension(800,300));
 		
 	}
 	
@@ -303,9 +300,5 @@ public class AdminFrame extends JFrame {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		return table;
-	}
-	
-	public static void main(String[] args) {
-		new AdminFrame();
 	}
 }

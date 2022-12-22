@@ -25,7 +25,6 @@ import lmp.members.vo.MemberVO;
 
 public class MemberLoginFrame extends JFrame {
 	
-	private JFrame frame;
 	private JTextField idField;
 	private JPasswordField pwField;
 	

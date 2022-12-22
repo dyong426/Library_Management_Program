@@ -1,11 +1,14 @@
 package lmp.login;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -25,78 +28,123 @@ import lmp.admin.AdminFrame;
 import lmp.admin.dao.AdminDao;
 import lmp.admin.dao.AdminLogHistoryDao;
 import lmp.admin.vo.AdminVO;
+import lmp.members.dao.MemberDao;
+import lmp.members.dao.MemberLogHistoryDao;
+import lmp.members.vo.MemberVO;
 
 public class AdminLoginFrame extends JFrame{
 
-
+	SelectModeFrame selectModeFrame;
 	AdminLoginFrame adminLoginFrame;
 	AdminFrame adminFrame;						
 	
-	AdminDao adminDao = new AdminDao();
 	AdminLogHistoryDao adminLogHistoryDao = new AdminLogHistoryDao();
+	AdminDao adminDao = new AdminDao();
+
+	private JTextField idField;
+	private JPasswordField pwField;
 
 	public AdminLoginFrame(SelectModeFrame selectModeFrame) {
+		this.selectModeFrame = selectModeFrame;
+		initialize();
+	}
 
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	public void initialize() {
 		adminLoginFrame = this;
+		setAutoRequestFocus(false);
+		setBounds(100, 100, 400, 300);
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setLocationRelativeTo(null);
 		
-		JPanel panel = new JPanel();
-
-		Font font = new Font("한컴 말랑말랑 Regular", Font.BOLD, 14);
-
-		Color panelColor = new Color(49, 82, 91);
-		Color btnColor = new Color(204, 139, 101);
-		panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-		panel.setBackground(panelColor);
-		panel.setSize(400, 300);
-
-		JLabel managerIdLabel = new JLabel("관리자번호");
-		JLabel managerPwLabel = new JLabel("관리자암호");
-		managerIdLabel.setBounds(40, 80, 100, 30);
-		managerPwLabel.setBounds(40, 120, 100, 30);
-		managerIdLabel.setFont(font);
-		managerPwLabel.setFont(font);
-		managerIdLabel.setForeground(Color.WHITE);
-		managerPwLabel.setForeground(Color.WHITE);
-
-
-		JTextField managerIdTf = new JTextField("관리자번호를 입력하세요");
-		JPasswordField managerPwTf = new JPasswordField("관리자암호를 입력하세요");
-		managerIdTf.setBounds(130, 80, 180, 30);
-		managerPwTf.setBounds(130, 120, 180, 30);
-		managerIdTf.setForeground(Color.LIGHT_GRAY);
-		managerPwTf.setForeground(Color.LIGHT_GRAY);
-		managerIdTf.setBorder(null);
-		managerPwTf.setBorder(null);
-
-		managerIdTf.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				managerIdTf.setText("");
-			}
-		});
-
-		managerPwTf.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				managerPwTf.setText("");
-			}
-		});
+		
+		
+		JPanel loginPanel = new JPanel();
+		getContentPane().add(loginPanel, BorderLayout.CENTER);
+		loginPanel.setLayout(null);
+		loginPanel.setBackground(new Color(186, 206, 194));
+		loginPanel.setFocusCycleRoot(true);
+		
+		
+		
+		
+		idField = new JTextField("사원번호");
+		idField.setBounds(50, 75, 300, 35);
+		loginPanel.add(idField);
+		idField.setColumns(30);
+		
+		JTextField pwTField = new JTextField("비밀번호");
+		
+		pwTField.setBounds(50, 120, 300, 35);
+		loginPanel.add(pwTField);
+		
+		
+		pwField = new JPasswordField();
+		pwField.setBounds(50, 120, 300, 35);
+		loginPanel.add(pwField);
+		pwField.setColumns(30);
 
 		JButton loginBtn = new JButton("로그인");
+		loginBtn.setBounds(49, 170, 302, 40);
+		loginBtn.setFocusPainted(false);
+		loginPanel.add(loginBtn);
 
-		loginBtn.setBounds(90, 180, 80, 30);
-		loginBtn.setFont(font);
-		loginBtn.setBackground(Color.WHITE);
-		loginBtn.setForeground(Color.GRAY);
-		loginBtn.setBorderPainted(false);
+		JLabel loginImageLabel = new JLabel("이미지");
+		loginImageLabel.setFont(new Font("굴림", Font.PLAIN, 40));
+		loginImageLabel.setBounds(129, 10, 146, 40);
+		
+		loginPanel.add(loginImageLabel);
+		
+		
+		idField.addFocusListener(new FocusAdapter() {
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (idField.getText().equals("사원번호")) {
+					idField.setText("");
+				}
+			}
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				
+				if (idField.getText().equals("")) {
+					idField.setText("사원번호");
+				}
+				
+			}
+		});
+		
+		pwTField.addFocusListener(new FocusAdapter() {
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				pwTField.setVisible(false);
+				pwField.setFocusable(true);
+				pwField.requestFocusInWindow();
+				
+			}
+		});
+		
+		pwField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusLost(FocusEvent e) {
+				if (new String(pwField.getPassword()).equals("")) {					
+					pwTField.setVisible(true);
+				}
+			}
+		});
+		
 		loginBtn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					System.out.println(managerIdTf.getText() + new String(managerPwTf.getPassword()));
-					System.out.println(checkLogin(managerIdTf.getText(), new String(managerPwTf.getPassword())));
-					if (checkLogin(managerIdTf.getText(), new String(managerPwTf.getPassword()))) {
+					System.out.println(idField.getText() + new String(pwField.getPassword()));
+					if (checkLogin(idField.getText(), new String(pwField.getPassword()))) {
 						adminLoginFrame.dispose();
 						selectModeFrame.dispose();
 						adminFrame = new AdminFrame();
@@ -110,46 +158,10 @@ public class AdminLoginFrame extends JFrame{
 			}
 
 		});
-
-		JButton cancelBtn = new JButton("취소") {
-			{
-				setBounds(220, 180, 80, 30);
-				addActionListener(new ActionListener() {	
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						adminLoginFrame.setVisible(false);
-					}
-				});
-			}
-		};
-		
-		cancelBtn.setFont(font);
-		cancelBtn.setBackground(Color.WHITE);
-		cancelBtn.setForeground(Color.GRAY);
-		cancelBtn.setBorderPainted(false);
-
-
-
-
-
-		add(loginBtn);
-		add(cancelBtn);
-
-		add(managerIdLabel);
-		add(managerPwLabel);
-		add(managerIdTf);
-		add(managerPwTf);
-		add(panel);
-		setTitle("관리자 로그인");
-		setVisible(true);
-		setResizable(false);
-		setSize(new Dimension(400, 300));
-		setDefaultCloseOperation(this.EXIT_ON_CLOSE);
-		setLocationRelativeTo(null); // 화면 중앙에 띄우기
 	}
-	
+
 	public boolean checkLogin(String admin_num, String admin_pw) {
-		AdminVO adminVO;
+		AdminVO adminVO = null;
 		try {
 			
 			adminVO = adminDao.getAdminInfo(Integer.parseInt(admin_num));

@@ -10,13 +10,14 @@ import java.awt.event.ActionListener;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import lmp.members.MemberFrame;
 
 public class SelectModeFrame extends JFrame{
 	
-	static Font font = new Font("한컴 말랑말랑 Regular", Font.PLAIN, 30);
+	static Font font = new Font("한컴 말랑말랑 Regular", Font.PLAIN, 15);
 	static Color panelColor = new Color(49, 82, 91);
 	static Color btnColor = new Color(204, 139, 101);
 
@@ -25,23 +26,23 @@ public class SelectModeFrame extends JFrame{
 
 			SelectModeFrame selectModeFrame = this;
 
-			JButton memberBtn = new JButton("회원") {
+			JButton memberBtn = new JButton("회원용") {
 				{
 					setBounds(80, 50, 100, 60);
 					addActionListener(new ActionListener() {	
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							adminLogFrame = new AdminLoginFrame(selectModeFrame);
-							selectModeFrame.setVisible(false);
+							selectModeFrame.dispose();
+							MemberFrame memberFrame = new MemberFrame();
 						}
 					});
 				}
 			};
 
 
-			JButton managerBtn = new JButton("관리자") {
+			JButton managerBtn = new JButton("관리자용") {
 				{
-					setBounds(225, 50, 100, 60);
+					setBounds(220, 50, 100, 60);
 					addActionListener(new ActionListener() {	
 						@Override
 						public void actionPerformed(ActionEvent e) {
