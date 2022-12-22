@@ -30,10 +30,9 @@ public class SeatPanel extends JPanel{
 		this.readingRoomPanel = readingRoomPanel;
 		this.tens = tensDigit * 10;
 		
-		
 		for (int i = 0; i < gridLayout.getRows() * gridLayout.getColumns(); i++) {
 			
-			seatLabels[i] = new SeatLabel(readingRoomPanel,i + 1 + tens);
+			seatLabels[i] = new SeatLabel(readingRoomPanel, i + 1 + tens);
 			add(seatLabels[i]);
 		}
 		initialize();

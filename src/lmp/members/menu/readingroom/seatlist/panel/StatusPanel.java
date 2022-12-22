@@ -27,8 +27,8 @@ public class StatusPanel extends JPanel{
 	public StatusPanel() throws SQLException {
 		
 		setLayout(gridLayout);
-		setBounds(250,180, 1000, 50);
-		setBackground(Color.WHITE);
+		setBounds(250, 180, 1000, 50);
+		setBackground(new Color(126, 151, 148));
 		for (int i = 0; i < LABELS.length; i++) {
 			LABELS[i] = new StatusLabel();
 		}

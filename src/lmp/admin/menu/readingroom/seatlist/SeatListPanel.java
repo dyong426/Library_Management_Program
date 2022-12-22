@@ -17,7 +17,7 @@ import lmp.db.vo.SeatUseDetailVO;
 
 public class SeatListPanel extends JPanel{
 	
-	GridLayout gridLayout = new GridLayout(1, 5, 30, 0);
+	GridLayout gridLayout = new GridLayout(1, 7, 30, 0);
 
 	StatusPanel statusPanel;
 	SeatPanel[]	seatPanels = new SeatPanel[gridLayout.getColumns() - 1];

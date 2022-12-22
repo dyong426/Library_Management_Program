@@ -12,8 +12,8 @@ public class UsageListTitleLabel extends JLabel{
 		
 		this.setText("열람실 이용 내역");
 		this.setHorizontalAlignment(JLabel.CENTER);
-		setFont(new Font("한컴 말랑말랑 Regular", Font.PLAIN, 30));
-		setForeground(Color.BLACK);
+		setFont(new Font("한컴 말랑말랑 Regular", Font.PLAIN, 40));
+		setForeground(Color.WHITE);
 	}
 
 }

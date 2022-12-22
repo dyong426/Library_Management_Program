@@ -51,6 +51,8 @@ public class BookModificationFrame extends JFrame implements MouseListener, KeyL
 	private JButton overwriteBtn, comebackBtn, saveBtn_Modify;
 	JComboBox cb_Modify = new JComboBox(BOOK_LOCATIONS);
 
+	JFrame f = this;
+	
 	public BookModificationFrame(String title) {
 
 		this.setTitle(title);
@@ -174,6 +176,7 @@ public class BookModificationFrame extends JFrame implements MouseListener, KeyL
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				updateRecord();
+				f.dispose();
 			}
 		});
 
@@ -256,6 +259,7 @@ public class BookModificationFrame extends JFrame implements MouseListener, KeyL
 	}
 	
 	public void updateRecord() {
+		
 		BookDao bookDao = new BookDao();
 		
 		// BookVO에서 수정 항목 데이터 변경
@@ -280,6 +284,7 @@ public class BookModificationFrame extends JFrame implements MouseListener, KeyL
 		
 		// 데이터 수정후 검색 테이블 새로고침
 		BookMgmt.tableValidate();
+		
 //				(
 //				model_Modify.getValueAt(0, 0).toString(),
 //				model_Modify.getValueAt(0, 1).toString(),

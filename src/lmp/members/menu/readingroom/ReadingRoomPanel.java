@@ -30,12 +30,12 @@ public class ReadingRoomPanel extends JPanel {
 		
 		setBackground(new Color(126, 151, 148));  //--> 사이즈 수정 필요
 		setLayout(null);
-
-		JLabel label = new JLabel("| | : 칸막이");
+		
+		JLabel label = new JLabel("|  |  :  칸막이");
 		label.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 20));
 		label.setForeground(Color.WHITE);
-		label.setBounds(100,100,200,150);
-
+		label.setBounds(100, 125, 200, 150);
+		
 		add(label);
 		usageListPanel.add(usageListTitlePanel);
 		add(usageListPanel);

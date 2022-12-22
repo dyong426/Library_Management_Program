@@ -2,7 +2,6 @@ package lmp.admin.vo;
 
 import java.util.Date;
 
-
 import lmp.admin.dao.CheckOutDao;
 
 public class MemberVO {
@@ -92,12 +91,13 @@ public class MemberVO {
 										  };
 	}
 	
-	public MemberVO(int mem_num, String mem_name, String mem_phone, String mem_email, String mem_address) {
+	public MemberVO(int mem_num, String mem_name, String mem_phone, String mem_email, String mem_address, String mem_note) {
 		this.num = mem_num;
 		this.name = mem_name;
 		this.phone = mem_phone;
 		this.email = mem_email;
 		this.address = mem_address;
+		this.note = mem_note;
 	}
 
 	public Integer getNum() {

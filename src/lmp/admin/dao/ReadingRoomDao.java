@@ -5,11 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import lmp.admin.vo.ReadingRoomVO;
 
-public class ReadingRoomDao extends MenuDao{
-
+public class ReadingRoomDao extends MenuDao {
+	
 	@Override
 	public ArrayList<ReadingRoomVO> get() throws SQLException {
 		String sql = "SELECT * FROM readingroom";
@@ -24,7 +26,11 @@ public class ReadingRoomDao extends MenuDao{
 			readingrooms.add(readingRoomVO);
 		}
 		
+		Collections.sort(readingrooms);
+		
 		return readingrooms;
 	}
+
+	
 	
 }

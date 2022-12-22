@@ -301,7 +301,7 @@ public class CheckIn_Out_Frame extends JFrame{
 						
 						// 대출내역 정보가 3건 이상이면 풀대출 안내문구 출력
 						if (checkedOutList.size() == 3) {
-							JOptionPane.showMessageDialog(frame, "대출 불가능 (풀대출)");
+							JOptionPane.showMessageDialog(frame, "대출 불가능 (대출 권수 확인)");
 							return;
 						}
 						
