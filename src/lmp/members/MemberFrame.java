@@ -287,12 +287,11 @@ public class MemberFrame extends JFrame {
 	};
 
 	public static void main(String[] args) {
-			try {
-				new MemberFrame();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		
+		try {
+			new MemberFrame();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }
 

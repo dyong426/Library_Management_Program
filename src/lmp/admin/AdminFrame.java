@@ -14,6 +14,12 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -26,11 +32,13 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+import lmp.admin.dao.SeatUseDetailDao;
 import lmp.admin.menu.book.BookMgmt;
 import lmp.admin.menu.checkin_out.Member_Searching_Panel;
 import lmp.admin.menu.employees.EmployeesMgmt;
 import lmp.admin.menu.member.MemberMgmt;
 import lmp.admin.menu.readingroom.ReadingRoomPanel;
+import lmp.admin.vo.SeatUseDetailVO;
 
 
 public class AdminFrame extends JFrame {
@@ -52,6 +60,32 @@ public class AdminFrame extends JFrame {
 		
 		setTitle("관리자 모드");
 		setLayout(null);
+		
+		// 자정 되면 전좌석 강제 퇴실
+		Calendar date = Calendar.getInstance();
+		date.set(Calendar.HOUR_OF_DAY, 23);
+		date.set(Calendar.MINUTE, 59);
+		date.set(Calendar.SECOND, 59);
+		
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				SeatUseDetailDao sDao = new SeatUseDetailDao();
+				ArrayList<SeatUseDetailVO> sVo = new ArrayList<>();
+				try {
+					sVo.addAll(sDao.get());
+					
+					for (SeatUseDetailVO seat : sVo) {
+						sDao.update(seat.getUse_id());
+					}
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		timer.schedule(task, date.getTime());
+		
 		
 		
 		JPanel menuButtonPanel = new JPanel(new GridLayout(1, 5, 100, 0));

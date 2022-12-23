@@ -127,7 +127,7 @@ public class MemberMenu extends JPanel {
 		logoutBtn = new JButton("로그아웃");
 
 		
-		setlabel(memberInfo, 35, 30, 20);
+		setlabel(memberInfo, 35, 30, 30);
 
 		setlabel(membernum, 30, 200, 150);
 		setlabel(membernum2, 30, 450, 150);
@@ -192,6 +192,7 @@ public class MemberMenu extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFrame j = new JFrame();
+				j.setLayout(null);
 
 				JLabel join = new JLabel("회원수정");
 				JLabel id = new JLabel("아이디");
@@ -279,7 +280,7 @@ public class MemberMenu extends JPanel {
 				j.add(address);
 				j.add(addressField);
 
-				setBtn2(changeBtn2, 18, 280, 580, 80, 40 );
+				setBtn2(changeBtn2, 18, 400, 580, 80, 40 );
 				j.add(changeBtn2);
 
 				MemberDao memberDao = new MemberDao();
@@ -398,8 +399,8 @@ public class MemberMenu extends JPanel {
 						j.dispose();
 					}
 				});
-
-				j.setLayout(null);
+				
+				j.setBounds(450, 130, 550, 700);
 				j.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				j.setVisible(true);
 			}
@@ -424,7 +425,6 @@ public class MemberMenu extends JPanel {
 					return;
 				} 
 				
-				System.out.println(mvo.getNum());
 				int var = JOptionPane.showConfirmDialog
 						(null, "탈퇴하시겠습니까?", "탈퇴 안내",
 								JOptionPane.YES_NO_OPTION,
@@ -458,7 +458,7 @@ public class MemberMenu extends JPanel {
 		Font font = new Font("한컴 말랑말랑 Bold", Font.BOLD, size);
 		label.setFont(font);
 		label.setForeground(Color.WHITE);
-		label.setBounds(x, y, 300, 30);
+		label.setBounds(x, y, 300, 40);
 		add(label);
 	}
 

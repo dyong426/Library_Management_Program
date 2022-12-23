@@ -12,6 +12,8 @@ import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -44,6 +46,8 @@ public class MemberLoginFrame extends JFrame {
 
 	static String mem_id;
 	
+	MemberLoginFrame f = this;
+	
 	public MemberLoginFrame() {
 		initialize();
 	}
@@ -54,6 +58,7 @@ public class MemberLoginFrame extends JFrame {
 	 * Initialize the contents of the frame.
 	 */
 	public void initialize() {
+		
 		memberLoginFrame = this;
 		setAutoRequestFocus(false);
 		setBounds(100, 100, 400, 300);
@@ -166,6 +171,8 @@ public class MemberLoginFrame extends JFrame {
 							public void run() {
 								try {
 									memberLogHistoryDao.update(memberLogHistoryDao.getLog());
+									memberLoginFrame.initialize();
+									memberLoginFrame.validate();
 								} catch (SQLException e) {
 									e.printStackTrace();
 								}
@@ -203,6 +210,14 @@ public class MemberLoginFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				new MemberJoin();
+			}
+		});
+		
+		memberLoginFrame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				memberLoginFrame.initialize();
+				memberLoginFrame.validate();
 			}
 		});
 	}

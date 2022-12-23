@@ -26,7 +26,7 @@ public class UsageListScrollPane extends JScrollPane{
 		
 		sudList.addAll(sudDao.get());
 		int resetRow = 0;
-		model = new DefaultTableModel(colNames, 30) {
+		model = new DefaultTableModel(colNames, 60) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;

@@ -30,7 +30,7 @@ public class SeatUseDetailDao extends MenuDao{
 	public void add(SeatUseDetailVO sudVO) throws SQLException{
 		Connection conn = getConnection();
 		
-		String sql = "INSERT INTO check_out_info(use_id, mem_num, seat_num) VALUES(check_out_id_seq.nextval,?,?)";
+		String sql = "INSERT INTO check_out_info(use_id, mem_num, seat_num) VALUES(check_out_id_seq.nextval, ?, ?)";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
@@ -59,7 +59,7 @@ public class SeatUseDetailDao extends MenuDao{
 		String sql =  "UPDATE"
 					+ " seat_use_details"
 					+ " SET"
-					+ " end_time = sysdate"
+					+ " end_time = to_char(sysdate, 'yyyy.mm.dd hh24:mi')"
 					+ " WHERE"
 					+ " use_id = ?";
 		
