@@ -69,6 +69,7 @@ public class MemberFrame extends JFrame {
 	
 	public MemberFrame() throws SQLException {
 		
+		setBounds(300, 100, 1200, 800);
 		initialize();
 	}
 	
@@ -146,8 +147,6 @@ public class MemberFrame extends JFrame {
 					setMenu = new SettingMenu(memberFrame);
 					setMenu.setVisible(true);
 					theme.setTheme(themeDao.getTheme());
-					memberFrame.initialize();
-					memberFrame.invalidate();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
@@ -256,7 +255,6 @@ public class MemberFrame extends JFrame {
 		
 //		getContentPane().setBackground(defaultTheme.getMainColor());
 		setExtendedState(this.MAXIMIZED_BOTH);
-		setBounds(300, 100, 1200, 800);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		

@@ -115,7 +115,7 @@ public class SettingMenu extends JFrame {
 		});
 		getContentPane().add(btnNewButton);
 		
-		setSize(400,300);
+		setBounds(100,100,400,300);
 
 	}
 	
