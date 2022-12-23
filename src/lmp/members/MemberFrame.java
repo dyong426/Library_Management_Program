@@ -17,6 +17,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.GregorianCalendar;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -25,6 +27,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.LineBorder;
 
 import lmp.db.dao.MemberLogHistoryDao;
 import lmp.db.vo.MemberLogHistoryVO;
@@ -38,6 +41,7 @@ public class MemberFrame extends JFrame {
 
 	JButton homeBtn, bookMgmt, memberMgmt, readingRoom, settingBtn;
 	
+	JLabel clockLabel;
 	
 	JFrame f = this;
 	
@@ -57,6 +61,8 @@ public class MemberFrame extends JFrame {
 	Theme theme = new Theme();
 	ThemeDao themeDao = new ThemeDao();
 	
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 a HH : mm");
+	
 	public MemberFrame() throws SQLException {
 
 		JPanel menuButtonPanel = new JPanel(new GridLayout(1, 5, 100, 0));
@@ -65,7 +71,17 @@ public class MemberFrame extends JFrame {
 		
 		setTitle("회원 모드");
 		setLayout(null);
-
+		
+		
+		clockLabel = new JLabel(sdf.format(new GregorianCalendar().getTime()));
+		clockLabel.setFont(new Font("한컴 말랑말랑 Regular", Font.PLAIN, 20));
+		clockLabel.setForeground(Color.WHITE);
+		clockLabel.setBounds(5, 5, 300, 30);
+		
+		javax.swing.Timer timers = new javax.swing.Timer(1000, updateClockAction);
+		timers.start();
+		
+		
 		BufferedImage bufferedHome = null;
 		BufferedImage bufferedBookMgmt = null;
 		BufferedImage bufferedCheckIn_Out = null;
@@ -180,6 +196,7 @@ public class MemberFrame extends JFrame {
 		panel.setBackground(new Color(0, 82, 91));
 		panel.add(menuButtonPanel);
 		panel.add(menuCardPanel);
+		panel.add(clockLabel);
 		
 		JScrollPane sp = new JScrollPane();
 		sp.setViewportView(panel);
@@ -262,12 +279,17 @@ public class MemberFrame extends JFrame {
 		};
 	}
 
+	ActionListener updateClockAction = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			clockLabel.setText(sdf.format(new GregorianCalendar().getTime()));
+		}
+	};
 
 	public static void main(String[] args) {
 			try {
 				new MemberFrame();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		

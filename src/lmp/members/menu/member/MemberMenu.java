@@ -126,8 +126,8 @@ public class MemberMenu extends JPanel {
 		deleteBtn = new JButton("탈퇴");
 		logoutBtn = new JButton("로그아웃");
 
-
-		setlabel(memberInfo, 35, 30, 30);
+		
+		setlabel(memberInfo, 35, 30, 20);
 
 		setlabel(membernum, 30, 200, 150);
 		setlabel(membernum2, 30, 450, 150);
@@ -153,7 +153,7 @@ public class MemberMenu extends JPanel {
 		setlabel(memberaddress, 30, 800, 350);
 		setlabel(memberaddress2, 30, 980, 350);
 
-		setBtn(changeBtn, 23, 1200, 660);
+		setBtn(changeBtn, 23, 1250, 660);
 
 		setBtn(deleteBtn, 23, 1350, 660);
 
@@ -478,7 +478,7 @@ public class MemberMenu extends JPanel {
 		button.setBackground(Color.WHITE);
 		button.setForeground(new Color(49, 82, 91));
 		button.setFocusable(false);
-		button.setBounds(x, y, 70, 50);
+		button.setBounds(x, y, 80, 50);
 		add(button);
 	}
 

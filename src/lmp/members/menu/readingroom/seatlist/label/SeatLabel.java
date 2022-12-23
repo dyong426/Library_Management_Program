@@ -27,7 +27,7 @@ public class SeatLabel extends JLabel{
 		if (seatList.get(seatNum -1).getTableDivider().equals("0")) {
 			setText(Integer.toString(seatNum));			
 		} else {
-			setText("| " + Integer.toString(seatNum) + " |");
+			setText("|" + Integer.toString(seatNum) + "|");
 		}
 		setOpaque(true);
 		setForeground(Color.BLACK);

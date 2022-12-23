@@ -2,6 +2,7 @@ package lmp.members;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
@@ -10,6 +11,10 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.sql.SQLException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,7 +27,9 @@ import javax.swing.JTextField;
 import lmp.db.dao.MemberDao;
 import lmp.db.dao.MemberLogHistoryDao;
 import lmp.db.vo.MemberVO;
+import lmp.members.menu.findId_Pw.FindID;
 import lmp.members.menu.member.MemberMenu;
+import lmp.members.menu.readingroom.usagelist.label.UsageListCheckOutLabel;
 import lmp.util.ShaPasswordEncoder;
 
 public class MemberLoginFrame extends JFrame {
@@ -40,6 +47,8 @@ public class MemberLoginFrame extends JFrame {
 	public MemberLoginFrame() {
 		initialize();
 	}
+	
+	Font font = new Font("한컴 말랑말랑 Regular", Font.PLAIN, 15);
 
 	/**
 	 * Initialize the contents of the frame.
@@ -62,7 +71,6 @@ public class MemberLoginFrame extends JFrame {
 
 
 
-
 		idField = new JTextField("아이디");
 		idField.setBounds(50, 75, 300, 35);
 		loginPanel.add(idField);
@@ -81,17 +89,25 @@ public class MemberLoginFrame extends JFrame {
 
 		JButton loginBtn = new JButton("로그인");
 		loginBtn.setBounds(49, 170, 302, 40);
+		loginBtn.setBackground(new Color(87, 119, 119));
+		loginBtn.setFont(font);
+		loginBtn.setForeground(Color.WHITE);
+		loginBtn.addMouseListener(getMouseListener());
 		loginBtn.setFocusPainted(false);
 		loginPanel.add(loginBtn);
 
 
 
 		JLabel findIDLabel = new JLabel("아이디 찾기");
-		findIDLabel.setBounds(50, 236, 70, 15);
+		findIDLabel.setBounds(50, 230, 80, 15);
+		findIDLabel.setFont(font);
+		findIDLabel.addMouseListener(getMouseListener());
 		loginPanel.add(findIDLabel);
-
+		
 		JLabel joinLabel = new JLabel("회원가입");
-		joinLabel.setBounds(290, 236, 50, 15);
+		joinLabel.setBounds(290, 230, 70, 15);
+		joinLabel.setFont(font);
+		joinLabel.addMouseListener(getMouseListener());
 		loginPanel.add(joinLabel);
 
 		JLabel loginImageLabel = new JLabel("이미지");
@@ -141,11 +157,26 @@ public class MemberLoginFrame extends JFrame {
 		});
 
 		loginBtn.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (checkLogin(idField.getText(), new String(pwField.getPassword()))) {
+						TimerTask task = new TimerTask() {
+							@Override
+							public void run() {
+								try {
+									memberLogHistoryDao.update(memberLogHistoryDao.getLog());
+								} catch (SQLException e) {
+									e.printStackTrace();
+								}
+							}
+						};
+						
+						Timer timer = new Timer();
+						long delay = 1000L * 60 * 5;
+						
+						timer.schedule(task, delay);
+						
 						memberLoginFrame.dispose();
 //						MemberMenu memberMenu = new MemberMenu();
 //						MemberFrame.menuCardPanel.add("3", memberMenu);
@@ -162,20 +193,32 @@ public class MemberLoginFrame extends JFrame {
 		});
 
 		findIDLabel.addMouseListener(new MouseAdapter() {
-
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				new FindID();
 			}
 		});
 
 		joinLabel.addMouseListener(new MouseAdapter() {
-
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				new MemberJoin();
 			}
 		});
+	}
+	
+	public MouseListener getMouseListener() {
+		MouseListener mouse = new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {				
+				setCursor(null);
+			}
+		};
+		return mouse;
 	}
 	
 	public static String getMemId() {
@@ -187,7 +230,6 @@ public class MemberLoginFrame extends JFrame {
 		MemberVO memberVO = null;
 		try {
 			memberVO = (MemberVO) memberDao.get3(mem_id);
-			System.out.println(memberVO);
 			if (memberVO == null) {
 				return false;
 			} else {

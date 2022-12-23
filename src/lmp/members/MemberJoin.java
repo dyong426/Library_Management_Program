@@ -33,7 +33,7 @@ public class MemberJoin extends JFrame {
 	MemberDao memberDao = new MemberDao();
 	Validator vd = new Validator();
 	ShaPasswordEncoder pwEncoder = new ShaPasswordEncoder();
-
+	
 	public MemberJoin() {
 		JLabel join = new JLabel("회원가입");
 		JLabel name = new JLabel("이름");

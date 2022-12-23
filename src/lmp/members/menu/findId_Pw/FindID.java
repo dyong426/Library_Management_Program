@@ -54,6 +54,7 @@ public class FindID extends JFrame {
     */
    public FindID() {
       initialize();
+      setVisible(true);
    }
 
    /**
