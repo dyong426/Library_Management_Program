@@ -118,7 +118,7 @@ public class BookMgmt extends JPanel {
 		label.setForeground(Color.WHITE);
 
 		// 도서검색 콤보박스 선언
-		cb.setBounds(270, 130, 200, 35);
+		cb.setBounds(330, 130, 150, 35);
 		cb.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 15));
 
 		// 도서검색 텍스트필드 선언

@@ -44,8 +44,6 @@ public class MemberFrame extends JFrame {
 
 	JButton homeBtn, bookMgmt, memberMgmt, readingRoom, settingBtn;
 	
-	static JButton logoutBtn, loginBtn;
-	
 	JLabel clockLabel;
 //	static JPanel MemberPanel = new MemberMenu();
 	
@@ -91,55 +89,10 @@ public class MemberFrame extends JFrame {
 		javax.swing.Timer timers = new javax.swing.Timer(1000, updateClockAction);
 		timers.start();
 		
-		loginBtn = new JButton("로그인");
-		loginBtn.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 20));
-		loginBtn.setBackground(Color.WHITE);
-		loginBtn.setForeground(Color.RED);
-		loginBtn.setFocusable(false);
-		loginBtn.setBounds(1770, 10, 120, 50);
-		loginBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				memberLoginFrame.initialize();
-				memberLoginFrame.setVisible(true);
-			}
-		});
-		
-		
-		logoutBtn = new JButton("로그아웃");
-		logoutBtn.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 20));
-		logoutBtn.setBackground(Color.WHITE);
-		logoutBtn.setForeground(Color.RED);
-		logoutBtn.setFocusable(false);
-		logoutBtn.setVisible(false);
-		logoutBtn.setBounds(1770, 10, 120, 50);
-		
 		
 		theme.setTheme(themeDao.getTheme());
 		JPanel menuButtonPanel = new JPanel(new GridLayout(1, 4, 100, 0));
 
-		logoutBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					if (memLogDao.getLog() == null) {
-						return;
-					} else {
-						int var = JOptionPane.showConfirmDialog
-								(null, "로그아웃 하시겠습니까?", "로그아웃",
-										JOptionPane.YES_NO_OPTION,
-										JOptionPane.INFORMATION_MESSAGE, null);
-						if (var == JOptionPane.YES_OPTION) {
-							memLogDao.update(memLogDao.getLog());
-							System.out.println("로그아웃");
-							MemberFrame.card.show(MemberFrame.menuCardPanel, "1");
-						}
-					}
-				} catch (SQLException e2) {
-					e2.printStackTrace();
-				}
-			}
-		});
 
 //		theme.setTheme(themeDao.getTheme(1));
 
@@ -249,8 +202,6 @@ public class MemberFrame extends JFrame {
 
 		panel.add(settingBtn);
 		panel.add(clockLabel);
-		panel.add(logoutBtn);
-		panel.add(loginBtn);
 
 		
 		JScrollPane sp = new JScrollPane();
@@ -337,7 +288,7 @@ public class MemberFrame extends JFrame {
 			clockLabel.setText(sdf.format(new GregorianCalendar().getTime()));
 		}
 	};
-
+	
 	public static void main(String[] args) {
 		try {
 			new MemberFrame();

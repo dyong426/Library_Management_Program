@@ -178,11 +178,11 @@ public class CheckIn_Out_Frame extends JFrame{
 		
 		keyword = new JComboBox(keywordList);
 		keyword.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 15));
-		keyword.setBounds(120, 250, 120, 30);
+		keyword.setBounds(130, 250, 120, 30);
 		
 		searchbutton = AdminFrame.getButton("검색");
-		searchbutton.setIcon(img.scaledMgmtImage("search"));
-		searchbutton.setBounds(720, 230, 70, 70);
+		searchbutton.setIcon(img.scaledSmallImage("search"));
+		searchbutton.setBounds(690, 230, 70, 70);
 		
 		// 텍스트 필드에서 엔터 누르면 버튼 클릭되도록 액션 추가 (검색 버튼 눌러도 되고 텍스트 필드에서 엔터 눌러도 검색됨)
 		searchField = new JTextField();
@@ -265,6 +265,14 @@ public class CheckIn_Out_Frame extends JFrame{
 							if (LocalDate.parse((list.getExpectReturnDate()),
 									DateTimeFormatter.ofPattern("yy/MM/dd")).compareTo(LocalDate.now()) < 0) {
 								JOptionPane.showMessageDialog(frame, "연체 중인 도서가 존재합니다.");
+								return;
+							}
+						}
+						
+						Object book_note = checkOutModel.getValueAt(checkOutTable.getSelectedRow(), 10);
+						if (book_note != null) {
+							if (book_note.toString().contains("훼손") || book_note.toString().contains("분실")) {
+								JOptionPane.showMessageDialog(frame, "대출 불가능 도서입니다.");
 								return;
 							}
 						}

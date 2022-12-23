@@ -65,9 +65,9 @@ public class AdminFrame extends JFrame {
 		
 		// 자정 되면 전좌석 강제 퇴실
 		Calendar date = Calendar.getInstance();
-		date.set(Calendar.HOUR_OF_DAY, 23);
-		date.set(Calendar.MINUTE, 59);
-		date.set(Calendar.SECOND, 59);
+		date.set(Calendar.HOUR_OF_DAY, 20);
+		date.set(Calendar.MINUTE, 03);
+		date.set(Calendar.SECOND, 30);
 		
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
@@ -86,9 +86,7 @@ public class AdminFrame extends JFrame {
 				}
 			}
 		};
-		timer.schedule(task, date.getTime());
-		
-		
+		timer.schedule(task, date.getTime());		
 		
 		JPanel menuButtonPanel = new JPanel(new GridLayout(1, 5, 100, 0));
 		

@@ -97,7 +97,7 @@ public class Member_Searching_Panel extends JPanel {
 		
 		keyword = new JComboBox(keywordList);
 		keyword.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 15));
-		keyword.setBounds(270, 130, 200, 35);
+		keyword.setBounds(330, 130, 150, 35);
 		
 //		searchButton = AdminFrame.getButton("검색");
 //		try {

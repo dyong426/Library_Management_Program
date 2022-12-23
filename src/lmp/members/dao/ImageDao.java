@@ -16,7 +16,7 @@ public class ImageDao extends MenuDao {
 		
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, image_name);
+		pstmt.setString(1, image_name + ".png");
 		ResultSet rs = pstmt.executeQuery();
 		
 		ImageVO imageVO = null;

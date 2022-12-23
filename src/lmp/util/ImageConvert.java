@@ -22,7 +22,7 @@ public class ImageConvert {
 	
 	public ImageIcon scaledMenuImage(String image_name) {
 		try {
-			imageVO = imageDao.getImage(image_name + ".png");
+			imageVO = imageDao.getImage(image_name);
 			bufferedImage = ImageIO.read(new File(imageVO.getImage_path()));
 			image = bufferedImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
 			icon = new ImageIcon(image);
@@ -35,7 +35,7 @@ public class ImageConvert {
 	
 	public ImageIcon scaledSmallImage(String image_name) {
 		try {
-			imageVO = imageDao.getImage(image_name + ".png");
+			imageVO = imageDao.getImage(image_name);
 			bufferedImage = ImageIO.read(new File(imageVO.getImage_path()));
 			image = bufferedImage.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 			icon = new ImageIcon(image);
@@ -48,7 +48,7 @@ public class ImageConvert {
 	
 	public ImageIcon scaledMgmtImage(String image_name) {
 		try {
-			imageVO = imageDao.getImage(image_name + ".png");
+			imageVO = imageDao.getImage(image_name);
 			bufferedImage = ImageIO.read(new File(imageVO.getImage_path()));
 			image = bufferedImage.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 			icon = new ImageIcon(image);
@@ -61,7 +61,7 @@ public class ImageConvert {
 	
 	public ImageIcon scaledPanelImage(String image_name) {
 		try {
-			imageVO = imageDao.getImage(image_name + ".png");
+			imageVO = imageDao.getImage(image_name);
 			bufferedImage = ImageIO.read(new File(imageVO.getImage_path()));
 			image = bufferedImage.getScaledInstance(1500, 750, Image.SCALE_SMOOTH);
 			icon = new ImageIcon(image);

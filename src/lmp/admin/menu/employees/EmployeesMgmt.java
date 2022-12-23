@@ -93,7 +93,7 @@ public class EmployeesMgmt extends JPanel {
 		// 콤보박스로 검색할내용 선택하기
 		String[] keywordList = { "사번", "이름", "전화번호", "입사일" };
 		JComboBox keyword = new JComboBox<>(keywordList);
-		keyword.setBounds(270, 130, 200, 35);
+		keyword.setBounds(330, 130, 150, 35);
 		keyword.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 15));
 		add(keyword);
 

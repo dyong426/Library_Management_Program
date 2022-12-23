@@ -137,7 +137,7 @@ public class MemberMgmt extends JPanel {
 		String[] keywordList = {"회원번호", "이름", "아이디", "전화번호"};
 		JComboBox keyword = new JComboBox<>(keywordList);
 		keyword.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 15));
-		keyword.setBounds(270, 130, 200, 35);
+		keyword.setBounds(330, 130, 150, 35);
 		add(keyword);
 
 
