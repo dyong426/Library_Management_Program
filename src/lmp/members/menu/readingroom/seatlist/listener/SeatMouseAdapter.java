@@ -2,6 +2,8 @@ package lmp.members.menu.readingroom.seatlist.listener;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
@@ -49,7 +51,7 @@ public class SeatMouseAdapter extends MouseAdapter{
 				if (memLogVO == null) {
 					JOptionPane.showMessageDialog(null, "로그인 후 이용하세요.", "Message", 0);
 					memLogFrame.initialize();
-					memLogFrame.setVisible(true);
+					memLogFrame.setVisible(true);					
 				} else {
 					memberVO = memberDao.getNum(memLogVO.getMem_num());
 					

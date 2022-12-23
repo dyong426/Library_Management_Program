@@ -14,9 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import lmp.members.MemberFrame;
 import lmp.members.dao.FontDao;
 import lmp.members.dao.ThemeDao;
+import lmp.members.memberframe.frame.MemberFrame;
 import lmp.members.menu.setting.listener.FontListener;
 import lmp.members.menu.setting.listener.ThemeListener;
 
@@ -24,7 +24,7 @@ public class SettingMenu extends JFrame {
 
 	private Font font = new Font("한컴 말랑말랑 Regular", Font.PLAIN, 14);
 
-	GridLayout gridLayout = new GridLayout(1, 3);
+	GridLayout gridLayout = new GridLayout(2, 3,5,5);
 
 	JButton[] themeBtns;
 	JButton[] fontBtns;
@@ -58,7 +58,7 @@ public class SettingMenu extends JFrame {
 		JPanel themePanel = new JPanel();
 		themePanel.setBounds(12, 79, 360, 46);
 		getContentPane().add(themePanel);
-		themePanel.setLayout(new GridLayout(1, 3, 5, 5));
+		themePanel.setLayout(gridLayout);
 		
 		themes.addAll(themeDao.getThemes());
 		themeBtns = new JButton[themes.size()];
@@ -125,11 +125,15 @@ public class SettingMenu extends JFrame {
 			{
 				setText(text);
 				if (themeDao.getTheme().equals(text)) {
-					setBackground(Color.BLUE);
+					setBackground(new Color(153,204,255));
 				} else {
 					setBackground(Color.LIGHT_GRAY);
 				}
+				setHorizontalTextPosition(CENTER);
+				setForeground(Color.BLACK);
+				setOpaque(true);
 			}
+			
 		};
 	}
 
@@ -139,10 +143,13 @@ public class SettingMenu extends JFrame {
 			{
 				setText(text);
 				if (fontDao.getFont().equals(text)) {
-					setBackground(Color.BLUE);
+					setBackground(new Color(153,204,255));
 				} else {
 					setBackground(Color.LIGHT_GRAY);
 				}
+				setHorizontalTextPosition(CENTER);
+				setForeground(Color.BLACK);
+				setOpaque(true);
 			}
 		};
 	}

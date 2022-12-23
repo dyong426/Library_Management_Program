@@ -28,9 +28,9 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.AdminFrame;
-import lmp.members.MemberFrame;
 import lmp.members.dao.BookDao;
 import lmp.members.dao.CheckOutDao;
+import lmp.members.memberframe.MemberFrame;
 import lmp.members.vo.BookVO;
 import lmp.members.vo.CheckOutVO;
 

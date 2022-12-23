@@ -30,8 +30,10 @@ import lmp.members.MemberJoin;
 import lmp.members.menu.findId_Pw.FindID;
 import lmp.util.ShaPasswordEncoder;
 
-public class MemberLoginFrame extends JFrame {
+public class MemberLoginFrame extends JFrame implements LoginStatus{
 
+	static boolean log;
+	
 	private JFrame frame;
 	private JTextField idField;
 	private JPasswordField pwField;
@@ -160,6 +162,8 @@ public class MemberLoginFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (checkLogin(idField.getText(), new String(pwField.getPassword()))) {
+						
+						success();
 						memberLoginFrame.dispose();
 //						MemberMenu memberMenu = new MemberMenu();
 //						MemberFrame.menuCardPanel.add("3", memberMenu);
@@ -235,6 +239,16 @@ public class MemberLoginFrame extends JFrame {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	@Override
+	public void fail() {
+		log = false;
+	}
+
+	@Override
+	public void success() {
+		log =  true;
 	}
 }
 

@@ -52,14 +52,16 @@ public class MemberLogHistoryDao extends MenuDao {
 
 
 	@Override
-	public MemberLogHistoryVO getLog() throws SQLException {
+	public MemberLogHistoryVO getLog(){
 		String sql = "SELECT * FROM member_log_history INNER JOIN members "
 				+ "USING(mem_num) WHERE logout_time IS NULL";
 		
-			Connection conn = getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery();
-			MemberLogHistoryVO memLogVO = null;
+		MemberLogHistoryVO memLogVO = null;
+		try (
+				Connection conn = getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();
+				){
 			while (rs.next()) {
 				memLogVO = new MemberLogHistoryVO(rs.getInt("mem_log_id"),
 						new MemberVO(rs.getInt("mem_num"), rs.getString("mem_name"), rs.getString("mem_id"),
@@ -69,10 +71,15 @@ public class MemberLogHistoryDao extends MenuDao {
 								rs.getString("mem_note")),
 						rs.getString("login_time"), rs.getString("logout_time"));
 			}
+			
 			rs.close();
 			pstmt.close();
 			conn.close();
-			return memLogVO;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return memLogVO;
 	}
 	
 	@Override

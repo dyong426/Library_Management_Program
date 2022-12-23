@@ -4,9 +4,9 @@ import java.awt.Font;
 
 public class MyFont {
 
-	Font title;
-	Font text;
-	Font table;
+	private Font title;
+	private Font text;
+	private Font table;
 	
 	
 	public MyFont() {
@@ -33,8 +33,20 @@ public class MyFont {
 				table = new Font("한컴 말랑말랑 Regular", Font.PLAIN, 20);
 				break;
 		}
-		
-		
 	}
+
+	public Font getTitle() {
+		return title;
+	}
+
+	public Font getText() {
+		return text;
+	}
+
+	public Font getTable() {
+		return table;
+	}
+	
+	
 	
 }

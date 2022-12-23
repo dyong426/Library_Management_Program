@@ -22,11 +22,16 @@ public class ReadingRoomPanel extends JPanel {
 	UsageListPanel usageListPanel;
 	UsageListTitlePanel usageListTitlePanel;
 	
-	public ReadingRoomPanel() throws SQLException {
-		statusPanel = new StatusPanel();
+	public ReadingRoomPanel()  {
+		try {
+			statusPanel = new StatusPanel();
 		usageListPanel = new UsageListPanel();
 		seatListPanel = new SeatListPanel(this);
 		usageListTitlePanel = new UsageListTitlePanel(this);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		setBackground(new Color(126, 151, 148));  //--> 사이즈 수정 필요
 		setLayout(null);

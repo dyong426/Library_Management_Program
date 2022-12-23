@@ -23,8 +23,8 @@ import lmp.db.dao.MenuDao;
 import lmp.db.vo.CheckOutVO;
 import lmp.db.vo.MemberLogHistoryVO;
 import lmp.db.vo.MemberVO;
-import lmp.members.MemberFrame;
 import lmp.members.MemberLoginFrame;
+import lmp.members.memberframe.MemberFrame;
 import lmp.util.ShaPasswordEncoder;
 import lmp.util.Validator;
 
@@ -87,12 +87,11 @@ public class MemberMenu extends JPanel {
 		memberemail2.setText("" + mvo.getEmail());
 		memberaddress2.setText("" + mvo.getAddress());
 
-
 	}
 
 
-	public void initialize() throws SQLException {		
-
+	public void initialize() throws SQLException {
+		
 		memberInfo = new JLabel("회원 정보");
 		membernum = new JLabel("회원번호");
 		membername = new JLabel("이름");

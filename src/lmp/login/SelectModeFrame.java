@@ -2,81 +2,77 @@ package lmp.login;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import lmp.members.MemberFrame;
+import lmp.members.dao.FontDao;
+import lmp.members.dao.ThemeDao;
+import lmp.members.memberframe.frame.MemberFrame;
+import lmp.util.ImageConvert;
+import lmp.util.font.MyFont;
+import lmp.util.theme.Theme;
+
+
 
 public class SelectModeFrame extends JFrame{
-	
-	static Font font = new Font("한컴 말랑말랑 Regular", Font.PLAIN, 15);
-	static Color panelColor = new Color(49, 82, 91);
-	static Color btnColor = new Color(204, 139, 101);
 
 	AdminLoginFrame adminLogFrame;
-		public SelectModeFrame() {
+	
+	ThemeDao themeDao = new ThemeDao();
+	Theme theme = new Theme();
+	FontDao fontDao = new FontDao();
+	MyFont myFont = new MyFont();
+	ImageConvert img = new ImageConvert();
+	JLabel imageLabel = new JLabel();
+	
+		public SelectModeFrame() throws SQLException {
 
 			SelectModeFrame selectModeFrame = this;
 
-			JButton memberBtn = new JButton("회원용") {
-				{
-					setBounds(80, 50, 100, 60);
-					addActionListener(new ActionListener() {	
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							selectModeFrame.dispose();
-							try {
-								MemberFrame memberFrame = new MemberFrame();
-							} catch (SQLException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-						}
-					});
+			theme.setTheme(themeDao.getTheme());
+			myFont.setFont(fontDao.getFont());
+			JButton memberBtn = getButton("회원용");
+			memberBtn.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					selectModeFrame.dispose();
+					try {
+						MemberFrame memberFrame = new MemberFrame();
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
-			};
+			});
+			memberBtn.setBounds(80, 70, 100, 120);
+			memberBtn.setIcon(img.scaledMenuImage("membersEntrance"));
 
+			JButton managerBtn = getButton("관리자용");
 
-			JButton managerBtn = new JButton("관리자용") {
-				{
-					setBounds(220, 50, 100, 60);
-					addActionListener(new ActionListener() {	
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							AdminLoginFrame adminLoginFrame = new AdminLoginFrame(selectModeFrame);
-							adminLoginFrame.setVisible(true);
-						}
-					});
+			managerBtn.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					AdminLoginFrame adminLoginFrame = new AdminLoginFrame(selectModeFrame);
+					adminLoginFrame.setVisible(true);
 				}
-			};
-
-
-
-			memberBtn.setFont(font);
-			managerBtn.setFont(font);
-			memberBtn.setForeground(Color.WHITE);
-			managerBtn.setForeground(Color.WHITE);
-
-			memberBtn.setBackground(btnColor);
-			managerBtn.setBackground(btnColor);
-
-			memberBtn.setBorderPainted(false);
-			managerBtn.setBorderPainted(false);
-
+			});
+			managerBtn.setBounds(220, 70, 100, 120);
+			managerBtn.setIcon(img.scaledMenuImage("employeeEntrance"));
 
 			
 			JPanel panel = new JPanel();
 			panel.setLayout(null);
-			panel.setBackground(panelColor);
+			panel.setBackground(theme.getMainColor());
 			panel.add(memberBtn);
 			panel.add(managerBtn);
 			
@@ -84,9 +80,41 @@ public class SelectModeFrame extends JFrame{
 			setTitle("도서관 관리 프로그램");
 			setVisible(true);
 			setResizable(false);
-			setSize(400,200);
+			setSize(400,300);
 			setDefaultCloseOperation(this.EXIT_ON_CLOSE);
 			setLocationRelativeTo(null); // 화면 중앙에 띄우기
+		}
+		
+		public JButton getButton(String text) {
+			 return new JButton() {
+				 {
+					setHorizontalTextPosition(CENTER);
+					setVerticalTextPosition(BOTTOM);
+					setForeground(Color.WHITE);
+					setFont(myFont.getText());
+					setText(text);
+					if (!getText().equals("")) {
+						setToolTipText(text);
+					}
+					setBorderPainted(false);
+					setFocusPainted(false);
+					setContentAreaFilled(false);
+					addMouseListener(new MouseAdapter() {
+						// 버튼에 마우스 올리면 테두리 생성
+						@Override
+						public void mouseEntered(MouseEvent e) {
+							Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
+							setCursor(cursor);
+						}
+						// 버튼에서 마우스 떼면 테두리 삭제
+						@Override
+						public void mouseExited(MouseEvent e) {
+							Cursor cursor = new Cursor(Cursor.DEFAULT_CURSOR);
+							setCursor(cursor);
+						}
+					});
+					}
+			 };
 		}
 
 }

@@ -24,7 +24,7 @@ public ThemeListener(JButton[] btns) {
 		
 		for (int i =0; i < btns.length;  i++) {
 			if (btns[i].getText() == btn.getText()) {
-				btns[i].setBackground(Color.BLUE);
+				btns[i].setBackground(new Color(153,204,255));
 				try {
 					themeDao.setTheme(btns[i].getText());
 				} catch (SQLException e1) {
