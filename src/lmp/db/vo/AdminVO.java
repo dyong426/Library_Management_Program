@@ -68,7 +68,6 @@ public class AdminVO {
 		this.list	 = new Object[] {
 									admin_num,
 									admin_name,
-									admin_pw,
 									admin_phone,
 									admin_email,
 									admin_address,

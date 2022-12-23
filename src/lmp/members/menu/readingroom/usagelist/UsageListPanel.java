@@ -14,7 +14,6 @@ public class UsageListPanel extends JPanel{
 	
 	public UsageListPanel() {
 		
-		System.out.println("usagelistpanel");
 		setBounds(80, 50, 1300, 80);
 		this.setLayout(borderLayout);
 		

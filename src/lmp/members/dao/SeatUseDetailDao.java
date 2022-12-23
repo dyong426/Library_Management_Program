@@ -33,7 +33,7 @@ public class SeatUseDetailDao extends MenuDao{
 	public void add(Integer mem_num, Integer seat_num) throws SQLException{
 		Connection conn = getConnection();
 		
-		String sql = "INSERT INTO seat_use_details (use_id, mem_num, seat_num) VALUES(check_out_id_seq.nextval,?,?)";
+		String sql = "INSERT INTO seat_use_details (use_id, mem_num, seat_num) VALUES(user_detail_id_seq.nextval, ?, ?)";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		

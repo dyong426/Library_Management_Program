@@ -108,7 +108,6 @@ public class UsageListCheckOutButton extends JPanel {
 		checkOutButton.setForeground(Color.WHITE);
 		
 		checkOutButton.addMouseListener(new MouseAdapter() {
-			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				

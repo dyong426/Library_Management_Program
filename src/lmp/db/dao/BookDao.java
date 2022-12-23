@@ -200,10 +200,8 @@ public class BookDao extends MenuDao{
 
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
-		if (header != 6) {
-			pstmt.setString(1, "%" + searchStr + "%");
-		} else {
-			pstmt.setString(1, "%" + searchStr + "%");
+		pstmt.setString(1, "%" + searchStr + "%");
+		if (header == 6) {
 			pstmt.setString(2, "%" + searchStr + "%");
 		}
 		

@@ -33,7 +33,7 @@ public class MemberJoin extends JFrame {
 	MemberDao memberDao = new MemberDao();
 	Validator vd = new Validator();
 	ShaPasswordEncoder pwEncoder = new ShaPasswordEncoder();
-
+	
 	public MemberJoin() {
 		JLabel join = new JLabel("회원가입");
 		JLabel name = new JLabel("이름");
@@ -173,7 +173,7 @@ public class MemberJoin extends JFrame {
 		setlabel(address, 18, 40, 490);
 		setField(addressField, 513);
 
-		setBtn(joinBtn, 15, 330, 580);
+		setBtn(joinBtn, 15, 400, 580);
 
 
 		// 아이디 중복체크 및 유효성검사
@@ -192,7 +192,7 @@ public class MemberJoin extends JFrame {
 					}
 
 					if (memberVO != null) {
-						JOptionPane.showMessageDialog(null, "중복되는 아이디 입니다.",
+						JOptionPane.showMessageDialog(null, "중복되는 아이디입니다.",
 								"경고", JOptionPane.ERROR_MESSAGE);
 						joinBtn.setEnabled(false);
 					}
@@ -221,12 +221,12 @@ public class MemberJoin extends JFrame {
 					}
 
 					if (memberVO != null) {
-						JOptionPane.showMessageDialog(null, "중복되는 전화번호 입니다.",
+						JOptionPane.showMessageDialog(null, "중복되는 전화번호입니다.",
 								"경고", JOptionPane.ERROR_MESSAGE);
 						joinBtn.setEnabled(false);
 					}
 				} else {
-					JOptionPane.showMessageDialog(null, "사용 불가한 전화번호입니다",
+					JOptionPane.showMessageDialog(null, "사용 불가능한 전화번호입니다",
 							"경고", JOptionPane.ERROR_MESSAGE);
 					joinBtn.setEnabled(false);
 				}
@@ -252,12 +252,12 @@ public class MemberJoin extends JFrame {
 					}
 
 					if (memberVO != null) {
-						JOptionPane.showMessageDialog(null, "중복되는 이메일 입니다.",
+						JOptionPane.showMessageDialog(null, "중복되는 이메일입니다.",
 								"경고", JOptionPane.ERROR_MESSAGE);
 						joinBtn.setEnabled(false);
 					}
 				} else {
-					JOptionPane.showMessageDialog(null, "사용 불가한 이메일입니다",
+					JOptionPane.showMessageDialog(null, "사용 불가능한 이메일입니다",
 							"경고", JOptionPane.ERROR_MESSAGE);
 					joinBtn.setEnabled(false);
 				}
@@ -308,24 +308,23 @@ public class MemberJoin extends JFrame {
 						}
 						JOptionPane.showMessageDialog(null, "가입완료되었습니다");
 						dispose();
-						
 					}
 
 
 				} else if (vd.isValidatePW(new String(pwField.getPassword())) == false) {
-					JOptionPane.showMessageDialog(null, "사용 불가한 비밀번호입니다", "경고",
+					JOptionPane.showMessageDialog(null, "사용 불가능한 비밀번호입니다", "경고",
 							JOptionPane.ERROR_MESSAGE);
 
 				} else if (new String(pwField.getPassword()).equals(new String(chkpwField.getPassword())) == false) {
-					JOptionPane.showMessageDialog(null, "비밀번호가 일치하지않습니다", "경고",
-							JOptionPane.ERROR_MESSAGE);	
+					JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다", "경고",
+							JOptionPane.ERROR_MESSAGE);
 
 				} else if (vd.isValidateName(nameField.getText()) == false) {
 					JOptionPane.showMessageDialog(null, "적절하지 않은 이름입니다", "경고",
 							JOptionPane.ERROR_MESSAGE);
 
 				} else {
-					JOptionPane.showMessageDialog(null, "전부입력해주세요", "경고",
+					JOptionPane.showMessageDialog(null, "입력되지 않은 정보가 존재합니다.", "경고",
 							JOptionPane.ERROR_MESSAGE);
 
 				}

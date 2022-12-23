@@ -74,7 +74,8 @@ public class MemberDao extends MenuDao{
 					+ " mem_name = ?,"
 					+ " mem_phone = ?,"
 					+ " mem_email = ?,"
-					+ " mem_address = ?"
+					+ " mem_address = ?,"
+					+ " mem_note = ?"
 					+ " WHERE"
 					+ " mem_num = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -83,7 +84,8 @@ public class MemberDao extends MenuDao{
 		pstmt.setString(2, memberVO.getPhone());
 		pstmt.setString(3, memberVO.getEmail());
 		pstmt.setString(4, memberVO.getAddress());
-		pstmt.setInt(5, memberVO.getNum());
+		pstmt.setString(5, memberVO.getNote());
+		pstmt.setInt(6, memberVO.getNum());
 		
 		pstmt.executeUpdate();
 		
@@ -99,7 +101,7 @@ public class MemberDao extends MenuDao{
 		String sql =  "UPDATE"
 					+ " members"
 					+ " SET"
-					+ " mem_pw = 'A123456789!'"
+					+ " mem_pw = 'a123456789!'"
 					+ " WHERE"
 					+ " mem_num = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -169,6 +171,70 @@ public class MemberDao extends MenuDao{
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql.toString());
 		pstmt.setString(1, "%"+searchStr+"%");
+		
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<MemberVO> memberList = new ArrayList<>();
+		while (rs.next()) {
+			memberList.add(new MemberVO(
+								rs.getInt("mem_num"),
+								rs.getString("mem_name"),
+								rs.getString("mem_id"),
+								rs.getString("mem_pw"),
+								rs.getString("mem_birthday"),
+								rs.getString("mem_sex"),
+								rs.getString("mem_phone"),
+								rs.getString("mem_email"),
+								rs.getString("mem_address"),
+								rs.getString("mem_registrationdate"),
+								rs.getString("mem_note")));
+		}
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return memberList;
+	}
+	
+	
+	public ArrayList<MemberVO> getByPhone(String phone) throws SQLException {
+		
+		String sql = "SELECT * FROM members WHERE mem_phone LIKE ?";
+
+		Connection conn = getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, "%" + phone + "%");
+		
+		ResultSet rs = pstmt.executeQuery();
+		ArrayList<MemberVO> memberList = new ArrayList<>();
+		while (rs.next()) {
+			memberList.add(new MemberVO(
+								rs.getInt("mem_num"),
+								rs.getString("mem_name"),
+								rs.getString("mem_id"),
+								rs.getString("mem_pw"),
+								rs.getString("mem_birthday"),
+								rs.getString("mem_sex"),
+								rs.getString("mem_phone"),
+								rs.getString("mem_email"),
+								rs.getString("mem_address"),
+								rs.getString("mem_registrationdate"),
+								rs.getString("mem_note")));
+		}
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return memberList;
+	}
+	
+	
+	public ArrayList<MemberVO> getByEmail(String email) throws SQLException {
+		
+		String sql = "SELECT * FROM members WHERE mem_email LIKE ?";
+
+		Connection conn = getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, "%" + email + "%");
 		
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<MemberVO> memberList = new ArrayList<>();

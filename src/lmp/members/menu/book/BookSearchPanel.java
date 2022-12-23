@@ -43,7 +43,7 @@ public class BookSearchPanel extends JPanel {
 	static JComboBox cb = new JComboBox(category);
 
 	static JTextField textF = new JTextField(" 검색어를 입력하세요.");
-
+	
 	JPanel panel = this;
 
 	public DefaultTableModel model_BookMgmt = new DefaultTableModel(bookColumn, 30) {
@@ -109,7 +109,7 @@ public class BookSearchPanel extends JPanel {
 		label.setForeground(Color.WHITE);
 
 		// 도서검색 콤보박스 선언
-		cb.setBounds(270, 130, 200, 35);
+		cb.setBounds(320, 130, 150, 35);
 		cb.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 15));
 
 		// 도서검색 텍스트필드 선언
@@ -178,7 +178,6 @@ public class BookSearchPanel extends JPanel {
 								e1.printStackTrace();
 							}
 						} else {
-							System.out.println(book.getList()[i]);
 							model_BookMgmt.setValueAt(book.getList()[i], resetRow, i);
 						}
 					}

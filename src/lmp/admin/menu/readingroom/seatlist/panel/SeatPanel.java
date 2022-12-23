@@ -2,18 +2,23 @@ package lmp.admin.menu.readingroom.seatlist.panel;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
+import lmp.admin.dao.ReadingRoomDao;
 import lmp.admin.menu.readingroom.seatlist.label.SeatLabel;
+import lmp.admin.vo.ReadingRoomVO;
 import lmp.db.vo.SeatUseDetailVO;
 
 public class SeatPanel extends JPanel{
 
-	GridLayout gridLayout = new GridLayout(5, 2);
+	ReadingRoomDao rDao = new ReadingRoomDao();
+	ArrayList<ReadingRoomVO> rVo = new ArrayList<>();
+	
+	GridLayout gridLayout = new GridLayout(5, 2, 3, 3);
 	SeatLabel[] seatLabels = new SeatLabel[gridLayout.getRows() * gridLayout.getColumns()];
 	// 좌석 수 gridLayout으로 10개씩 묶음. 한 묶음 끝나고 좌석 수 이어가기 위한 변수
 	int tens;
@@ -22,12 +27,24 @@ public class SeatPanel extends JPanel{
 	public SeatPanel(ArrayList<SeatUseDetailVO> sudVOs, int tensDigit) {
 		
 		this.setLayout(gridLayout);
+		this.setBackground(new Color(87, 119, 119));
 		this.tens = tensDigit * 10;
+		
+		
+		try {
+			rVo.addAll(rDao.get());
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		for (int i = 0 + tens; i < gridLayout.getRows() * gridLayout.getColumns() + tens; i++) {
 			
-			seatLabels[i - tens] = new SeatLabel(i + 1);
-			seatLabels[i - tens].setBorder(new LineBorder(Color.BLACK));
+			if (rVo.get(i).getTableDivider().equals("0")) {
+				seatLabels[i - tens] = new SeatLabel(Integer.toString(i + 1));
+			} else {
+				seatLabels[i - tens] = new SeatLabel("| " + (i + 1) + " |");
+			}
+			seatLabels[i - tens].setBorder(new LineBorder(Color.BLACK, 3));
 			add(seatLabels[i - tens]);
 		}
 		

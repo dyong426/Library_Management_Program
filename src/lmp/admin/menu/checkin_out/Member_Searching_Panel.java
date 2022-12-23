@@ -34,8 +34,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.AdminFrame;
-import lmp.db.dao.MemberDao;
-import lmp.db.vo.MemberVO;
+import lmp.admin.dao.MemberDao;
+import lmp.admin.vo.MemberVO;
 
 public class Member_Searching_Panel extends JPanel {
 
@@ -52,7 +52,7 @@ public class Member_Searching_Panel extends JPanel {
 	// DB에서 회원정보 뽑아서 아래 액션 리스너 내부 조건에 맞는 배열 생성
 	// 대출 자격은 대출 테이블에서 해당 회원의 기록 중 대출일만 있고 반납일이 없는 내역이 3개면 대출 불가능, 2개 이하면 대출 가능
 	// && 반납 예정일이 지났지만 반납일이 없는 경우 (연체)면 대출 불가능
-	String[] memberColumn = {"회원번호", "이름", "아이디", "비밀번호", "생년월일", "성별", "전화번호", "이메일", "주소", "가입일", "비고"};
+	String[] memberColumn = {"회원번호", "이름", "아이디", "생년월일", "성별", "전화번호", "이메일", "주소", "가입일", "비고"};
 	
 	MemberDao memberDao = new MemberDao();
 	ArrayList<MemberVO> memVoList = new ArrayList<>();
@@ -96,15 +96,15 @@ public class Member_Searching_Panel extends JPanel {
 		keyword.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 15));
 		keyword.setBounds(270, 130, 200, 35);
 		
-		searchButton = AdminFrame.getButton("검색");
-		try {
-			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/searchButtonIcon.png"));
-			Image image = buffer.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-			searchButton.setIcon(new ImageIcon(image));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		searchButton.setBounds(1010, 100, 120, 100);
+//		searchButton = AdminFrame.getButton("검색");
+//		try {
+//			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/searchButtonIcon.png"));
+//			Image image = buffer.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+//			searchButton.setIcon(new ImageIcon(image));
+//		} catch (IOException e1) {
+//			e1.printStackTrace();
+//		}
+//		searchButton.setBounds(1010, 100, 120, 100);
 		
 		// 텍스트 필드에서 엔터 누르면 버튼 클릭되도록 액션 추가 (검색 버튼 눌러도 되고 텍스트 필드에서 엔터 눌러도 검색됨)
 		searchField = new JTextField();
@@ -115,6 +115,17 @@ public class Member_Searching_Panel extends JPanel {
 				searchButton.doClick();
 			}
 		});
+		
+		
+		searchButton = AdminFrame.getButton("검색");
+		try {
+			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/searchButtonIcon.png"));
+			Image image = buffer.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
+			searchButton.setIcon(new ImageIcon(image));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		searchButton.setBounds(1010, 100, 120, 100);
 		
 		
 		mgmtButton = AdminFrame.getButton("대출/반납 관리");
@@ -180,8 +191,17 @@ public class Member_Searching_Panel extends JPanel {
 				// 테이블 수정 안되게 세팅
 				int num = 0;
 				for (MemberVO list : memVoList) {
-					for (int i = 0; i < list.getList().length; ++i) {
-						model.setValueAt(list.getList()[i], num, i);
+					for (int i = 0; i < memberColumn.length; ++i) {
+						// DB에서 가져온 성별 데이터 남/여로 표시
+						if (memberColumn[i].equals("성별")) {
+							if (list.getSex().equals("0")) {
+								model.setValueAt("남", num, i);
+							} else {
+								model.setValueAt("여", num, i);
+							}
+						} else {
+							model.setValueAt(list.getList()[i], num, i);
+						}
 					}
 					++num;
 				}

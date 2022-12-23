@@ -124,9 +124,8 @@ public class MemberMenu extends JPanel {
 
 		changeBtn = new JButton("수정");
 		deleteBtn = new JButton("탈퇴");
-		logoutBtn = new JButton("로그아웃");
 
-
+		
 		setlabel(memberInfo, 35, 30, 30);
 
 		setlabel(membernum, 30, 200, 150);
@@ -153,45 +152,18 @@ public class MemberMenu extends JPanel {
 		setlabel(memberaddress, 30, 800, 350);
 		setlabel(memberaddress2, 30, 980, 350);
 
-		setBtn(changeBtn, 23, 1200, 660);
+		setBtn(changeBtn, 23, 1250, 660);
 
 		setBtn(deleteBtn, 23, 1350, 660);
 
-		logoutBtn.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 20));
-		logoutBtn.setBackground(Color.WHITE);
-		logoutBtn.setForeground(Color.RED);
-		logoutBtn.setFocusable(false);
-		logoutBtn.setBounds(1350, 30, 120, 50);
-		add(logoutBtn);
-
-		logoutBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int var = JOptionPane.showConfirmDialog
-						(null, "로그아웃하시겠습니까?", "로그아웃",
-								JOptionPane.YES_NO_OPTION,
-								JOptionPane.INFORMATION_MESSAGE, null);
-				if (var == JOptionPane.YES_OPTION) {
-					try {
-						if(mdao.getLog() != null) {
-							mdao.update(mdao.getLog());
-							System.out.println("로그아웃");
-							MemberFrame.card.show(MemberFrame.menuCardPanel, "1");
-						}
-					} catch (SQLException e1) {
-						return;
-					}
-				}
-
-
-			}
-		});
+		
 		
 		// 수정버튼 구현
 		changeBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				JFrame j = new JFrame();
+				j.setLayout(null);
 
 				JLabel join = new JLabel("회원수정");
 				JLabel id = new JLabel("아이디");
@@ -279,7 +251,7 @@ public class MemberMenu extends JPanel {
 				j.add(address);
 				j.add(addressField);
 
-				setBtn2(changeBtn2, 18, 280, 580, 80, 40 );
+				setBtn2(changeBtn2, 18, 400, 580, 80, 40 );
 				j.add(changeBtn2);
 
 				MemberDao memberDao = new MemberDao();
@@ -300,12 +272,12 @@ public class MemberMenu extends JPanel {
 							}
 
 							if (memberVO != null) {
-								JOptionPane.showMessageDialog(null, "중복되는 전화번호 입니다.",
+								JOptionPane.showMessageDialog(null, "중복되는 전화번호입니다.",
 										"경고", JOptionPane.ERROR_MESSAGE);
 								changeBtn2.setEnabled(false);
 							}
 						} else {
-							JOptionPane.showMessageDialog(null, "사용 불가한 전화번호입니다",
+							JOptionPane.showMessageDialog(null, "사용 불가능한 전화번호입니다",
 									"경고", JOptionPane.ERROR_MESSAGE);
 							changeBtn2.setEnabled(false);
 						}
@@ -330,12 +302,12 @@ public class MemberMenu extends JPanel {
 							}
 
 							if (memberVO != null) {
-								JOptionPane.showMessageDialog(null, "중복되는 이메일 입니다.",
+								JOptionPane.showMessageDialog(null, "중복되는 이메일입니다.",
 										"경고", JOptionPane.ERROR_MESSAGE);
 								changeBtn2.setEnabled(false);
 							}
 						} else {
-							JOptionPane.showMessageDialog(null, "사용 불가한 이메일입니다",
+							JOptionPane.showMessageDialog(null, "사용 불가능한 이메일입니다",
 									"경고", JOptionPane.ERROR_MESSAGE);
 							changeBtn2.setEnabled(false);
 						}
@@ -384,7 +356,7 @@ public class MemberMenu extends JPanel {
 								JOptionPane.showMessageDialog(null, "적절하지 않은 이름입니다", "경고",
 										JOptionPane.ERROR_MESSAGE);
 							} else {
-								JOptionPane.showMessageDialog(null, "전부입력해주세요", "경고",
+								JOptionPane.showMessageDialog(null, "입력되지 않은 정보가 존재합니다.", "경고",
 										JOptionPane.ERROR_MESSAGE);
 							}
 						}
@@ -398,8 +370,8 @@ public class MemberMenu extends JPanel {
 						j.dispose();
 					}
 				});
-
-				j.setLayout(null);
+				
+				j.setBounds(450, 130, 550, 700);
 				j.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 				j.setVisible(true);
 			}
@@ -424,7 +396,6 @@ public class MemberMenu extends JPanel {
 					return;
 				} 
 				
-				System.out.println(mvo.getNum());
 				int var = JOptionPane.showConfirmDialog
 						(null, "탈퇴하시겠습니까?", "탈퇴 안내",
 								JOptionPane.YES_NO_OPTION,
@@ -458,7 +429,7 @@ public class MemberMenu extends JPanel {
 		Font font = new Font("한컴 말랑말랑 Bold", Font.BOLD, size);
 		label.setFont(font);
 		label.setForeground(Color.WHITE);
-		label.setBounds(x, y, 300, 30);
+		label.setBounds(x, y, 300, 40);
 		add(label);
 	}
 
@@ -478,7 +449,7 @@ public class MemberMenu extends JPanel {
 		button.setBackground(Color.WHITE);
 		button.setForeground(new Color(49, 82, 91));
 		button.setFocusable(false);
-		button.setBounds(x, y, 70, 50);
+		button.setBounds(x, y, 80, 50);
 		add(button);
 	}
 

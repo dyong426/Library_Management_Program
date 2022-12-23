@@ -27,18 +27,18 @@ import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.AdminFrame;
 import lmp.admin.menu.book.BookMgmt;
-import lmp.db.dao.CheckOutDao;
-import lmp.db.dao.MenuDao;
-import lmp.db.dao.MemberDao;
-import lmp.db.vo.CheckOutVO;
-import lmp.db.vo.MemberVO;
+import lmp.admin.dao.CheckOutDao;
+import lmp.admin.dao.MenuDao;
+import lmp.admin.dao.MemberDao;
+import lmp.admin.vo.CheckOutVO;
+import lmp.admin.vo.MemberVO;
 import lmp.util.Validator;
 
 
 public class MemberMgmt extends JPanel {
 
 	// JTable 구성품 
-	String[] header = {"회원번호", "이름", "아이디", "비밀번호", "생년월일", "성별", "전화번호", "이메일", "주소",
+	String[] header = {"회원번호", "이름", "아이디", "생년월일", "성별", "전화번호", "이메일", "주소",
 			"등록일", "비고"};
 	DefaultTableModel model = new DefaultTableModel(header, 30) {
 		public boolean isCellEditable(int row, int column) {
@@ -56,6 +56,7 @@ public class MemberMgmt extends JPanel {
 		JButton searchBtn = AdminFrame.getButton("검색"); // 검색버튼
 		JButton changeBtn = BookMgmt.getButton("수정"); // 수정버튼
 		JButton deleteBtn = BookMgmt.getButton("삭제"); // 삭제버튼
+		JButton resetPasswordBtn = new JButton("비밀번호 초기화");
 
 		// 회원조회 타이틀 설정
 		memberInquiry.setBounds(600, 30, 300, 50);
@@ -86,7 +87,7 @@ public class MemberMgmt extends JPanel {
 		add(searchBtn);
 
 		// 수정버튼 설정
-		changeBtn.setBounds(1320, 40, 150, 70);
+		changeBtn.setBounds(1320, 15, 150, 70);
 		try {
 			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/bookModifyIconImage.png"));
 			Image image = buffer.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
@@ -97,7 +98,7 @@ public class MemberMgmt extends JPanel {
 		add(changeBtn);
 
 		// 삭제버튼 설정
-		deleteBtn.setBounds(1320, 140, 150, 70);
+		deleteBtn.setBounds(1320, 95, 150, 70);
 		try {
 			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/bookdeleteIconImage.png"));
 			Image image = buffer.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
@@ -106,6 +107,45 @@ public class MemberMgmt extends JPanel {
 			e2.printStackTrace();
 		}
 		add(deleteBtn);
+		
+		// 비밀번호 초기화 설정
+		resetPasswordBtn.setBounds(1340, 175, 120, 50);
+		resetPasswordBtn.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 13));
+		resetPasswordBtn.setBackground(new Color(227, 94, 79));
+		resetPasswordBtn.setForeground(Color.WHITE);
+		resetPasswordBtn.setFocusable(false);
+		
+		resetPasswordBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String mem_num = model.getValueAt(table.getSelectedRow(), 0).toString();
+				int num = JOptionPane.showConfirmDialog(
+						null,
+						"회원 번호 : " + mem_num + "\n비밀번호를 초기화 하시겠습니까?",
+						"비밀번호 초기화 확인",
+						JOptionPane.YES_NO_OPTION);
+				
+				switch (num) {
+				case 0 :
+					MemberDao memDao = new MemberDao();
+					
+					try {
+						memDao.resetPassword(mem_num);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+					
+					JOptionPane.showMessageDialog(null, "비밀번호 초기화 완료.");
+					
+					break;
+				case 1 :					
+					JOptionPane.showMessageDialog(null, "취소되었습니다.");
+					break;
+				}
+			}
+		});
+		
+		add(resetPasswordBtn);
 
 
 		// 콤보박스로 검색할내용 선택하기
@@ -133,9 +173,9 @@ public class MemberMgmt extends JPanel {
 					int num = 0;
 					model.setRowCount(mems.size());
 					for (MemberVO mem : mems) {
-						for (int i = 0; i < mem.getList().length; i++) {
+						for (int i = 0; i < header.length; i++) {
 							// DB에서 가져온 성별 데이터에 따라 남/여로 표시
-							if (i == 5) {
+							if (header[i].equals("성별")) {
 								if (mem.getSex().equals("0")) {
 									model.setValueAt("남", num, i);
 								} else {
@@ -187,26 +227,25 @@ public class MemberMgmt extends JPanel {
 				JTextField nameField = new JTextField
 						(model.getValueAt(table.getSelectedRow() , 1).toString());
 				JTextField birthField = new JTextField
-						(model.getValueAt(table.getSelectedRow() , 4).toString());
+						(model.getValueAt(table.getSelectedRow() , 3).toString());
 				JTextField sexField = new JTextField
-						(model.getValueAt(table.getSelectedRow() , 5).toString());
+						(model.getValueAt(table.getSelectedRow() , 4).toString());
 				JTextField phoneField = new JTextField
-						(model.getValueAt(table.getSelectedRow() , 6).toString());
+						(model.getValueAt(table.getSelectedRow() , 5).toString());
 				JTextField emailField = new JTextField
-						(model.getValueAt(table.getSelectedRow() , 7).toString());
+						(model.getValueAt(table.getSelectedRow() , 6).toString());
 				JTextField addressField = new JTextField
-						(model.getValueAt(table.getSelectedRow() , 8).toString());
+						(model.getValueAt(table.getSelectedRow() , 7).toString());
 				JTextField noteField = new JTextField("");
 				
-				if (model.getValueAt(table.getSelectedRow(), 10) == null) {
+				if (model.getValueAt(table.getSelectedRow(), 9) == null) {
 					noteField.setText("");
 				} else {
-					noteField.setText(model.getValueAt(table.getSelectedRow(), 10).toString());
+					noteField.setText(model.getValueAt(table.getSelectedRow(), 9).toString());
 				}
 				
 				  
 				JButton phonecheckBtn = new JButton("중복확인");
-				//JButton idcheckBtn = new JButton("중복확인");
 				JButton emailcheckBtn = new JButton("중복확인");
 				JButton joinBtn = new JButton("가입하기");
 				JButton changeBtn2 = new JButton("수정");
@@ -218,12 +257,9 @@ public class MemberMgmt extends JPanel {
 
 				setlabel2(id, 18, 40, 90);
 				setField(idField, 113);
-				//setBtn(idcheckBtn, 13, 80, 30);
-				//idcheckBtn.setLocation(350, 113);
 				idField.setEditable(false);
 				j.add(id);
 				j.add(idField);
-				//j.add(idcheckBtn);
 
 				setlabel2(name, 18, 40, 140);
 				setField(nameField, 163);
@@ -279,7 +315,7 @@ public class MemberMgmt extends JPanel {
 						if (vd.isValidatePhone(phoneField.getText()))  {
 							MemberVO memberVO = null;
 							try {
-								memberVO = memberDao.get2(2, phoneField.getText()).get(0);
+								memberVO = memberDao.getByPhone(phoneField.getText()).get(0);
 							} catch (SQLException e1) {
 								JOptionPane.showMessageDialog(null, "사용가능합니다");
 								
@@ -309,7 +345,7 @@ public class MemberMgmt extends JPanel {
 						if (vd.isValidateEmail(emailField.getText()))  {
 							MemberVO memberVO = null;
 							try {
-								memberVO = memberDao.get2(3, emailField.getText()).get(0);
+								memberVO = memberDao.getByEmail(emailField.getText()).get(0);
 							} catch (SQLException e1) {
 								JOptionPane.showMessageDialog(null, "사용가능합니다");
 								
@@ -346,16 +382,14 @@ public class MemberMgmt extends JPanel {
 											JOptionPane.YES_NO_OPTION,
 											JOptionPane.INFORMATION_MESSAGE, null);
 							if (var == JOptionPane.YES_OPTION) {
-								MenuDao mdao = new MemberDao();
+								MemberDao mdao = new MemberDao();
 								MemberVO vo = new MemberVO((int)model.getValueAt(table.getSelectedRow() , 0),
 										nameField.getText(),
 										phoneField.getText(),
 										emailField.getText(),
 										addressField.getText(),
-										noteField.getText() 
+										noteField.getText()
 										);
-
-
 								try {
 									mdao.update(vo);
 									ArrayList<MemberVO> mems = new ArrayList<>();
@@ -365,7 +399,15 @@ public class MemberMgmt extends JPanel {
 									model.setRowCount(mems.size());
 									for (MemberVO mem : mems) {						
 										for (int i = 0; i < mem.getList().length; i++) {
-											model.setValueAt(mem.getList()[i], num, i);
+											if (header[i].equals("성별")) {
+												if (mem.getSex().equals("0")) {
+													model.setValueAt("남", num, i);
+												} else {
+													model.setValueAt("여", num, i);
+												}
+											} else {
+												model.setValueAt(mem.getList()[i], num, i);
+											}
 										}
 										num++;
 									}
@@ -433,7 +475,7 @@ public class MemberMgmt extends JPanel {
 					MemberDao mdao = new MemberDao();
 					try {
 						mdao.delete((int)table.getValueAt(table.getSelectedRow(), 0));
-						//						mdao.delete(table.getValueAt(table.getSelectedRow(), 0).toString());
+						// mdao.delete(table.getValueAt(table.getSelectedRow(), 0).toString());
 
 						// 삭제되면 테이블 업데이트
 						model.setRowCount(0);
@@ -445,7 +487,7 @@ public class MemberMgmt extends JPanel {
 						for (MemberVO mem : mems) {
 							for (int i = 0; i < mem.getList().length; i++) {
 								// DB에서 가져온 성별 데이터 남/여로 표시
-								if (i == 5) {
+								if (header[i].equals("성별")) {
 									if (mem.getSex().equals("0")) {
 										model.setValueAt("남", num, i);
 									} else {
@@ -474,24 +516,22 @@ public class MemberMgmt extends JPanel {
 	}
 
 	// 라벨 생성 및 설정함수
-	public void setlabel(JLabel label , int size, int x, int y) {
+	public static void setlabel(JLabel label , int size, int x, int y) {
 		Font font = new Font("한컴 말랑말랑 Bold", Font.BOLD, size);
 		label.setFont(font);
 		label.setForeground(Color.WHITE);
 		label.setBounds(x, y, 300, 30);
-		add(label);
 	}
 
-	public void setlabel2(JLabel label , int size, int x, int y) {
+	public static void setlabel2(JLabel label , int size, int x, int y) {
 		Font font = new Font("한컴 말랑말랑 Bold", Font.BOLD, size);
 		label.setFont(font);
 		label.setForeground(new Color(49, 82, 91));
 		label.setBounds(x, y, 200, 70);
-		add(label);
 	}
 
 	// 버튼 생성 및 설정함수
-	public void setBtn(JButton button , int fontSize, int width, int height) {
+	public static void setBtn(JButton button , int fontSize, int width, int height) {
 		Font font = new Font("한컴 말랑말랑 Bold", Font.BOLD, fontSize);
 
 		button.setFont(font);
@@ -499,16 +539,14 @@ public class MemberMgmt extends JPanel {
 		button.setForeground(Color.WHITE);
 		button.setFocusable(false);
 		button.setSize(width, height);
-		add(button);
 	}
 
 	// 텍스트필드 생성 및 설정함수
-	public void setField(JTextField field, int y) {
+	public static void setField(JTextField field, int y) {
 		Font font = new Font(null, Font.PLAIN, 13);
 		field.setFont(font);
 		field.setBounds(130, y, 200, 30);
 		field.setBorder(new LineBorder(new Color(49, 82, 91), 2, false));
-		add(field);
 	}
 	
 }

@@ -104,7 +104,6 @@ public class MemberVO {
 				mem_num,
 				mem_name,
 				mem_id,
-				mem_pw,
 				mem_birthDay,
 				mem_sex,
 				mem_phone,

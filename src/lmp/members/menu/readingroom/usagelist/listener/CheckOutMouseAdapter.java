@@ -61,7 +61,8 @@ public class CheckOutMouseAdapter extends MouseAdapter {
 										sudVO.getReadingroom().getSeatNum(),
 										sudVO.getMember().getName(),
 										sudVO.getStartTime().substring(11),
-										sudVO.getEndTime().substring(11)),"퇴실확인", 0);
+										sudVO.getEndTime().substring(11)),"퇴실확인",
+										JOptionPane.OK_OPTION);
 								
 								readingRoomPanel.refresh();
 						}
