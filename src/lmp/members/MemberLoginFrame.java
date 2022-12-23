@@ -27,15 +27,12 @@ import lmp.util.ShaPasswordEncoder;
 
 public class MemberLoginFrame extends JFrame {
 
-	private JFrame frame;
 	private JTextField idField;
 	private JPasswordField pwField;
 
 	MemberLoginFrame memberLoginFrame;
 	MemberDao memberDao = new MemberDao();
 	MemberLogHistoryDao memberLogHistoryDao = new MemberLogHistoryDao();
-
-	static String mem_id;
 	
 	public MemberLoginFrame() {
 		initialize();
@@ -176,10 +173,6 @@ public class MemberLoginFrame extends JFrame {
 				new MemberJoin();
 			}
 		});
-	}
-	
-	public static String getMemId() {
-		return mem_id;
 	}
 	
 	public boolean checkLogin(String mem_id, String mem_pw) {

@@ -32,14 +32,13 @@ import lmp.members.dao.ThemeDao;
 import lmp.members.menu.book.BookSearchPanel;
 import lmp.members.menu.member.MemberMenu;
 import lmp.members.menu.readingroom.ReadingRoomPanel;
+import lmp.members.menu.setting.SettingMenu;
+import lmp.util.ImageConvert;
 import lmp.util.theme.Theme;
 
 public class MemberFrame extends JFrame {
 
 	JButton homeBtn, bookMgmt, memberMgmt, readingRoom, settingBtn;
-	
-	
-	JFrame f = this;
 	
 //	static JPanel MemberPanel = new MemberMenu();
 	
@@ -47,118 +46,128 @@ public class MemberFrame extends JFrame {
 	
 	public static JPanel menuCardPanel = new JPanel(card);
 	
-	MemberLogHistoryDao memLogDao = new MemberLogHistoryDao();
-	MemberLogHistoryVO memLogVO;
 	
 	ReadingRoomPanel readingroomPanel = new ReadingRoomPanel();
 	MemberMenu memberMenu = new MemberMenu();
 	BookSearchPanel bookSearchPanel = new BookSearchPanel();
+	SettingMenu setMenu;
 
-	Theme theme = new Theme();
+	MemberLogHistoryDao memLogDao = new MemberLogHistoryDao();
+	MemberLogHistoryVO memLogVO;
+	
 	ThemeDao themeDao = new ThemeDao();
+	Theme theme = new Theme();
+	
+	static ImageConvert img = new ImageConvert();
 	
 	public MemberFrame() throws SQLException {
-
-		JPanel menuButtonPanel = new JPanel(new GridLayout(1, 5, 100, 0));
 		
-//		theme.setTheme(themeDao.getTheme(1));
+		initialize();
+	}
+	
+	public void initialize() throws SQLException {
+		MemberFrame memberFrame = this;
 		
 		setTitle("회원 모드");
 		setLayout(null);
 
-		BufferedImage bufferedHome = null;
-		BufferedImage bufferedBookMgmt = null;
-		BufferedImage bufferedCheckIn_Out = null;
-		BufferedImage bufferedEmployeeMgmt = null;
-		BufferedImage befferedMemberMgmt = null;
-		BufferedImage bufferedReadingRoom = null;
-		try {
-			bufferedHome = ImageIO.read(new File("src/lmp/admin/menuButtonImages/homeIcon.png"));
-			bufferedBookMgmt = ImageIO.read(new File("src/lmp/admin/menuButtonImages/bookMgmtImage.png"));
-			befferedMemberMgmt = ImageIO.read(new File("src/lmp/admin/menuButtonImages/memberMgmtImage.png"));
-			bufferedReadingRoom = ImageIO.read(new File("src/lmp/admin/menuButtonImages/readingRoomMgmtImage.png"));
+		theme.setTheme(themeDao.getTheme());
+		JPanel menuButtonPanel = new JPanel(new GridLayout(1, 4, 100, 0));
 
-			Image homeIcon = bufferedHome.getScaledInstance(100, 100, Image.SCALE_SMOOTH);   
-			Image bookMgmtIcon = bufferedBookMgmt.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-			Image memberMgmtIcon = befferedMemberMgmt.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-			Image readingRoomIcon = bufferedReadingRoom.getScaledInstance(100, 100, Image.SCALE_SMOOTH);         
+//		theme.setTheme(themeDao.getTheme(1));
 
-			// 버튼 생성 메서드 테스트
-			homeBtn = getButton("홈");
-			homeBtn.setIcon(new ImageIcon(homeIcon));
-			homeBtn.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					card.show(menuCardPanel, "1");
-				}
-			});
-
-			bookMgmt = getButton("도서");
-			bookMgmt.setIcon(new ImageIcon(bookMgmtIcon));
-			bookMgmt.addActionListener(new ActionListener() {
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					card.show(menuCardPanel, "2");
-
-				}
-			});   
-
-			readingRoom = getButton("열람실");
-			readingRoom.setIcon(new ImageIcon(readingRoomIcon));
-			readingRoom.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					card.show(menuCardPanel, "3");
-				}
-			});
-
-			memberMgmt = getButton("회원정보");
-			memberMgmt.setIcon(new ImageIcon(memberMgmtIcon));
-			memberMgmt.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					try {
-						if (memLogDao.getLog() != null) {
-							memberMenu.refresh();
-							memberMenu.validate();
-							card.show(menuCardPanel, "4");
-						} else {
-							MemberLoginFrame mlogFrame =new MemberLoginFrame();
-							mlogFrame.setVisible(true);
-							
-							
-							mlogFrame.addWindowListener(new WindowAdapter() {
-								@Override
-								public void windowClosed(WindowEvent e) {
-									try {
-										MemberLogHistoryDao memLogDao = new MemberLogHistoryDao();
-										if (memLogDao.getLog() != null) {
-											memberMenu.refresh();
-											memberMenu.validate();
-											card.show(menuCardPanel, "4");
-										}
-									} catch (SQLException e1) {
-										e1.printStackTrace();
-									}
-								}
-							});
-						}
-
-					} catch (SQLException e1) {
-					}
-				}
-			});
-
-		} catch (IOException e) {
-			e.printStackTrace();
-		}      
-		
 		settingBtn = getButton("설정");
-		
+		settingBtn.setBounds(30, 30, 30, 30);
+		settingBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					setMenu = new SettingMenu(memberFrame);
+					setMenu.setVisible(true);
+					theme.setTheme(themeDao.getTheme());
+					memberFrame.initialize();
+					memberFrame.invalidate();
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+
+			}
+		});
+
+		// 버튼 생성 메서드 테스트
+		homeBtn = getButton("홈");
+		homeBtn.setIcon(img.scaledMenuImage("homeIcon.png"));
+		homeBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				card.show(menuCardPanel, "1");
+			}
+		});
+
+		bookMgmt = getButton("도서");
+		bookMgmt.setIcon(img.scaledMenuImage("bookMgmtImage.png"));
+		bookMgmt.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				card.show(menuCardPanel, "2");
+
+			}
+		});
+
+		readingRoom = getButton("열람실");
+		readingRoom.setIcon(img.scaledMenuImage("memberMgmtImage.png"));
+		readingRoom.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				card.show(menuCardPanel, "3");
+			}
+		});
+
+		memberMgmt = getButton("회원정보");
+		memberMgmt.setIcon(img.scaledMenuImage("readingRoomMgmtImage.png"));
+		memberMgmt.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if (memLogDao.getLog() != null) {
+						memberMenu.refresh();
+						memberMenu.validate();
+						card.show(menuCardPanel, "4");
+					} else {
+						MemberLoginFrame mlogFrame = new MemberLoginFrame();
+						mlogFrame.setVisible(true);
+
+						mlogFrame.addWindowListener(new WindowAdapter() {
+							@Override
+							public void windowClosed(WindowEvent e) {
+								try {
+									MemberLogHistoryDao memLogDao = new MemberLogHistoryDao();
+									if (memLogDao.getLog() != null) {
+										memberMenu.refresh();
+										memberMenu.validate();
+										card.show(menuCardPanel, "4");
+									}
+								} catch (SQLException e1) {
+									e1.printStackTrace();
+								}
+							}
+						});
+					}
+
+				} catch (SQLException e1) {
+				}
+			}
+		});
 
 		menuButtonPanel.setBounds(350, 0, 1200, 200);
-		menuButtonPanel.setBackground(new Color(0, 82, 91));
+		menuButtonPanel.setBackground(theme.getMainColor());
+		
+		menuButtonPanel.add(homeBtn);
+		menuButtonPanel.add(bookMgmt);
+		menuButtonPanel.add(readingRoom);
+		menuButtonPanel.add(memberMgmt);
 
 		menuCardPanel.setBounds(200, 220, 1500, 750);
 		menuCardPanel.add("1", initialLabel());
@@ -166,20 +175,13 @@ public class MemberFrame extends JFrame {
 		menuCardPanel.add("3", readingroomPanel);
 		menuCardPanel.add("4", memberMenu);
 		
-
-
-		menuButtonPanel.add(homeBtn);
-		menuButtonPanel.add(bookMgmt);
-		menuButtonPanel.add(readingRoom);
-		menuButtonPanel.add(memberMgmt);
-		menuButtonPanel.add(settingBtn);
-		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
 		panel.setPreferredSize(new Dimension(1900, 1000));
-		panel.setBackground(new Color(0, 82, 91));
+		panel.setBackground(theme.getMainColor());
 		panel.add(menuButtonPanel);
 		panel.add(menuCardPanel);
+		panel.add(settingBtn);
 		
 		JScrollPane sp = new JScrollPane();
 		sp.setViewportView(panel);
@@ -214,13 +216,11 @@ public class MemberFrame extends JFrame {
 	public static JPanel initialLabel() {
 		JPanel initImagePanel = new JPanel();
 		JLabel label = new JLabel();
-		try {
-			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/initialImage.jpg"));
-			Image image = buffer.getScaledInstance(1500, 750, Image.SCALE_SMOOTH);
-			label.setIcon(new ImageIcon(image));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+	
+		label.setIcon(img.scaledPanelImage("initialImage.jpg"));
+	
+		
 		label.setSize(1500, 750);
 
 		initImagePanel.setLayout(null);

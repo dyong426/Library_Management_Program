@@ -20,7 +20,7 @@ public class ImageConvert {
 	static ImageDao imageDao = new ImageDao();
 	ImageVO imageVO;
 	
-	public ImageIcon scaledImage(String image_name) {
+	public ImageIcon scaledMenuImage(String image_name) {
 		try {
 			imageVO = imageDao.getImage(image_name);
 			bufferedImage = ImageIO.read(new File(imageVO.getImage_path()));
@@ -31,6 +31,30 @@ public class ImageConvert {
 		} finally {			
 			return icon;
 		}
+	}
+	
+	public ImageIcon scaledPanelImage(String image_name) {
+		try {
+			imageVO = imageDao.getImage(image_name);
+			bufferedImage = ImageIO.read(new File(imageVO.getImage_path()));
+			image = bufferedImage.getScaledInstance(1500, 750, Image.SCALE_SMOOTH);
+			icon = new ImageIcon(image);
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		} finally {			
+			return icon;
+		}
+	}
+	
+	public void inputImage(File file) {
+		try {
+			imageDao.addImage(file);
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		
 	}
 
 }
