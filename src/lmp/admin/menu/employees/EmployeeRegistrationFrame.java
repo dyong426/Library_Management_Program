@@ -1,4 +1,4 @@
-package lmp.members;
+package lmp.admin.menu.employees;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -21,32 +21,28 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
-import lmp.db.dao.MemberDao;
-import lmp.db.vo.MemberVO;
+import lmp.admin.dao.AdminDao;
+import lmp.admin.vo.AdminVO;
 import lmp.util.ShaPasswordEncoder;
 import lmp.util.Validator;
 
-public class MemberJoin extends JFrame {
+public class EmployeeRegistrationFrame extends JFrame {
 
-	MemberDao memberDao = new MemberDao();
+	AdminDao adminDao = new AdminDao();
 	Validator vd = new Validator();
 	ShaPasswordEncoder pwEncoder = new ShaPasswordEncoder();
 	
-	public MemberJoin() {
+	public EmployeeRegistrationFrame() {
 		JLabel join = new JLabel("회원가입");
 		JLabel name = new JLabel("이름");
-		JLabel id = new JLabel("아이디");
 		JLabel pw = new JLabel("비밀번호");
 		JLabel chkpw = new JLabel("비밀번호확인");
-		JLabel birth = new JLabel("생년월일");
-		JLabel sex = new JLabel("성별");
 		JLabel phone = new JLabel("전화번호");
 		JLabel email = new JLabel("이메일");
 		JLabel address = new JLabel("주소");
 
 		JTextField pwinfoField = new JTextField("특수문자포함 8자리 이상");
 
-		JTextField idField = new JTextField();
 		JTextField nameField = new JTextField();
 		JPasswordField pwField = new JPasswordField();
 		JPasswordField chkpwField = new JPasswordField();
@@ -55,36 +51,13 @@ public class MemberJoin extends JFrame {
 		JTextField addressField = new JTextField();
 
 		JButton phonecheckBtn = new JButton("중복확인");
-		JButton idcheckBtn = new JButton("중복확인");
 		JButton emailcheckBtn = new JButton("중복확인");
 		JButton joinBtn = new JButton("가입하기");
-
-		JRadioButton maleBtn = new JRadioButton("남");
-		JRadioButton femaleBtn = new JRadioButton("여");
-
-		Integer[] years = {1950, 1951, 1952, 1953, 1954, 1955,
-				1956, 1957, 1958, 1959, 1960, 1961, 1962, 1963,
-				1964, 1965, 1966, 1967, 1968, 1969, 1970, 1971,
-				1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979,
-				1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987,
-				1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995,
-				1996, 1997, 1998, 1999, 2000, 2001, 2002};
-
-		String[] months = {"01", "02", "03","04", "05", "06", "07", "08", "09", "10", "11", "12"};
-		String[] days = {"01", "02", "03","04", "05", "06", "07", "08", "09", "10", "11", "12",
-				"13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25",
-				"26", "27", "28", "29", "30", "31"};
-
-		JComboBox year = new JComboBox(years);
-		JComboBox month = new JComboBox(months);
-		JComboBox day = new JComboBox(days);
-
-
+		
 		setlabel(join, 40, 55, 13);
-
-		setlabel(id, 18, 40, 90);
-		setField(idField, 113);
-		setBtn(idcheckBtn, 13, 400, 113);
+		
+		setlabel(name, 18, 40, 90);
+		setField(nameField, 113);
 
 		setlabel(pw, 18, 40, 140);
 		setField(pwField, 163);
@@ -118,36 +91,13 @@ public class MemberJoin extends JFrame {
 
 
 		setlabel(chkpw, 18, 40, 190);
-		setField(chkpwField, 213);
-
-		setlabel(name, 18, 40, 240);
-		setField(nameField, 263);
-
-		setlabel(birth, 18, 40, 290);
-		year.setBounds(180, 315, 70, 30);
-		month.setBounds(265, 315, 50, 30);
-		day.setBounds(330, 315, 50, 30);
-		add(year);
-		add(month);
-		add(day);
-
+		setField(chkpwField, 213);		
+		
 		Font font = new Font("한컴 말랑말랑 Bold", Font.BOLD, 18);
-		setlabel(sex, 18, 40, 340);
-		maleBtn.setFont(font);
-		maleBtn.setBounds(200, 360, 100, 30);
-		add(maleBtn);
-
-		femaleBtn.setFont(font);
-		femaleBtn.setBounds(300, 360, 100, 30);
-		add(femaleBtn);
-
-		ButtonGroup g = new ButtonGroup();
-		g.add(femaleBtn);
-		g.add(maleBtn);
-
-		setBtn(phonecheckBtn, 13, 400, 413);
-		setlabel(phone, 18, 40, 390);
-		setField(phoneField, 413);
+		
+		setBtn(phonecheckBtn, 13, 400, 263);
+		setlabel(phone, 18, 40, 240);
+		setField(phoneField, 263);
 		phoneField.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -163,53 +113,23 @@ public class MemberJoin extends JFrame {
 			}
 		});
 
-		setlabel(email, 18, 40, 440);
-		setField(emailField, 463);
-		setBtn(emailcheckBtn, 13, 400, 463);
-		setBtn(emailcheckBtn, 13, 400, 463);
+		setlabel(email, 18, 40, 290);
+		setField(emailField, 313);
+		setBtn(emailcheckBtn, 13, 400, 313);
 
-		setlabel(address, 18, 40, 490);
-		setField(addressField, 513);
+		setlabel(address, 18, 40, 340);
+		setField(addressField, 363);
 
-		setBtn(joinBtn, 15, 400, 580);
-
-
-		// 아이디 중복체크 및 유효성검사
-		idcheckBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (vd.isValidateID(idField.getText()))  {
-					MemberVO memberVO = null;
-					try {
-						memberVO = memberDao.get2(1, idField.getText()).get(0);
-					} catch (SQLException e1) {
-						JOptionPane.showMessageDialog(null, "사용가능합니다");
-					} catch (IndexOutOfBoundsException e2) {
-						JOptionPane.showMessageDialog(null, "사용가능합니다");
-						joinBtn.setEnabled(true);
-					}
-
-					if (memberVO != null) {
-						JOptionPane.showMessageDialog(null, "중복되는 아이디입니다.",
-								"경고", JOptionPane.ERROR_MESSAGE);
-						joinBtn.setEnabled(false);
-					}
-				} else {
-					JOptionPane.showMessageDialog(null, "사용 불가한 아이디입니다",
-							"경고", JOptionPane.ERROR_MESSAGE);
-					joinBtn.setEnabled(false);
-				}
-			}	
-		});
+		setBtn(joinBtn, 15, 400, 400);
 
 		// 전화번호 중복체크 및 유효성검사
 		phonecheckBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (vd.isValidatePhone(phoneField.getText()))  {
-					MemberVO memberVO = null;
+					AdminVO adminVo = null;
 					try {
-						memberVO = memberDao.get2(2, phoneField.getText()).get(0);
+						adminVo = adminDao.getByPhone(phoneField.getText()).get(0);
 					} catch (SQLException e1) {
 						JOptionPane.showMessageDialog(null, "사용가능합니다");
 
@@ -218,7 +138,7 @@ public class MemberJoin extends JFrame {
 						joinBtn.setEnabled(true);
 					}
 
-					if (memberVO != null) {
+					if (adminVo != null) {
 						JOptionPane.showMessageDialog(null, "중복되는 전화번호입니다.",
 								"경고", JOptionPane.ERROR_MESSAGE);
 						joinBtn.setEnabled(false);
@@ -237,9 +157,9 @@ public class MemberJoin extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (vd.isValidateEmail(emailField.getText()))  {
-					MemberVO memberVO = null;
+					AdminVO adminVo = null;
 					try {
-						memberVO = memberDao.get2(3, emailField.getText()).get(0);
+						adminVo = adminDao.getByEmail(emailField.getText()).get(0);
 					} catch (SQLException e1) {
 						JOptionPane.showMessageDialog(null, "사용가능합니다");
 
@@ -249,7 +169,7 @@ public class MemberJoin extends JFrame {
 						joinBtn.setEnabled(true);
 					}
 
-					if (memberVO != null) {
+					if (adminVo != null) {
 						JOptionPane.showMessageDialog(null, "중복되는 이메일입니다.",
 								"경고", JOptionPane.ERROR_MESSAGE);
 						joinBtn.setEnabled(false);
@@ -268,17 +188,13 @@ public class MemberJoin extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Validator vd = new Validator();
-				MemberDao dao = new MemberDao();
-				MemberVO vo = null;
+				AdminDao dao = new AdminDao();
+				AdminVO vo = null;
 				try {
-					vo = new MemberVO(null, nameField.getText(), idField.getText(),
+					vo = new AdminVO(null, nameField.getText(),
 							pwEncoder.encrypt(new String(pwField.getPassword())),
-							Integer.toString((int)year.getSelectedItem() % 100)
-							+ month.getSelectedItem()
-							+ day.getSelectedItem(),
-							(maleBtn.isSelected() ? "0" : "1"),
 							phoneField.getText(), emailField.getText(), addressField.getText(),
-							null,null,null);
+							null, null);
 				} catch (Exception e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
@@ -290,10 +206,8 @@ public class MemberJoin extends JFrame {
 						vd.isValidatePW(new String(pwField.getPassword())) &&
 						new String(pwField.getPassword()).equals(new String(chkpwField.getPassword())) &&
 						vd.isValidatePhone(phoneField.getText()) &&
-						vd.isValidateID(idField.getText()) &&
 						vd.isValidateEmail(emailField.getText()) &&
-						!(addressField.getText().equals("")) &&
-						(maleBtn.isSelected() ? true : true)
+						!(addressField.getText().equals(""))
 						) {
 					int var = JOptionPane.showConfirmDialog(null, "가입하시겠습니까?", "가입안내",
 							JOptionPane.YES_NO_OPTION,
@@ -333,7 +247,7 @@ public class MemberJoin extends JFrame {
 
 
 		setLayout(null);
-		setBounds(700, 150, 550, 700);
+		setBounds(700, 200, 550, 500);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setVisible(true);
 	}
@@ -367,7 +281,7 @@ public class MemberJoin extends JFrame {
 
 
 	public static void main(String[] args) {
-		new MemberJoin();
+		new EmployeeRegistrationFrame();
 
 	}
 

@@ -44,6 +44,8 @@ public class MemberFrame extends JFrame {
 
 	JButton homeBtn, bookMgmt, memberMgmt, readingRoom, settingBtn;
 	
+	static JButton logoutBtn, loginBtn;
+	
 	JLabel clockLabel;
 //	static JPanel MemberPanel = new MemberMenu();
 	
@@ -59,6 +61,7 @@ public class MemberFrame extends JFrame {
 
 	MemberLogHistoryDao memLogDao = new MemberLogHistoryDao();
 	MemberLogHistoryVO memLogVO;
+	MemberLoginFrame memberLoginFrame = new MemberLoginFrame();
 	
 	ThemeDao themeDao = new ThemeDao();
 	Theme theme = new Theme();
@@ -88,7 +91,7 @@ public class MemberFrame extends JFrame {
 		javax.swing.Timer timers = new javax.swing.Timer(1000, updateClockAction);
 		timers.start();
 		
-		JButton loginBtn = new JButton("로그인");
+		loginBtn = new JButton("로그인");
 		loginBtn.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 20));
 		loginBtn.setBackground(Color.WHITE);
 		loginBtn.setForeground(Color.RED);
@@ -97,18 +100,21 @@ public class MemberFrame extends JFrame {
 		loginBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				memberLoginFrame.initialize();
+				memberLoginFrame.setVisible(true);
 			}
 		});
 		
-		JButton logoutBtn = new JButton("로그아웃");
+		
+		logoutBtn = new JButton("로그아웃");
 		logoutBtn.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 20));
 		logoutBtn.setBackground(Color.WHITE);
 		logoutBtn.setForeground(Color.RED);
 		logoutBtn.setFocusable(false);
+		logoutBtn.setVisible(false);
 		logoutBtn.setBounds(1770, 10, 120, 50);
-
-
+		
+		
 		theme.setTheme(themeDao.getTheme());
 		JPanel menuButtonPanel = new JPanel(new GridLayout(1, 4, 100, 0));
 
@@ -244,6 +250,7 @@ public class MemberFrame extends JFrame {
 		panel.add(settingBtn);
 		panel.add(clockLabel);
 		panel.add(logoutBtn);
+		panel.add(loginBtn);
 
 		
 		JScrollPane sp = new JScrollPane();

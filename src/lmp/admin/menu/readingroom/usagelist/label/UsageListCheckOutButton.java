@@ -35,12 +35,15 @@ import lmp.admin.menu.readingroom.usagelist.scrollpane.table.UsageListTable;
 import lmp.db.dao.ReadingRoomDao;
 import lmp.db.dao.SeatUseDetailDao;
 import lmp.db.vo.SeatUseDetailVO;
+import lmp.util.ImageConvert;
 
 public class UsageListCheckOutButton extends JPanel {
 	
 	SeatUseDetailDao sudDao = new SeatUseDetailDao();
 	ReadingRoomDao roomDao = new ReadingRoomDao();
 	ArrayList<SeatUseDetailVO> sudList =  new ArrayList<>();
+	
+	ImageConvert img = new ImageConvert();
 	
 	// 강제퇴실, 새로고침 버튼 패널
 	public UsageListCheckOutButton(ReadingRoomPanel readingRoomPanel) {
@@ -53,13 +56,7 @@ public class UsageListCheckOutButton extends JPanel {
 		UsageListTable usageListTable = readingRoomPanel.getUsageListScrollPane().getUsageListTable();
 		
 		JButton refreshButton = AdminFrame.getButton("");
-		try {
-			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/refreshIcon.png"));
-			Image image = buffer.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-			refreshButton.setIcon(new ImageIcon(image));
-		} catch (IOException e3) {
-			e3.printStackTrace();
-		}
+		refreshButton.setIcon(img.scaledSmallImage("refresh"));
 		refreshButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

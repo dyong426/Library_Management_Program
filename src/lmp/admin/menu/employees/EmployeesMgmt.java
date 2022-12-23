@@ -39,6 +39,7 @@ import lmp.admin.dao.MemberDao;
 import lmp.admin.dao.MenuDao;
 import lmp.admin.vo.AdminVO;
 import lmp.admin.vo.MemberVO;
+import lmp.util.ImageConvert;
 import lmp.util.Validator;
 
 public class EmployeesMgmt extends JPanel {
@@ -56,6 +57,8 @@ public class EmployeesMgmt extends JPanel {
 	JPanel panel = this;
 	
 	Validator vd = new Validator();
+	
+	ImageConvert img = new ImageConvert();
 
 	public EmployeesMgmt() {
 
@@ -99,13 +102,7 @@ public class EmployeesMgmt extends JPanel {
 		scroll.setBounds(0, 250, 1500, 500);
 		add(scroll);
 
-		try {
-			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/searchButtonIcon.png"));
-			Image image = buffer.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-			searchBtn.setIcon(new ImageIcon(image));
-		} catch (IOException e3) {
-			e3.printStackTrace();
-		}
+		searchBtn.setIcon(img.scaledMgmtImage("search"));
 		searchBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -131,43 +128,24 @@ public class EmployeesMgmt extends JPanel {
 		});
 
 		// 추가버튼 설정
-		addBtn.setBounds(1320, 15, 150, 70);
-		try {
-			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/registrationIcon.png"));
-			Image image = buffer.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-			addBtn.setIcon(new ImageIcon(image));
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
-
+		addBtn.setBounds(1320, 10, 150, 70);
+		addBtn.setIcon(img.scaledMgmtImage("memberregistration"));
 		// 추가버튼을 누르면 새창이 뜨면서 정보입력하게..
 		addBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				addEmployee();
+				new EmployeeRegistrationFrame();
 			}
 		});
 		add(addBtn);
-
+		
 		// 수정버튼 설정
-		changeBtn.setBounds(1320, 175, 150, 70);
-		try {
-			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/bookModifyIconImage.png"));
-			Image image = buffer.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-			changeBtn.setIcon(new ImageIcon(image));
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
-
+		changeBtn.setBounds(1320, 90, 150, 70);
+		changeBtn.setIcon(img.scaledMgmtImage("modification"));
+		
 		// 삭제버튼 설정
-		deleteBtn.setBounds(1320, 95, 150, 70);
-		try {
-			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/deleteIcon.png"));
-			Image image = buffer.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-			deleteBtn.setIcon(new ImageIcon(image));
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
+		deleteBtn.setBounds(1320, 170, 150, 70);
+		deleteBtn.setIcon(img.scaledMgmtImage("memberdelete"));
 		// 삭제버튼 누르면 해당정보 삭제
 		deleteBtn.addActionListener(new ActionListener() {
 			@Override
@@ -536,134 +514,6 @@ public class EmployeesMgmt extends JPanel {
 		j.setVisible(true);
 	}
 
-	public void addEmployee() {
-		JFrame f = new JFrame("직원등록");
-		JLabel addemp = new JLabel("직원등록");
-		JLabel name = getLabel("이름");
-		JLabel birth = getLabel("생년월일");
-		JLabel phone = getLabel("전화번호");
-		JLabel pw = getLabel("비밀번호");
-		JLabel email = getLabel("이메일");
-		JLabel address = getLabel("주소");
-
-		JTextField nameField = EmployeesMgmt.getTextField();
-		JTextField birthField = EmployeesMgmt.getTextField();
-		JTextField phoneField = EmployeesMgmt.getTextField();
-		JTextField pwNoticeField = new JTextField("필수 입력사항입니다.");
-		pwNoticeField.setBounds(130, 140, 150, 30);
-		pwNoticeField.setForeground(Color.RED);
-		pwNoticeField.setVisible(false);
-		JPasswordField pwField = new JPasswordField();
-		// passwordField에서는 안내문구를 띄워도 ***... 로 표시되기 때문에 안내문구 출력용 textField 생성
-		pwField.addFocusListener(new FocusAdapter() {
-			@Override
-			public void focusLost(FocusEvent e) {
-				if (new String(pwField.getPassword()).trim().equals("")) {
-					pwField.setText("필수 입력사항입니다.");
-					pwField.setForeground(Color.RED);
-					pwField.setVisible(false);
-					pwNoticeField.setVisible(true);
-				}
-			}
-		});
-		pwNoticeField.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				pwField.setText("");
-				pwField.setForeground(Color.BLACK);
-				pwNoticeField.setVisible(false);
-				pwField.setVisible(true);
-				pwField.requestFocus();
-			}
-		});
-		JTextField emailField = EmployeesMgmt.getTextField();
-		JTextField addressField = EmployeesMgmt.getTextField();
-
-		// 반복문으로 유효성 검사를 하기 위해 생성
-		JTextField[] tfList = { nameField, birthField, phoneField, pwField, emailField, addressField };
-
-		JButton finishBtn = new JButton("완료");
-		finishBtn.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 18));
-		finishBtn.setBackground(new Color(87, 119, 119));
-		finishBtn.setForeground(Color.WHITE);
-		finishBtn.setFocusable(false);
-
-		f.add(pwNoticeField);
-
-		// 직원등록 타이틀 설정
-
-		addemp.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 30));
-		addemp.setForeground(new Color(49, 82, 91));
-		addemp.setBounds(50, 30, 150, 35);
-		addemp.setHorizontalTextPosition(JLabel.CENTER);
-		f.add(addemp);
-
-		// 이름 라벨 , 텍스트필드 설정
-		f.add(name);
-		f.add(nameField);
-		name.setBounds(50, 90, 100, 30);
-		nameField.setBounds(130, 90, 150, 30);
-
-		// 비밀번호 라벨 , 텍스트필드 설정
-		f.add(pw);
-		f.add(pwField);
-		pw.setBounds(50, 140, 100, 30);
-		pwField.setBounds(130, 140, 150, 30);
-
-		// 전화번호 라벨 , 텍스트필드 설정
-		f.add(phone);
-		f.add(phoneField);
-		phone.setBounds(50, 190, 100, 30);
-		phoneField.setBounds(130, 190, 150, 30);
-
-		// 이메일 라벨 , 텍스트필드 설정
-		f.add(email);
-		f.add(emailField);
-		email.setBounds(50, 240, 100, 30);
-		emailField.setBounds(130, 240, 150, 30);
-
-		// 주소 라벨 , 텍스트필드 설정
-		f.add(address);
-		f.add(addressField);
-		address.setBounds(50, 290, 100, 30);
-		addressField.setBounds(130, 290, 150, 30);
-
-		f.add(finishBtn);
-		finishBtn.setBounds(290, 340, 70, 40);
-
-		finishBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				// 입력하지 않은 정보가 있으면 안내문구 출력 후 완료 버튼 무효
-				for (JTextField field : tfList) {
-					if (field.getForeground() == Color.RED) {
-						JOptionPane.showMessageDialog(null, "입력하지 않은 정보가 존재합니다.");
-						return;
-					}
-				}
-
-				AdminDao dao = new AdminDao();
-				AdminVO vo = new AdminVO(null, nameField.getText(), new String(pwField.getPassword()),
-						phoneField.getText(), emailField.getText(), addressField.getText(), null, null);
-
-				try {
-					dao.add(vo);
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
-
-				JOptionPane.showMessageDialog(null, "등록이 완료되었습니다.");
-
-			}
-		});
-
-		f.dispose();
-		f.setLayout(null);
-		f.setBounds(500, 300, 400, 450);
-		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		f.setVisible(true);
-	}
 
 	public static JLabel getLabel(String text) {
 		JLabel label = new JLabel(text);

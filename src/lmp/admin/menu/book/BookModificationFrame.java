@@ -39,6 +39,7 @@ import lmp.admin.AdminFrame;
 import lmp.db.dao.BookDao;
 import lmp.db.vo.BookVO;
 import lmp.db.vo.LocationVO;
+import lmp.util.ImageConvert;
 
 public class BookModificationFrame extends JFrame implements MouseListener, KeyListener {
 
@@ -51,6 +52,8 @@ public class BookModificationFrame extends JFrame implements MouseListener, KeyL
 	private JButton overwriteBtn, comebackBtn, saveBtn_Modify;
 	JComboBox cb_Modify = new JComboBox(BOOK_LOCATIONS);
 
+	ImageConvert img = new ImageConvert();
+	
 	JFrame f = this;
 	
 	public BookModificationFrame(String title) {
@@ -132,44 +135,20 @@ public class BookModificationFrame extends JFrame implements MouseListener, KeyL
 
 		// 덮어쓰기,원래대로,저장 각 버튼 이미지 삽입
 		// 덮어쓰기 버튼 이미지
-		BufferedImage bfi_overwrite = null;
-		try {
-			bfi_overwrite = ImageIO.read(new File("src/lmp/admin/menuButtonImages/overwriteBtnIcon.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Image image_overwrite = bfi_overwrite.getScaledInstance(60, 60, Image.SCALE_AREA_AVERAGING);
-
 		overwriteBtn = BookMgmt.getButton(" 덮어쓰기");
-		overwriteBtn.setIcon(new ImageIcon(image_overwrite));
+		overwriteBtn.setIcon(img.scaledMgmtImage("overwrite"));
 		overwriteBtn.setBounds(1020, 110, 120, 40);
 		overwriteBtn.setForeground(Color.BLACK);
 
 		// 원래대로 버튼 이미지
-		BufferedImage bfi_comeback = null;
-		try {
-			bfi_comeback = ImageIO.read(new File("src/lmp/admin/menuButtonImages/comebackBtnIcon.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Image comeback = bfi_comeback.getScaledInstance(60, 60, Image.SCALE_AREA_AVERAGING);
-
 		comebackBtn = BookMgmt.getButton(" 원래대로");
-		comebackBtn.setIcon(new ImageIcon(comeback));
+		comebackBtn.setIcon(img.scaledMgmtImage("comeback"));
 		comebackBtn.setBounds(1020, 110, 120, 40);
 		comebackBtn.setForeground(Color.BLACK);
 
 		// 저장버튼 이미지
-		BufferedImage bfi_save = null;
-		try {
-			bfi_save = ImageIO.read(new File("src/lmp/admin/menuButtonImages/saveIconImage_Modify.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Image save = bfi_save.getScaledInstance(60, 60, Image.SCALE_AREA_AVERAGING);
-
 		saveBtn_Modify = BookMgmt.getButton(" 저장하기");
-		saveBtn_Modify.setIcon(new ImageIcon(save));
+		saveBtn_Modify.setIcon(img.scaledMgmtImage("savemodify"));
 		saveBtn_Modify.setBounds(1020, 110, 120, 40);
 		saveBtn_Modify.setForeground(Color.BLACK);
 		saveBtn_Modify.addActionListener(new ActionListener() {

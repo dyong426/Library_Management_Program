@@ -110,7 +110,7 @@ public class FindID extends JFrame {
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
 		textField_1.setBounds(100, 55, 210, 30);
-		textField_1.setText("\"-\"를 포함해 입력해주세요.");
+		textField_1.setText(" ex) 010-1234-5678");
 		textField_1.addFocusListener(getFocusAdapter(textField_1));
 		panel_1.add(textField_1);
 

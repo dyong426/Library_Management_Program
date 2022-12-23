@@ -38,7 +38,7 @@ public class AdminDao extends MenuDao{
 										+ "admin_email,"
 										+ "admin_address,"
 										+ "admin_note) "
-										+ "VALUES(admin_num_seq.nextval,?,?,?,?,?,?)";
+										+ "VALUES(admin_num_seq.nextval, ?, ?, ?, ?, ?, ?)";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 			

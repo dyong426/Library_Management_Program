@@ -39,6 +39,7 @@ import javax.swing.table.DefaultTableModel;
 import lmp.db.dao.BookDao;
 import lmp.db.vo.BookVO;
 import lmp.db.vo.LocationVO;
+import lmp.util.ImageConvert;
 
 public class BookRegistrationFrame extends JFrame implements MouseListener, KeyListener {
 
@@ -53,6 +54,8 @@ public class BookRegistrationFrame extends JFrame implements MouseListener, KeyL
 	private JButton delBtn;
 	private JButton saveBtn_Regist;
 	JComboBox cb_Regist = new JComboBox(comboBox_BookLocations);
+
+	ImageConvert img = new ImageConvert();
 
 	public BookRegistrationFrame(String title) {
 
@@ -92,44 +95,20 @@ public class BookRegistrationFrame extends JFrame implements MouseListener, KeyL
 
 		// 추가,제외,저장 각 버튼 이미지 삽입
 		// 추가버튼 이미지
-		BufferedImage bfi_add = null;
-		try {
-			bfi_add = ImageIO.read(new File("src/lmp/admin/menuButtonImages/plusBtnIcon.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Image image_add = bfi_add.getScaledInstance(60, 60, Image.SCALE_AREA_AVERAGING);
-
 		addBtn = BookMgmt.getButton(" 추가");
-		addBtn.setIcon(new ImageIcon(image_add));
+		addBtn.setIcon(img.scaledMgmtImage("plus"));
 		addBtn.setBounds(420, 5, 120, 40);
 		addBtn.setForeground(Color.BLACK);
 
 		// 제외버튼 이미지
-		BufferedImage bfi_del = null;
-		try {
-			bfi_del = ImageIO.read(new File("src/lmp/admin/menuButtonImages/minusBtnIcon.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Image del = bfi_del.getScaledInstance(60, 60, Image.SCALE_AREA_AVERAGING);
-
 		delBtn = BookMgmt.getButton(" 제외");
-		delBtn.setIcon(new ImageIcon(del));
+		delBtn.setIcon(img.scaledMgmtImage("minus"));
 		delBtn.setBounds(720, 0, 120, 40);
 		delBtn.setForeground(Color.BLACK);
 
 		// 저장버튼 이미지
-		BufferedImage bfi_save = null;
-		try {
-			bfi_save = ImageIO.read(new File("src/lmp/admin/menuButtonImages/saveIconImage_Regist.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Image save = bfi_save.getScaledInstance(60, 60, Image.SCALE_AREA_AVERAGING);
-
 		saveBtn_Regist = BookMgmt.getButton(" 저장");
-		saveBtn_Regist.setIcon(new ImageIcon(save));
+		saveBtn_Regist.setIcon(img.scaledMgmtImage("saveregist"));
 		saveBtn_Regist.setBounds(1020, 0, 120, 40);
 		saveBtn_Regist.setForeground(Color.BLACK);
 
@@ -168,7 +147,7 @@ public class BookRegistrationFrame extends JFrame implements MouseListener, KeyL
 	}
 
 	public void addRecord() {
-		
+
 		// 정보 없는 칸 있으면 거르기
 		for (int i = 0; i < labels_Regist.length; ++i) {
 			if (!(labels_Regist[i].equals("위치") || labels_Regist[i].equals("비고"))) {
@@ -198,19 +177,18 @@ public class BookRegistrationFrame extends JFrame implements MouseListener, KeyL
 				}
 			}
 		}
-		
+
 		++rowCount;
 		model_Regist.setRowCount(rowCount);
 		for (int i = 0; i < labels_Regist.length; i++) {
 			if (!labels_Regist[i].equals("위치")) {
-					model_Regist.setValueAt(fields_Regist[i].getText(), rowCount - 1, i);
-				
+				model_Regist.setValueAt(fields_Regist[i].getText(), rowCount - 1, i);
+
 			} else {
 				model_Regist.setValueAt(cb_Regist.getSelectedItem(), rowCount - 1, i);
 			}
 		}
-		
-		
+
 //		++rowCount;
 //		model_Regist.setRowCount(rowCount);
 		table_Regist.setModel(model_Regist);
@@ -219,19 +197,19 @@ public class BookRegistrationFrame extends JFrame implements MouseListener, KeyL
 		for (int i = 0; i < labels_Regist.length; i++)
 			fields_Regist[i].setText("");
 		fields_Regist[0].requestFocus();
-		
+
 	}
-	
+
 	public void saveRecord() {
-		
+
 		if (model_Regist.getRowCount() == 0) {
 			JOptionPane.showMessageDialog(null, "저장할 도서를 추가해주세요.");
 			return;
 		}
-		
+
 		BookDao bookDao = new BookDao();
 		BookVO bookVo = new BookVO();
-		
+
 		for (int i = 0; i < model_Regist.getRowCount(); ++i) {
 			bookVo.setTitle(model_Regist.getValueAt(i, 0).toString());
 			bookVo.setAuthor(model_Regist.getValueAt(i, 1).toString());
@@ -239,7 +217,8 @@ public class BookRegistrationFrame extends JFrame implements MouseListener, KeyL
 			bookVo.setIsbn(model_Regist.getValueAt(i, 3).toString());
 			bookVo.setBias(Integer.parseInt(model_Regist.getValueAt(i, 4).toString()));
 			bookVo.setPrice(Integer.parseInt(model_Regist.getValueAt(i, 5).toString()));
-			bookVo.setLocation(new LocationVO(model_Regist.getValueAt(i, 6).toString().substring(0, 1), model_Regist.getValueAt(i, 6).toString().substring(2)));
+			bookVo.setLocation(new LocationVO(model_Regist.getValueAt(i, 6).toString().substring(0, 1),
+					model_Regist.getValueAt(i, 6).toString().substring(2)));
 			if (model_Regist.getValueAt(i, 7) != null) {
 				bookVo.setNote(model_Regist.getValueAt(i, 7).toString());
 			}
@@ -268,7 +247,7 @@ public class BookRegistrationFrame extends JFrame implements MouseListener, KeyL
 			int selected = table_Regist.getSelectedRow();
 			removeRecord(selected);
 		}
-		
+
 		if (src == saveBtn_Regist) {
 			saveRecord();
 			rowCount = 0;

@@ -163,6 +163,9 @@ public class MemberLoginFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (checkLogin(idField.getText(), new String(pwField.getPassword()))) {
+						MemberFrame.loginBtn.setVisible(false);
+						MemberFrame.logoutBtn.setVisible(true);
+						// 로그인 성공하면 로그인 기록 업데이트 후 5분 타이머 시작
 						TimerTask task = new TimerTask() {
 							@Override
 							public void run() {

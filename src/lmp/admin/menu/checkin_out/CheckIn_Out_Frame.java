@@ -36,6 +36,7 @@ import lmp.db.dao.BookDao;
 import lmp.db.dao.CheckOutDao;
 import lmp.db.vo.BookVO;
 import lmp.db.vo.CheckOutVO;
+import lmp.util.ImageConvert;
 
 public class CheckIn_Out_Frame extends JFrame{
 
@@ -81,6 +82,8 @@ public class CheckIn_Out_Frame extends JFrame{
 	ArrayList<CheckOutVO> checkedOutRecord = new ArrayList<>();
 	ArrayList<BookVO> bookList = new ArrayList<>();
 	
+	ImageConvert img = new ImageConvert();
+	
 	public CheckIn_Out_Frame(String memberNum) {
 		setTitle("회원 대출 관리");
 		
@@ -110,14 +113,8 @@ public class CheckIn_Out_Frame extends JFrame{
 		checkInButton = AdminFrame.getButton("반납");
 		checkInButton.setHorizontalTextPosition(JButton.RIGHT);
 		checkInButton.setVerticalTextPosition(JButton.CENTER);
-		try {
-			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/checkOutImage.png"));
-			Image image = buffer.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-			checkInButton.setIcon(new ImageIcon(image));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		checkInButton.setBounds(850, 168, 120, 70);
+		checkInButton.setIcon(img.scaledMgmtImage("checkIn"));
+		checkInButton.setBounds(820, 172, 150, 70);
 		
 		// 반납 버튼을 누르면 DB에 존재하는 해당 등록번호의 도서 정보 업데이트
 		checkInButton.addActionListener(new ActionListener() {
@@ -184,13 +181,7 @@ public class CheckIn_Out_Frame extends JFrame{
 		keyword.setBounds(120, 250, 120, 30);
 		
 		searchbutton = AdminFrame.getButton("검색");
-		try {
-			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/searchButtonIcon.png"));
-			Image image = buffer.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
-			searchbutton.setIcon(new ImageIcon(image));
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
+		searchbutton.setIcon(img.scaledMgmtImage("search"));
 		searchbutton.setBounds(720, 230, 70, 70);
 		
 		// 텍스트 필드에서 엔터 누르면 버튼 클릭되도록 액션 추가 (검색 버튼 눌러도 되고 텍스트 필드에서 엔터 눌러도 검색됨)
@@ -206,15 +197,9 @@ public class CheckIn_Out_Frame extends JFrame{
 		checkOutButton = AdminFrame.getButton("대출");
 		checkOutButton.setHorizontalTextPosition(JButton.RIGHT);
 		checkOutButton.setVerticalTextPosition(JButton.CENTER);
-		try {
-			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/checkInImage.png"));
-			Image image = buffer.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-			checkOutButton.setIcon(new ImageIcon(image));
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
+		checkOutButton.setIcon(img.scaledMgmtImage("checkout"));
 		// 버튼을 누르면 VO에 들어있는 현재 회원의 정보, 해당 도서의 정보 업데이트
-		checkOutButton.setBounds(850, 490, 120, 70);
+		checkOutButton.setBounds(820, 490, 150, 70);
 		
 		searchbutton.addActionListener(new ActionListener() {
 			@Override

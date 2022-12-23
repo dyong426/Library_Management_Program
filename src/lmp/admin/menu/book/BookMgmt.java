@@ -37,6 +37,7 @@ import lmp.db.dao.BookDao;
 import lmp.db.dao.CheckOutDao;
 import lmp.db.vo.BookVO;
 import lmp.db.vo.CheckOutVO;
+import lmp.util.ImageConvert;
 
 public class BookMgmt extends JPanel {
 
@@ -47,19 +48,19 @@ public class BookMgmt extends JPanel {
 	static JComboBox cb = new JComboBox(category);
 
 	static JTextField textF = new JTextField(" 검색어를 입력하세요.");
-
+	
 	JPanel panel = this;
-
+	
 	public static DefaultTableModel model_BookMgmt = new DefaultTableModel(bookColumn, 30) {
 		public boolean isCellEditable(int row, int column) {
 			return false;
 		};
 	};
-
+	
 	public DefaultTableModel getModel_BookMgmt() {
 		return model_BookMgmt;
 	}
-
+	
 	public static BookDao bookDao = new BookDao();
 	public static ArrayList<BookVO> bookVO;
 	// 도서현황 검색 창 초기화면 테이블
@@ -95,6 +96,8 @@ public class BookMgmt extends JPanel {
 			}
 		};
 	}
+	
+	ImageConvert img = new ImageConvert();
 
 	public BookMgmt() {
 
@@ -124,13 +127,7 @@ public class BookMgmt extends JPanel {
 		// 텍스트필드 옆 검색 버튼 선언
 		JButton button = AdminFrame.getButton("검색");
 		button.setBounds(1010, 100, 120, 100);
-		try {
-			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/searchButtonIcon.png"));
-			Image image = buffer.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-			button.setIcon(new ImageIcon(image));
-		} catch (IOException e3) {
-			e3.printStackTrace();
-		}
+		button.setIcon(img.scaledMgmtImage("search"));
 		button.addActionListener(new ActionListener() {
 
 			@Override
@@ -200,15 +197,7 @@ public class BookMgmt extends JPanel {
 		// 도서등록 버튼 선언
 		JButton registration = getButton(" 등록");
 		registration.setBounds(1320, 15, 150, 70);
-		try {
-			BufferedImage bfi_registration = ImageIO
-					.read(new File("src/lmp/admin/menuButtonImages/bookregisterIconImage.png"));
-			Image image_registration = bfi_registration.getScaledInstance(60, 60, Image.SCALE_AREA_AVERAGING);
-			registration.setIcon(new ImageIcon(image_registration));
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
-		
+		registration.setIcon(img.scaledMgmtImage("bookregister"));
 		registration.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -222,30 +211,13 @@ public class BookMgmt extends JPanel {
 		// 내용삭제 버튼 선언
 		JButton delete = getButton(" 삭제");
 		delete.setBounds(1320, 95, 150, 70);
-		try {
-			BufferedImage bfi_delete = ImageIO.read(new File("src/lmp/admin/menuButtonImages/bookdeleteIconImage.png"));
-			Image image_delete = bfi_delete.getScaledInstance(60, 60, Image.SCALE_AREA_AVERAGING);
-			delete.setIcon(new ImageIcon(image_delete));
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
-
-		// delete.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 18));
-		// delete.setText(" 삭제");
-		// delete.setVerticalTextPosition(JButton.CENTER);
-		// delete.setHorizontalTextPosition(JButton.RIGHT);
-		// delete.setForeground(Color.WHITE);
-		// delete.setBackground(Color.RED);
-		// delete.setBorderPainted(false);
-		// delete.setFocusPainted(false);
-		// delete.setContentAreaFilled(false);
-		// delete.setForeground(Color.WHITE);
+		delete.setIcon(img.scaledMgmtImage("bookdelete"));
 		delete.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				if (table_BookMgmt.getSelectedRow() == -1
-						|| model_BookMgmt.getValueAt(table_BookMgmt.getSelectedRow(), 0) == null) {
+				if (table_BookMgmt.getSelectedRow() == -1 ||
+					model_BookMgmt.getValueAt(table_BookMgmt.getSelectedRow(), 0) == null) {
 					JOptionPane.showMessageDialog(null, "삭제할 도서를 선택하세요.");
 				} else {
 					int num = JOptionPane.showConfirmDialog(null, "선택한 도서정보\n정말로 삭제하시겠습니까?", "선택도서 삭제",
@@ -329,15 +301,7 @@ public class BookMgmt extends JPanel {
 		// 정보수정 버튼 선언
 		JButton modification = getButton(" 수정");
 		modification.setBounds(1320, 175, 150, 70);
-		try {
-			BufferedImage bfi_modification = ImageIO
-					.read(new File("src/lmp/admin/menuButtonImages/bookModifyIconImage.png"));
-			Image image_modification = bfi_modification.getScaledInstance(60, 60, Image.SCALE_AREA_AVERAGING);
-			modification.setIcon(new ImageIcon(image_modification));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-
+		modification.setIcon(img.scaledMgmtImage("bookmodify"));
 		modification.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

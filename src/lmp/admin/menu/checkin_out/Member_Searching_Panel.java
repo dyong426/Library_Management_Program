@@ -36,6 +36,7 @@ import javax.swing.table.DefaultTableModel;
 import lmp.admin.AdminFrame;
 import lmp.admin.dao.MemberDao;
 import lmp.admin.vo.MemberVO;
+import lmp.util.ImageConvert;
 
 public class Member_Searching_Panel extends JPanel {
 
@@ -72,6 +73,8 @@ public class Member_Searching_Panel extends JPanel {
 	public ArrayList<MemberVO> getMemVoList() {
 		return memVoList;
 	}
+	
+	ImageConvert img = new ImageConvert();
 	
 	
 	public Member_Searching_Panel() {
@@ -118,25 +121,13 @@ public class Member_Searching_Panel extends JPanel {
 		
 		
 		searchButton = AdminFrame.getButton("검색");
-		try {
-			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/searchButtonIcon.png"));
-			Image image = buffer.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-			searchButton.setIcon(new ImageIcon(image));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+		searchButton.setIcon(img.scaledMgmtImage("search"));
 		searchButton.setBounds(1010, 100, 120, 100);
 		
 		
 		mgmtButton = AdminFrame.getButton("대출/반납 관리");
-		try {
-			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/checkOutImage.png"));
-			Image image = buffer.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-			mgmtButton.setIcon(new ImageIcon(image));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		mgmtButton.setBounds(1320, 100, 150, 100);
+		mgmtButton.setIcon(img.scaledMgmtImage("checkinout"));
+		mgmtButton.setBounds(1320, 90, 150, 100);
 		mgmtButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

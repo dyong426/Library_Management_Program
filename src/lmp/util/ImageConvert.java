@@ -22,26 +22,52 @@ public class ImageConvert {
 	
 	public ImageIcon scaledMenuImage(String image_name) {
 		try {
-			imageVO = imageDao.getImage(image_name);
+			imageVO = imageDao.getImage(image_name + ".png");
 			bufferedImage = ImageIO.read(new File(imageVO.getImage_path()));
 			image = bufferedImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
 			icon = new ImageIcon(image);
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
-		} finally {			
+		} finally {
+			return icon;
+		}
+	}
+	
+	public ImageIcon scaledSmallImage(String image_name) {
+		try {
+			imageVO = imageDao.getImage(image_name + ".png");
+			bufferedImage = ImageIO.read(new File(imageVO.getImage_path()));
+			image = bufferedImage.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+			icon = new ImageIcon(image);
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			return icon;
+		}
+	}
+	
+	public ImageIcon scaledMgmtImage(String image_name) {
+		try {
+			imageVO = imageDao.getImage(image_name + ".png");
+			bufferedImage = ImageIO.read(new File(imageVO.getImage_path()));
+			image = bufferedImage.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+			icon = new ImageIcon(image);
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		} finally {
 			return icon;
 		}
 	}
 	
 	public ImageIcon scaledPanelImage(String image_name) {
 		try {
-			imageVO = imageDao.getImage(image_name);
+			imageVO = imageDao.getImage(image_name + ".png");
 			bufferedImage = ImageIO.read(new File(imageVO.getImage_path()));
 			image = bufferedImage.getScaledInstance(1500, 750, Image.SCALE_SMOOTH);
 			icon = new ImageIcon(image);
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
-		} finally {			
+		} finally {
 			return icon;
 		}
 	}
@@ -50,11 +76,8 @@ public class ImageConvert {
 		try {
 			imageDao.addImage(file);
 		} catch (SQLException e) {
-			
 			e.printStackTrace();
-		}
-		
-		
+		}		
 	}
 
 }
