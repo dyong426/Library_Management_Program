@@ -124,7 +124,6 @@ public class MemberMenu extends JPanel {
 
 		changeBtn = new JButton("수정");
 		deleteBtn = new JButton("탈퇴");
-		logoutBtn = new JButton("로그아웃");
 
 		
 		setlabel(memberInfo, 35, 30, 30);
@@ -157,35 +156,7 @@ public class MemberMenu extends JPanel {
 
 		setBtn(deleteBtn, 23, 1350, 660);
 
-		logoutBtn.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 20));
-		logoutBtn.setBackground(Color.WHITE);
-		logoutBtn.setForeground(Color.RED);
-		logoutBtn.setFocusable(false);
-		logoutBtn.setBounds(1350, 30, 120, 50);
-		add(logoutBtn);
-
-		logoutBtn.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int var = JOptionPane.showConfirmDialog
-						(null, "로그아웃하시겠습니까?", "로그아웃",
-								JOptionPane.YES_NO_OPTION,
-								JOptionPane.INFORMATION_MESSAGE, null);
-				if (var == JOptionPane.YES_OPTION) {
-					try {
-						if(mdao.getLog() != null) {
-							mdao.update(mdao.getLog());
-							System.out.println("로그아웃");
-							MemberFrame.card.show(MemberFrame.menuCardPanel, "1");
-						}
-					} catch (SQLException e1) {
-						return;
-					}
-				}
-
-
-			}
-		});
+		
 		
 		// 수정버튼 구현
 		changeBtn.addActionListener(new ActionListener() {
@@ -301,12 +272,12 @@ public class MemberMenu extends JPanel {
 							}
 
 							if (memberVO != null) {
-								JOptionPane.showMessageDialog(null, "중복되는 전화번호 입니다.",
+								JOptionPane.showMessageDialog(null, "중복되는 전화번호입니다.",
 										"경고", JOptionPane.ERROR_MESSAGE);
 								changeBtn2.setEnabled(false);
 							}
 						} else {
-							JOptionPane.showMessageDialog(null, "사용 불가한 전화번호입니다",
+							JOptionPane.showMessageDialog(null, "사용 불가능한 전화번호입니다",
 									"경고", JOptionPane.ERROR_MESSAGE);
 							changeBtn2.setEnabled(false);
 						}
@@ -331,12 +302,12 @@ public class MemberMenu extends JPanel {
 							}
 
 							if (memberVO != null) {
-								JOptionPane.showMessageDialog(null, "중복되는 이메일 입니다.",
+								JOptionPane.showMessageDialog(null, "중복되는 이메일입니다.",
 										"경고", JOptionPane.ERROR_MESSAGE);
 								changeBtn2.setEnabled(false);
 							}
 						} else {
-							JOptionPane.showMessageDialog(null, "사용 불가한 이메일입니다",
+							JOptionPane.showMessageDialog(null, "사용 불가능한 이메일입니다",
 									"경고", JOptionPane.ERROR_MESSAGE);
 							changeBtn2.setEnabled(false);
 						}
@@ -385,7 +356,7 @@ public class MemberMenu extends JPanel {
 								JOptionPane.showMessageDialog(null, "적절하지 않은 이름입니다", "경고",
 										JOptionPane.ERROR_MESSAGE);
 							} else {
-								JOptionPane.showMessageDialog(null, "전부입력해주세요", "경고",
+								JOptionPane.showMessageDialog(null, "입력되지 않은 정보가 존재합니다.", "경고",
 										JOptionPane.ERROR_MESSAGE);
 							}
 						}

@@ -25,6 +25,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
@@ -72,7 +73,7 @@ public class MemberFrame extends JFrame {
 		setTitle("회원 모드");
 		setLayout(null);
 		
-		
+		// 현재 시간 라벨 (분 단위 표시)
 		clockLabel = new JLabel(sdf.format(new GregorianCalendar().getTime()));
 		clockLabel.setFont(new Font("한컴 말랑말랑 Regular", Font.PLAIN, 20));
 		clockLabel.setForeground(Color.WHITE);
@@ -80,6 +81,49 @@ public class MemberFrame extends JFrame {
 		
 		javax.swing.Timer timers = new javax.swing.Timer(1000, updateClockAction);
 		timers.start();
+		
+		JButton loginBtn = new JButton("로그인");
+		loginBtn.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 20));
+		loginBtn.setBackground(Color.WHITE);
+		loginBtn.setForeground(Color.RED);
+		loginBtn.setFocusable(false);
+		loginBtn.setBounds(1770, 10, 120, 50);
+		loginBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		
+		JButton logoutBtn = new JButton("로그아웃");
+		logoutBtn.setFont(new Font("한컴 말랑말랑 Bold", Font.BOLD, 20));
+		logoutBtn.setBackground(Color.WHITE);
+		logoutBtn.setForeground(Color.RED);
+		logoutBtn.setFocusable(false);
+		logoutBtn.setBounds(1770, 10, 120, 50);
+
+		logoutBtn.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if (memLogDao.getLog() == null) {
+						return;
+					} else {
+						int var = JOptionPane.showConfirmDialog
+								(null, "로그아웃 하시겠습니까?", "로그아웃",
+										JOptionPane.YES_NO_OPTION,
+										JOptionPane.INFORMATION_MESSAGE, null);
+						if (var == JOptionPane.YES_OPTION) {
+							memLogDao.update(memLogDao.getLog());
+							System.out.println("로그아웃");
+							MemberFrame.card.show(MemberFrame.menuCardPanel, "1");
+						}
+					}
+				} catch (SQLException e2) {
+					e2.printStackTrace();
+				}
+			}
+		});
 		
 		
 		BufferedImage bufferedHome = null;
@@ -143,7 +187,6 @@ public class MemberFrame extends JFrame {
 							MemberLoginFrame mlogFrame =new MemberLoginFrame();
 							mlogFrame.setVisible(true);
 							
-							
 							mlogFrame.addWindowListener(new WindowAdapter() {
 								@Override
 								public void windowClosed(WindowEvent e) {
@@ -197,6 +240,7 @@ public class MemberFrame extends JFrame {
 		panel.add(menuButtonPanel);
 		panel.add(menuCardPanel);
 		panel.add(clockLabel);
+		panel.add(logoutBtn);
 		
 		JScrollPane sp = new JScrollPane();
 		sp.setViewportView(panel);

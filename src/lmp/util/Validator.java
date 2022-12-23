@@ -16,7 +16,7 @@ public class Validator {
 	 *
 	 */
 	private final static String REGEX_ID = "^\\S*(?=^\\S{5,20}$)(?=\\S*\\d)(?=\\S*[a-z]).*$"; // 아이디
-	private final static String REGEX_PASSWORD = "^\\S*(?=^\\S{8,30}$)(?=\\S*\\d)(?=\\S*[a-zA-Z])(?=\\S*[!@#$%^&+=]).*$"; // 비밀번호
+	private final static String REGEX_PASSWORD = "^\\S*(?=^\\S{8,30}$)(?=\\S*\\d)(?=\\S*[a-zA-Z])(?=\\S*[!@#$%^&+=.]).*$"; // 비밀번호
 	private final static String REGEX_NAME = "^\\S*[가-힣]$"; // 이름
 	private final static String REGEX_EMAIL = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$"; // 이메일
 	private final static String REGEX_PHONE = "^010-\\d{3,4}-\\d{4}$"; // 연락처
