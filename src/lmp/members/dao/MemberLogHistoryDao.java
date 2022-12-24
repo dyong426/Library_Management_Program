@@ -10,13 +10,12 @@ import lmp.members.vo.MemberVO;
 
 public class MemberLogHistoryDao extends MenuDao{
 
-	
 	@Override
 	public void add(MemberVO memberVO) throws SQLException{
 		
 		Connection conn = getConnection();
 		
-		String sql = "INSERT INTO member_log_history(mem_log_id, mem_num) VALUES(mem_log_id_seq.nextval,?)";
+		String sql = "INSERT INTO member_log_history(mem_log_id, mem_num) VALUES(mem_log_id_seq.nextval, ?)";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		

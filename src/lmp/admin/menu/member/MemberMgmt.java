@@ -32,6 +32,7 @@ import lmp.admin.dao.MenuDao;
 import lmp.admin.dao.MemberDao;
 import lmp.admin.vo.CheckOutVO;
 import lmp.admin.vo.MemberVO;
+import lmp.util.ImageConvert;
 import lmp.util.Validator;
 
 
@@ -48,6 +49,8 @@ public class MemberMgmt extends JPanel {
 	JTable table;
 	JScrollPane scroll;
 	Validator vd = new Validator();
+	
+	ImageConvert img = new ImageConvert();
 
 	public MemberMgmt() {
 
@@ -77,35 +80,17 @@ public class MemberMgmt extends JPanel {
 
 		// 검색버튼 설정
 		searchBtn.setBounds(1010, 100, 120, 100);
-		try {
-			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/searchButtonIcon.png"));
-			Image image = buffer.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-			searchBtn.setIcon(new ImageIcon(image));
-		} catch (IOException e3) {
-			e3.printStackTrace();
-		}
+		searchBtn.setIcon(img.scaledMgmtImage("search"));
 		add(searchBtn);
 
 		// 수정버튼 설정
-		changeBtn.setBounds(1320, 15, 150, 70);
-		try {
-			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/bookModifyIconImage.png"));
-			Image image = buffer.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-			changeBtn.setIcon(new ImageIcon(image));
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
+		changeBtn.setBounds(1320, 10, 150, 70);
+		changeBtn.setIcon(img.scaledMgmtImage("modification"));
 		add(changeBtn);
-
+		
 		// 삭제버튼 설정
-		deleteBtn.setBounds(1320, 95, 150, 70);
-		try {
-			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/bookdeleteIconImage.png"));
-			Image image = buffer.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
-			deleteBtn.setIcon(new ImageIcon(image));
-		} catch (IOException e2) {
-			e2.printStackTrace();
-		}
+		deleteBtn.setBounds(1320, 90, 150, 70);
+		deleteBtn.setIcon(img.scaledMgmtImage("memberdelete"));
 		add(deleteBtn);
 		
 		// 비밀번호 초기화 설정
@@ -152,7 +137,7 @@ public class MemberMgmt extends JPanel {
 		String[] keywordList = {"회원번호", "이름", "아이디", "전화번호"};
 		JComboBox keyword = new JComboBox<>(keywordList);
 		keyword.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 15));
-		keyword.setBounds(270, 130, 200, 35);
+		keyword.setBounds(330, 130, 150, 35);
 		add(keyword);
 
 
@@ -325,12 +310,12 @@ public class MemberMgmt extends JPanel {
 							}
 							
 							if (memberVO != null) {
-								JOptionPane.showMessageDialog(null, "중복되는 전화번호 입니다.",
+								JOptionPane.showMessageDialog(null, "중복되는 전화번호입니다.",
 										"경고", JOptionPane.ERROR_MESSAGE);
 								changeBtn2.setEnabled(false);
 							}
 						} else {
-							JOptionPane.showMessageDialog(null, "사용 불가한 전화번호입니다",
+							JOptionPane.showMessageDialog(null, "사용 불가능한 전화번호입니다",
 									"경고", JOptionPane.ERROR_MESSAGE);
 							changeBtn2.setEnabled(false);
 						}
@@ -355,12 +340,12 @@ public class MemberMgmt extends JPanel {
 							}
 							
 							if (memberVO != null) {
-								JOptionPane.showMessageDialog(null, "중복되는 이메일 입니다.",
+								JOptionPane.showMessageDialog(null, "중복되는 이메일입니다.",
 										"경고", JOptionPane.ERROR_MESSAGE);
 								changeBtn2.setEnabled(false);
 							}
 						} else {
-							JOptionPane.showMessageDialog(null, "사용 불가한 이메일입니다",
+							JOptionPane.showMessageDialog(null, "사용 불가능한 이메일입니다",
 									"경고", JOptionPane.ERROR_MESSAGE);
 							changeBtn2.setEnabled(false);
 						}
@@ -421,7 +406,7 @@ public class MemberMgmt extends JPanel {
 								JOptionPane.showMessageDialog(null, "적절하지 않은 이름입니다", "경고",
 										JOptionPane.ERROR_MESSAGE);
 							} else {
-								JOptionPane.showMessageDialog(null, "전부입력해주세요", "경고",
+								JOptionPane.showMessageDialog(null, "입력되지 않은 정보가 존재합니다.", "경고",
 										JOptionPane.ERROR_MESSAGE);
 							}
 

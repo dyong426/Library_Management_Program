@@ -42,14 +42,13 @@ public class MemberLoginFrame extends JFrame {
 	MemberLoginFrame memberLoginFrame;
 	MemberDao memberDao = new MemberDao();
 	MemberLogHistoryDao memberLogHistoryDao = new MemberLogHistoryDao();
-	
-	MemberLoginFrame f = this;
+
+	Font font = new Font("한컴 말랑말랑 Regular", Font.PLAIN, 15);
 	
 	public MemberLoginFrame() {
 		initialize();
 	}
 	
-	Font font = new Font("한컴 말랑말랑 Regular", Font.PLAIN, 15);
 
 	/**
 	 * Initialize the contents of the frame.
@@ -137,9 +136,9 @@ public class MemberLoginFrame extends JFrame {
 
 			}
 		});
-
+		
 		pwTField.addFocusListener(new FocusAdapter() {
-
+			
 			@Override
 			public void focusGained(FocusEvent e) {
 				pwTField.setVisible(false);
@@ -148,7 +147,7 @@ public class MemberLoginFrame extends JFrame {
 
 			}
 		});
-
+		
 		pwField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -157,12 +156,13 @@ public class MemberLoginFrame extends JFrame {
 				}
 			}
 		});
-
+		
 		loginBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (checkLogin(idField.getText(), new String(pwField.getPassword()))) {
+						// 로그인 성공하면 로그인 기록 업데이트 후 5분 타이머 시작
 						TimerTask task = new TimerTask() {
 							@Override
 							public void run() {

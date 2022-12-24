@@ -29,7 +29,7 @@ public class ImageDao extends MenuDao {
 	
 	public void addImage(File file) throws SQLException {
 		
-		String sql = "INSERT INTO images VALUES(image_id_seq.nextval, ?,?)";
+		String sql = "INSERT INTO images VALUES(image_id_seq.nextval, ?, ?)";
 		
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);

@@ -16,6 +16,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
+import lmp.admin.AdminFrame;
 import lmp.db.dao.CheckOutDao;
 import lmp.db.dao.MemberDao;
 import lmp.db.dao.MemberLogHistoryDao;
@@ -24,7 +25,11 @@ import lmp.db.vo.CheckOutVO;
 import lmp.db.vo.MemberLogHistoryVO;
 import lmp.db.vo.MemberVO;
 import lmp.members.MemberLoginFrame;
+
 import lmp.members.memberframe.MemberFrame;
+
+import lmp.util.ImageConvert;
+
 import lmp.util.ShaPasswordEncoder;
 import lmp.util.Validator;
 
@@ -38,6 +43,8 @@ public class MemberMenu extends JPanel {
 	MemberDao memberDao = new MemberDao();
 	MemberVO mvo;
 	Validator vd = new Validator();
+	
+	ImageConvert img = new ImageConvert();
 	
 
 	JLabel memberInfo;
@@ -121,8 +128,8 @@ public class MemberMenu extends JPanel {
 		memberaddress2 = new JLabel("");
 
 
-		changeBtn = new JButton("수정");
-		deleteBtn = new JButton("탈퇴");
+		changeBtn = AdminFrame.getButton("수정");
+		deleteBtn = AdminFrame.getButton("탈퇴");
 
 		
 		setlabel(memberInfo, 35, 30, 30);
@@ -151,9 +158,11 @@ public class MemberMenu extends JPanel {
 		setlabel(memberaddress, 30, 800, 350);
 		setlabel(memberaddress2, 30, 980, 350);
 
-		setBtn(changeBtn, 23, 1250, 660);
+		setBtn(changeBtn, 18, 1200, 600);
+		changeBtn.setIcon(img.scaledMgmtImage("modification"));
 
-		setBtn(deleteBtn, 23, 1350, 660);
+		setBtn(deleteBtn, 18, 1300, 600);
+		deleteBtn.setIcon(img.scaledMgmtImage("memberdelete"));
 
 		
 		
@@ -403,7 +412,7 @@ public class MemberMenu extends JPanel {
 					try {
 						memberDao.delete(mvo.getNum());
 						MemberFrame.card.show(MemberFrame.menuCardPanel, "1");
-						JOptionPane.showMessageDialog(null, "탈퇴되었습니다");
+						JOptionPane.showMessageDialog(null, "탈퇴 완료");
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}
@@ -448,7 +457,7 @@ public class MemberMenu extends JPanel {
 		button.setBackground(Color.WHITE);
 		button.setForeground(new Color(49, 82, 91));
 		button.setFocusable(false);
-		button.setBounds(x, y, 80, 50);
+		button.setBounds(x, y, 100, 100);
 		add(button);
 	}
 

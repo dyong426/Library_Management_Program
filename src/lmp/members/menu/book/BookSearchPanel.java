@@ -33,6 +33,7 @@ import lmp.members.dao.CheckOutDao;
 import lmp.members.memberframe.MemberFrame;
 import lmp.members.vo.BookVO;
 import lmp.members.vo.CheckOutVO;
+import lmp.util.ImageConvert;
 
 public class BookSearchPanel extends JPanel {
 
@@ -60,6 +61,8 @@ public class BookSearchPanel extends JPanel {
 	public static ArrayList<BookVO> bookVO;
 	// 도서현황 검색 창 초기화면 테이블
 	public JTable table_BookMgmt = AdminFrame.getTable(model_BookMgmt);
+	
+	ImageConvert img = new ImageConvert();
 
 	public static JButton getButton(String text) {
 		return new JButton() {
@@ -118,13 +121,7 @@ public class BookSearchPanel extends JPanel {
 		// 텍스트필드 옆 검색 버튼 선언
 		JButton button = AdminFrame.getButton("검색");
 		button.setBounds(1010, 100, 120, 100);
-		try {
-			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/searchButtonIcon.png"));
-			Image image = buffer.getScaledInstance(70, 70, Image.SCALE_SMOOTH);
-			button.setIcon(new ImageIcon(image));
-		} catch (IOException e3) {
-			e3.printStackTrace();
-		}
+		button.setIcon(img.scaledMgmtImage("search"));
 		button.addActionListener(new ActionListener() {
 
 			@Override

@@ -30,7 +30,33 @@ public class ImageConvert {
 			icon = new ImageIcon(image);
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
-		} finally {			
+		} finally {
+			return icon;
+		}
+	}
+	
+	public ImageIcon scaledSmallImage(String image_name) {
+		try {
+			imageVO = imageDao.getImage(image_name);
+			bufferedImage = ImageIO.read(new File(imageVO.getImage_path()));
+			image = bufferedImage.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+			icon = new ImageIcon(image);
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		} finally {
+			return icon;
+		}
+	}
+	
+	public ImageIcon scaledMgmtImage(String image_name) {
+		try {
+			imageVO = imageDao.getImage(image_name);
+			bufferedImage = ImageIO.read(new File(imageVO.getImage_path()));
+			image = bufferedImage.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+			icon = new ImageIcon(image);
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		} finally {
 			return icon;
 		}
 	}
@@ -43,7 +69,7 @@ public class ImageConvert {
 			icon = new ImageIcon(image);
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();
-		} finally {			
+		} finally {
 			return icon;
 		}
 	}
@@ -65,11 +91,8 @@ public class ImageConvert {
 		try {
 			imageDao.addImage(file);
 		} catch (SQLException e) {
-			
 			e.printStackTrace();
-		}
-		
-		
+		}		
 	}
 
 }

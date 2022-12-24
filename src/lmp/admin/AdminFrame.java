@@ -39,11 +39,12 @@ import lmp.admin.menu.employees.EmployeesMgmt;
 import lmp.admin.menu.member.MemberMgmt;
 import lmp.admin.menu.readingroom.ReadingRoomPanel;
 import lmp.admin.vo.SeatUseDetailVO;
+import lmp.util.ImageConvert;
 
 
 public class AdminFrame extends JFrame {
 
-	JButton bookMgmt, checkIn_Out, employeeMgmt, memberMgmt, readingRoom, homeButton;
+	JButton bookMgmt, checkIn_Out, employeeMgmt, memberMgmt, readingRoom, homeButton, settingButton;
 	
 	JFrame f = this;
 	
@@ -55,6 +56,7 @@ public class AdminFrame extends JFrame {
 	JPanel readingRoomPanel = new ReadingRoomPanel();
 //	JPanel readingRoomPanel = new ReadingRoomMgmt();
 	
+	static ImageConvert img = new ImageConvert();
 	
 	public AdminFrame() {
 		
@@ -63,9 +65,9 @@ public class AdminFrame extends JFrame {
 		
 		// 자정 되면 전좌석 강제 퇴실
 		Calendar date = Calendar.getInstance();
-		date.set(Calendar.HOUR_OF_DAY, 23);
-		date.set(Calendar.MINUTE, 59);
-		date.set(Calendar.SECOND, 59);
+		date.set(Calendar.HOUR_OF_DAY, 20);
+		date.set(Calendar.MINUTE, 03);
+		date.set(Calendar.SECOND, 30);
 		
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
@@ -84,115 +86,72 @@ public class AdminFrame extends JFrame {
 				}
 			}
 		};
-		timer.schedule(task, date.getTime());
-		
-		
+		timer.schedule(task, date.getTime());		
 		
 		JPanel menuButtonPanel = new JPanel(new GridLayout(1, 5, 100, 0));
 		
 		CardLayout card = new CardLayout();
 		JPanel menuCardPanel = new JPanel(card);
 		
+		// 버튼 생성 메서드 테스트
+		bookMgmt = getButton("도서 관리");
+		bookMgmt.setIcon(img.scaledMenuImage("book"));
+		bookMgmt.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				card.show(menuCardPanel, "2");
+			}
+		});
 		
-		BufferedImage bufferedBookMgmt = null;
-		BufferedImage bufferedCheckIn_Out = null;
-		BufferedImage bufferedEmployeeMgmt = null;
-		BufferedImage befferedMemberMgmt = null;
-		BufferedImage bufferedReadingRoom = null;
-		BufferedImage bufferedHomeIcon = null;
-		try {
-			bufferedBookMgmt = ImageIO.read(new File("src/lmp/admin/menuButtonImages/bookMgmtImage.png"));
-			bufferedCheckIn_Out = ImageIO.read(new File("src/lmp/admin/menuButtonImages/checkIn_OutMgmtImage.png"));
-			bufferedEmployeeMgmt = ImageIO.read(new File("src/lmp/admin/menuButtonImages/employeeMgmtImage.png"));
-			befferedMemberMgmt = ImageIO.read(new File("src/lmp/admin/menuButtonImages/memberMgmtImage.png"));
-			bufferedReadingRoom = ImageIO.read(new File("src/lmp/admin/menuButtonImages/readingRoomMgmtImage.png"));
-			bufferedHomeIcon = ImageIO.read(new File("src/lmp/admin/menuButtonImages/homeIcon.png"));
-			
-			Image bookMgmtIcon = bufferedBookMgmt.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-			Image checkIn_OutIcon = bufferedCheckIn_Out.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-			Image employeeMgmtIcon = bufferedEmployeeMgmt.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-			Image memberMgmtIcon = befferedMemberMgmt.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-			Image readingRoomIcon = bufferedReadingRoom.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-			Image homeIcon = bufferedHomeIcon.getScaledInstance(30, 25, Image.SCALE_SMOOTH);		
-			
-			// 버튼 생성 메서드 테스트
-			bookMgmt = getButton("도서 관리");
-			bookMgmt.setIcon(new ImageIcon(bookMgmtIcon));
-			bookMgmt.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					card.show(menuCardPanel, "2");
-				}
-			});
-//			bookMgmt = new JButton(new ImageIcon(bookMgmtIcon)) {
-//				{
-//				setBackground(Color.GRAY);
-//				setBorderPainted(false);
-//				setFocusPainted(false);
-//				setContentAreaFilled(false);
-//				addMouseListener(new MouseAdapter() {
-//					// 버튼에 마우스 올리면 배경색 변경
-//					@Override
-//					public void mouseEntered(MouseEvent e) {
-//						setContentAreaFilled(true);
-//					}
-//					// 버튼에서 마우스 떼면 배경색 투명
-//					@Override
-//					public void mouseExited(MouseEvent e) {
-//						setContentAreaFilled(false);
-//					}
-//				});
-//				}
-//			};
-			checkIn_Out = getButton("대출 / 반납");
-			checkIn_Out.setIcon(new ImageIcon(checkIn_OutIcon));
-			checkIn_Out.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					card.show(menuCardPanel, "3");
-				}
-			});
-			
-			employeeMgmt = getButton("직원 관리");
-			employeeMgmt.setIcon(new ImageIcon(employeeMgmtIcon));
-			employeeMgmt.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					card.show(menuCardPanel, "4");
-				}
-			});
-			
-			memberMgmt = getButton("회원 관리");
-			memberMgmt.setIcon(new ImageIcon(memberMgmtIcon));
-			memberMgmt.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					card.show(menuCardPanel, "5");
-				}
-			});
-			
-			readingRoom = getButton("열람실 관리");
-			readingRoom.setIcon(new ImageIcon(readingRoomIcon));
-			readingRoom.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					card.show(menuCardPanel, "6");
-				}
-			});
-			
-			homeButton = getButton("");
-			homeButton.setIcon(new ImageIcon(homeIcon));
-			homeButton.setBounds(5, 5, 50, 50);
-			homeButton.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					card.show(menuCardPanel, "1");
-				}
-			});
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		checkIn_Out = getButton("대출 / 반납");
+		checkIn_Out.setIcon(img.scaledMenuImage("barcode"));
+		checkIn_Out.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				card.show(menuCardPanel, "3");
+			}
+		});
+		
+		employeeMgmt = getButton("직원 관리");
+		employeeMgmt.setIcon(img.scaledMenuImage("employee"));
+		employeeMgmt.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				card.show(menuCardPanel, "6");
+			}
+		});
+		
+		memberMgmt = getButton("회원 관리");
+		memberMgmt.setIcon(img.scaledMenuImage("member"));
+		memberMgmt.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				card.show(menuCardPanel, "5");
+			}
+		});
+		
+		readingRoom = getButton("열람실 관리");
+		readingRoom.setIcon(img.scaledMenuImage("readingroom"));
+		readingRoom.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				card.show(menuCardPanel, "4");
+			}
+		});
+		
+		homeButton = getButton("");
+		homeButton.setIcon(img.scaledMgmtImage("home"));
+		homeButton.setBounds(10, 10, 60, 60);
+		homeButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				card.show(menuCardPanel, "1");
+			}
+		});
+		
+		settingButton = getButton("");
+		settingButton.setIcon(img.scaledMgmtImage("setup"));
+		settingButton.setBounds(80, 10, 60, 60);
 		
 		menuButtonPanel.setBounds(350, 0, 1200, 200);
 		menuButtonPanel.setBackground(new Color(49, 82, 91));
@@ -201,15 +160,15 @@ public class AdminFrame extends JFrame {
 		menuCardPanel.add("1", initialLabel());
 		menuCardPanel.add("2", bookPanel);
 		menuCardPanel.add("3", checkInOutPanel);
-		menuCardPanel.add("4", employeePanel);
+		menuCardPanel.add("4", readingRoomPanel);
 		menuCardPanel.add("5", memberPanel);
-		menuCardPanel.add("6", readingRoomPanel);
+		menuCardPanel.add("6", employeePanel);
 		
 		menuButtonPanel.add(bookMgmt);
 		menuButtonPanel.add(checkIn_Out);
-		menuButtonPanel.add(employeeMgmt);
-		menuButtonPanel.add(memberMgmt);
 		menuButtonPanel.add(readingRoom);
+		menuButtonPanel.add(memberMgmt);
+		menuButtonPanel.add(employeeMgmt);
 		
 		
 		JPanel panel = new JPanel();
@@ -217,6 +176,7 @@ public class AdminFrame extends JFrame {
 		panel.setPreferredSize(new Dimension(1900, 1000));
 		panel.setBackground(new Color(49, 82, 91));
 		panel.add(homeButton);
+		panel.add(settingButton);
 		panel.add(menuButtonPanel);
 		panel.add(menuCardPanel);
 		
@@ -239,20 +199,14 @@ public class AdminFrame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		
-		
 	}
 	
 	// 버튼 누르기 전 초기 화면 이미지 설정
 	public static JPanel initialLabel() {
 		JPanel initImagePanel = new JPanel();
 		JLabel label = new JLabel();
-		try {
-			BufferedImage buffer = ImageIO.read(new File("src/lmp/admin/menuButtonImages/initialImage.jpg"));
-			Image image = buffer.getScaledInstance(1500, 750, Image.SCALE_SMOOTH);
-			label.setIcon(new ImageIcon(image));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+		label.setIcon(img.scaledPanelImage("initial"));
 		label.setSize(1500, 750);
 		
 		initImagePanel.setLayout(null);

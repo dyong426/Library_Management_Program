@@ -14,6 +14,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.sql.SQLException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -30,25 +33,20 @@ import lmp.members.MemberJoin;
 import lmp.members.menu.findId_Pw.FindID;
 import lmp.util.ShaPasswordEncoder;
 
-public class MemberLoginFrame extends JFrame implements LoginStatus{
+public class MemberLoginFrame extends JFrame {
 
-	static boolean log;
-	
-	private JFrame frame;
 	private JTextField idField;
 	private JPasswordField pwField;
 
 	MemberLoginFrame memberLoginFrame;
 	MemberDao memberDao = new MemberDao();
 	MemberLogHistoryDao memberLogHistoryDao = new MemberLogHistoryDao();
-
-	static String mem_id;
+	
+	Font font = new Font("한컴 말랑말랑 Regular", Font.PLAIN, 15);
 	
 	public MemberLoginFrame() {
 		initialize();
 	}
-	
-	Font font = new Font("한컴 말랑말랑 Regular", Font.PLAIN, 15);
 
 	/**
 	 * Initialize the contents of the frame.
@@ -163,13 +161,27 @@ public class MemberLoginFrame extends JFrame implements LoginStatus{
 				try {
 					if (checkLogin(idField.getText(), new String(pwField.getPassword()))) {
 						
-						success();
+						// 로그인 성공하면 로그인 기록 업데이트 후 5분 타이머 시작
+						TimerTask task = new TimerTask() {
+							@Override
+							public void run() {
+								try {
+									memberLogHistoryDao.update(memberLogHistoryDao.getLog());
+									memberLoginFrame.initialize();
+									memberLoginFrame.validate();
+								} catch (SQLException e) {
+									e.printStackTrace();
+								}
+							}
+						};
+						
+						Timer timer = new Timer();
+						long delay = 1000L * 60 * 5;
+						
+						timer.schedule(task, delay);
+						
 						memberLoginFrame.dispose();
-//						MemberMenu memberMenu = new MemberMenu();
-//						MemberFrame.menuCardPanel.add("3", memberMenu);
-//						MemberFrame.card.show(MemberFrame.menuCardPanel, "3");
-//						mem_id = idField.getText();
-//						
+					
 					} else {
 						JOptionPane.showMessageDialog(memberLoginFrame, "아이디/비밀번호를 확인하세요");
 					}
@@ -216,10 +228,6 @@ public class MemberLoginFrame extends JFrame implements LoginStatus{
 		return mouse;
 	}
 	
-	public static String getMemId() {
-		return mem_id;
-	}
-	
 	public boolean checkLogin(String mem_id, String mem_pw) {
 		ShaPasswordEncoder pwEncoder = new ShaPasswordEncoder();
 		MemberVO memberVO = null;
@@ -239,16 +247,6 @@ public class MemberLoginFrame extends JFrame implements LoginStatus{
 			e.printStackTrace();
 			return false;
 		}
-	}
-
-	@Override
-	public void fail() {
-		log = false;
-	}
-
-	@Override
-	public void success() {
-		log =  true;
 	}
 }
 
