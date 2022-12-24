@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,9 +22,13 @@ import javax.swing.table.DefaultTableModel;
 import lmp.admin.AdminFrame;
 import lmp.members.dao.BookDao;
 import lmp.members.dao.CheckOutDao;
+import lmp.members.dao.FontDao;
+import lmp.members.dao.ThemeDao;
 import lmp.members.vo.BookVO;
 import lmp.members.vo.CheckOutVO;
 import lmp.util.ImageConvert;
+import lmp.util.font.MyFont;
+import lmp.util.theme.Theme;
 
 public class BookSearchPanel extends JPanel {
 
@@ -55,57 +58,34 @@ public class BookSearchPanel extends JPanel {
 	public JTable table_BookMgmt = AdminFrame.getTable(model_BookMgmt);
 	
 	ImageConvert img = new ImageConvert();
-
-	public static JButton getButton(String text) {
-		return new JButton() {
-			{
-				setText(text);
-				setBackground(Color.PINK);
-				setBorderPainted(false);
-				setFocusPainted(false);
-				setContentAreaFilled(false);
-				setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 18));
-				setVerticalTextPosition(JButton.CENTER);
-				setHorizontalTextPosition(JButton.RIGHT);
-				setForeground(Color.WHITE);
-				addMouseListener(new MouseAdapter() {
-					// 버튼에 마우스 올리면 배경색 변경
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
-						setCursor(cursor);
-					}
-
-					// 버튼에서 마우스 떼면 배경색 투명
-					@Override
-					public void mouseExited(MouseEvent e) {
-						Cursor cursor = new Cursor(Cursor.DEFAULT_CURSOR);
-						setCursor(cursor);
-					}
-				});
-			}
-		};
-	}
-
-	public BookSearchPanel() {
-
-		setBackground(new Color(87, 119, 119));
+	
+	FontDao fontDao = new FontDao();
+	MyFont myFont = new MyFont();
+	ThemeDao themeDao = new ThemeDao();
+	Theme theme = new Theme();
+	
+	
+	public BookSearchPanel() throws SQLException {
+		
+		theme.setTheme(themeDao.getTheme().getName());
+		setBackground(theme.getSub1Color());
 		setLayout(null);
 		
 		JScrollPane scroll = new JScrollPane(table_BookMgmt);
 		scroll.setBounds(0, 250, 1500, 500);
 		add(scroll);
-
+		
+		myFont.setFont(fontDao.getFont());
 		// 도서검색 라벨 선언
 		JLabel label = new JLabel("도서 검색");
 		label.setBounds(600, 30, 300, 50);
-		label.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 40));
+		label.setFont(myFont.getTitle());
 		label.setHorizontalAlignment(JLabel.CENTER);
 		label.setForeground(Color.WHITE);
 
 		// 도서검색 콤보박스 선언
 		cb.setBounds(320, 130, 150, 35);
-		cb.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 15));
+		cb.setFont(myFont.getText());
 
 		// 도서검색 텍스트필드 선언
 		textF.setBounds(530, 130, 450, 35);
@@ -201,6 +181,38 @@ public class BookSearchPanel extends JPanel {
 		add(button);
 		
 	}
+	
+	public static JButton getButton(String text) {
+		return new JButton() {
+			{
+				setText(text);
+				setBackground(Color.PINK);
+				setBorderPainted(false);
+				setFocusPainted(false);
+				setContentAreaFilled(false);
+				setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 18));
+				setVerticalTextPosition(JButton.CENTER);
+				setHorizontalTextPosition(JButton.RIGHT);
+				setForeground(Color.WHITE);
+				addMouseListener(new MouseAdapter() {
+					// 버튼에 마우스 올리면 배경색 변경
+					@Override
+					public void mouseEntered(MouseEvent e) {
+						Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
+						setCursor(cursor);
+					}
+
+					// 버튼에서 마우스 떼면 배경색 투명
+					@Override
+					public void mouseExited(MouseEvent e) {
+						Cursor cursor = new Cursor(Cursor.DEFAULT_CURSOR);
+						setCursor(cursor);
+					}
+				});
+			}
+		};
+	}
+
 
 	// 메인 검색 테이블 새로고침 메서드
 	public void tableValidate() {

@@ -13,8 +13,12 @@ import lmp.admin.dao.ReadingRoomDao;
 import lmp.admin.dao.SeatUseDetailDao;
 import lmp.admin.vo.ReadingRoomVO;
 import lmp.admin.vo.SeatUseDetailVO;
+import lmp.members.dao.FontDao;
+import lmp.members.dao.ThemeDao;
 import lmp.members.menu.readingroom.ReadingRoomPanel;
 import lmp.members.menu.readingroom.seatlist.panel.SeatPanel;
+import lmp.util.font.MyFont;
+import lmp.util.theme.Theme;
 
 
 public class SeatListPanel extends JPanel{
@@ -30,15 +34,18 @@ public class SeatListPanel extends JPanel{
 	ArrayList<ReadingRoomVO> seatList;
 	
 	ReadingRoomPanel readingRoomPanel;
+	
+	Theme theme = new Theme();
 		
 	public SeatListPanel() {
 	}
 	
 	public SeatListPanel(ReadingRoomPanel readingRoomPanel) throws SQLException {
 		this.readingRoomPanel = readingRoomPanel;
+		theme = readingRoomPanel.getTheme();
 		setLayout(gridLayout);
-		setBorder(new TitledBorder(new LineBorder(new Color(126, 151, 148), 20)));
-		setBackground(new Color(126, 151, 148));
+		setBorder(new TitledBorder(new LineBorder(theme.getSub1Color(), 20)));
+		setBackground(theme.getSub1Color());
 		setBounds(20,280, 1460, 400);
 		
 		seatList = roomDao.get();

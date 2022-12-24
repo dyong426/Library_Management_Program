@@ -27,6 +27,8 @@ import lmp.members.vo.MemberVO;
 import lmp.util.ImageConvert;
 import lmp.util.ShaPasswordEncoder;
 import lmp.util.Validator;
+import lmp.util.font.MyFont;
+import lmp.util.theme.Theme;
 
 
 public class MemberPanel extends JPanel {
@@ -41,8 +43,8 @@ public class MemberPanel extends JPanel {
 
 	Validator vd = new Validator();
 	ImageConvert img = new ImageConvert();
-	
-
+	MyFont myFont = new MyFont();
+	Theme theme = new Theme();
 	JLabel memberInfo;
 	JLabel membernum;
 	JLabel membername;
@@ -70,7 +72,8 @@ public class MemberPanel extends JPanel {
 
 
 	public MemberPanel(MemberFrame memberFrame) {
-		this.memberFrame = memberFrame;;
+		this.memberFrame = memberFrame;
+		theme = memberFrame.getTheme();
 		try {
 			initialize();
 		} catch (SQLException e) {
@@ -115,7 +118,7 @@ public class MemberPanel extends JPanel {
 		//		
 
 		// 받아온내용 get.mem_name;
-		membernum2 = new JLabel("" );
+		membernum2 = new JLabel("");
 		membername2 = new JLabel("");
 		memberId2 = new JLabel("");
 		memberbirth2 = new JLabel("");
@@ -421,7 +424,7 @@ public class MemberPanel extends JPanel {
 
 
 		// 판넬 설정
-		setBackground(new Color(87, 119, 119));
+		setBackground(theme.getSub1Color());
 		setLayout(null);
 		//setBorder(new LineBorder(Color.WHITE, 2, false)); // 테두리
 		setBounds(15, 180, 1150, 550);

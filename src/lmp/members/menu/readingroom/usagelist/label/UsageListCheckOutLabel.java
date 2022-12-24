@@ -19,7 +19,7 @@ public class UsageListCheckOutLabel extends JLabel implements MouseListener {
 		this.setText("  퇴실하기  ");
 		this.setHorizontalAlignment(JLabel.CENTER);
 		this.setOpaque(true);
-		this.setBackground(new Color(49, 82, 91));
+		this.setBackground(new Color(245, 36, 31));
 		this.setFont(new Font("한컴 말랑말랑 Regular", Font.PLAIN, 15));
 //		this.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1));
 		this.setForeground(Color.WHITE);

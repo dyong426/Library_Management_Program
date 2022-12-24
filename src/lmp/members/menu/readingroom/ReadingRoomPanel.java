@@ -1,24 +1,24 @@
 package lmp.members.menu.readingroom;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.Label;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 
 import lmp.admin.dao.ReadingRoomDao;
 import lmp.admin.dao.SeatUseDetailDao;
 import lmp.admin.vo.ReadingRoomVO;
 import lmp.admin.vo.SeatUseDetailVO;
+import lmp.members.dao.FontDao;
+import lmp.members.dao.ThemeDao;
 import lmp.members.menu.readingroom.seatlist.SeatListPanel;
 import lmp.members.menu.readingroom.seatlist.panel.StatusPanel;
 import lmp.members.menu.readingroom.usagelist.UsageListPanel;
 import lmp.members.menu.readingroom.usagelist.panel.UsageListTitlePanel;
+import lmp.util.font.MyFont;
+import lmp.util.theme.Theme;
 
 public class ReadingRoomPanel extends JPanel {
 	
@@ -32,20 +32,30 @@ public class ReadingRoomPanel extends JPanel {
 	ArrayList<SeatUseDetailVO> sudVOs;
 	ArrayList<ReadingRoomVO> seatList;
 	
+	ThemeDao themeDao = new ThemeDao();
+	Theme theme = new Theme();
+	FontDao fontDao = new FontDao();
+	MyFont myFont = new MyFont();
+	
 	public ReadingRoomPanel() throws SQLException  {
+		theme.setTheme(themeDao.getTheme().getName());
+		myFont.setFont(fontDao.getFont());
+		
+		
 		statusPanel = new StatusPanel();
 		usageListPanel = new UsageListPanel();
 		seatListPanel = new SeatListPanel(this);
 		usageListTitlePanel = new UsageListTitlePanel(this);
 		
 		
-		setBackground(new Color(126, 151, 148));  //--> 사이즈 수정 필요
+		setBackground(theme.getSub1Color());  //--> 사이즈 수정 필요
 		setLayout(null);
 		
 		JLabel label = new JLabel("|  |  :  칸막이");
-		label.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 20));
+		label.setFont(myFont.getText());
 		label.setForeground(Color.WHITE);
-		label.setBounds(100, 125, 200, 150);
+		label.setBackground(theme.getSub1Color());
+		label.setBounds(100, 100, 200, 100);
 		
 		add(label);
 		usageListPanel.add(usageListTitlePanel);
@@ -54,10 +64,6 @@ public class ReadingRoomPanel extends JPanel {
 		add(seatListPanel);
 	}
 	public void refresh() throws SQLException {
-		
-		
-		
-		
 		seatListPanel.refresh();
 		statusPanel.refresh();
 	}
@@ -78,6 +84,9 @@ public class ReadingRoomPanel extends JPanel {
 	}
 	public ArrayList<ReadingRoomVO> getSeatList() {
 		return seatList;
+	}
+	public Theme getTheme() {
+		return theme;
 	}
 
 	

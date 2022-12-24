@@ -146,6 +146,10 @@ public class MemberFrame extends JFrame{
 	public MemberPanel getMemberMenuPanel() {
 		return memberPanel;
 	}
+
+	public static Theme getTheme() {
+		return theme;
+	}
 	
 	
 	
