@@ -8,10 +8,10 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import lmp.login.MemberLoginFrame;
 import lmp.members.dao.MemberDao;
 import lmp.members.dao.MemberLogHistoryDao;
 import lmp.members.dao.SeatUseDetailDao;
+import lmp.members.login.MemberLoginFrame;
 import lmp.members.menu.readingroom.ReadingRoomPanel;
 import lmp.members.menu.readingroom.seatlist.label.SeatLabel;
 import lmp.members.vo.MemberLogHistoryVO;
@@ -29,7 +29,7 @@ public class SeatMouseAdapter extends MouseAdapter{
 	MemberLoginFrame memLogFrame = new MemberLoginFrame();
 	ReadingRoomPanel readingRoomPanel;
 	public SeatMouseAdapter(ReadingRoomPanel readingRoomPanel) {
-		this.readingRoomPanel = readingRoomPanel;
+	this.readingRoomPanel = readingRoomPanel;
 	}
 	
 	@Override
@@ -53,19 +53,19 @@ public class SeatMouseAdapter extends MouseAdapter{
 					memLogFrame.initialize();
 					memLogFrame.setVisible(true);					
 				} else {
-					memberVO = memberDao.getNum(memLogVO.getMem_num());
+					memberVO = memberDao.getNum(memLogVO.getMemberVO().getNum());
 					
 					// 발권 여부 확인
 					if (JOptionPane.showConfirmDialog(null, String.format("좌석번호 : %d", seat_num), "열람실 입/퇴실 확인", JOptionPane.YES_NO_OPTION) == 0) {
-						sudVO = sudDao.getUsingInfo(memLogVO.getMem_num());
+						sudVO = sudDao.getUsingInfo(memLogVO.getMemberVO().getNum());
 						if (sudVO != null) {
 							JOptionPane.showMessageDialog(null, String.format("이미 사용중 입니다.\n좌석번호 : %d\n회원이름 : %s\n사용시작시간 : %s",
 																				sudVO.getReadingroom().getSeatNum(),
 																				sudVO.getMember().getName(),
 																				sudVO.getStartTime()), "사용중인 자리 확인", 0);	
 						} else {
-							sudDao.add(memLogVO.getMem_num(),seat_num);
-							sudVO = sudDao.getUsingInfo(memLogVO.getMem_num());
+							sudDao.add(memLogVO.getMemberVO().getNum(),seat_num);
+							sudVO = sudDao.getUsingInfo(memLogVO.getMemberVO().getNum());
 							JOptionPane.showMessageDialog(null,
 														  String.format("좌석번호 : %d\n회원이름 : %s\n사용시작시간 : %s",
 																				sudVO.getReadingroom().getSeatNum(),

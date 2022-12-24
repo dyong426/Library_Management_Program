@@ -3,31 +3,24 @@ package lmp.members.menu.readingroom.seatlist.label;
 import java.awt.Color;
 import java.awt.Font;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
-import lmp.members.dao.SeatUseDetailDao;
+import lmp.admin.vo.ReadingRoomVO;
 import lmp.members.menu.readingroom.ReadingRoomPanel;
 import lmp.members.menu.readingroom.seatlist.listener.SeatMouseAdapter;
-import lmp.members.menu.readingroom.seatlist.panel.SeatPanel;
-import lmp.members.vo.ReadingRoomVO;
+
 
 public class SeatLabel extends JLabel{
-
-	SeatUseDetailDao sudDao = new SeatUseDetailDao();
-	ArrayList<ReadingRoomVO> seatList;
-
 	
-	public SeatLabel(ReadingRoomPanel readingRoomPanel,int seatNum) throws SQLException {
+	public SeatLabel(ReadingRoomPanel readingRoomPanel,ReadingRoomVO readingRoomVO) throws SQLException {
 		
-		seatList = sudDao.getRoomInfo();
 		
-		if (seatList.get(seatNum -1).getTableDivider().equals("0")) {
-			setText(Integer.toString(seatNum));			
+		if (readingRoomVO.getTableDivider().equals("0")) {
+			setText(Integer.toString(readingRoomVO.getSeatNum()));			
 		} else {
-			setText("|" + Integer.toString(seatNum) + "|");
+			setText("|" + Integer.toString(readingRoomVO.getSeatNum()) + "|");
 		}
 		setOpaque(true);
 		setForeground(Color.BLACK);

@@ -3,14 +3,14 @@ package lmp.members.vo;
 public class MemberLogHistoryVO {
 	
 	Integer log_id;
-	Integer mem_num;
+	MemberVO memberVO;
 	String  loginTime;
 	String  logoutTime;
 	
-	public MemberLogHistoryVO(Integer log_id,Integer mem_num, String loginTime, String logoutTime) {
+	public MemberLogHistoryVO(Integer log_id,MemberVO memberVO, String loginTime, String logoutTime) {
 		
 		this.log_id = log_id;
-		this.mem_num = mem_num;
+		this.memberVO = memberVO;
 		this.loginTime = loginTime;
 		this.logoutTime = logoutTime;
 		
@@ -20,8 +20,8 @@ public class MemberLogHistoryVO {
 		return log_id;
 	}
 
-	public Integer getMem_num() {
-		return mem_num;
+	public MemberVO getMemberVO() {
+		return memberVO;
 	}
 
 	public String getLoginTime() {
@@ -36,6 +36,6 @@ public class MemberLogHistoryVO {
 	@Override
 	public String toString() {
 		
-		return String.format("%d,%d,%s,%s",log_id, mem_num, loginTime,logoutTime);
+		return String.format("%d,%d,%s,%s",log_id, memberVO, loginTime,logoutTime);
 	}
 }

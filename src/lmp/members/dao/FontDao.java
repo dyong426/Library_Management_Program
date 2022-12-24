@@ -21,6 +21,11 @@ public class FontDao extends MenuDao{
 			while (rs.next()) {
 				getFont = rs.getString("font_size");
 			}
+			
+			rs.close();
+			pstmt.close();
+			conn.close();
+			
 			return getFont;
 		}
 		
@@ -49,6 +54,9 @@ public class FontDao extends MenuDao{
 			pstmt.setString(2, "0");
 			
 			pstmt.executeUpdate();
+			
+			pstmt.close();
+			conn.close();
 		}
 
 	public void setFont(String font_size) throws SQLException {

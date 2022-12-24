@@ -5,9 +5,7 @@ import java.awt.Font;
 
 import javax.swing.JButton;
 
-import lmp.login.LoginStatus;
-
-public class LogButton extends JButton implements LoginStatus{
+public class LogButton extends JButton {
 
 	static boolean log;
 	
@@ -33,16 +31,4 @@ public class LogButton extends JButton implements LoginStatus{
 			setVisible(false);
 		}
 	}
-
-	@Override
-	public void fail() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void success() {
-		// TODO Auto-generated method stub
-		
-	}	
 }

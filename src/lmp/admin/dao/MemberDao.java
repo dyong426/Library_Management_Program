@@ -37,7 +37,7 @@ public class MemberDao extends MenuDao{
 										+ "mem_email,"
 										+ "mem_address"
 										+ "mem_note"
-										+ ") VALUES('EZM' | member_num_seq.nextval,?,?,?,?,?,?,?,?,?)";
+										+ ") VALUES(member_num_seq.nextval,?,?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		

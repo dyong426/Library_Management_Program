@@ -39,6 +39,33 @@ public class MemberVO {
 		
 	}
 	
+	public MemberVO(Integer mem_num, String mem_name, String mem_pw, String mem_phone, String mem_email,String mem_address) {
+		this.num = mem_num;
+		this.name = mem_name;
+		this.pw = mem_pw;
+		this.phone = mem_phone;
+		this.email = mem_email;
+		this.address = mem_address;
+	}
+	
+	public MemberVO(String mem_name,
+					String mem_id,
+					String mem_pw, 
+					String mem_phone, 
+					String mem_birthday, 
+					String mem_sex, 
+					String mem_email,
+					String mem_address) {
+		this.name = mem_name;
+		this.id = mem_id;
+		this.pw = mem_pw;
+		this.birthDay = mem_birthday;
+		this.sex = mem_sex;
+		this.phone = mem_phone;
+		this.email = mem_email;
+		this.address = mem_address;
+	}
+	
 	/**
 	 * 회원 정보 생성자
 	 * 

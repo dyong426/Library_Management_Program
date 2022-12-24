@@ -1,15 +1,14 @@
 package lmp.admin.menu.readingroom.usagelist.scrollpane;
 
-import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import lmp.admin.dao.SeatUseDetailDao;
 import lmp.admin.menu.readingroom.usagelist.scrollpane.table.UsageListTable;
-import lmp.db.dao.SeatUseDetailDao;
-import lmp.db.vo.SeatUseDetailVO;
+import lmp.admin.vo.SeatUseDetailVO;
 
 public class UsageListScrollPane extends JScrollPane{
 	

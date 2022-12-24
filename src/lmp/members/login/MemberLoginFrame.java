@@ -1,4 +1,4 @@
-package lmp.members;
+package lmp.members.login;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -26,12 +26,12 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import lmp.db.dao.MemberDao;
-import lmp.db.dao.MemberLogHistoryDao;
-import lmp.db.vo.MemberVO;
-import lmp.members.menu.findId_Pw.FindID;
-import lmp.members.menu.member.MemberMenu;
-import lmp.members.menu.readingroom.usagelist.label.UsageListCheckOutLabel;
+import lmp.members.dao.MemberDao;
+import lmp.members.dao.MemberLogHistoryDao;
+import lmp.members.login.find.FindID;
+import lmp.members.login.join.MemberJoin;
+import lmp.members.vo.MemberVO;
+import lmp.util.ImageConvert;
 import lmp.util.ShaPasswordEncoder;
 
 public class MemberLoginFrame extends JFrame {
@@ -42,22 +42,22 @@ public class MemberLoginFrame extends JFrame {
 	MemberLoginFrame memberLoginFrame;
 	MemberDao memberDao = new MemberDao();
 	MemberLogHistoryDao memberLogHistoryDao = new MemberLogHistoryDao();
-
+	
 	Font font = new Font("한컴 말랑말랑 Regular", Font.PLAIN, 15);
+	
+	ImageConvert img = new ImageConvert();
 	
 	public MemberLoginFrame() {
 		initialize();
 	}
-	
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	public void initialize() {
-		
 		memberLoginFrame = this;
 		setAutoRequestFocus(false);
-		setBounds(100, 100, 400, 300);
+		setBounds(100, 100, 400, 350);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
@@ -73,23 +73,23 @@ public class MemberLoginFrame extends JFrame {
 
 
 		idField = new JTextField("아이디");
-		idField.setBounds(50, 75, 300, 35);
+		idField.setBounds(50, 105, 300, 35);
 		loginPanel.add(idField);
 		idField.setColumns(30);
 
 		JTextField pwTField = new JTextField("비밀번호");
 
-		pwTField.setBounds(50, 120, 300, 35);
+		pwTField.setBounds(50, 160, 300, 35);
 		loginPanel.add(pwTField);
 
 
 		pwField = new JPasswordField();
-		pwField.setBounds(50, 120, 300, 35);
+		pwField.setBounds(50, 160, 300, 35);
 		loginPanel.add(pwField);
 		pwField.setColumns(30);
 
 		JButton loginBtn = new JButton("로그인");
-		loginBtn.setBounds(49, 170, 302, 40);
+		loginBtn.setBounds(49, 210, 302, 40);
 		loginBtn.setBackground(new Color(87, 119, 119));
 		loginBtn.setFont(font);
 		loginBtn.setForeground(Color.WHITE);
@@ -100,20 +100,21 @@ public class MemberLoginFrame extends JFrame {
 
 
 		JLabel findIDLabel = new JLabel("아이디 찾기");
-		findIDLabel.setBounds(50, 230, 80, 15);
+		findIDLabel.setBounds(50, 270, 80, 15);
 		findIDLabel.setFont(font);
 		findIDLabel.addMouseListener(getMouseListener());
 		loginPanel.add(findIDLabel);
-		
+
 		JLabel joinLabel = new JLabel("회원가입");
-		joinLabel.setBounds(290, 230, 70, 15);
+		joinLabel.setBounds(290, 270, 70, 15);
 		joinLabel.setFont(font);
 		joinLabel.addMouseListener(getMouseListener());
 		loginPanel.add(joinLabel);
 
 		JLabel loginImageLabel = new JLabel("이미지");
 		loginImageLabel.setFont(new Font("굴림", Font.PLAIN, 40));
-		loginImageLabel.setBounds(129, 10, 146, 40);
+		loginImageLabel.setIcon(img.scaledMenuImage("dhlibrary"));
+		loginImageLabel.setBounds(140, 10, 100, 100);
 
 		loginPanel.add(loginImageLabel);
 
@@ -136,9 +137,9 @@ public class MemberLoginFrame extends JFrame {
 
 			}
 		});
-		
+
 		pwTField.addFocusListener(new FocusAdapter() {
-			
+
 			@Override
 			public void focusGained(FocusEvent e) {
 				pwTField.setVisible(false);
@@ -147,7 +148,7 @@ public class MemberLoginFrame extends JFrame {
 
 			}
 		});
-		
+
 		pwField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
@@ -156,12 +157,14 @@ public class MemberLoginFrame extends JFrame {
 				}
 			}
 		});
-		
+
 		loginBtn.addActionListener(new ActionListener() {
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (checkLogin(idField.getText(), new String(pwField.getPassword()))) {
+						
 						// 로그인 성공하면 로그인 기록 업데이트 후 5분 타이머 시작
 						TimerTask task = new TimerTask() {
 							@Override
@@ -182,11 +185,7 @@ public class MemberLoginFrame extends JFrame {
 						timer.schedule(task, delay);
 						
 						memberLoginFrame.dispose();
-//						MemberMenu memberMenu = new MemberMenu();
-//						MemberFrame.menuCardPanel.add("3", memberMenu);
-//						MemberFrame.card.show(MemberFrame.menuCardPanel, "3");
-//						mem_id = idField.getText();
-//						
+					
 					} else {
 						JOptionPane.showMessageDialog(memberLoginFrame, "아이디/비밀번호를 확인하세요");
 					}
@@ -237,7 +236,7 @@ public class MemberLoginFrame extends JFrame {
 		ShaPasswordEncoder pwEncoder = new ShaPasswordEncoder();
 		MemberVO memberVO = null;
 		try {
-			memberVO = (MemberVO) memberDao.get3(mem_id);
+			memberVO = (MemberVO) memberDao.getLoginInfo(mem_id);
 			if (memberVO == null) {
 				return false;
 			} else {

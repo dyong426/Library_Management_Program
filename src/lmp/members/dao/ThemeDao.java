@@ -21,6 +21,11 @@ public class ThemeDao extends MenuDao{
 		while (rs.next()) {
 			getTheme = rs.getString("theme_name");
 		}
+		
+		
+		pstmt.close();
+		conn.close();
+		
 		return getTheme;
 	}
 	
@@ -36,6 +41,9 @@ public ArrayList<String> getThemes() throws SQLException {
 		while (rs.next()) {
 			getThemes.add(rs.getString("theme_name"));
 		}
+		
+		pstmt.close();
+		conn.close();
 		return getThemes;
 	}
 	
@@ -48,6 +56,9 @@ public void addTheme(String theme_name) throws SQLException {
 		pstmt.setString(1, theme_name);
 		
 		pstmt.executeUpdate();
+		
+		pstmt.close();
+		conn.close();
 	}
 
 public void setTheme(String theme_name) throws SQLException {

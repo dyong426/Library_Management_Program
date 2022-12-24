@@ -1,4 +1,4 @@
-package lmp.members;
+package lmp.members.login.join;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -21,8 +21,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
-import lmp.db.dao.MemberDao;
-import lmp.db.vo.MemberVO;
+import lmp.members.dao.MemberDao;
+import lmp.members.vo.MemberVO;
 import lmp.util.ShaPasswordEncoder;
 import lmp.util.Validator;
 
@@ -181,20 +181,22 @@ public class MemberJoin extends JFrame {
 				if (vd.isValidateID(idField.getText()))  {
 					MemberVO memberVO = null;
 					try {
-						memberVO = memberDao.get2(1, idField.getText()).get(0);
+						memberVO = memberDao.getExist(1, idField.getText());
 					} catch (SQLException e1) {
 						JOptionPane.showMessageDialog(null, "사용가능합니다");
 					} catch (IndexOutOfBoundsException e2) {
 						JOptionPane.showMessageDialog(null, "사용가능합니다");
 						joinBtn.setEnabled(true);
 					}
-
 					if (memberVO != null) {
 						JOptionPane.showMessageDialog(null, "중복되는 아이디입니다.",
 								"경고", JOptionPane.ERROR_MESSAGE);
 						joinBtn.setEnabled(false);
+					} else {
+						JOptionPane.showMessageDialog(null, "사용가능합니다");
 					}
 				} else {
+					System.out.println(4);
 					JOptionPane.showMessageDialog(null, "사용 불가한 아이디입니다",
 							"경고", JOptionPane.ERROR_MESSAGE);
 					joinBtn.setEnabled(false);
@@ -209,7 +211,7 @@ public class MemberJoin extends JFrame {
 				if (vd.isValidatePhone(phoneField.getText()))  {
 					MemberVO memberVO = null;
 					try {
-						memberVO = memberDao.get2(2, phoneField.getText()).get(0);
+						memberVO = memberDao.getExist(2, phoneField.getText());
 					} catch (SQLException e1) {
 						JOptionPane.showMessageDialog(null, "사용가능합니다");
 
@@ -222,6 +224,9 @@ public class MemberJoin extends JFrame {
 						JOptionPane.showMessageDialog(null, "중복되는 전화번호입니다.",
 								"경고", JOptionPane.ERROR_MESSAGE);
 						joinBtn.setEnabled(false);
+					} else {
+						JOptionPane.showMessageDialog(null, "사용가능합니다");
+						joinBtn.setEnabled(true);
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, "사용 불가능한 전화번호입니다",
@@ -239,7 +244,7 @@ public class MemberJoin extends JFrame {
 				if (vd.isValidateEmail(emailField.getText()))  {
 					MemberVO memberVO = null;
 					try {
-						memberVO = memberDao.get2(3, emailField.getText()).get(0);
+						memberVO = memberDao.getExist(3, emailField.getText());
 					} catch (SQLException e1) {
 						JOptionPane.showMessageDialog(null, "사용가능합니다");
 
@@ -253,6 +258,10 @@ public class MemberJoin extends JFrame {
 						JOptionPane.showMessageDialog(null, "중복되는 이메일입니다.",
 								"경고", JOptionPane.ERROR_MESSAGE);
 						joinBtn.setEnabled(false);
+					} else {
+						JOptionPane.showMessageDialog(null, "사용가능합니다");
+
+						joinBtn.setEnabled(true);
 					}
 				} else {
 					JOptionPane.showMessageDialog(null, "사용 불가능한 이메일입니다",
@@ -271,14 +280,18 @@ public class MemberJoin extends JFrame {
 				MemberDao dao = new MemberDao();
 				MemberVO vo = null;
 				try {
-					vo = new MemberVO(null, nameField.getText(), idField.getText(),
+					vo = new MemberVO(
+							nameField.getText(), 
+							idField.getText(),
 							pwEncoder.encrypt(new String(pwField.getPassword())),
+							phoneField.getText(), 
 							Integer.toString((int)year.getSelectedItem() % 100)
 							+ month.getSelectedItem()
 							+ day.getSelectedItem(),
 							(maleBtn.isSelected() ? "0" : "1"),
-							phoneField.getText(), emailField.getText(), addressField.getText(),
-							null,null,null);
+							emailField.getText(), 
+							addressField.getText()
+							);
 				} catch (Exception e2) {
 					// TODO Auto-generated catch block
 					e2.printStackTrace();
@@ -364,14 +377,6 @@ public class MemberJoin extends JFrame {
 		button.setBounds(x, y, 90, 30);
 		add(button);
 	}
-
-
-	public static void main(String[] args) {
-		new MemberJoin();
-
-	}
-
-
 }
 
 

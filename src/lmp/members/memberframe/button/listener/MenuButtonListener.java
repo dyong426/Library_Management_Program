@@ -6,8 +6,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
-import lmp.login.MemberLoginFrame;
 import lmp.members.dao.MemberLogHistoryDao;
+import lmp.members.login.MemberLoginFrame;
 import lmp.members.memberframe.button.MenuButton;
 import lmp.members.memberframe.frame.MemberFrame;
 

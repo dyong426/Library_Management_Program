@@ -33,7 +33,7 @@ public class FontListener extends MouseAdapter{
 					e1.printStackTrace();
 				}
 			} else {
-				btns[i].setBackground(Color.LIGHT_GRAY);
+				btns[i].setBackground(Color.WHITE);
 			}
 		}
 		

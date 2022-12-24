@@ -13,12 +13,7 @@ import java.sql.SQLException;
 
 import lmp.admin.vo.BookVO;
 
-public class ExampleDao {
-	
-	
-	private static String url = "jdbc:oracle:thin:@localhost:1521:XE";
-	private static String user = "lmp";
-	private static String pw = "1234";
+public class ExampleDao extends MenuDao{
 	
 public void add(BookVO bookVO) throws SQLException {
 		
@@ -90,21 +85,10 @@ public void add(BookVO bookVO) throws SQLException {
 		Blob image = rs.getBlob(2);
 		InputStream binstr = image.getBinaryStream();
 		
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
 		
 	}
-	
-	
-	public Connection getConnection() {
-		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection conn = DriverManager.getConnection(url, user, pw);
-			return conn;
-		} catch (ClassNotFoundException e) {
-			System.out.println("Class 못찾음");
-		} catch (SQLException e) {
-			System.out.println("DB 접속 실패");
-		}
-		return null; 
-	}
-
 }

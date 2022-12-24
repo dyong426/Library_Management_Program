@@ -19,6 +19,7 @@ import lmp.members.dao.ThemeDao;
 import lmp.members.memberframe.frame.MemberFrame;
 import lmp.members.menu.setting.listener.FontListener;
 import lmp.members.menu.setting.listener.ThemeListener;
+import lmp.util.theme.Theme;
 
 public class SettingMenu extends JFrame {
 
@@ -29,6 +30,7 @@ public class SettingMenu extends JFrame {
 	JButton[] themeBtns;
 	JButton[] fontBtns;
 	ThemeDao themeDao = new ThemeDao();
+	Theme theme = new Theme();
 	FontDao fontDao = new FontDao();
 	ArrayList<String> themes = new ArrayList<>();
 	ArrayList<String> fonts = new ArrayList<>();
@@ -47,12 +49,14 @@ public class SettingMenu extends JFrame {
 
 		JLabel titleLabel = new JLabel("설정");
 		titleLabel.setFont(new Font("굴림", Font.BOLD, 30));
+		titleLabel.setForeground(Color.WHITE);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setBounds(140, 10, 95, 29);
 		getContentPane().add(titleLabel);
 
 		JLabel themeTitleLabel = new JLabel("테마");
 		themeTitleLabel.setBounds(12, 54, 57, 15);
+		themeTitleLabel.setForeground(Color.WHITE);
 		getContentPane().add(themeTitleLabel);
 
 		JPanel themePanel = new JPanel();
@@ -113,8 +117,8 @@ public class SettingMenu extends JFrame {
 				
 			}
 		});
+		getContentPane().setBackground(theme.getSub2Color());
 		getContentPane().add(btnNewButton);
-		
 		setBounds(100,100,400,300);
 
 	}
@@ -127,7 +131,7 @@ public class SettingMenu extends JFrame {
 				if (themeDao.getTheme().equals(text)) {
 					setBackground(new Color(153,204,255));
 				} else {
-					setBackground(Color.LIGHT_GRAY);
+					setBackground(Color.WHITE);
 				}
 				setHorizontalTextPosition(CENTER);
 				setForeground(Color.BLACK);
@@ -145,7 +149,7 @@ public class SettingMenu extends JFrame {
 				if (fontDao.getFont().equals(text)) {
 					setBackground(new Color(153,204,255));
 				} else {
-					setBackground(Color.LIGHT_GRAY);
+					setBackground(Color.WHITE);
 				}
 				setHorizontalTextPosition(CENTER);
 				setForeground(Color.BLACK);

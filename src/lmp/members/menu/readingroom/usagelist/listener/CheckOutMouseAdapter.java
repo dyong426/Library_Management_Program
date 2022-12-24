@@ -1,15 +1,16 @@
 package lmp.members.menu.readingroom.usagelist.listener;
 
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import lmp.login.MemberLoginFrame;
 import lmp.members.dao.MemberDao;
 import lmp.members.dao.MemberLogHistoryDao;
 import lmp.members.dao.SeatUseDetailDao;
+import lmp.members.login.MemberLoginFrame;
 import lmp.members.menu.readingroom.ReadingRoomPanel;
 import lmp.members.menu.readingroom.seatlist.SeatListPanel;
 import lmp.members.vo.MemberLogHistoryVO;
@@ -42,8 +43,8 @@ public class CheckOutMouseAdapter extends MouseAdapter {
 					memLogFrame.initialize();
 					memLogFrame.setVisible(true);
 				} else {
-					memberVO = memberDao.getNum(memLogVO.getMem_num());
-					sudVO = sudDao.getUsingInfo(memLogVO.getMem_num());
+					memberVO = memberDao.getNum(memLogVO.getMemberVO().getNum());
+					sudVO = sudDao.getUsingInfo(memLogVO.getMemberVO().getNum());
 					
 					// 이용중인 자리 확인
 					if (sudVO == null) {

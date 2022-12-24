@@ -2,6 +2,8 @@ package lmp.members.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -14,7 +16,7 @@ import lmp.members.vo.SeatUseDetailVO;
 
 public abstract class MenuDao {
 	
-	private static String url = "jdbc:oracle:thin:@192.168.0.23:1521:XE";
+	private static String url = "jdbc:oracle:thin:@localhost:1521:XE";
 	private static String user = "library";
 	private static String pw = "1234";
 	
@@ -41,9 +43,10 @@ public abstract class MenuDao {
 			System.out.println("Class 못찾음");
 		} catch (SQLException e) {
 			System.out.println("DB 접속 실패");
-		}
-		return null; 
+		}			
+		return null;
 	}
+	
 
 	/**
 	 * 회원 정보 수정
@@ -198,5 +201,6 @@ public abstract class MenuDao {
 		return null;
 	}
 
+	
 
 }

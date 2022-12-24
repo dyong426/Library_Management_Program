@@ -1,4 +1,4 @@
-package lmp.members.menu.findId_Pw;
+package lmp.members.login.find;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,8 +21,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
-import lmp.db.dao.MemberDao;
-import lmp.db.vo.MemberVO;
+import lmp.admin.dao.MemberDao;
+import lmp.admin.vo.MemberVO;
 
 public class FindID extends JFrame {
 

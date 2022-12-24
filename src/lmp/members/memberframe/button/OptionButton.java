@@ -31,7 +31,7 @@ public class OptionButton extends JButton {
 	public void initialize() {
 		setHorizontalTextPosition(CENTER);
 		setForeground(Color.WHITE);
-		setBorderPainted(true);
+		setBorderPainted(false);
 		setFocusPainted(false);
 		setContentAreaFilled(false);
 		addMouseListener(new MouseAdapter() {

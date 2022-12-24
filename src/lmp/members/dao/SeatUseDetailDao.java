@@ -84,6 +84,7 @@ public class SeatUseDetailDao extends MenuDao{
 		String sql = "SELECT * FROM readingroom";
 		
 		Connection conn = getConnection();
+		System.out.println(conn + "여기?");
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		
@@ -96,6 +97,11 @@ public class SeatUseDetailDao extends MenuDao{
 		
 		Collections.sort(seatList);
 		
+		
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
 		return seatList;
 		
 	}
@@ -106,10 +112,10 @@ public class SeatUseDetailDao extends MenuDao{
 	 * @return ArrayList<SeatUseDetailVO> sudList
 	 */
 	@Override
-	public ArrayList getUse() throws SQLException {
+	public ArrayList<SeatUseDetailVO> getUse() throws SQLException {
 		String sql = "SELECT * FROM seat_use_details JOIN members USING(mem_num) JOIN readingroom USING(seat_num) WHERE end_time is null";
-		
 		Connection conn = getConnection();
+		System.out.println(conn);
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<SeatUseDetailVO> sudList = new ArrayList<>();
@@ -119,16 +125,7 @@ public class SeatUseDetailDao extends MenuDao{
 							rs.getInt("use_id"),
 							new MemberVO(
 								rs.getInt("mem_num"),
-								rs.getString("mem_name"),
-								rs.getString("mem_id"),
-								rs.getString("mem_pw"),
-								rs.getString("mem_birthday"),
-								rs.getString("mem_sex"),
-								rs.getString("mem_phone"),
-								rs.getString("mem_email"),
-								rs.getString("mem_address"),
-								rs.getString("mem_registrationdate"),
-								rs.getString("mem_note")
+								rs.getString("mem_name")
 								),
 							new ReadingRoomVO(
 								rs.getInt("seat_num"),

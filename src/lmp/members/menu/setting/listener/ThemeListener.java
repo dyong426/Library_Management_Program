@@ -9,33 +9,33 @@ import javax.swing.JButton;
 
 import lmp.members.dao.ThemeDao;
 
-public class ThemeListener extends MouseAdapter{
-	
+public class ThemeListener extends MouseAdapter {
+
 	ThemeDao themeDao = new ThemeDao();
 	JButton[] btns;
-public ThemeListener(JButton[] btns) {
-	this.btns = btns;
-}	
-	
+
+	public ThemeListener(JButton[] btns) {
+		this.btns = btns;
+	}
+
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
+
 		JButton btn = (JButton) e.getSource();
-		
-		for (int i =0; i < btns.length;  i++) {
+
+		for (int i = 0; i < btns.length; i++) {
 			if (btns[i].getText() == btn.getText()) {
-				btns[i].setBackground(new Color(153,204,255));
+				btns[i].setBackground(new Color(153, 204, 255));
 				try {
 					themeDao.setTheme(btns[i].getText());
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
 			} else {
-				btns[i].setBackground(Color.LIGHT_GRAY);
+				btns[i].setBackground(Color.WHITE);
 			}
 		}
-		
-		
+
 	}
-	
+
 }

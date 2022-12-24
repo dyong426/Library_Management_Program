@@ -1,5 +1,5 @@
 package lmp.members.menu.book;
-
+/*
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -203,3 +203,4 @@ public class BookSearchFrame extends JFrame {
 		new BookSearchFrame();
 	}
 }
+*/

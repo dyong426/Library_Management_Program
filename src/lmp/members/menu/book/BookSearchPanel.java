@@ -3,20 +3,13 @@ package lmp.members.menu.book;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -30,7 +23,6 @@ import javax.swing.table.DefaultTableModel;
 import lmp.admin.AdminFrame;
 import lmp.members.dao.BookDao;
 import lmp.members.dao.CheckOutDao;
-import lmp.members.memberframe.MemberFrame;
 import lmp.members.vo.BookVO;
 import lmp.members.vo.CheckOutVO;
 import lmp.util.ImageConvert;
@@ -233,17 +225,5 @@ public class BookSearchPanel extends JPanel {
 			++resetRow;
 		}
 		table_BookMgmt.setModel(model_BookMgmt);
-	}
-	
-	
-	public static void main(String[] args) {
-		JFrame f = new JFrame();
-		
-		f.add(new BookSearchPanel());
-		
-		f.setBounds(300, 300, 1200, 1000);
-		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		f.setVisible(true);
-	}
-	
+	}	
 }

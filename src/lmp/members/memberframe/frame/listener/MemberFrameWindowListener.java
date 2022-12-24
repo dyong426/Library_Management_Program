@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import lmp.members.dao.MemberDao;
 import lmp.members.dao.MemberLogHistoryDao;
 
-public class FrameWindowListener extends WindowAdapter {
+public class MemberFrameWindowListener extends WindowAdapter {
 
 	MemberLogHistoryDao memLogDao = new MemberLogHistoryDao();
 	MemberDao memberDao = new MemberDao();

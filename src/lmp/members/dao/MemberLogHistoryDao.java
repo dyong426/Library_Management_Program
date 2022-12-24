@@ -41,7 +41,7 @@ public class MemberLogHistoryDao extends MenuDao{
 		String sql =  "Update member_log_history SET logout_time = to_char(sysdate, 'yyyy.mm.dd hh24:mi') WHERE mem_num = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 			
-		pstmt.setInt(1,memLogVO.getMem_num());
+		pstmt.setInt(1,memLogVO.getMemberVO().getNum());
 			
 		pstmt.executeUpdate();
 		
@@ -51,13 +51,13 @@ public class MemberLogHistoryDao extends MenuDao{
 	
 	@Override
 	public MemberLogHistoryVO getLog() throws SQLException {
-		String sql = "SELECT * FROM member_log_history WHERE logout_time IS NULL";
+		String sql = "SELECT * FROM member_log_history JOIN members USING(mem_num) WHERE logout_time IS NULL";
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		MemberLogHistoryVO memLogVO = null;
 		while (rs.next()) {
-			memLogVO = new MemberLogHistoryVO(rs.getInt("mem_log_id"), rs.getInt("mem_num"), rs.getString("login_time"), rs.getString("logout_time"));
+			memLogVO = new MemberLogHistoryVO(rs.getInt("mem_log_id"), new MemberVO(rs.getInt("mem_num"),rs.getString("mem_name")), rs.getString("login_time"), rs.getString("logout_time"));
 		}
 		rs.close();
 		pstmt.close();

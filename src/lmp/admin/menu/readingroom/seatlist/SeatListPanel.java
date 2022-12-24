@@ -6,13 +6,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
 
+import lmp.admin.dao.SeatUseDetailDao;
 import lmp.admin.menu.readingroom.seatlist.panel.SeatPanel;
 import lmp.admin.menu.readingroom.seatlist.panel.StatusPanel;
-import lmp.db.dao.SeatUseDetailDao;
-import lmp.db.vo.SeatUseDetailVO;
+import lmp.admin.vo.SeatUseDetailVO;
 
 
 public class SeatListPanel extends JPanel{

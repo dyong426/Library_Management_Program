@@ -14,12 +14,13 @@ import lmp.members.memberframe.button.OptionButton;
 import lmp.members.memberframe.button.listener.LogButtonListener;
 import lmp.members.memberframe.button.listener.MenuButtonListener;
 import lmp.members.memberframe.button.listener.OptionButtonListener;
+import lmp.members.memberframe.frame.listener.MemberFrameWindowListener;
 import lmp.members.memberframe.label.ClockLabel;
 import lmp.members.memberframe.panel.HomePanel;
 import lmp.members.memberframe.panel.MenuButtonPanel;
 import lmp.members.memberframe.panel.MenuCardPanel;
 import lmp.members.menu.book.BookSearchPanel;
-import lmp.members.menu.member.MemberMenu;
+import lmp.members.menu.member.MemberPanel;
 import lmp.members.menu.readingroom.ReadingRoomPanel;
 import lmp.util.theme.Theme;
 
@@ -29,28 +30,28 @@ public class MemberFrame extends JFrame{
 	JPanel panel = new JPanel();
 	JScrollPane sp = new JScrollPane();
 	
-	MenuButtonPanel menuButtonPanel;
-	private MenuCardPanel menuCardPanel;
+	private static MenuButtonPanel menuButtonPanel;
+	private static MenuCardPanel menuCardPanel;
 	
-	static MenuButton bookBtn = new MenuButton("book");
-	static MenuButton readingroomBtn = new MenuButton("readingroom"); 
-	static MenuButton memberBtn = new MenuButton("member");
+	private static  MenuButton bookBtn;
+	private static  MenuButton readingroomBtn; 
+	private static  MenuButton memberBtn;
 
-	static HomePanel		homePanel = new HomePanel();
-	BookSearchPanel bookSearchPanel = new BookSearchPanel();
-	ReadingRoomPanel readingroomPanel = new ReadingRoomPanel();
-	MemberMenu memberMenuPanel = new MemberMenu();
+	private static  HomePanel homePanel;
+	private static BookSearchPanel bookSearchPanel;
+	private static ReadingRoomPanel readingroomPanel;
+	private static MemberPanel memberPanel;
 	
-	private LogButton loginButton = new LogButton("로그인");
-	private LogButton logoutButton = new LogButton("로그아웃");
+	private static  LogButton loginButton;
+	private static  LogButton logoutButton;
 	
-	ClockLabel clockLabel = new ClockLabel();
+	private static ClockLabel clockLabel;
 	
-	static OptionButton homeButton = new OptionButton("home");
-	static OptionButton setupButton = new OptionButton("setup");
+	private static  OptionButton homeButton;
+	private static  OptionButton setupButton;
 	
-	ThemeDao themeDao;
-	Theme theme = new Theme();
+	private static ThemeDao themeDao;
+	private static Theme theme = new Theme();
 	
 	public MemberFrame() throws SQLException {
 		setLayout(null);
@@ -61,6 +62,23 @@ public class MemberFrame extends JFrame{
 		
 		menuButtonPanel = new MenuButtonPanel();
 		menuCardPanel = new MenuCardPanel();
+		
+		homePanel = new HomePanel();
+		bookSearchPanel = new BookSearchPanel();
+		readingroomPanel = new ReadingRoomPanel();
+		memberPanel = new MemberPanel(this);
+		
+		bookBtn = new MenuButton("book");
+		readingroomBtn = new MenuButton("readingroom"); 
+		memberBtn = new MenuButton("member");
+		
+		loginButton = new LogButton("로그인");
+		logoutButton = new LogButton("로그아웃");
+		
+		homeButton = new OptionButton("home");
+		setupButton = new OptionButton("setup");
+		
+		clockLabel = new ClockLabel();
 		
 		bookBtn.addActionListener(new MenuButtonListener(this));
 		readingroomBtn.addActionListener(new MenuButtonListener(this));
@@ -78,7 +96,7 @@ public class MemberFrame extends JFrame{
 		menuCardPanel.add("홈 화면", homePanel);
 		menuCardPanel.add("도서검색", bookSearchPanel);
 		menuCardPanel.add("열람실", readingroomPanel);
-		menuCardPanel.add("회원정보", memberMenuPanel);
+		menuCardPanel.add("회원정보", memberPanel);
 		
 		panel.add(clockLabel);
 		panel.add(homeButton);
@@ -89,6 +107,7 @@ public class MemberFrame extends JFrame{
 		panel.add(menuCardPanel);
 		initialize();
 		
+		addWindowListener(new MemberFrameWindowListener());
 		setExtendedState(this.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);		
 		getContentPane().add(sp);
@@ -118,8 +137,8 @@ public class MemberFrame extends JFrame{
 		return loginButton;
 	}
 
-	public MemberMenu getMemberMenuPanel() {
-		return memberMenuPanel;
+	public MemberPanel getMemberMenuPanel() {
+		return memberPanel;
 	}
 	
 	

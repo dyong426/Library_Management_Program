@@ -25,20 +25,11 @@ public class MemberDao extends MenuDao{
 		Connection conn = getConnection();
 		
 		String sql = "INSERT INTO members("
-										+ "mem_num,"
-										+ "mem_name,"
-										+ "mem_id,"
-										+ "mem_pw,"
-										+ "mem_birthday,"
-										+ "mem_sex,"
-										+ "mem_phone,"
-										+ "mem_email,"
-										+ "mem_address,"
-										+ "mem_note"
-										+ ") VALUES(member_num_seq.nextval,?,?,?,?,?,?,?,?,?)";
+										+ "mem_num,mem_name,mem_id,mem_pw,mem_birthday,mem_sex,mem_phone,mem_email,mem_address) "
+										+ "VALUES(member_num_seq.nextval,?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		
+		System.out.println(memberVO.getSex());
 		pstmt.setString(1, memberVO.getName());
 		pstmt.setString(2, memberVO.getId());
 		pstmt.setString(3, memberVO.getPw());
@@ -47,7 +38,6 @@ public class MemberDao extends MenuDao{
 		pstmt.setString(6, memberVO.getPhone());
 		pstmt.setString(7, memberVO.getEmail());
 		pstmt.setString(8, memberVO.getAddress());
-		pstmt.setString(9, memberVO.getNote());
 			
 		pstmt.executeUpdate();
 			
@@ -75,6 +65,7 @@ public class MemberDao extends MenuDao{
 					+ "mem_phone = ?,"
 					+ "mem_email = ?,"
 					+ "mem_address = ? "
+					+ "mem_updatedate = sysdate"
 					+ "WHERE "
 					+ "mem_num = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -93,8 +84,7 @@ public class MemberDao extends MenuDao{
 		conn.close();
 	}
 	
-	@Override
-	public MemberVO get(String mem_id) throws SQLException {
+	public MemberVO getLoginInfo(String mem_id) throws SQLException {
 		String sql = "SELECT * FROM members WHERE mem_id = ?";
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -114,6 +104,45 @@ public class MemberDao extends MenuDao{
 		conn.close();
 		
 		return memberVO;
+	}
+	
+	public MemberVO getExist(int header, String searchStr) throws SQLException{
+		
+		String sql = selectSql(header).toString();
+		Connection conn = getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, searchStr);
+		ResultSet rs = pstmt.executeQuery();
+
+		MemberVO memberVO = null;
+		while (rs.next()) {
+			memberVO = new MemberVO(
+								rs.getInt("mem_num"),
+								rs.getString("mem_id"),
+								rs.getString("mem_pw")
+								);
+		}
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		return memberVO;
+	}
+	
+	public StringBuilder selectSql(int header) {
+		StringBuilder sql = new StringBuilder();
+
+		String id = "SELECT * FROM members WHERE mem_id = ?";
+		String phone = "SELECT * FROM members WHERE mem_phone = ?";
+		String email = "SELECT * FROM members WHERE mem_email = ?";
+		if (header == 1) {
+			sql.append(id);
+		} else if (header == 2) {
+			sql.append(phone);
+		} else if (header == 3) {
+			sql.append(email);
+		}
+		return sql;
 	}
 
 	/**

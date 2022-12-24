@@ -17,24 +17,19 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 import lmp.admin.AdminFrame;
-import lmp.db.dao.CheckOutDao;
-import lmp.db.dao.MemberDao;
-import lmp.db.dao.MemberLogHistoryDao;
-import lmp.db.dao.MenuDao;
-import lmp.db.vo.CheckOutVO;
-import lmp.db.vo.MemberLogHistoryVO;
-import lmp.db.vo.MemberVO;
-import lmp.members.MemberLoginFrame;
-
-import lmp.members.memberframe.MemberFrame;
-
+import lmp.admin.dao.CheckOutDao;
+import lmp.admin.vo.CheckOutVO;
+import lmp.members.dao.MemberDao;
+import lmp.members.dao.MemberLogHistoryDao;
+import lmp.members.memberframe.frame.MemberFrame;
+import lmp.members.vo.MemberLogHistoryVO;
+import lmp.members.vo.MemberVO;
 import lmp.util.ImageConvert;
-
 import lmp.util.ShaPasswordEncoder;
 import lmp.util.Validator;
 
 
-public class MemberMenu extends JPanel {
+public class MemberPanel extends JPanel {
 
 	MemberLogHistoryDao mdao = new MemberLogHistoryDao();
 	MemberLogHistoryVO memLogVO;
@@ -42,8 +37,9 @@ public class MemberMenu extends JPanel {
 	ShaPasswordEncoder pwEncoder = new ShaPasswordEncoder();
 	MemberDao memberDao = new MemberDao();
 	MemberVO mvo;
+	MemberFrame memberFrame;
+
 	Validator vd = new Validator();
-	
 	ImageConvert img = new ImageConvert();
 	
 
@@ -73,7 +69,8 @@ public class MemberMenu extends JPanel {
 
 
 
-	public MemberMenu() {
+	public MemberPanel(MemberFrame memberFrame) {
+		this.memberFrame = memberFrame;;
 		try {
 			initialize();
 		} catch (SQLException e) {
@@ -270,7 +267,7 @@ public class MemberMenu extends JPanel {
 						if (vd.isValidatePhone(phoneField.getText()))  {
 							MemberVO memberVO = null;
 							try {
-								memberVO = memberDao.get2(2, phoneField.getText()).get(0);
+								memberVO = memberDao.getExist(2, phoneField.getText());
 							} catch (SQLException e1) {
 								JOptionPane.showMessageDialog(null, "사용가능합니다");
 
@@ -300,7 +297,7 @@ public class MemberMenu extends JPanel {
 						if (vd.isValidateEmail(emailField.getText()))  {
 							MemberVO memberVO = null;
 							try {
-								memberVO = memberDao.get2(3, emailField.getText()).get(0);
+								memberVO = memberDao.getExist(3, emailField.getText());
 							} catch (SQLException e1) {
 								JOptionPane.showMessageDialog(null, "사용가능합니다");
 
@@ -339,12 +336,13 @@ public class MemberMenu extends JPanel {
 											JOptionPane.YES_NO_OPTION,
 											JOptionPane.INFORMATION_MESSAGE, null);
 							if (var == JOptionPane.YES_OPTION) {
-								MenuDao mdao = new MemberDao();
+								MemberDao mdao = new MemberDao();
 								MemberVO vo = null;
 								try {
-									vo = new MemberVO(pwEncoder.encrypt(new String(pwField.getPassword())),
+									vo = new MemberVO(
 											mvo.getNum(),
 											nameField.getText(),
+											pwEncoder.encrypt(new String(pwField.getPassword())),
 											phoneField.getText(),
 											emailField.getText(),
 											addressField.getText()
@@ -411,7 +409,7 @@ public class MemberMenu extends JPanel {
 				if (var == JOptionPane.YES_OPTION) {
 					try {
 						memberDao.delete(mvo.getNum());
-						MemberFrame.card.show(MemberFrame.menuCardPanel, "1");
+						memberFrame.getMenuCardPanel().getCard().show(memberFrame.getMenuCardPanel(), "1");
 						JOptionPane.showMessageDialog(null, "탈퇴 완료");
 					} catch (SQLException e1) {
 						e1.printStackTrace();

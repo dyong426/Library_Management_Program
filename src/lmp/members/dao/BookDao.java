@@ -61,6 +61,7 @@ public class BookDao extends MenuDao{
 								new LocationVO(rs.getString("location_id"), rs.getString("location_name")),
 								rs.getString("book_note")));
 		}
+
 		rs.close();
 		pstmt.close();
 		conn.close();

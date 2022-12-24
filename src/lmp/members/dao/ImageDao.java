@@ -24,6 +24,10 @@ public class ImageDao extends MenuDao {
 			imageVO = new ImageVO(rs.getInt("image_id"),rs.getString("image_name"),rs.getString("image_path"));
 		}
 		
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
 		return imageVO;
 	}
 	
@@ -38,6 +42,9 @@ public class ImageDao extends MenuDao {
 		
 		
 		pstmt.executeUpdate();
+		
+		pstmt.close();
+		conn.close();
 	}
 	
 }

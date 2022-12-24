@@ -7,19 +7,22 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import lmp.members.dao.SeatUseDetailDao;
+import lmp.admin.dao.ReadingRoomDao;
+import lmp.admin.dao.SeatUseDetailDao;
+import lmp.admin.vo.ReadingRoomVO;
 import lmp.members.menu.readingroom.ReadingRoomPanel;
 import lmp.members.menu.readingroom.seatlist.label.SeatLabel;
-import lmp.members.vo.ReadingRoomVO;
 import lmp.members.vo.SeatUseDetailVO;
 
 public class SeatPanel extends JPanel{
 
 	GridLayout gridLayout = new GridLayout(5,2,3,3);
 	SeatLabel[] seatLabels = new SeatLabel[gridLayout.getRows() * gridLayout.getColumns()];
-	SeatUseDetailDao sudDao = new SeatUseDetailDao();
+	static SeatUseDetailDao sudDao = new SeatUseDetailDao();
+	static ReadingRoomDao roomDao = new ReadingRoomDao();
 	ArrayList<SeatUseDetailVO> sudVOs;
-	
+	ArrayList<ReadingRoomVO> seatList;
+
 	ReadingRoomPanel readingRoomPanel;
 	int tens;
 	
@@ -29,10 +32,11 @@ public class SeatPanel extends JPanel{
 		this.setBackground(new Color(126, 151, 148));
 		this.readingRoomPanel = readingRoomPanel;
 		this.tens = tensDigit * 10;
+		seatList = roomDao.get();
 		
 		for (int i = 0; i < gridLayout.getRows() * gridLayout.getColumns(); i++) {
 			
-			seatLabels[i] = new SeatLabel(readingRoomPanel, i + 1 + tens);
+			seatLabels[i] = new SeatLabel(readingRoomPanel,seatList.get(i + tens));
 			add(seatLabels[i]);
 		}
 		initialize();
@@ -41,8 +45,7 @@ public class SeatPanel extends JPanel{
 	
 	public void initialize() throws SQLException {
 		
-		sudVOs = sudDao.getUse();
-		
+		sudVOs = sudDao.get();
 		for (int i = 0; i < seatLabels.length; i++) {
 			seatLabels[i].setBackground(Color.WHITE);
 		}

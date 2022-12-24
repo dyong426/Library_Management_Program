@@ -1,21 +1,21 @@
 package lmp;
 
+import java.io.File;
 import java.sql.SQLException;
 
-import lmp.members.memberframe.frame.MemberFrame;
-import lmp.members.menu.book.BookSearchPanel;
+import lmp.login.SelectModeFrame;
+import lmp.util.ImageConvert;
 
 public class Main {
 	
 	public static void main(String[] args) throws SQLException {
 //		ImageConvert img = new ImageConvert();
-//		//			new MemberFrame();
-//					File files = new File("src\\lmp\\util\\images\\imageicon");
-//					for (File file : files.listFiles()) {				
-//						img.inputImage(file);
-//					}
+//					File files = new File("src\\lmp\\util\\images\\imageicon\\dhlibrary.png");
+//									
+//					img.inputImage(files);
+					
 		
 		
-		new MemberFrame();
+		new SelectModeFrame();
 	}
 }
