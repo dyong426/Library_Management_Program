@@ -19,6 +19,7 @@ import lmp.members.dao.ThemeDao;
 import lmp.members.memberframe.frame.MemberFrame;
 import lmp.members.menu.setting.listener.FontListener;
 import lmp.members.menu.setting.listener.ThemeListener;
+import lmp.members.vo.ThemeVO;
 import lmp.util.theme.Theme;
 
 public class SettingMenu extends JFrame {
@@ -29,21 +30,15 @@ public class SettingMenu extends JFrame {
 
 	JButton[] themeBtns;
 	JButton[] fontBtns;
-	ThemeDao themeDao = new ThemeDao();
+	static ThemeDao themeDao = new ThemeDao();
 	Theme theme = new Theme();
-	FontDao fontDao = new FontDao();
-	ArrayList<String> themes = new ArrayList<>();
+	static FontDao fontDao = new FontDao();
+	ArrayList<ThemeVO> themes = new ArrayList<>();
 	ArrayList<String> fonts = new ArrayList<>();
 	MemberFrame memberFrame;
 	
 	public SettingMenu(MemberFrame memberFrame) throws SQLException {
 		this.memberFrame = memberFrame;
-		initialize();
-		
-	}
-
-	public void initialize() throws SQLException {
-		
 		SettingMenu setMenu = this;
 		getContentPane().setLayout(null);
 
@@ -66,7 +61,7 @@ public class SettingMenu extends JFrame {
 		
 		themes.addAll(themeDao.getThemes());
 		themeBtns = new JButton[themes.size()];
-
+		
 		for (int i = 0; i < themes.size(); i++) {
 			themeBtns[i] = getThemeButton(themes.get(i));
 		}
@@ -107,7 +102,7 @@ public class SettingMenu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					memberFrame.initialize();
+					memberFrame.refresh();
 				} catch (SQLException e1) {
 				
 					e1.printStackTrace();
@@ -120,15 +115,16 @@ public class SettingMenu extends JFrame {
 		getContentPane().setBackground(theme.getSub2Color());
 		getContentPane().add(btnNewButton);
 		setBounds(100,100,400,300);
-
+		
 	}
+
 	
-	public JButton getThemeButton(String text) throws SQLException {
+	public JButton getThemeButton(ThemeVO themeVO) throws SQLException {
 		
 		return new JButton() {
 			{
-				setText(text);
-				if (themeDao.getTheme().equals(text)) {
+				setText(themeVO.getName());
+				if (themeVO.getActivation().equals("1")) {
 					setBackground(new Color(153,204,255));
 				} else {
 					setBackground(Color.WHITE);

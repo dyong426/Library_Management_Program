@@ -12,7 +12,7 @@ import lmp.util.ImageConvert;
 
 public class OptionButton extends JButton {
 	
-	ImageConvert img = new ImageConvert();
+	static ImageConvert img = new ImageConvert();
 	
 	public OptionButton(String text) {
 		if (text.equals("home")) {			

@@ -84,7 +84,6 @@ public class SeatUseDetailDao extends MenuDao{
 		String sql = "SELECT * FROM readingroom";
 		
 		Connection conn = getConnection();
-		System.out.println(conn + "여기?");
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		
@@ -112,35 +111,23 @@ public class SeatUseDetailDao extends MenuDao{
 	 * @return ArrayList<SeatUseDetailVO> sudList
 	 */
 	@Override
-	public ArrayList<SeatUseDetailVO> getUse() throws SQLException {
+	public ArrayList<SeatUseDetailVO> getUse() {
 		String sql = "SELECT * FROM seat_use_details JOIN members USING(mem_num) JOIN readingroom USING(seat_num) WHERE end_time is null";
-		Connection conn = getConnection();
-		System.out.println(conn);
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		ResultSet rs = pstmt.executeQuery();
 		ArrayList<SeatUseDetailVO> sudList = new ArrayList<>();
-		while (rs.next()) {
-			sudList.add(
-						new SeatUseDetailVO(
-							rs.getInt("use_id"),
-							new MemberVO(
-								rs.getInt("mem_num"),
-								rs.getString("mem_name")
-								),
-							new ReadingRoomVO(
-								rs.getInt("seat_num"),
-								rs.getString("table_divider")
-								),
-							rs.getString("start_time"),
-							rs.getString("end_time")
-							)
-						);
+		try (Connection conn = getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();) {
+			while (rs.next()) {
+				sudList.add(new SeatUseDetailVO(rs.getInt("use_id"),
+						new MemberVO(rs.getInt("mem_num"), rs.getString("mem_name")),
+						new ReadingRoomVO(rs.getInt("seat_num"), rs.getString("table_divider")),
+						rs.getString("start_time"), rs.getString("end_time")));
+			}
+		} catch (SQLException e) {
+
 		}
-		rs.close();
-		pstmt.close();
-		conn.close();
-		
 		return sudList;
+		
 	}
 	
 	@Override

@@ -68,6 +68,7 @@ public abstract class MenuDao {
 	 * @return conn
 	 */
 	public Connection getConnection() {
+		
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			Connection conn = DriverManager.getConnection(url, user, pw);
@@ -77,6 +78,7 @@ public abstract class MenuDao {
 		} catch (SQLException e) {
 			System.out.println("DB 접속 실패");
 		}
+		
 		return null;
 	}
 

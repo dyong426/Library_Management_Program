@@ -22,6 +22,7 @@ import lmp.members.memberframe.panel.MenuCardPanel;
 import lmp.members.menu.book.BookSearchPanel;
 import lmp.members.menu.member.MemberPanel;
 import lmp.members.menu.readingroom.ReadingRoomPanel;
+import lmp.members.vo.ThemeVO;
 import lmp.util.theme.Theme;
 
 
@@ -50,7 +51,7 @@ public class MemberFrame extends JFrame{
 	private static  OptionButton homeButton;
 	private static  OptionButton setupButton;
 	
-	private static ThemeDao themeDao;
+	private static ThemeDao themeDao = new ThemeDao();
 	private static Theme theme = new Theme();
 	
 	public MemberFrame() throws SQLException {
@@ -58,7 +59,9 @@ public class MemberFrame extends JFrame{
 		setBounds(300, 100, 1200, 800);
 		setTitle("회원 모드");
 		MemberFrame memberFrame = this;
-		themeDao = new ThemeDao();
+		ThemeVO getTheme = themeDao.getTheme();
+		theme.setTheme(getTheme.getName());
+		
 		
 		menuButtonPanel = new MenuButtonPanel();
 		menuCardPanel = new MenuCardPanel();
@@ -105,20 +108,23 @@ public class MemberFrame extends JFrame{
 		panel.add(logoutButton);
 		panel.add(menuButtonPanel);
 		panel.add(menuCardPanel);
-		initialize();
+
+		panel.setLayout(null);
+		panel.setPreferredSize(new Dimension(1900, 1000));
+		panel.setBackground(theme.getMainColor());
+		sp.setViewportView(panel);
+		sp.getVerticalScrollBar().setUnitIncrement(16);
 		
 		addWindowListener(new MemberFrameWindowListener());
 		setExtendedState(this.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);		
 		getContentPane().add(sp);
 		setContentPane(sp);
-		setVisible(true);
-		
 	}
 
-	public void initialize() throws SQLException {
-		String getTheme = themeDao.getTheme();
-		theme.setTheme(getTheme);
+	public void refresh() throws SQLException {
+		ThemeVO getTheme = themeDao.getTheme();
+		theme.setTheme(getTheme.getName());
 	
 		panel.setLayout(null);
 		panel.setPreferredSize(new Dimension(1900, 1000));

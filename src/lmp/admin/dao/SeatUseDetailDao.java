@@ -28,9 +28,9 @@ public class SeatUseDetailDao extends MenuDao{
 	 */
 	@Override
 	public void add(SeatUseDetailVO sudVO) throws SQLException{
-		Connection conn = getConnection();
 		
 		String sql = "INSERT INTO check_out_info(use_id, mem_num, seat_num) VALUES(check_out_id_seq.nextval, ?, ?)";
+		Connection conn = getConnection();
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
@@ -54,7 +54,6 @@ public class SeatUseDetailDao extends MenuDao{
 	 */
 	@Override
 	public void update(int use_id) throws SQLException {
-		Connection conn = getConnection();
 		
 		String sql =  "UPDATE"
 					+ " seat_use_details"
@@ -63,6 +62,7 @@ public class SeatUseDetailDao extends MenuDao{
 					+ " WHERE"
 					+ " use_id = ?";
 		
+		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
 		pstmt.setInt(1, use_id);
@@ -80,7 +80,7 @@ public class SeatUseDetailDao extends MenuDao{
 	 * @return ArrayList<SeatUseDetailVO> sudList
 	 */
 	@Override
-	public ArrayList get() throws SQLException {
+	public ArrayList<SeatUseDetailVO> get() throws SQLException {
 		String sql = "SELECT * FROM seat_use_details JOIN members USING(mem_num) JOIN readingroom USING(seat_num) WHERE end_time IS NULL";
 		
 		Connection conn = getConnection();
@@ -93,16 +93,7 @@ public class SeatUseDetailDao extends MenuDao{
 							rs.getInt("use_id"),
 							new MemberVO(
 								rs.getInt("mem_num"),
-								rs.getString("mem_name"),
-								rs.getString("mem_id"),
-								rs.getString("mem_pw"),
-								rs.getString("mem_birthday"),
-								rs.getString("mem_sex"),
-								rs.getString("mem_phone"),
-								rs.getString("mem_email"),
-								rs.getString("mem_address"),
-								rs.getString("mem_registrationdate"),
-								rs.getString("mem_note")
+								rs.getString("mem_name")
 								),
 							new ReadingRoomVO(
 								rs.getInt("seat_num"),

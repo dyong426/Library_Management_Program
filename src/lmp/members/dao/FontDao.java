@@ -41,6 +41,11 @@ public class FontDao extends MenuDao{
 			while (rs.next()) {
 				getFonts.add(rs.getString("font_size"));
 			}
+			
+			rs.close();
+			pstmt.close();
+			conn.close();
+			
 			return getFonts;
 		}
 		

@@ -21,7 +21,7 @@ public class StatusPanel extends JPanel{
 	private static JLabel[] LABELS = new JLabel[6]; 
 	
 	SeatListPanel seatListPanel = new SeatListPanel();
-	SeatUseDetailDao sudDao = new SeatUseDetailDao();
+	static SeatUseDetailDao sudDao = new SeatUseDetailDao();
 	ArrayList<SeatUseDetailVO> sudVOs = new ArrayList<>();
 	
 	public StatusPanel() throws SQLException {
@@ -32,10 +32,22 @@ public class StatusPanel extends JPanel{
 		for (int i = 0; i < LABELS.length; i++) {
 			LABELS[i] = new StatusLabel();
 		}
-		initialize();
+		sudVOs = sudDao.getUse();
+		
+		LABELS[0].setText("총 자리");
+		LABELS[1].setText("" + (seatListPanel.gridLayout.getColumns() * 10));
+		LABELS[2].setText("이용중인 자리");
+		LABELS[3].setText("" + sudVOs.size());
+		LABELS[4].setText("남은 자리");
+		LABELS[5].setText("" + ( seatListPanel.gridLayout.getColumns() * 10  - sudVOs.size()));
+		for (JLabel label : LABELS) {
+			this.add(label);
+		}
+		LABELS[3].setText("" + sudVOs.size());
+		LABELS[5].setText("" + (seatListPanel.gridLayout.getColumns() * 10 - sudVOs.size()));
 	}
 	
-	public void initialize() throws SQLException {
+	public void refresh() throws SQLException {
 	
 		sudVOs = sudDao.getUse();
 		

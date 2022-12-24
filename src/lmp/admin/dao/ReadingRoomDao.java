@@ -22,12 +22,15 @@ public class ReadingRoomDao extends MenuDao {
 		ArrayList<ReadingRoomVO> readingrooms = new ArrayList<>();
 		ReadingRoomVO readingRoomVO = null; 
 		while (rs.next()) {
-			readingRoomVO = new ReadingRoomVO(rs.getInt("seat_num"), rs.getString("table_divider"));
-			readingrooms.add(readingRoomVO);
+			readingrooms.add(new ReadingRoomVO(rs.getInt("seat_num"), rs.getString("table_divider")));
 		}
 		
-		Collections.sort(readingrooms);
 		
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
+		Collections.sort(readingrooms);
 		return readingrooms;
 	}
 

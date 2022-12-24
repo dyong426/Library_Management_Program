@@ -6,8 +6,6 @@ import java.awt.Font;
 import javax.swing.JButton;
 
 public class LogButton extends JButton {
-
-	static boolean log;
 	
 	public LogButton(String text) {
 		setText(text);
@@ -18,7 +16,6 @@ public class LogButton extends JButton {
 			setBounds(1770, 10, 120, 50);
 		}
 		initialize();
-		System.out.println(log);
 	}
 	
 	public void initialize() {
@@ -27,8 +24,5 @@ public class LogButton extends JButton {
 		setBackground(Color.WHITE);
 		setForeground(Color.RED);
 		setFocusable(false);
-		if (log) {
-			setVisible(false);
-		}
 	}
 }

@@ -10,42 +10,50 @@ import javax.swing.JPanel;
 import lmp.admin.dao.ReadingRoomDao;
 import lmp.admin.dao.SeatUseDetailDao;
 import lmp.admin.vo.ReadingRoomVO;
+import lmp.admin.vo.SeatUseDetailVO;
 import lmp.members.menu.readingroom.ReadingRoomPanel;
 import lmp.members.menu.readingroom.seatlist.label.SeatLabel;
-import lmp.members.vo.SeatUseDetailVO;
+
 
 public class SeatPanel extends JPanel{
 
-	GridLayout gridLayout = new GridLayout(5,2,3,3);
-	SeatLabel[] seatLabels = new SeatLabel[gridLayout.getRows() * gridLayout.getColumns()];
-	static SeatUseDetailDao sudDao = new SeatUseDetailDao();
-	static ReadingRoomDao roomDao = new ReadingRoomDao();
-	ArrayList<SeatUseDetailVO> sudVOs;
-	ArrayList<ReadingRoomVO> seatList;
+	static GridLayout gridLayout = new GridLayout(5,2,3,3);
+	static SeatLabel[] seatLabels = new SeatLabel[gridLayout.getRows() * gridLayout.getColumns()];
 
 	ReadingRoomPanel readingRoomPanel;
 	int tens;
 	
 	
-	public SeatPanel(ReadingRoomPanel readingRoomPanel, int tensDigit) throws SQLException {
+	public SeatPanel(ReadingRoomPanel readingRoomPanel, ArrayList<ReadingRoomVO> seatList, ArrayList<SeatUseDetailVO> sudVOs,int tensDigit) throws SQLException {
 		this.setLayout(gridLayout);
 		this.setBackground(new Color(126, 151, 148));
 		this.readingRoomPanel = readingRoomPanel;
 		this.tens = tensDigit * 10;
-		seatList = roomDao.get();
 		
 		for (int i = 0; i < gridLayout.getRows() * gridLayout.getColumns(); i++) {
 			
 			seatLabels[i] = new SeatLabel(readingRoomPanel,seatList.get(i + tens));
 			add(seatLabels[i]);
 		}
-		initialize();
+
+		for (int i = 0; i < seatLabels.length; i++) {
+			seatLabels[i].setBackground(Color.WHITE);
+		}
 		
+		for (SeatUseDetailVO sudVO : sudVOs) {
+			int usageSeatNum = sudVO.getReadingroom().getSeatNum();
+			String sex = sudVO.getMember().getSex();
+			if (usageSeatNum >= tens + 1 && usageSeatNum <= tens + 10) {
+				if (sex.equals("0")) {					
+					seatLabels[usageSeatNum - tens - 1].setBackground(new Color(153,204,255));
+				} else {
+					seatLabels[usageSeatNum - tens - 1].setBackground(new Color(255,153,204));
+				}
+			}
+		}
 	}
 	
-	public void initialize() throws SQLException {
-		
-		sudVOs = sudDao.get();
+	public void refresh(ArrayList<SeatUseDetailVO> sudVOs) throws SQLException {
 		for (int i = 0; i < seatLabels.length; i++) {
 			seatLabels[i].setBackground(Color.WHITE);
 		}

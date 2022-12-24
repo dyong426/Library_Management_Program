@@ -24,17 +24,10 @@ public class MemberVO {
 	private Object[] list;
 	
 	
-	/**
-	 * 회원 로그인시 생성자
-	 * 
-	 * @param mem_id
-	 * @param mem_pw
-	 */
-	public MemberVO(String mem_id, String mem_pw) {
+	public MemberVO(Integer mem_num,String mem_name) {
 		
-		this.id = mem_id;
-		this.pw = mem_pw;
-		
+		this.num = mem_num;
+		this.name = mem_name;
 	}
 	
 	/**

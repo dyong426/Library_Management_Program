@@ -4,12 +4,17 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Label;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import lmp.admin.dao.ReadingRoomDao;
+import lmp.admin.dao.SeatUseDetailDao;
+import lmp.admin.vo.ReadingRoomVO;
+import lmp.admin.vo.SeatUseDetailVO;
 import lmp.members.menu.readingroom.seatlist.SeatListPanel;
 import lmp.members.menu.readingroom.seatlist.panel.StatusPanel;
 import lmp.members.menu.readingroom.usagelist.UsageListPanel;
@@ -22,16 +27,17 @@ public class ReadingRoomPanel extends JPanel {
 	UsageListPanel usageListPanel;
 	UsageListTitlePanel usageListTitlePanel;
 	
-	public ReadingRoomPanel()  {
-		try {
-			statusPanel = new StatusPanel();
+	static SeatUseDetailDao sudDao = new SeatUseDetailDao();
+	static ReadingRoomDao roomDao  = new ReadingRoomDao();
+	ArrayList<SeatUseDetailVO> sudVOs;
+	ArrayList<ReadingRoomVO> seatList;
+	
+	public ReadingRoomPanel() throws SQLException  {
+		statusPanel = new StatusPanel();
 		usageListPanel = new UsageListPanel();
 		seatListPanel = new SeatListPanel(this);
 		usageListTitlePanel = new UsageListTitlePanel(this);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		
 		setBackground(new Color(126, 151, 148));  //--> 사이즈 수정 필요
 		setLayout(null);
@@ -47,6 +53,14 @@ public class ReadingRoomPanel extends JPanel {
 		add(statusPanel);
 		add(seatListPanel);
 	}
+	public void refresh() throws SQLException {
+		
+		
+		
+		
+		seatListPanel.refresh();
+		statusPanel.refresh();
+	}
 	
 	public SeatListPanel getSeatListPanel() {
 		return seatListPanel;
@@ -59,11 +73,13 @@ public class ReadingRoomPanel extends JPanel {
 	public StatusPanel getStatusPanel() {
 		return statusPanel;
 	}
-
-	public void refresh() throws SQLException {
-		seatListPanel.refresh();
-		statusPanel.initialize();
+	public ArrayList<SeatUseDetailVO> getSudVOs() {
+		return sudVOs;
 	}
+	public ArrayList<ReadingRoomVO> getSeatList() {
+		return seatList;
+	}
+
 	
 	
 	

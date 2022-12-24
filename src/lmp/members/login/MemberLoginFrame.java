@@ -77,16 +77,16 @@ public class MemberLoginFrame extends JFrame {
 		loginPanel.add(idField);
 		idField.setColumns(30);
 
-		JTextField pwTField = new JTextField("비밀번호");
-
-		pwTField.setBounds(50, 160, 300, 35);
-		loginPanel.add(pwTField);
 
 
 		pwField = new JPasswordField();
 		pwField.setBounds(50, 160, 300, 35);
 		loginPanel.add(pwField);
 		pwField.setColumns(30);
+		
+		JTextField pwTField = new JTextField("비밀번호");
+		pwTField.setBounds(50, 160, 300, 35);
+		loginPanel.add(pwTField);
 
 		JButton loginBtn = new JButton("로그인");
 		loginBtn.setBounds(49, 210, 302, 40);

@@ -18,9 +18,8 @@ public class LocationDao extends MenuDao{
 			
 		pstmt.setString(1, locationVO.getLocID());
 		pstmt.setString(2, locationVO.getLocName());
-		System.out.println("성공?");
+		
 		pstmt.executeUpdate();
-		System.out.println("성공");	
 		pstmt.close();
 		conn.close();
 	}

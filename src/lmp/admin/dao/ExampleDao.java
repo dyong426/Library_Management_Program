@@ -36,8 +36,6 @@ public void add(BookVO bookVO) throws SQLException {
 		pstmt.setString(2, bookVO.getAuthor());
 		pstmt.setString(3, bookVO.getPublisher());
 		pstmt.setString(4, bookVO.getIsbn());
-//		pstmt.setInt(5, bookVO.getBias());
-//		pstmt.setInt(6, bookVO.getDuplicates());//복권수 확인 절차
 		pstmt.setInt(5, bookVO.getPrice());
 		pstmt.setString(6, bookVO.getLocation().getLocID());
 		pstmt.setString(7, bookVO.getNote());
@@ -61,13 +59,6 @@ public void add(BookVO bookVO) throws SQLException {
 		pstmt.setBinaryStream(2, fis,(long)(file.length()));
 		
 		int rowNum = pstmt.executeUpdate();
-		
-		if(rowNum >0){
-            System.out.println("삽입성공");
-        }else
-        {
-            System.out.println("실패");
-        }
 		
 		pstmt.close();
 		conn.close();

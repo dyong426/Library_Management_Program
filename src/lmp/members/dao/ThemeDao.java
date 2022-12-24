@@ -6,30 +6,32 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import lmp.members.vo.ThemeVO;
+
 public class ThemeDao extends MenuDao{
 	
-	public String getTheme() throws SQLException {
+	public ThemeVO getTheme() throws SQLException {
 		
 		String sql = "SELECT * FROM themes WHERE theme_activation = ?";
 		
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, "1");
+		pstmt.setInt(1, 1);
 		ResultSet rs = pstmt.executeQuery();
 		
-		String getTheme = "";
+		ThemeVO themeVO = null;
 		while (rs.next()) {
-			getTheme = rs.getString("theme_name");
+			themeVO = new ThemeVO(rs.getInt("theme_id"),rs.getString("theme_name"),rs.getString("theme_activation"));
 		}
 		
-		
+		rs.close();
 		pstmt.close();
 		conn.close();
 		
-		return getTheme;
+		return themeVO;
 	}
 	
-public ArrayList<String> getThemes() throws SQLException {
+public ArrayList<ThemeVO> getThemes() throws SQLException {
 		
 		String sql = "SELECT * FROM themes";
 		
@@ -37,11 +39,12 @@ public ArrayList<String> getThemes() throws SQLException {
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		
-		ArrayList<String> getThemes = new ArrayList<>();
+		ArrayList<ThemeVO> getThemes = new ArrayList<>();
 		while (rs.next()) {
-			getThemes.add(rs.getString("theme_name"));
+			getThemes.add(new ThemeVO(rs.getInt("theme_id"),rs.getString("theme_name"),rs.getString("theme_activation")));
 		}
 		
+		rs.close();
 		pstmt.close();
 		conn.close();
 		return getThemes;
