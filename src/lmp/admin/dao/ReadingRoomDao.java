@@ -28,7 +28,12 @@ public class ReadingRoomDao extends MenuDao {
 		
 		Collections.sort(readingrooms);
 		
+		rs.close();
+		pstmt.close();
+		conn.close();
+		
 		return readingrooms;
+		
 	}
 
 	

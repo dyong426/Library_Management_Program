@@ -33,7 +33,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import lmp.admin.AdminFrame;
+import lmp.admin.adminframe.frame.AdminFrame;
 import lmp.admin.dao.MemberDao;
 import lmp.admin.vo.MemberVO;
 import lmp.util.ImageConvert;

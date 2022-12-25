@@ -33,22 +33,22 @@ public class MemberFrame extends JFrame{
 	private static MenuButtonPanel menuButtonPanel;
 	private static MenuCardPanel menuCardPanel;
 	
-	private static  MenuButton bookBtn;
-	private static  MenuButton readingroomBtn; 
-	private static  MenuButton memberBtn;
+	private static MenuButton bookBtn;
+	private static MenuButton readingroomBtn;
+	private static MenuButton memberBtn;
 
-	private static  HomePanel homePanel;
+	private static HomePanel homePanel;
 	private static BookSearchPanel bookSearchPanel;
 	private static ReadingRoomPanel readingroomPanel;
 	private static MemberPanel memberPanel;
 	
-	private static  LogButton loginButton;
-	private static  LogButton logoutButton;
+	private static LogButton loginButton;
+	private static LogButton logoutButton;
 	
 	private static ClockLabel clockLabel;
 	
-	private static  OptionButton homeButton;
-	private static  OptionButton setupButton;
+	private static OptionButton homeButton;
+	private static OptionButton setupButton;
 	
 	private static ThemeDao themeDao;
 	private static Theme theme = new Theme();
@@ -85,7 +85,7 @@ public class MemberFrame extends JFrame{
 		memberBtn.addActionListener(new MenuButtonListener(this));
 		
 		loginButton.addActionListener(new LogButtonListener(this));
-		logoutButton.addActionListener(new LogButtonListener(this)); 
+		logoutButton.addActionListener(new LogButtonListener(this));
 		homeButton.addActionListener(new OptionButtonListener(this));
 		setupButton.addActionListener(new OptionButtonListener(this));
 		
@@ -109,7 +109,7 @@ public class MemberFrame extends JFrame{
 		
 		addWindowListener(new MemberFrameWindowListener());
 		setExtendedState(this.MAXIMIZED_BOTH);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);		
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().add(sp);
 		setContentPane(sp);
 		setVisible(true);

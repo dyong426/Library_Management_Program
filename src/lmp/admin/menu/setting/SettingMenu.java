@@ -1,4 +1,4 @@
-package lmp.members.menu.setting;
+package lmp.admin.menu.setting;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import lmp.admin.adminframe.frame.AdminFrame;
 import lmp.members.dao.FontDao;
 import lmp.members.dao.ThemeDao;
 import lmp.members.memberframe.frame.MemberFrame;
@@ -34,10 +35,10 @@ public class SettingMenu extends JFrame {
 	FontDao fontDao = new FontDao();
 	ArrayList<String> themes = new ArrayList<>();
 	ArrayList<String> fonts = new ArrayList<>();
-	MemberFrame memberFrame;
+	AdminFrame adminFrame;
 	
-	public SettingMenu(MemberFrame memberFrame) throws SQLException {
-		this.memberFrame = memberFrame;
+	public SettingMenu(AdminFrame adminFrame) throws SQLException {
+		this.adminFrame = adminFrame;
 		initialize();
 		
 	}
@@ -108,18 +109,18 @@ public class SettingMenu extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					memberFrame.initialize();
+					adminFrame.initialize();
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
-				memberFrame.validate();
+				adminFrame.validate();
 				setMenu.dispose();
 				
 			}
 		});
 		getContentPane().setBackground(theme.getSub2Color());
 		getContentPane().add(btnNewButton);
-		setBounds(100,100,400,300);
+		setBounds(100, 100, 400, 300);
 
 	}
 	

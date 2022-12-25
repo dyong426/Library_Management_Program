@@ -23,8 +23,6 @@ import lmp.util.ImageConvert;
 import lmp.util.font.MyFont;
 import lmp.util.theme.Theme;
 
-
-
 public class SelectModeFrame extends JFrame{
 
 	AdminLoginFrame adminLogFrame;
@@ -50,7 +48,6 @@ public class SelectModeFrame extends JFrame{
 					try {
 						MemberFrame memberFrame = new MemberFrame();
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				}

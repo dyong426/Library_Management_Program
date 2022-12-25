@@ -9,7 +9,7 @@ import lmp.members.vo.MemberLogHistoryVO;
 import lmp.members.vo.MemberVO;
 
 public class MemberLogHistoryDao extends MenuDao{
-
+	
 	@Override
 	public void add(MemberVO memberVO) throws SQLException{
 		
@@ -22,7 +22,7 @@ public class MemberLogHistoryDao extends MenuDao{
 		pstmt.setInt(1, memberVO.getNum());
 		
 		pstmt.executeUpdate();
-			
+		
 		pstmt.close();
 		conn.close();
 	}
@@ -57,7 +57,11 @@ public class MemberLogHistoryDao extends MenuDao{
 		ResultSet rs = pstmt.executeQuery();
 		MemberLogHistoryVO memLogVO = null;
 		while (rs.next()) {
-			memLogVO = new MemberLogHistoryVO(rs.getInt("mem_log_id"), new MemberVO(rs.getInt("mem_num"),rs.getString("mem_name")), rs.getString("login_time"), rs.getString("logout_time"));
+			memLogVO = new MemberLogHistoryVO(rs.getInt("mem_log_id"),
+					   new MemberVO(rs.getInt("mem_num"),
+							   		rs.getString("mem_name")),
+									rs.getString("login_time"),
+									rs.getString("logout_time"));
 		}
 		rs.close();
 		pstmt.close();

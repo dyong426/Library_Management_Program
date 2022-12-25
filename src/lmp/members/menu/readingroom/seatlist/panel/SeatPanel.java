@@ -10,9 +10,9 @@ import javax.swing.JPanel;
 import lmp.admin.dao.ReadingRoomDao;
 import lmp.admin.dao.SeatUseDetailDao;
 import lmp.admin.vo.ReadingRoomVO;
+import lmp.admin.vo.SeatUseDetailVO;
 import lmp.members.menu.readingroom.ReadingRoomPanel;
 import lmp.members.menu.readingroom.seatlist.label.SeatLabel;
-import lmp.members.vo.SeatUseDetailVO;
 
 public class SeatPanel extends JPanel{
 

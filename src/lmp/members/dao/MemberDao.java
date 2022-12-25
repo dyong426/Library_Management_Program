@@ -26,7 +26,7 @@ public class MemberDao extends MenuDao{
 		
 		String sql = "INSERT INTO members("
 										+ "mem_num,mem_name,mem_id,mem_pw,mem_birthday,mem_sex,mem_phone,mem_email,mem_address) "
-										+ "VALUES(member_num_seq.nextval,?,?,?,?,?,?,?,?)";
+										+ "VALUES(mem_num_seq.nextval,?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		System.out.println(memberVO.getSex());

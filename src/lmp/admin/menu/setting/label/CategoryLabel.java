@@ -1,4 +1,4 @@
-package lmp.members.menu.setting.label;
+package lmp.admin.menu.setting.label;
 
 import javax.swing.JLabel;
 
