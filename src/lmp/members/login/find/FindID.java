@@ -21,11 +21,15 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
-import lmp.admin.dao.MemberDao;
-import lmp.admin.vo.MemberVO;
+import lmp.admin.db.dao.MemberDao;
+import lmp.admin.db.vo.MemberVO;
 
 public class FindID extends JFrame {
 
+	/**
+	 * 회원 아이디 찾기 프레임
+	 */
+	
 	private JFrame frame = this;
 
 	private Font font = new Font("한컴 말랑말랑 Regular", Font.BOLD, 15);

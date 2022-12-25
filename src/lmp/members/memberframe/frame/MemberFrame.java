@@ -7,7 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import lmp.members.dao.ThemeDao;
+import lmp.members.db.dao.ThemeDao;
+import lmp.members.db.vo.ThemeVO;
 import lmp.members.memberframe.button.LogButton;
 import lmp.members.memberframe.button.MenuButton;
 import lmp.members.memberframe.button.OptionButton;
@@ -22,7 +23,6 @@ import lmp.members.memberframe.panel.MenuCardPanel;
 import lmp.members.menu.book.BookSearchPanel;
 import lmp.members.menu.member.MemberPanel;
 import lmp.members.menu.readingroom.ReadingRoomPanel;
-import lmp.members.vo.ThemeVO;
 import lmp.util.theme.Theme;
 
 

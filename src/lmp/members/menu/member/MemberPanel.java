@@ -17,13 +17,13 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
 import lmp.admin.adminframe.frame.AdminFrame;
-import lmp.admin.dao.CheckOutDao;
-import lmp.admin.vo.CheckOutVO;
-import lmp.members.dao.MemberDao;
-import lmp.members.dao.MemberLogHistoryDao;
+import lmp.admin.db.dao.CheckOutDao;
+import lmp.admin.db.vo.CheckOutVO;
+import lmp.members.db.dao.MemberDao;
+import lmp.members.db.dao.MemberLogHistoryDao;
+import lmp.members.db.vo.MemberLogHistoryVO;
+import lmp.members.db.vo.MemberVO;
 import lmp.members.memberframe.frame.MemberFrame;
-import lmp.members.vo.MemberLogHistoryVO;
-import lmp.members.vo.MemberVO;
 import lmp.util.ImageConvert;
 import lmp.util.ShaPasswordEncoder;
 import lmp.util.Validator;
@@ -433,7 +433,7 @@ public class MemberPanel extends JPanel {
 								JOptionPane.INFORMATION_MESSAGE, null);
 				if (var == JOptionPane.YES_OPTION) {
 					try {
-						memberDao.delete(mvo.getNum());
+						memberDao.delete(mvo);
 						memberFrame.getMenuCardPanel().getCard().show(memberFrame.getMenuCardPanel(), "1");
 						JOptionPane.showMessageDialog(null, "탈퇴 완료");
 					} catch (SQLException e1) {

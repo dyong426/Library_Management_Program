@@ -11,7 +11,7 @@ import java.util.GregorianCalendar;
 import javax.swing.JLabel;
 import javax.swing.Timer;
 
-import lmp.members.dao.FontDao;
+import lmp.members.db.dao.FontDao;
 import lmp.util.font.MyFont;
 
 public class ClockLabel extends JLabel {

@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-import lmp.admin.dao.ReadingRoomDao;
+import lmp.admin.db.dao.ReadingRoomDao;
+import lmp.admin.db.vo.ReadingRoomVO;
+import lmp.admin.db.vo.SeatUseDetailVO;
 import lmp.admin.menu.readingroom.seatlist.label.SeatLabel;
-import lmp.admin.vo.ReadingRoomVO;
-import lmp.admin.vo.SeatUseDetailVO;
 
 public class SeatPanel extends JPanel{
 

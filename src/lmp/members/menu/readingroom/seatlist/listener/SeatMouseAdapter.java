@@ -8,15 +8,15 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import lmp.members.dao.MemberDao;
-import lmp.members.dao.MemberLogHistoryDao;
-import lmp.members.dao.SeatUseDetailDao;
+import lmp.members.db.dao.MemberDao;
+import lmp.members.db.dao.MemberLogHistoryDao;
+import lmp.members.db.dao.SeatUseDetailDao;
+import lmp.members.db.vo.MemberLogHistoryVO;
+import lmp.members.db.vo.MemberVO;
+import lmp.members.db.vo.SeatUseDetailVO;
 import lmp.members.login.MemberLoginFrame;
 import lmp.members.menu.readingroom.ReadingRoomPanel;
 import lmp.members.menu.readingroom.seatlist.label.SeatLabel;
-import lmp.members.vo.MemberLogHistoryVO;
-import lmp.members.vo.MemberVO;
-import lmp.members.vo.SeatUseDetailVO;
 
 public class SeatMouseAdapter extends MouseAdapter{
 	
@@ -53,7 +53,7 @@ public class SeatMouseAdapter extends MouseAdapter{
 					memLogFrame.initialize();
 					memLogFrame.setVisible(true);					
 				} else {
-					memberVO = memberDao.getNum(memLogVO.getMemberVO().getNum());
+					memberVO = memberDao.getName(memLogVO.getMemberVO().getNum());
 					
 					// 발권 여부 확인
 					if (JOptionPane.showConfirmDialog(null, String.format("좌석번호 : %d", seat_num), "열람실 입/퇴실 확인", JOptionPane.YES_NO_OPTION) == 0) {

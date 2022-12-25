@@ -7,15 +7,15 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import lmp.members.dao.MemberDao;
-import lmp.members.dao.MemberLogHistoryDao;
-import lmp.members.dao.SeatUseDetailDao;
+import lmp.members.db.dao.MemberDao;
+import lmp.members.db.dao.MemberLogHistoryDao;
+import lmp.members.db.dao.SeatUseDetailDao;
+import lmp.members.db.vo.MemberLogHistoryVO;
+import lmp.members.db.vo.MemberVO;
+import lmp.members.db.vo.SeatUseDetailVO;
 import lmp.members.login.MemberLoginFrame;
 import lmp.members.menu.readingroom.ReadingRoomPanel;
 import lmp.members.menu.readingroom.seatlist.SeatListPanel;
-import lmp.members.vo.MemberLogHistoryVO;
-import lmp.members.vo.MemberVO;
-import lmp.members.vo.SeatUseDetailVO;
 
 public class CheckOutMouseAdapter extends MouseAdapter {
 
@@ -43,7 +43,7 @@ public class CheckOutMouseAdapter extends MouseAdapter {
 					memLogFrame.initialize();
 					memLogFrame.setVisible(true);
 				} else {
-					memberVO = memberDao.getNum(memLogVO.getMemberVO().getNum());
+					memberVO = memberDao.getName(memLogVO.getMemberVO().getNum());
 					sudVO = sudDao.getUsingInfo(memLogVO.getMemberVO().getNum());
 					
 					// 이용중인 자리 확인

@@ -10,11 +10,11 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import lmp.members.dao.SeatUseDetailDao;
-import lmp.members.dao.ThemeDao;
+import lmp.members.db.dao.SeatUseDetailDao;
+import lmp.members.db.dao.ThemeDao;
+import lmp.members.db.vo.SeatUseDetailVO;
 import lmp.members.menu.readingroom.seatlist.SeatListPanel;
 import lmp.members.menu.readingroom.seatlist.label.StatusLabel;
-import lmp.members.vo.SeatUseDetailVO;
 import lmp.util.theme.Theme;
 
 public class StatusPanel extends JPanel{

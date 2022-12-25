@@ -3,6 +3,10 @@ package lmp.util.theme;
 import java.awt.Color;
 
 public class Theme{
+	
+	/**
+	 *  테마 설정
+	 */
 
 	Color mainColor;
 	Color sub1Color;

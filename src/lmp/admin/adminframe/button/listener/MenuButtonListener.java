@@ -8,8 +8,8 @@ import java.sql.SQLException;
 
 import lmp.admin.adminframe.button.MenuButton;
 import lmp.admin.adminframe.frame.AdminFrame;
-import lmp.admin.dao.AdminLogHistoryDao;
-import lmp.login.admin.AdminLoginFrame;
+import lmp.admin.db.dao.AdminLogHistoryDao;
+import lmp.admin.login.AdminLoginFrame;
 
 public class MenuButtonListener implements ActionListener {
 

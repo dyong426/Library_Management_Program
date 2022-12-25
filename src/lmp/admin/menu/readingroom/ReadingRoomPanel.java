@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-import lmp.admin.dao.SeatUseDetailDao;
+import lmp.admin.db.dao.SeatUseDetailDao;
 import lmp.admin.menu.readingroom.seatlist.SeatListPanel;
 import lmp.admin.menu.readingroom.usagelist.UsageListPanel;
 import lmp.admin.menu.readingroom.usagelist.panel.UsageListTitlePanel;

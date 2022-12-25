@@ -21,13 +21,18 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 
-import lmp.members.dao.MemberDao;
-import lmp.members.vo.MemberVO;
+import lmp.members.db.dao.MemberDao;
+import lmp.members.db.vo.MemberVO;
 import lmp.util.ShaPasswordEncoder;
 import lmp.util.Validator;
 
 public class MemberJoin extends JFrame {
 
+	
+	/**
+	 * 회원가입 프레임
+	 */
+	
 	MemberDao memberDao = new MemberDao();
 	Validator vd = new Validator();
 	ShaPasswordEncoder pwEncoder = new ShaPasswordEncoder();

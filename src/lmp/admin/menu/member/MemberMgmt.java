@@ -27,11 +27,11 @@ import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.menu.book.BookMgmt;
 import lmp.admin.adminframe.frame.AdminFrame;
-import lmp.admin.dao.CheckOutDao;
-import lmp.admin.dao.MenuDao;
-import lmp.admin.dao.MemberDao;
-import lmp.admin.vo.CheckOutVO;
-import lmp.admin.vo.MemberVO;
+import lmp.admin.db.dao.CheckOutDao;
+import lmp.admin.db.dao.MemberDao;
+import lmp.admin.db.dao.MenuDao;
+import lmp.admin.db.vo.CheckOutVO;
+import lmp.admin.db.vo.MemberVO;
 import lmp.util.ImageConvert;
 import lmp.util.Validator;
 

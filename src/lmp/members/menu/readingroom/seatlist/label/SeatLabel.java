@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
-import lmp.admin.vo.ReadingRoomVO;
+import lmp.admin.db.vo.ReadingRoomVO;
 import lmp.members.menu.readingroom.ReadingRoomPanel;
 import lmp.members.menu.readingroom.seatlist.listener.SeatMouseAdapter;
 

@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
-import lmp.admin.dao.SeatUseDetailDao;
+import lmp.admin.db.dao.SeatUseDetailDao;
+import lmp.admin.db.vo.SeatUseDetailVO;
 import lmp.admin.menu.readingroom.seatlist.panel.SeatPanel;
 import lmp.admin.menu.readingroom.seatlist.panel.StatusPanel;
-import lmp.admin.vo.SeatUseDetailVO;
 
 
 public class SeatListPanel extends JPanel{

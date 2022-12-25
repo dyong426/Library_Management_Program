@@ -15,11 +15,11 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import lmp.admin.adminframe.frame.AdminFrame;
-import lmp.members.dao.FontDao;
-import lmp.members.dao.ThemeDao;
+import lmp.members.db.dao.FontDao;
+import lmp.members.db.dao.ThemeDao;
+import lmp.members.db.vo.ThemeVO;
 import lmp.members.menu.setting.listener.FontListener;
 import lmp.members.menu.setting.listener.ThemeListener;
-import lmp.members.vo.ThemeVO;
 import lmp.util.theme.Theme;
 
 public class SettingMenu extends JFrame {

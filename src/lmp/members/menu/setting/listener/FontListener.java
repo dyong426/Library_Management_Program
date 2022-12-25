@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import javax.swing.JButton;
 
-import lmp.members.dao.FontDao;
+import lmp.members.db.dao.FontDao;
 
 public class FontListener extends MouseAdapter{
 	

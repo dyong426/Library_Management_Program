@@ -8,8 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import lmp.members.dao.FontDao;
-import lmp.members.dao.ThemeDao;
+import lmp.members.db.dao.FontDao;
+import lmp.members.db.dao.ThemeDao;
 import lmp.members.menu.readingroom.ReadingRoomPanel;
 import lmp.members.menu.readingroom.seatlist.label.GenderPanel;
 import lmp.members.menu.readingroom.usagelist.label.UsageListCheckOutLabel;

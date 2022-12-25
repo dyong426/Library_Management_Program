@@ -4,11 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
-import lmp.members.dao.ThemeDao;
+import lmp.members.db.dao.ThemeDao;
+import lmp.members.db.vo.ThemeVO;
 import lmp.members.memberframe.button.OptionButton;
 import lmp.members.memberframe.frame.MemberFrame;
 import lmp.members.menu.setting.SettingMenu;
-import lmp.members.vo.ThemeVO;
 import lmp.util.theme.Theme;
 
 public class OptionButtonListener implements ActionListener{

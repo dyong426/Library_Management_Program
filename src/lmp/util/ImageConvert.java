@@ -9,10 +9,15 @@ import java.sql.SQLException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-import lmp.members.dao.ImageDao;
-import lmp.members.vo.ImageVO;
+import lmp.members.db.dao.ImageDao;
+import lmp.members.db.vo.ImageVO;
 
 public class ImageConvert {
+	
+	/*
+	 *  DB 이미지 경로 저장 불러오기 
+	 */
+	
 	
 	BufferedImage bufferedImage;
 	Image image;
@@ -21,7 +26,12 @@ public class ImageConvert {
 	ImageVO imageVO;
 	
 	
-	
+	/**
+	 * scaledImage 100*100
+	 * 
+	 * @param image_name
+	 * @return icon
+	 */
 	public ImageIcon scaledMenuImage(String image_name) {
 		try {
 			imageVO = imageDao.getImage(image_name);
@@ -35,6 +45,12 @@ public class ImageConvert {
 		}
 	}
 	
+	/**
+	 * scaledImage 30*30
+	 * 
+	 * @param image_name
+	 * @return icon
+	 */
 	public ImageIcon scaledSmallImage(String image_name) {
 		try {
 			imageVO = imageDao.getImage(image_name);
@@ -48,6 +64,13 @@ public class ImageConvert {
 		}
 	}
 	
+	
+	/**
+	 * scaledImage 60*60
+	 * 
+	 * @param image_name
+	 * @return
+	 */
 	public ImageIcon scaledMgmtImage(String image_name) {
 		try {
 			imageVO = imageDao.getImage(image_name);
@@ -61,6 +84,13 @@ public class ImageConvert {
 		}
 	}
 	
+	/**
+	 * cardPanel 사이즈로 scaled
+	 * 1500 * 750
+	 * 
+	 * @param image_name
+	 * @return icon
+	 */
 	public ImageIcon scaledPanelImage(String image_name) {
 		try {
 			imageVO = imageDao.getImage(image_name);
@@ -73,6 +103,14 @@ public class ImageConvert {
 			return icon;
 		}
 	}
+	
+	/**
+	 * scaledImage 50*50
+	 * 
+	 * @param image_name
+	 * @return icon
+	 */
+	
 	
 	public ImageIcon scaledOptionImage(String image_name) {
 		try {
@@ -87,6 +125,15 @@ public class ImageConvert {
 		}
 	}
 	
+	/**
+	 * image insert DB
+	 * 
+	 * image_id
+	 * image_name
+	 * image_path
+	 * 
+	 * @param file
+	 */
 	public void inputImage(File file) {
 		try {
 			imageDao.addImage(file);

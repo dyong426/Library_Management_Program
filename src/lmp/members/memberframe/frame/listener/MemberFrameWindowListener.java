@@ -4,8 +4,8 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 
-import lmp.members.dao.MemberDao;
-import lmp.members.dao.MemberLogHistoryDao;
+import lmp.members.db.dao.MemberDao;
+import lmp.members.db.dao.MemberLogHistoryDao;
 
 public class MemberFrameWindowListener extends WindowAdapter {
 

@@ -20,12 +20,12 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.adminframe.frame.AdminFrame;
-import lmp.members.dao.BookDao;
-import lmp.members.dao.CheckOutDao;
-import lmp.members.dao.FontDao;
-import lmp.members.dao.ThemeDao;
-import lmp.members.vo.BookVO;
-import lmp.members.vo.CheckOutVO;
+import lmp.members.db.dao.BookDao;
+import lmp.members.db.dao.CheckOutDao;
+import lmp.members.db.dao.FontDao;
+import lmp.members.db.dao.ThemeDao;
+import lmp.members.db.vo.BookVO;
+import lmp.members.db.vo.CheckOutVO;
 import lmp.util.ImageConvert;
 import lmp.util.font.MyFont;
 import lmp.util.theme.Theme;

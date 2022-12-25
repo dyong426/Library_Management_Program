@@ -21,9 +21,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import lmp.admin.dao.BookDao;
-import lmp.admin.vo.BookVO;
-import lmp.admin.vo.LocationVO;
+import lmp.admin.db.dao.BookDao;
+import lmp.admin.db.vo.BookVO;
+import lmp.admin.db.vo.LocationVO;
 import lmp.util.ImageConvert;
 
 public class BookRegistrationFrame extends JFrame implements MouseListener, KeyListener {

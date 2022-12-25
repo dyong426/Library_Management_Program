@@ -4,6 +4,9 @@ import java.awt.Font;
 
 public class MyFont {
 
+	/**
+	 * 폰트 설정
+	 */
 	private Font title;
 	private Font text;
 	private Font table;

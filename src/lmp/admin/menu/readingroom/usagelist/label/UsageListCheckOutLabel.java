@@ -12,13 +12,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-import lmp.admin.dao.ReadingRoomDao;
-import lmp.admin.dao.SeatUseDetailDao;
+import lmp.admin.db.dao.ReadingRoomDao;
+import lmp.admin.db.dao.SeatUseDetailDao;
+import lmp.admin.db.vo.SeatUseDetailVO;
 import lmp.admin.menu.readingroom.ReadingRoomPanel;
 import lmp.admin.menu.readingroom.seatlist.SeatListPanel;
 import lmp.admin.menu.readingroom.usagelist.UsageListPanel;
 import lmp.admin.menu.readingroom.usagelist.scrollpane.table.UsageListTable;
-import lmp.admin.vo.SeatUseDetailVO;
 
 public class UsageListCheckOutLabel extends JLabel{
 	

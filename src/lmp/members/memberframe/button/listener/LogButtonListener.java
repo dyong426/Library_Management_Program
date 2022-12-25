@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
-import lmp.members.dao.MemberLogHistoryDao;
+import lmp.members.db.dao.MemberLogHistoryDao;
 import lmp.members.login.MemberLoginFrame;
 import lmp.members.memberframe.button.LogButton;
 import lmp.members.memberframe.frame.MemberFrame;

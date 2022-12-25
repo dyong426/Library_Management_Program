@@ -34,11 +34,12 @@ import javax.swing.table.DefaultTableModel;
 import lmp.admin.menu.book.BookMgmt;
 import lmp.admin.menu.member.MemberMgmt;
 import lmp.admin.adminframe.frame.AdminFrame;
-import lmp.admin.dao.AdminDao;
-import lmp.admin.dao.MemberDao;
-import lmp.admin.dao.MenuDao;
-import lmp.admin.vo.AdminVO;
-import lmp.admin.vo.MemberVO;
+import lmp.admin.db.dao.AdminDao;
+import lmp.admin.db.dao.MemberDao;
+import lmp.admin.db.dao.MenuDao;
+import lmp.admin.db.vo.AdminVO;
+import lmp.admin.db.vo.MemberVO;
+import lmp.admin.login.join.EmployeeRegistrationFrame;
 import lmp.util.ImageConvert;
 import lmp.util.Validator;
 

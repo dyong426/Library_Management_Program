@@ -9,12 +9,12 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-import lmp.admin.dao.ReadingRoomDao;
-import lmp.admin.dao.SeatUseDetailDao;
-import lmp.admin.vo.ReadingRoomVO;
-import lmp.admin.vo.SeatUseDetailVO;
-import lmp.members.dao.FontDao;
-import lmp.members.dao.ThemeDao;
+import lmp.admin.db.dao.ReadingRoomDao;
+import lmp.admin.db.dao.SeatUseDetailDao;
+import lmp.admin.db.vo.ReadingRoomVO;
+import lmp.admin.db.vo.SeatUseDetailVO;
+import lmp.members.db.dao.FontDao;
+import lmp.members.db.dao.ThemeDao;
 import lmp.members.menu.readingroom.ReadingRoomPanel;
 import lmp.members.menu.readingroom.seatlist.panel.SeatPanel;
 import lmp.util.font.MyFont;

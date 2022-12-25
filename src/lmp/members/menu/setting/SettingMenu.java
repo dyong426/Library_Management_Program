@@ -14,12 +14,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import lmp.members.dao.FontDao;
-import lmp.members.dao.ThemeDao;
+import lmp.members.db.dao.FontDao;
+import lmp.members.db.dao.ThemeDao;
+import lmp.members.db.vo.ThemeVO;
 import lmp.members.memberframe.frame.MemberFrame;
 import lmp.members.menu.setting.listener.FontListener;
 import lmp.members.menu.setting.listener.ThemeListener;
-import lmp.members.vo.ThemeVO;
 import lmp.util.theme.Theme;
 
 public class SettingMenu extends JFrame {

@@ -26,16 +26,20 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import lmp.members.dao.MemberDao;
-import lmp.members.dao.MemberLogHistoryDao;
+import lmp.members.db.dao.MemberDao;
+import lmp.members.db.dao.MemberLogHistoryDao;
+import lmp.members.db.vo.MemberVO;
 import lmp.members.login.find.FindID;
 import lmp.members.login.join.MemberJoin;
-import lmp.members.vo.MemberVO;
 import lmp.util.ImageConvert;
 import lmp.util.ShaPasswordEncoder;
 
 public class MemberLoginFrame extends JFrame {
 
+	/**
+	 * 회원 로그인 프레임
+	 */
+	
 	private JTextField idField;
 	private JPasswordField pwField;
 

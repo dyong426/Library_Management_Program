@@ -28,15 +28,15 @@ import lmp.admin.adminframe.frame.listener.AdminFrameWindowListener;
 import lmp.admin.adminframe.panel.HomePanel;
 import lmp.admin.adminframe.panel.MenuButtonPanel;
 import lmp.admin.adminframe.panel.MenuCardPanel;
-import lmp.admin.dao.SeatUseDetailDao;
+import lmp.admin.db.dao.SeatUseDetailDao;
+import lmp.admin.db.vo.SeatUseDetailVO;
 import lmp.admin.menu.book.BookMgmt;
 import lmp.admin.menu.checkin_out.Member_Searching_Panel;
 import lmp.admin.menu.employees.EmployeesMgmt;
 import lmp.admin.menu.member.MemberMgmt;
 import lmp.admin.menu.readingroom.ReadingRoomPanel;
-import lmp.admin.vo.SeatUseDetailVO;
-import lmp.members.dao.ThemeDao;
-import lmp.members.vo.ThemeVO;
+import lmp.members.db.dao.ThemeDao;
+import lmp.members.db.vo.ThemeVO;
 import lmp.util.theme.Theme;
 
 public class AdminFrame extends JFrame {

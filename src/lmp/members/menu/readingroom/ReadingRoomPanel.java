@@ -7,12 +7,12 @@ import java.util.ArrayList;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import lmp.admin.dao.ReadingRoomDao;
-import lmp.admin.dao.SeatUseDetailDao;
-import lmp.admin.vo.ReadingRoomVO;
-import lmp.admin.vo.SeatUseDetailVO;
-import lmp.members.dao.FontDao;
-import lmp.members.dao.ThemeDao;
+import lmp.admin.db.dao.ReadingRoomDao;
+import lmp.admin.db.dao.SeatUseDetailDao;
+import lmp.admin.db.vo.ReadingRoomVO;
+import lmp.admin.db.vo.SeatUseDetailVO;
+import lmp.members.db.dao.FontDao;
+import lmp.members.db.dao.ThemeDao;
 import lmp.members.menu.readingroom.seatlist.SeatListPanel;
 import lmp.members.menu.readingroom.seatlist.panel.StatusPanel;
 import lmp.members.menu.readingroom.usagelist.UsageListPanel;
