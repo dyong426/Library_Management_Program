@@ -40,11 +40,8 @@ public class ThemeDao extends MenuDao {
 				PreparedStatement pstmt = conn.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery();) {
 			while (rs.next()) {
-				getThemes.add(new ThemeVO(
-											rs.getInt("theme_id"), 
-											rs.getString("theme_name"),
-											rs.getString("theme_activation"))
-							);
+				getThemes.add(new ThemeVO(rs.getInt("theme_id"), rs.getString("theme_name"),
+						rs.getString("theme_activation")));
 			}
 
 		} catch (SQLException e) {
@@ -53,38 +50,38 @@ public class ThemeDao extends MenuDao {
 		return getThemes;
 	}
 
-public void addTheme(String theme_name) throws SQLException {
-		
+	public void addTheme(String theme_name) throws SQLException {
+
 		String sql = "INSERT INTO themes VALUES(theme_id_seq.nextval, ?)";
-		
+
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, theme_name);
-		
+
 		pstmt.executeUpdate();
-		
+
 		pstmt.close();
 		conn.close();
 	}
 
-public void setTheme(String theme_name) throws SQLException {
-	
-	String sql1 = "UPDATE themes SET theme_activation = 0 WHERE theme_name <> ?";
-	String sql2	= "UPDATE themes SET theme_activation = 1 WHERE theme_name = ?";
-	
-	Connection conn = getConnection();
-	PreparedStatement pstmt = conn.prepareStatement(sql1);
-	pstmt.setString(1, theme_name);
-	pstmt.executeUpdate();
-	
-	pstmt = conn.prepareStatement(sql2);
-	pstmt.setString(1, theme_name);
-	pstmt.executeUpdate();
-	
-	conn.commit();
-	
-	pstmt.close();
-	conn.close();
-}
+	public void setTheme(String theme_name) throws SQLException {
+
+		String sql1 = "UPDATE themes SET theme_activation = 0 WHERE theme_name <> ?";
+		String sql2 = "UPDATE themes SET theme_activation = 1 WHERE theme_name = ?";
+
+		Connection conn = getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql1);
+		pstmt.setString(1, theme_name);
+		pstmt.executeUpdate();
+
+		pstmt = conn.prepareStatement(sql2);
+		pstmt.setString(1, theme_name);
+		pstmt.executeUpdate();
+
+		conn.commit();
+
+		pstmt.close();
+		conn.close();
+	}
 
 }

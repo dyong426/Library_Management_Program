@@ -38,7 +38,7 @@ public class ImageDao extends MenuDao {
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, file.getName());
-		pstmt.setString(2, file.getPath());
+		pstmt.setString(2, "src/lmp/util/images/imageicon/" + file.getPath());
 		
 		
 		pstmt.executeUpdate();

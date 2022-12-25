@@ -25,8 +25,8 @@ import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
-import lmp.admin.AdminFrame;
 import lmp.admin.menu.book.BookMgmt;
+import lmp.admin.adminframe.frame.AdminFrame;
 import lmp.admin.dao.CheckOutDao;
 import lmp.admin.dao.MenuDao;
 import lmp.admin.dao.MemberDao;

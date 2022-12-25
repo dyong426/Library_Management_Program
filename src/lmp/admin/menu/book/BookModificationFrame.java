@@ -25,7 +25,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import lmp.admin.AdminFrame;
+import lmp.admin.adminframe.frame.AdminFrame;
 import lmp.admin.dao.BookDao;
 import lmp.admin.vo.LocationVO;
 import lmp.util.ImageConvert;

@@ -31,9 +31,9 @@ import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
-import lmp.admin.AdminFrame;
 import lmp.admin.menu.book.BookMgmt;
 import lmp.admin.menu.member.MemberMgmt;
+import lmp.admin.adminframe.frame.AdminFrame;
 import lmp.admin.dao.AdminDao;
 import lmp.admin.dao.MemberDao;
 import lmp.admin.dao.MenuDao;

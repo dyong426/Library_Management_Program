@@ -17,7 +17,7 @@ public class MemberFrameWindowListener extends WindowAdapter {
 		try {
 			if(memLogDao.getLog() != null) {
 			memLogDao.update(memLogDao.getLog());
-			} 
+			}
 		} catch (SQLException e1) {
 			return;
 		}

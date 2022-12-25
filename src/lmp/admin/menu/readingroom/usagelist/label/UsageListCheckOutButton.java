@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
-import lmp.admin.AdminFrame;
+import lmp.admin.adminframe.frame.AdminFrame;
 import lmp.admin.dao.ReadingRoomDao;
 import lmp.admin.dao.SeatUseDetailDao;
 import lmp.admin.menu.readingroom.ReadingRoomPanel;

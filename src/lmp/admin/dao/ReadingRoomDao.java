@@ -31,7 +31,9 @@ public class ReadingRoomDao extends MenuDao {
 		conn.close();
 		
 		Collections.sort(readingrooms);
+		
 		return readingrooms;
+		
 	}
 
 	

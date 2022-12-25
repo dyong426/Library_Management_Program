@@ -21,7 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import lmp.admin.AdminFrame;
+import lmp.admin.adminframe.frame.AdminFrame;
 import lmp.admin.dao.AdminDao;
 import lmp.admin.dao.AdminLogHistoryDao;
 import lmp.admin.menu.employees.EmployeeRegistrationFrame;
@@ -160,6 +160,8 @@ public class AdminLoginFrame extends JFrame{
 						JOptionPane.showMessageDialog(adminLoginFrame, "사원번호/비밀번호를 확인하세요");
 					}
 				} catch (HeadlessException e1) {
+					e1.printStackTrace();
+				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}
 			}

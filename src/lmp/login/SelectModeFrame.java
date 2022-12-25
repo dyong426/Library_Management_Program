@@ -24,8 +24,6 @@ import lmp.util.ImageConvert;
 import lmp.util.font.MyFont;
 import lmp.util.theme.Theme;
 
-
-
 public class SelectModeFrame extends JFrame {
 
 	AdminLoginFrame adminLogFrame;
