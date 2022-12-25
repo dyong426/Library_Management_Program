@@ -28,6 +28,7 @@ import lmp.admin.menu.employees.EmployeeRegistrationFrame;
 import lmp.admin.vo.AdminVO;
 import lmp.login.SelectModeFrame;
 import lmp.util.ImageConvert;
+import lmp.util.ShaPasswordEncoder;
 
 public class AdminLoginFrame extends JFrame{
 
@@ -42,6 +43,9 @@ public class AdminLoginFrame extends JFrame{
 	private JPasswordField pwField;
 
 	ImageConvert img = new ImageConvert();
+	ShaPasswordEncoder pwEncoder = new ShaPasswordEncoder();
+	
+	
 	public AdminLoginFrame(SelectModeFrame selectModeFrame) {
 		this.selectModeFrame = selectModeFrame;
 		initialize();
@@ -80,7 +84,7 @@ public class AdminLoginFrame extends JFrame{
 		loginPanel.add(pwTField);
 		
 		
-		pwField = new JPasswordField();
+		pwField = new JPasswordField("");
 		pwField.setBounds(50, 160, 300, 35);
 		loginPanel.add(pwField);
 		pwField.setColumns(30);
@@ -196,7 +200,7 @@ public class AdminLoginFrame extends JFrame{
 			if (adminVO == null) {
 				return false;
 			} else {
-				if (adminVO.getPw().equals(admin_pw)) {
+				if (pwEncoder.matches(admin_pw,adminVO.getPw())) {
 					adminLogHistoryDao.add(adminVO);
 					return true;
 				} else {
@@ -205,11 +209,10 @@ public class AdminLoginFrame extends JFrame{
 			}
 			
 		}catch (NumberFormatException nfe) {
-			System.out.println("사원번호 확인");
 			return false;
 		}catch (SQLException e) {
-			e.printStackTrace();
-			System.out.println("sql exception");
+			return false;
+		} catch (Exception e) {
 			return false;
 		}
 	}

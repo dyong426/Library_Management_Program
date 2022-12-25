@@ -15,7 +15,7 @@ public class StatusLabel extends JLabel{
 		this.setHorizontalAlignment(JLabel.CENTER);
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		this.setForeground(Color.BLACK);
-		this.setFont(new Font("한컴 말랑말랑 Regular", Font.PLAIN, 15));
+		this.setFont(new Font("한컴 말랑말랑 Regular", Font.BOLD, 18));
 	}
 
 }

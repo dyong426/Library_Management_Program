@@ -23,12 +23,10 @@ public class SeatPanel extends JPanel{
 
 	ReadingRoomPanel readingRoomPanel;
 	int tens;
-	Theme theme = new Theme();
 	
 	public SeatPanel(ReadingRoomPanel readingRoomPanel, ArrayList<ReadingRoomVO> seatList, ArrayList<SeatUseDetailVO> sudVOs,int tensDigit) throws SQLException {
-		theme = readingRoomPanel.getTheme();
 		this.setLayout(gridLayout);
-		this.setBackground(theme.getSub1Color());
+		this.setBackground(getBackground());
 		this.readingRoomPanel = readingRoomPanel;
 		this.tens = tensDigit * 10;
 		
@@ -45,7 +43,6 @@ public class SeatPanel extends JPanel{
 		if (sudVOs != null) {
 
 			for (SeatUseDetailVO sudVO : sudVOs) {
-				System.out.println(sudVO);
 				int usageSeatNum = sudVO.getReadingroom().getSeatNum();
 				String sex = sudVO.getMember().getSex();
 				if (usageSeatNum >= tens + 1 && usageSeatNum <= tens + 10) {

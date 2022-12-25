@@ -6,13 +6,16 @@ import java.awt.GridLayout;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import lmp.members.dao.SeatUseDetailDao;
+import lmp.members.dao.ThemeDao;
 import lmp.members.menu.readingroom.seatlist.SeatListPanel;
 import lmp.members.menu.readingroom.seatlist.label.StatusLabel;
 import lmp.members.vo.SeatUseDetailVO;
+import lmp.util.theme.Theme;
 
 public class StatusPanel extends JPanel{
 
@@ -24,17 +27,28 @@ public class StatusPanel extends JPanel{
 	static SeatUseDetailDao sudDao = new SeatUseDetailDao();
 	ArrayList<SeatUseDetailVO> sudVOs = new ArrayList<>();
 	
+	ThemeDao themeDao = new ThemeDao();
+	Theme theme = new Theme();
+	
 	public StatusPanel() throws SQLException {
 		
 		setLayout(gridLayout);
 		setBounds(250, 180, 1000, 50);
-		setBackground(new Color(126, 151, 148));
+		setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
+		theme.setTheme(themeDao.getTheme().getName());
+		
 		for (int i = 0; i < LABELS.length; i++) {
 			LABELS[i] = new StatusLabel();
+			if (i%2 == 0) {				
+				LABELS[i].setBackground(theme.getSub2Color());
+				LABELS[i].setForeground(Color.WHITE);
+			}
 		}
 		sudVOs = sudDao.getUse();
 		
 		LABELS[0].setText("총 자리");
+		LABELS[0].setBackground(theme.getSub2Color());
+		
 		LABELS[1].setText("" + (seatListPanel.gridLayout.getColumns() * 10));
 		LABELS[2].setText("이용중인 자리");
 		LABELS[3].setText("" + sudVOs.size());
@@ -50,18 +64,11 @@ public class StatusPanel extends JPanel{
 	public void refresh() throws SQLException {
 	
 		sudVOs = sudDao.getUse();
-		
-		LABELS[0].setText("총 자리");
-		LABELS[1].setText("" + (seatListPanel.gridLayout.getColumns() * 10));
-		LABELS[2].setText("이용중인 자리");
 		LABELS[3].setText("" + sudVOs.size());
-		LABELS[4].setText("남은 자리");
 		LABELS[5].setText("" + ( seatListPanel.gridLayout.getColumns() * 10  - sudVOs.size()));
 		for (JLabel label : LABELS) {
 			this.add(label);
 		}
-		LABELS[3].setText("" + sudVOs.size());
-		LABELS[5].setText("" + (seatListPanel.gridLayout.getColumns() * 10 - sudVOs.size()));
 		this.validate();
 	}
 	

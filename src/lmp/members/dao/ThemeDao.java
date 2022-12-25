@@ -8,48 +8,51 @@ import java.util.ArrayList;
 
 import lmp.members.vo.ThemeVO;
 
-public class ThemeDao extends MenuDao{
-	
+public class ThemeDao extends MenuDao {
+
 	public ThemeVO getTheme() throws SQLException {
-		
+
 		String sql = "SELECT * FROM themes WHERE theme_activation = ?";
-		
+
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, 1);
 		ResultSet rs = pstmt.executeQuery();
-		
+
 		ThemeVO themeVO = null;
 		while (rs.next()) {
-			themeVO = new ThemeVO(rs.getInt("theme_id"),rs.getString("theme_name"),rs.getString("theme_activation"));
+			themeVO = new ThemeVO(rs.getInt("theme_id"), rs.getString("theme_name"), rs.getString("theme_activation"));
 		}
-		
+
 		rs.close();
 		pstmt.close();
 		conn.close();
-		
+
 		return themeVO;
 	}
-	
-public ArrayList<ThemeVO> getThemes() throws SQLException {
-		
+
+	public ArrayList<ThemeVO> getThemes() {
+
 		String sql = "SELECT * FROM themes";
-		
-		Connection conn = getConnection();
-		PreparedStatement pstmt = conn.prepareStatement(sql);
-		ResultSet rs = pstmt.executeQuery();
-		
 		ArrayList<ThemeVO> getThemes = new ArrayList<>();
-		while (rs.next()) {
-			getThemes.add(new ThemeVO(rs.getInt("theme_id"),rs.getString("theme_name"),rs.getString("theme_activation")));
+
+		try (Connection conn = getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();) {
+			while (rs.next()) {
+				getThemes.add(new ThemeVO(
+											rs.getInt("theme_id"), 
+											rs.getString("theme_name"),
+											rs.getString("theme_activation"))
+							);
+			}
+
+		} catch (SQLException e) {
+
 		}
-		
-		rs.close();
-		pstmt.close();
-		conn.close();
 		return getThemes;
 	}
-	
+
 public void addTheme(String theme_name) throws SQLException {
 		
 		String sql = "INSERT INTO themes VALUES(theme_id_seq.nextval, ?)";

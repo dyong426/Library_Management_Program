@@ -160,10 +160,11 @@ public class MemberPanel extends JPanel {
 
 		setBtn(changeBtn, 18, 1200, 600);
 		changeBtn.setIcon(img.scaledMgmtImage("modification"));
+		changeBtn.setForeground(Color.WHITE);
 
 		setBtn(deleteBtn, 18, 1300, 600);
 		deleteBtn.setIcon(img.scaledMgmtImage("memberdelete"));
-
+		deleteBtn.setForeground(Color.WHITE);
 		
 		
 		// 수정버튼 구현
@@ -270,19 +271,28 @@ public class MemberPanel extends JPanel {
 						if (vd.isValidatePhone(phoneField.getText()))  {
 							MemberVO memberVO = null;
 							try {
+								mvo = mdao.getLog().getMemberVO();
 								memberVO = memberDao.getExist(2, phoneField.getText());
 							} catch (SQLException e1) {
 								JOptionPane.showMessageDialog(null, "사용가능합니다");
-
+								changeBtn2.setEnabled(true);
 							} catch (IndexOutOfBoundsException e2) {
 								JOptionPane.showMessageDialog(null, "사용가능합니다");
 								changeBtn2.setEnabled(true);
 							}
 
 							if (memberVO != null) {
-								JOptionPane.showMessageDialog(null, "중복되는 전화번호입니다.",
-										"경고", JOptionPane.ERROR_MESSAGE);
-								changeBtn2.setEnabled(false);
+								if (memberVO.getNum().equals(mvo.getNum())) {	
+									JOptionPane.showMessageDialog(null, "사용가능합니다");
+									changeBtn2.setEnabled(true);
+								} else {
+									JOptionPane.showMessageDialog(null, "사용 불가능한 전화번호입니다",
+											"경고", JOptionPane.ERROR_MESSAGE);
+									changeBtn2.setEnabled(false);
+								}
+							} else {
+								JOptionPane.showMessageDialog(null, "사용가능합니다");
+								changeBtn2.setEnabled(true);
 							}
 						} else {
 							JOptionPane.showMessageDialog(null, "사용 불가능한 전화번호입니다",
@@ -300,6 +310,7 @@ public class MemberPanel extends JPanel {
 						if (vd.isValidateEmail(emailField.getText()))  {
 							MemberVO memberVO = null;
 							try {
+								mvo = mdao.getLog().getMemberVO();
 								memberVO = memberDao.getExist(3, emailField.getText());
 							} catch (SQLException e1) {
 								JOptionPane.showMessageDialog(null, "사용가능합니다");
@@ -310,9 +321,18 @@ public class MemberPanel extends JPanel {
 							}
 
 							if (memberVO != null) {
-								JOptionPane.showMessageDialog(null, "중복되는 이메일입니다.",
-										"경고", JOptionPane.ERROR_MESSAGE);
-								changeBtn2.setEnabled(false);
+								
+								if (memberVO.getNum().equals(mvo.getNum())) {
+									JOptionPane.showMessageDialog(null, "사용가능합니다");
+									changeBtn2.setEnabled(true);
+								} else {
+									JOptionPane.showMessageDialog(null, "중복되는 이메일입니다.",
+											"경고", JOptionPane.ERROR_MESSAGE);
+									changeBtn2.setEnabled(false);									
+								}
+							} else {
+								JOptionPane.showMessageDialog(null, "사용가능합니다");
+								changeBtn2.setEnabled(true);
 							}
 						} else {
 							JOptionPane.showMessageDialog(null, "사용 불가능한 이메일입니다",
@@ -351,12 +371,14 @@ public class MemberPanel extends JPanel {
 											addressField.getText()
 											);
 								} catch (Exception e2) {
-									e2.printStackTrace();
+									JOptionPane.showMessageDialog(null, "입력 정보를 확인하세요", "경고",
+											JOptionPane.ERROR_MESSAGE);
 								}
 								try {
 									mdao.update(vo);
 								} catch (SQLException e1) {
-									e1.printStackTrace();
+									JOptionPane.showMessageDialog(null, "입력 정보를 확인하세요", "경고",
+											JOptionPane.ERROR_MESSAGE);
 								}
 
 

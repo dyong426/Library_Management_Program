@@ -191,7 +191,7 @@ public class AdminDao extends MenuDao{
 		String sql = "DELETE FROM admins WHERE admin_num = ?";
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, adminNum);
+		pstmt.setInt(1, Integer.parseInt(adminNum));
 		
 		pstmt.executeUpdate();
 		

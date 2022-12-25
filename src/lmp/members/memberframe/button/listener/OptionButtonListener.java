@@ -21,7 +21,7 @@ public class OptionButtonListener implements ActionListener{
 	public OptionButtonListener(MemberFrame memberFrame) {
 		this.memberFrame = memberFrame;
 		try {
-			setMenu = new SettingMenu(this.memberFrame);
+			setMenu = new SettingMenu(memberFrame);
 		} catch (SQLException e) {
 		}
 	}
