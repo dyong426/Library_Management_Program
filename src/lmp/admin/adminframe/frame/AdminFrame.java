@@ -36,6 +36,7 @@ import lmp.admin.menu.member.MemberMgmt;
 import lmp.admin.menu.readingroom.ReadingRoomPanel;
 import lmp.admin.vo.SeatUseDetailVO;
 import lmp.members.dao.ThemeDao;
+import lmp.members.vo.ThemeVO;
 import lmp.util.theme.Theme;
 
 public class AdminFrame extends JFrame {
@@ -158,8 +159,8 @@ public class AdminFrame extends JFrame {
 	
 	// 버튼 누르기 전 초기 화면 이미지 설정
 	public void initialize() throws SQLException {
-		String getTheme = themeDao.getTheme();
-		theme.setTheme(getTheme);
+		ThemeVO getTheme = themeDao.getTheme();
+		theme.setTheme(getTheme.getName());
 		
 		panel.setLayout(null);
 		panel.setPreferredSize(new Dimension(1900, 1000));

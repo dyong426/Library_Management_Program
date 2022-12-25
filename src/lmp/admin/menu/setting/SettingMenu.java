@@ -17,9 +17,9 @@ import javax.swing.SwingConstants;
 import lmp.admin.adminframe.frame.AdminFrame;
 import lmp.members.dao.FontDao;
 import lmp.members.dao.ThemeDao;
-import lmp.members.memberframe.frame.MemberFrame;
 import lmp.members.menu.setting.listener.FontListener;
 import lmp.members.menu.setting.listener.ThemeListener;
+import lmp.members.vo.ThemeVO;
 import lmp.util.theme.Theme;
 
 public class SettingMenu extends JFrame {
@@ -33,7 +33,7 @@ public class SettingMenu extends JFrame {
 	ThemeDao themeDao = new ThemeDao();
 	Theme theme = new Theme();
 	FontDao fontDao = new FontDao();
-	ArrayList<String> themes = new ArrayList<>();
+	ArrayList<ThemeVO> themes = new ArrayList<>();
 	ArrayList<String> fonts = new ArrayList<>();
 	AdminFrame adminFrame;
 	
@@ -69,7 +69,7 @@ public class SettingMenu extends JFrame {
 		themeBtns = new JButton[themes.size()];
 
 		for (int i = 0; i < themes.size(); i++) {
-			themeBtns[i] = getThemeButton(themes.get(i));
+			themeBtns[i] = getThemeButton(themes.get(i).getName());
 		}
 		
 		for (JButton themeBtn : themeBtns) {

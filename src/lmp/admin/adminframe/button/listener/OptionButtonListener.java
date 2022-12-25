@@ -33,7 +33,7 @@ public class OptionButtonListener implements ActionListener{
 			try {
 				setMenu = new SettingMenu(this.adminFrame);
 				setMenu.setVisible(true);
-				theme.setTheme(themeDao.getTheme());
+				theme.setTheme(themeDao.getTheme().getName());
 			} catch (SQLException e1) {
 				e1.printStackTrace();
 			}
