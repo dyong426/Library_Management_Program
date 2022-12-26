@@ -1,6 +1,7 @@
 package lmp.members.menu.readingroom.usagelist;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import javax.swing.JPanel;
 

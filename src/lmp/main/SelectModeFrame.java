@@ -57,7 +57,7 @@ public class SelectModeFrame extends JFrame {
 				}
 			}
 		});
-		memberBtn.setBounds(70, 70, 120, 120);
+		memberBtn.setBounds(70, 70, 120, 130);
 		memberBtn.setIcon(img.scaledMenuImage("membersEntrance"));
 
 		JButton managerBtn = getButton("관리자용");
@@ -69,7 +69,7 @@ public class SelectModeFrame extends JFrame {
 				adminLoginFrame.setVisible(true);
 			}
 		});
-		managerBtn.setBounds(210, 70, 120, 120);
+		managerBtn.setBounds(210, 70, 120, 130);
 		managerBtn.setIcon(img.scaledMenuImage("employeeEntrance"));
 
 		JPanel panel = new JPanel();
@@ -92,7 +92,6 @@ public class SelectModeFrame extends JFrame {
 			{
 				setHorizontalTextPosition(CENTER);
 				setVerticalTextPosition(BOTTOM);
-				setForeground(Color.WHITE);
 				setFont(myFont.getText());
 				setText(text);
 				if (!getText().equals("")) {

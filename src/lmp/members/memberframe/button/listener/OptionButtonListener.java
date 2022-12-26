@@ -14,21 +14,19 @@ import lmp.util.theme.Theme;
 public class OptionButtonListener implements ActionListener{
 
 	MemberFrame memberFrame;
-	SettingMenu setMenu;
-	static ThemeDao themeDao = new ThemeDao();
+	SettingMenu setMenu = new SettingMenu();
+	
 	Theme theme = new Theme();
 	
-	public OptionButtonListener(MemberFrame memberFrame) {
+	public OptionButtonListener(MemberFrame memberFrame) throws SQLException {
 		this.memberFrame = memberFrame;
-		try {
-			setMenu = new SettingMenu(this.memberFrame);
-		} catch (SQLException e) {
-		}
+		setMenu.setMemberFrame(memberFrame);
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+		ThemeDao themeDao = new ThemeDao();
 		OptionButton btn = (OptionButton) e.getSource();
 		if (btn.getToolTipText().equals("홈 화면")) {
 			this.memberFrame.getMenuCardPanel().getCard().show(this.memberFrame.getMenuCardPanel(), "홈 화면");

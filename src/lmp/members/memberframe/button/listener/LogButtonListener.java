@@ -27,7 +27,7 @@ public class LogButtonListener implements ActionListener {
 		
 		LogButton btn = (LogButton) e.getSource();
 		
-		if (btn.getText().equals("로그인")) {
+		if (btn.getToolTipText().equals("로그인")) {
 			try {
 				if (memLogDao.getLog() != null) {
 					JOptionPane.showMessageDialog(memberFrame, "로그인 상태입니다.");
@@ -51,7 +51,6 @@ public class LogButtonListener implements ActionListener {
 									JOptionPane.INFORMATION_MESSAGE, null);
 					if (var == JOptionPane.YES_OPTION) {
 						memLogDao.update(memLogDao.getLog());
-						System.out.println("로그아웃");
 						this.memberFrame.getLoginButton().setVisible(true);
 						this.memberFrame.getMenuCardPanel().getCard().show(this.memberFrame.getMenuCardPanel(), "홈 화면");
 						

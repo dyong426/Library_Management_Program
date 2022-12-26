@@ -44,9 +44,9 @@ public class SeatListPanel extends JPanel{
 		this.readingRoomPanel = readingRoomPanel;
 		theme = readingRoomPanel.getTheme();
 		setLayout(gridLayout);
-		setBorder(new TitledBorder(new LineBorder(theme.getSub1Color(), 20)));
-		setBackground(theme.getSub1Color());
-		setBounds(20,280, 1460, 400);
+		setBorder(new TitledBorder(new LineBorder(new Color(0, 0, 0, 0), 20)));
+		setBackground(new Color(0, 0, 0, 0));
+		setBounds(20, 280, 1460, 400);
 		
 		seatList = roomDao.get();
 		sudVOs = sudDao.get();

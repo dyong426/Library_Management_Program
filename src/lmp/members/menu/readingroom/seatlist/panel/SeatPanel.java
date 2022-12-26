@@ -26,7 +26,7 @@ public class SeatPanel extends JPanel{
 	
 	public SeatPanel(ReadingRoomPanel readingRoomPanel, ArrayList<ReadingRoomVO> seatList, ArrayList<SeatUseDetailVO> sudVOs,int tensDigit) throws SQLException {
 		this.setLayout(gridLayout);
-		this.setBackground(getBackground());
+		this.setBackground(new Color(0, 0, 0, 0));
 		this.readingRoomPanel = readingRoomPanel;
 		this.tens = tensDigit * 10;
 		

@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,18 +33,16 @@ public class SettingMenu extends JFrame {
 	JPanel fontPanel;
 	JButton[] themeBtns;
 	JButton[] fontBtns;
-	static ThemeDao themeDao = new ThemeDao();
 	Theme theme = new Theme();
-	static FontDao fontDao = new FontDao();
+	ThemeDao themeDao = new ThemeDao();;
+	FontDao fontDao = new FontDao();
 	ArrayList<ThemeVO> themes = new ArrayList<>();
 	ArrayList<String> fonts = new ArrayList<>();
 	MemberFrame memberFrame;
 	
-	public SettingMenu(MemberFrame memberFrame) throws SQLException {
-		this.memberFrame = memberFrame;
-		SettingMenu setMenu = this;
+	public SettingMenu() throws SQLException {
 		getContentPane().setLayout(null);
-
+		
 		JLabel titleLabel = new JLabel("설정");
 		titleLabel.setFont(new Font("굴림", Font.BOLD, 30));
 		titleLabel.setForeground(Color.BLACK);
@@ -61,12 +60,6 @@ public class SettingMenu extends JFrame {
 		getContentPane().add(themePanel);
 		themePanel.setLayout(gridLayout);
 		
-		themes.addAll(themeDao.getThemes());
-		themeBtns = new JButton[themes.size()];
-		
-		for (int i = 0; i < themes.size(); i++) {
-			themeBtns[i] = getThemeButton(themes.get(i));
-		}	
 
 		JLabel fontTitleLabel = new JLabel("폰트크기");
 		fontTitleLabel.setBounds(12, 135, 57, 15);
@@ -77,15 +70,7 @@ public class SettingMenu extends JFrame {
 		getContentPane().add(fontPanel);
 		fontPanel.setLayout(new GridLayout(1, 3, 5, 5));
 		
-		
-		fonts.addAll(fontDao.getFonts());
-		fontBtns = new JButton[fonts.size()];
-		
-		for (int i = 0; i < fonts.size(); i++) {
-			fontBtns[i] = getFontButton(fonts.get(i));
-		}
-		
-		
+		SettingMenu setMenu = this;
 		JButton btnNewButton = new JButton("닫기");
 		btnNewButton.setBounds(275, 228, 97, 23);
 		btnNewButton.addActionListener(new ActionListener() {
@@ -111,7 +96,21 @@ public class SettingMenu extends JFrame {
 		
 	}
 
-	public void initialize() {
+	public void initialize() throws SQLException {
+		
+		themes.addAll(themeDao.getThemes());
+		themeBtns = new JButton[themes.size()];
+		for (int i = 0; i < themes.size(); i++) {
+			themeBtns[i] = getThemeButton(themes.get(i));
+		}	
+		
+		fonts.addAll(fontDao.getFonts());
+		fontBtns = new JButton[fonts.size()];
+		
+		for (int i = 0; i < fonts.size(); i++) {
+			fontBtns[i] = getFontButton(fonts.get(i));
+		}
+		
 		ThemeListener themeListener = new ThemeListener(themeBtns);
 		for (JButton themeBtn : themeBtns) {
 			themeBtn.addMouseListener(themeListener);
@@ -159,5 +158,11 @@ public class SettingMenu extends JFrame {
 			}
 		};
 	}
+
+	public void setMemberFrame(MemberFrame memberFrame) {
+		this.memberFrame = memberFrame;
+	}
+	
+	
 
 }

@@ -43,6 +43,8 @@ public class CheckOutDao extends MenuDao{
 		
 		pstmt.executeUpdate();
 		
+		conn.commit();
+		
 		pstmt.close();
 		conn.close();
 	}
@@ -70,6 +72,8 @@ public class CheckOutDao extends MenuDao{
 		pstmt.setInt(1,checkOutVO.getCheckOutID());
 		
 		pstmt.executeUpdate();
+		
+		conn.commit();
 		
 		pstmt.close();
 		conn.close();

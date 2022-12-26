@@ -11,7 +11,7 @@ public class StatusLabel extends JLabel{
 	public StatusLabel() {
 
 		this.setOpaque(true);
-		this.setBackground(Color.WHITE);
+		this.setBackground(new Color(0, 0, 0, 0));
 		this.setHorizontalAlignment(JLabel.CENTER);
 		this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		this.setForeground(Color.BLACK);

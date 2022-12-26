@@ -3,6 +3,7 @@ package lmp.admin.login;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -27,8 +29,10 @@ import lmp.admin.db.dao.AdminLogHistoryDao;
 import lmp.admin.db.vo.AdminVO;
 import lmp.admin.login.join.EmployeeRegistrationFrame;
 import lmp.main.SelectModeFrame;
+import lmp.members.db.dao.ThemeDao;
 import lmp.util.ImageConvert;
 import lmp.util.ShaPasswordEncoder;
+import lmp.util.theme.Theme;
 
 public class AdminLoginFrame extends JFrame{
 	/**
@@ -48,6 +52,9 @@ public class AdminLoginFrame extends JFrame{
 	ImageConvert img = new ImageConvert();
 	ShaPasswordEncoder pwEncoder = new ShaPasswordEncoder();
 	
+	ThemeDao themeDao = new ThemeDao();
+	Theme theme = new Theme();
+	
 	
 	public AdminLoginFrame(SelectModeFrame selectModeFrame) {
 		this.selectModeFrame = selectModeFrame;
@@ -59,6 +66,10 @@ public class AdminLoginFrame extends JFrame{
 	 */
 	public void initialize() {
 		adminLoginFrame = this;
+		try {
+			theme.setTheme(themeDao.getTheme().getName());
+		} catch (SQLException e2) {
+		}
 		setAutoRequestFocus(false);
 		setBounds(100, 100, 400, 350);
 		setResizable(false);
@@ -70,7 +81,7 @@ public class AdminLoginFrame extends JFrame{
 		JPanel loginPanel = new JPanel();
 		getContentPane().add(loginPanel, BorderLayout.CENTER);
 		loginPanel.setLayout(null);
-		loginPanel.setBackground(new Color(186, 206, 194));
+		loginPanel.setBackground(theme.getSub2Color());
 		loginPanel.setFocusCycleRoot(true);
 		
 		
@@ -104,7 +115,10 @@ public class AdminLoginFrame extends JFrame{
 		loginPanel.add(loginImageLabel);
 		
 		JLabel joinLabel = new JLabel("회원가입");
+		joinLabel.setFont(new Font("한컴 말랑말랑 Regular", Font.PLAIN, 15));
 		joinLabel.setBounds(290, 270, 70, 15);
+		loginBtn.setBackground(Color.WHITE);
+		loginBtn.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		joinLabel.addMouseListener(getMouseListener());
 		loginPanel.add(joinLabel);
 		

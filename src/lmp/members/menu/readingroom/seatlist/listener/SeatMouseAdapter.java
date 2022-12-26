@@ -26,7 +26,6 @@ public class SeatMouseAdapter extends MouseAdapter{
 	MemberDao memberDao = new MemberDao();
 	MemberLogHistoryVO memLogVO;
 	MemberVO memberVO;
-	MemberLoginFrame memLogFrame = new MemberLoginFrame();
 	ReadingRoomPanel readingRoomPanel;
 	public SeatMouseAdapter(ReadingRoomPanel readingRoomPanel) {
 	this.readingRoomPanel = readingRoomPanel;
@@ -35,6 +34,7 @@ public class SeatMouseAdapter extends MouseAdapter{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
+		MemberLoginFrame memLogFrame = new MemberLoginFrame();
 		SeatLabel seatLabel = (SeatLabel) e.getSource();
 		int seat_num = Integer.parseInt(seatLabel.getText().replace("|",""));
 		try {

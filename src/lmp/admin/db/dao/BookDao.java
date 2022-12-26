@@ -65,8 +65,10 @@ public class BookDao extends MenuDao{
 		pstmt.setString(9, bookVO.getNote());
 			
 		pstmt.executeUpdate();
-			
+		
+		conn.commit();
 		pstmt.close();
+		
 		conn.close();
 		
 	}

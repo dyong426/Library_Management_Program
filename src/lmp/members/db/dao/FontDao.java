@@ -69,12 +69,11 @@ public class FontDao extends MenuDao{
 	 */
 	public void addTheme(String font_size) throws SQLException {
 
-		String sql = "INSERT INTO fonts VALUES(font_id_seq.nextval, ?,?)";
+		String sql = "INSERT INTO fonts VALUES(font_id_seq.nextval, ?,'0')";
 
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, font_size);
-		pstmt.setString(2, "0");
 
 		pstmt.executeUpdate();
 
@@ -90,12 +89,11 @@ public class FontDao extends MenuDao{
 	 */
 	public void setFont(String font_size) throws SQLException {
 
-		String sql1 = "UPDATE fonts SET font_activation = 0 WHERE font_size <> ?";
-		String sql2 = "UPDATE fonts SET font_activation = 1 WHERE font_size = ?";
+		String sql1 = "UPDATE fonts SET font_activation = '0'";
+		String sql2 = "UPDATE fonts SET font_activation = '1' WHERE font_size = ?";
 
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql1);
-		pstmt.setString(1, font_size);
 		pstmt.executeUpdate();
 
 		pstmt = conn.prepareStatement(sql2);

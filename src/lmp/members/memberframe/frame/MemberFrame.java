@@ -116,7 +116,7 @@ public class MemberFrame extends JFrame{
 		
 	}
 	
-	public void initialize() {
+	public void initialize() throws SQLException {
 		MenuButtonListener mbl = new MenuButtonListener(this);
 		LogButtonListener lbl = new LogButtonListener(this);
 		OptionButtonListener obl = new OptionButtonListener(this);

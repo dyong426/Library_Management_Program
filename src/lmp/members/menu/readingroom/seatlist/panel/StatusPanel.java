@@ -34,20 +34,21 @@ public class StatusPanel extends JPanel{
 		
 		setLayout(gridLayout);
 		setBounds(250, 180, 1000, 50);
-		setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
+		setBackground(new Color(0, 0, 0, 0));
+		setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		theme.setTheme(themeDao.getTheme().getName());
 		
 		for (int i = 0; i < LABELS.length; i++) {
 			LABELS[i] = new StatusLabel();
 			if (i%2 == 0) {				
-				LABELS[i].setBackground(theme.getSub2Color());
+				LABELS[i].setBackground(new Color(0, 0, 0, 0));
 				LABELS[i].setForeground(Color.WHITE);
 			}
 		}
 		sudVOs = sudDao.getUse();
 		
 		LABELS[0].setText("총 자리");
-		LABELS[0].setBackground(theme.getSub2Color());
+		LABELS[0].setBackground(new Color(0, 0, 0, 0));
 		
 		LABELS[1].setText("" + (seatListPanel.gridLayout.getColumns() * 10));
 		LABELS[2].setText("이용중인 자리");

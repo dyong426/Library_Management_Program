@@ -135,28 +135,28 @@ public class MemberPanel extends JPanel {
 		setlabel(memberInfo, 35, 30, 30);
 
 		setlabel(membernum, 30, 200, 150);
-		setlabel(membernum2, 30, 450, 150);
+		setlabel(membernum2, 25, 450, 150);
 
 		setlabel(membername, 30, 250, 250);
-		setlabel(membername2, 30, 450, 250);
+		setlabel(membername2, 25, 450, 250);
 
 		setlabel(memberId, 30, 230, 350);
-		setlabel(memberId2, 30, 450, 350);
+		setlabel(memberId2, 25, 450, 350);
 
 		setlabel(memberbirth, 30, 200, 450);
-		setlabel(memberbirth2, 30, 450, 450);
+		setlabel(memberbirth2, 25, 450, 450);
 
 		setlabel(membersex, 30, 250, 550);
-		setlabel(membersex2, 30, 450, 550);
+		setlabel(membersex2, 25, 450, 550);
 
 		setlabel(memberphone, 30, 750, 150);
-		setlabel(memberphone2, 30, 980, 150);
+		setlabel(memberphone2, 25, 980, 150);
 
 		setlabel(memberemail, 30, 780, 250);
-		setlabel(memberemail2, 20, 980, 250);
+		setlabel(memberemail2, 25, 980, 250);
 
 		setlabel(memberaddress, 30, 800, 350);
-		setlabel(memberaddress2, 30, 980, 350);
+		setlabel(memberaddress2, 25, 980, 350);
 
 		setBtn(changeBtn, 18, 1200, 600);
 		changeBtn.setIcon(img.scaledMgmtImage("modification"));
@@ -416,9 +416,9 @@ public class MemberPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				CheckOutDao checkOutDao = new CheckOutDao();
 				ArrayList<CheckOutVO> checkOutVO = new ArrayList();
-
+				
 				try {
-					checkOutVO.addAll(checkOutDao.get(mvo.getNum().toString()));
+					checkOutVO.addAll(checkOutDao.get(3, mvo.getNum().toString()));
 				} catch (SQLException e2) {
 					e2.printStackTrace();
 				}
@@ -463,7 +463,7 @@ public class MemberPanel extends JPanel {
 		Font font = new Font("한컴 말랑말랑 Bold", Font.BOLD, size);
 		label.setFont(font);
 		label.setForeground(Color.WHITE);
-		label.setBounds(x, y, 300, 40);
+		label.setBounds(x, y, 350, 40);
 		add(label);
 	}
 

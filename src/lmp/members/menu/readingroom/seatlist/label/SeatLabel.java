@@ -25,7 +25,7 @@ public class SeatLabel extends JLabel{
 		setOpaque(true);
 		setForeground(Color.BLACK);
 		setBackground(Color.WHITE);
-		setBorder(BorderFactory.createLineBorder(Color.BLACK, 3));
+		setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		setHorizontalAlignment(JLabel.CENTER);
 		setFont(new Font("한컴 말랑말랑 Regular", Font.PLAIN, 20));
 		

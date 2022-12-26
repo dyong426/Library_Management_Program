@@ -25,7 +25,7 @@ public class CheckOutMouseAdapter extends MouseAdapter {
 	MemberDao memberDao = new MemberDao();
 	MemberLogHistoryVO memLogVO;
 	MemberVO memberVO;
-	MemberLoginFrame memLogFrame = new MemberLoginFrame();
+	
 	ReadingRoomPanel readingRoomPanel;
 	
 	
@@ -35,6 +35,7 @@ public class CheckOutMouseAdapter extends MouseAdapter {
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
+		MemberLoginFrame memLogFrame = new MemberLoginFrame();
 		try {
 				memLogVO = memLogDao.getLog();
 				// 로그인 여부 확인

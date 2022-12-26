@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.imageio.ImageIO;
+import javax.print.DocFlavor.INPUT_STREAM;
 import javax.swing.ImageIcon;
 
 import lmp.members.db.dao.ImageDao;
@@ -117,6 +118,38 @@ public class ImageConvert {
 			imageVO = imageDao.getImage(image_name);
 			bufferedImage = ImageIO.read(new File(imageVO.getImage_path()));
 			image = bufferedImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+			icon = new ImageIcon(image);
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		} finally {			
+			return icon;
+		}
+	}
+	
+	/**
+	 * scaledImage 120*50
+	 * 
+	 * @param image_name
+	 * @return icon
+	 */
+	public ImageIcon scaledLogImage(String image_name) {
+		try {
+			imageVO = imageDao.getImage(image_name);
+			bufferedImage = ImageIO.read(new File(imageVO.getImage_path()));
+			image = bufferedImage.getScaledInstance(120, 50, Image.SCALE_SMOOTH);
+			icon = new ImageIcon(image);
+		} catch (IOException | SQLException e) {
+			e.printStackTrace();
+		} finally {			
+			return icon;
+		}
+	}
+	
+	public ImageIcon scaledLoginButtonImage(String image_name) {
+		try {
+			imageVO = imageDao.getImage(image_name);
+			bufferedImage = ImageIO.read(new File(imageVO.getImage_path()));
+			image = bufferedImage.getScaledInstance(302, 40, Image.SCALE_SMOOTH);
 			icon = new ImageIcon(image);
 		} catch (IOException | SQLException e) {
 			e.printStackTrace();

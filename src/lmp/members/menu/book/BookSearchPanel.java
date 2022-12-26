@@ -38,7 +38,7 @@ public class BookSearchPanel extends JPanel {
 
 	static JComboBox cb = new JComboBox(category);
 
-	static JTextField textF = new JTextField(" 검색어를 입력하세요.");
+	static JTextField textF = new JTextField();
 	
 	JPanel panel = this;
 
@@ -52,8 +52,8 @@ public class BookSearchPanel extends JPanel {
 		return model_BookMgmt;
 	}
 
-	public static BookDao bookDao = new BookDao();
-	public static ArrayList<BookVO> bookVO;
+	public BookDao bookDao = new BookDao();
+	public ArrayList<BookVO> bookVO;
 	// 도서현황 검색 창 초기화면 테이블
 	public JTable table_BookMgmt = AdminFrame.getTable(model_BookMgmt);
 	
@@ -95,7 +95,6 @@ public class BookSearchPanel extends JPanel {
 		button.setBounds(1010, 100, 120, 100);
 		button.setIcon(img.scaledMgmtImage("search"));
 		button.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// 검색 키워드로 검새된 결과 받아오기
@@ -155,16 +154,6 @@ public class BookSearchPanel extends JPanel {
 				table_BookMgmt.setModel(model_BookMgmt);
 				scroll.validate();
 				validate();
-			}
-		});
-		
-		textF.addMouseListener(new MouseAdapter() { // 검색 텍스트필드 안에 마우스 클릭 시 안내문구 삭제
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-				if (textF.getText().equals(" 검색어를 입력하세요.")) {
-					textF.setText("");
-				}
 			}
 		});
 		

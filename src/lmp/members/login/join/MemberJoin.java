@@ -67,13 +67,13 @@ public class MemberJoin extends JFrame {
 		JRadioButton maleBtn = new JRadioButton("남");
 		JRadioButton femaleBtn = new JRadioButton("여");
 
-		Integer[] years = {1950, 1951, 1952, 1953, 1954, 1955,
-				1956, 1957, 1958, 1959, 1960, 1961, 1962, 1963,
-				1964, 1965, 1966, 1967, 1968, 1969, 1970, 1971,
-				1972, 1973, 1974, 1975, 1976, 1977, 1978, 1979,
-				1980, 1981, 1982, 1983, 1984, 1985, 1986, 1987,
-				1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995,
-				1996, 1997, 1998, 1999, 2000, 2001, 2002};
+		String[] years = {"1950", "1951", "1952", "1953", "1954", "1955",
+				"1956", "1957", "1958", "1959", "1960", "1961", "1962", "1963",
+				"1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971",
+				"1972", "1973", "1974", "1975", "1976", "1977", "1978", "1979",
+				"1980", "1981", "1982", "1983", "1984", "1985", "1986", "1987",
+				"1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995",
+				"1996", "1997", "1998", "1999", "2000", "2001", "2002"};
 
 		String[] months = {"01", "02", "03","04", "05", "06", "07", "08", "09", "10", "11", "12"};
 		String[] days = {"01", "02", "03","04", "05", "06", "07", "08", "09", "10", "11", "12",
@@ -110,14 +110,14 @@ public class MemberJoin extends JFrame {
 				}
 			}
 		});
-		pwinfoField.addMouseListener(new MouseAdapter() {
+		pwinfoField.addFocusListener(new FocusAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void focusGained(FocusEvent e) {
 				pwField.setText("");
 				pwField.setForeground(Color.BLACK);
 				pwinfoField.setVisible(false);
 				pwField.setVisible(true);
-				pwField.requestFocus();
+				pwField.requestFocus();				
 			}
 		});
 
@@ -290,7 +290,7 @@ public class MemberJoin extends JFrame {
 							idField.getText(),
 							pwEncoder.encrypt(new String(pwField.getPassword())),
 							phoneField.getText(), 
-							Integer.toString((int)year.getSelectedItem() % 100)
+							year.getSelectedItem().toString().substring(2)
 							+ month.getSelectedItem()
 							+ day.getSelectedItem(),
 							(maleBtn.isSelected() ? "0" : "1"),

@@ -30,23 +30,23 @@ public class ThemeDao extends MenuDao {
 		return themeVO;
 	}
 
-	public ArrayList<ThemeVO> getThemes() {
+	public ArrayList<ThemeVO> getThemes() throws SQLException {
 
 		String sql = "SELECT * FROM themes";
+
+		Connection conn = getConnection();
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		ResultSet rs = pstmt.executeQuery();
+		
 		ArrayList<ThemeVO> getThemes = new ArrayList<>();
-
-		try (Connection conn = getConnection();
-			PreparedStatement pstmt = conn.prepareStatement(sql);
-			ResultSet rs = pstmt.executeQuery();
-		){
-			while (rs.next()) {
-				getThemes.add(new ThemeVO(rs.getInt("theme_id"), rs.getString("theme_name"),
-						rs.getString("theme_activation")));
-			}
-
-		} catch (SQLException e) {
-
+		while (rs.next()) {
+			getThemes.add(new ThemeVO(rs.getInt("theme_id"), rs.getString("theme_name"),
+					rs.getString("theme_activation")));
 		}
+		
+		rs.close();
+		pstmt.close();
+		conn.close();
 		return getThemes;
 	}
 

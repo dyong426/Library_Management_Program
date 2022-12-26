@@ -25,10 +25,10 @@ public class FontListener extends MouseAdapter{
 		JButton btn = (JButton) e.getSource();
 		
 		for (int i =0; i < btns.length;  i++) {
-			if (btns[i].getText() == btn.getText()) {
+			if (btns[i].getText().equals(btn.getText())) {
 				btns[i].setBackground(new Color(153,204,255));
 				try {
-					fontDao.setFont(btns[i].getText());
+					fontDao.setFont(btns[i].getText().toString());
 				} catch (SQLException e1) {
 					e1.printStackTrace();
 				}

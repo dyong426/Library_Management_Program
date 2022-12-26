@@ -18,6 +18,7 @@ import java.sql.SQLException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,11 +29,13 @@ import javax.swing.JTextField;
 
 import lmp.members.db.dao.MemberDao;
 import lmp.members.db.dao.MemberLogHistoryDao;
+import lmp.members.db.dao.ThemeDao;
 import lmp.members.db.vo.MemberVO;
 import lmp.members.login.find.FindID;
 import lmp.members.login.join.MemberJoin;
 import lmp.util.ImageConvert;
 import lmp.util.ShaPasswordEncoder;
+import lmp.util.theme.Theme;
 
 public class MemberLoginFrame extends JFrame {
 
@@ -42,24 +45,39 @@ public class MemberLoginFrame extends JFrame {
 	
 	private JTextField idField;
 	private JPasswordField pwField;
+	JLabel loginImageLabel;
 
 	MemberLoginFrame memberLoginFrame;
 	MemberDao memberDao = new MemberDao();
 	MemberLogHistoryDao memberLogHistoryDao = new MemberLogHistoryDao();
 	
 	Font font = new Font("한컴 말랑말랑 Regular", Font.PLAIN, 15);
-	
+	ThemeDao themeDao = new ThemeDao();
+	Theme theme = new Theme();
 	ImageConvert img = new ImageConvert();
 	
 	public MemberLoginFrame() {
+
+		loginImageLabel = new JLabel("이미지");
+		loginImageLabel.setFont(new Font("굴림", Font.PLAIN, 40));
+		loginImageLabel.setIcon(img.scaledMenuImage("dhlibrary"));
+		loginImageLabel.setBounds(140, 10, 100, 100);
+
+
+		
 		initialize();
 	}
 
 	/**
 	 * Initialize the contents of the frame.
+	 * @throws SQLException 
 	 */
 	public void initialize() {
 		memberLoginFrame = this;
+		try {
+			theme.setTheme(themeDao.getTheme().getName());
+		} catch (SQLException e2) {
+		}
 		setAutoRequestFocus(false);
 		setBounds(100, 100, 400, 350);
 		setResizable(false);
@@ -71,8 +89,7 @@ public class MemberLoginFrame extends JFrame {
 		JPanel loginPanel = new JPanel();
 		getContentPane().add(loginPanel, BorderLayout.CENTER);
 		loginPanel.setLayout(null);
-		loginPanel.setBackground(new Color(186, 206, 194));
-		loginPanel.setFocusCycleRoot(true);
+		loginPanel.setBackground(theme.getSub2Color());
 
 
 
@@ -82,21 +99,21 @@ public class MemberLoginFrame extends JFrame {
 		idField.setColumns(30);
 
 
+		JTextField pwTField = new JTextField("비밀번호");
+		pwTField.setBounds(50, 160, 300, 35);
+		pwTField.setVisible(true);
+		loginPanel.add(pwTField);
 
 		pwField = new JPasswordField();
 		pwField.setBounds(50, 160, 300, 35);
 		loginPanel.add(pwField);
 		pwField.setColumns(30);
 		
-		JTextField pwTField = new JTextField("비밀번호");
-		pwTField.setBounds(50, 160, 300, 35);
-		loginPanel.add(pwTField);
 
 		JButton loginBtn = new JButton("로그인");
 		loginBtn.setBounds(49, 210, 302, 40);
-		loginBtn.setBackground(new Color(87, 119, 119));
-		loginBtn.setFont(font);
-		loginBtn.setForeground(Color.WHITE);
+		loginBtn.setBackground(Color.WHITE);
+		loginBtn.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		loginBtn.addMouseListener(getMouseListener());
 		loginBtn.setFocusPainted(false);
 		loginPanel.add(loginBtn);
@@ -114,15 +131,7 @@ public class MemberLoginFrame extends JFrame {
 		joinLabel.setFont(font);
 		joinLabel.addMouseListener(getMouseListener());
 		loginPanel.add(joinLabel);
-
-		JLabel loginImageLabel = new JLabel("이미지");
-		loginImageLabel.setFont(new Font("굴림", Font.PLAIN, 40));
-		loginImageLabel.setIcon(img.scaledMenuImage("dhlibrary"));
-		loginImageLabel.setBounds(140, 10, 100, 100);
-
 		loginPanel.add(loginImageLabel);
-
-
 		idField.addFocusListener(new FocusAdapter() {
 
 			@Override
