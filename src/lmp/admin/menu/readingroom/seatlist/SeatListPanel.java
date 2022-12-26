@@ -34,9 +34,7 @@ public class SeatListPanel extends JPanel{
 	
 		try {
 			sudVO = sudDao.get();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {}
 		
 		statusPanel = new StatusPanel(sudVO);
 		add(statusPanel);

@@ -34,9 +34,7 @@ public class ReadingRoomPanel extends JPanel {
 		usageListPanel = new UsageListPanel();
 		try {
 			usageListScrollPane = new UsageListScrollPane();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {}
 		usageListTitlePanel = new UsageListTitlePanel(this);
 		
 		

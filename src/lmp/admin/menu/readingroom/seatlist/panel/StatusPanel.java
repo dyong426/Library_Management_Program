@@ -32,9 +32,7 @@ public class StatusPanel extends JPanel{
 		try {
 			readingRoomVo.addAll(readingRoomDao.get());
 			totalSeat = readingRoomVo.size();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {}
 		
 		for (int i = 0; i < LABELS.length; i++) {
 			LABELS[i] = new StatusLabel();

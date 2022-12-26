@@ -141,9 +141,7 @@ public class BookRegistration extends JFrame implements MouseListener, KeyListen
 		BufferedImage bfi_add = null;
 		try {
 			bfi_add = ImageIO.read(new File("src\\lmp\\admin\\menu\\book\\images\\plusBtnIcon.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) {}
 		Image image_add = bfi_add.getScaledInstance(40, 40, Image.SCALE_AREA_AVERAGING);
 
 		addBtn = BookMgmt.getButton(" 추가");
@@ -154,9 +152,7 @@ public class BookRegistration extends JFrame implements MouseListener, KeyListen
 		BufferedImage bfi_del = null;
 		try {
 			bfi_del = ImageIO.read(new File("src\\lmp\\admin\\menu\\book\\images\\minusBtnIcon.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) {}
 		Image del = bfi_del.getScaledInstance(40, 40, Image.SCALE_AREA_AVERAGING);
 
 		delBtn = BookMgmt.getButton(" 제외");
@@ -167,9 +163,7 @@ public class BookRegistration extends JFrame implements MouseListener, KeyListen
 		BufferedImage bfi_save = null;
 		try {
 			bfi_save = ImageIO.read(new File("src\\lmp\\admin\\menu\\book\\images\\saveIconImage.png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) {}
 		Image save = bfi_save.getScaledInstance(40, 40, Image.SCALE_AREA_AVERAGING);
 
 		saveBtn = BookMgmt.getButton(" 저장");

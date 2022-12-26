@@ -47,9 +47,7 @@ public class FindID extends JFrame {
 				try {
 					FindID window = new FindID();
 					window.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				} catch (Exception e) {}
 			}
 		});
 	}

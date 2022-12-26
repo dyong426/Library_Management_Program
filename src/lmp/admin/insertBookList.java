@@ -440,8 +440,6 @@ public class insertBookList {
 					j = 0;
 				}
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {}
 	}
 }

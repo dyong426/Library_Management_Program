@@ -186,9 +186,7 @@ public class MemberLoginFrame extends JFrame {
 									memberLogHistoryDao.update(memberLogHistoryDao.getLog());
 									memberLoginFrame.initialize();
 									memberLoginFrame.validate();
-								} catch (SQLException e) {
-									e.printStackTrace();
-								}
+								} catch (SQLException e) {}
 							}
 						};
 						
@@ -261,7 +259,6 @@ public class MemberLoginFrame extends JFrame {
 				}
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			return false;
 		}
 	}

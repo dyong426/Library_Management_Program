@@ -210,9 +210,7 @@ public class BookRegistrationFrame extends JFrame implements MouseListener, KeyL
 			}
 			try {
 				bookDao.add(bookVo);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			} catch (SQLException e) {}
 		}
 		JOptionPane.showMessageDialog(null, "도서 정보가 등록되었습니다.");
 		model_Regist.setRowCount(0);

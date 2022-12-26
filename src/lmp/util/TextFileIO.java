@@ -58,9 +58,7 @@ public class TextFileIO {
 			// 최근에 열었던 순서대로 닫아야 한다
 			in.close();
 			fin.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		} catch (Exception e) {}
 		
 	}
 }

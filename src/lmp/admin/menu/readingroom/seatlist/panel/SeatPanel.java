@@ -33,9 +33,7 @@ public class SeatPanel extends JPanel{
 		
 		try {
 			rVo.addAll(rDao.get());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {}
 		
 		for (int i = 0 + tens; i < gridLayout.getRows() * gridLayout.getColumns() + tens; i++) {
 			

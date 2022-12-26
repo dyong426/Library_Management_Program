@@ -244,9 +244,7 @@ public class BookModificationFrame extends JFrame implements MouseListener, KeyL
 		}
 		try {
 			bookDao.update(BookMgmt.bookVO.get(row));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {}
 		
 		JOptionPane.showMessageDialog(null, "수정 사항이 저장되었습니다.");
 		

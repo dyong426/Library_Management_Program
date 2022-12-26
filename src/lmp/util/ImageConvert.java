@@ -40,7 +40,6 @@ public class ImageConvert {
 			image = bufferedImage.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
 			icon = new ImageIcon(image);
 		} catch (IOException | SQLException e) {
-			e.printStackTrace();
 		} finally {
 			return icon;
 		}
@@ -59,7 +58,6 @@ public class ImageConvert {
 			image = bufferedImage.getScaledInstance(30, 30, Image.SCALE_SMOOTH);
 			icon = new ImageIcon(image);
 		} catch (IOException | SQLException e) {
-			e.printStackTrace();
 		} finally {
 			return icon;
 		}
@@ -79,7 +77,6 @@ public class ImageConvert {
 			image = bufferedImage.getScaledInstance(60, 60, Image.SCALE_SMOOTH);
 			icon = new ImageIcon(image);
 		} catch (IOException | SQLException e) {
-			e.printStackTrace();
 		} finally {
 			return icon;
 		}
@@ -99,7 +96,6 @@ public class ImageConvert {
 			image = bufferedImage.getScaledInstance(1500, 750, Image.SCALE_SMOOTH);
 			icon = new ImageIcon(image);
 		} catch (IOException | SQLException e) {
-			e.printStackTrace();
 		} finally {
 			return icon;
 		}
@@ -120,7 +116,6 @@ public class ImageConvert {
 			image = bufferedImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 			icon = new ImageIcon(image);
 		} catch (IOException | SQLException e) {
-			e.printStackTrace();
 		} finally {			
 			return icon;
 		}
@@ -139,7 +134,6 @@ public class ImageConvert {
 			image = bufferedImage.getScaledInstance(120, 50, Image.SCALE_SMOOTH);
 			icon = new ImageIcon(image);
 		} catch (IOException | SQLException e) {
-			e.printStackTrace();
 		} finally {			
 			return icon;
 		}
@@ -152,7 +146,6 @@ public class ImageConvert {
 			image = bufferedImage.getScaledInstance(302, 40, Image.SCALE_SMOOTH);
 			icon = new ImageIcon(image);
 		} catch (IOException | SQLException e) {
-			e.printStackTrace();
 		} finally {			
 			return icon;
 		}
@@ -170,9 +163,7 @@ public class ImageConvert {
 	public void inputImage(File file) {
 		try {
 			imageDao.addImage(file);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}		
+		} catch (SQLException e) {}		
 	}
 
 }

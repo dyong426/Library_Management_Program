@@ -96,9 +96,7 @@ public class AdminFrame extends JFrame {
 					for (SeatUseDetailVO seat : sVo) {
 						sDao.update(seat.getUse_id());
 					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+				} catch (SQLException e) {}
 			}
 		};
 		timer.schedule(task, date.getTime());		

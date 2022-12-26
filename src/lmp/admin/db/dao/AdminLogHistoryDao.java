@@ -36,9 +36,7 @@ public class AdminLogHistoryDao extends MenuDao{
 			
 		pstmt.close();
 		conn.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		} catch (SQLException e) {}
 	}
 	
 	/**
