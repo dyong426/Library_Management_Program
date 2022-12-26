@@ -42,7 +42,7 @@ public class EmployeeRegistrationFrame extends JFrame {
 		JLabel email = new JLabel("이메일");
 		JLabel address = new JLabel("주소");
 
-		JTextField pwinfoField = new JTextField("특수문자포함 8자리 이상");
+		JTextField pwinfoField = new JTextField("숫자, 문자, 특수문자포함 8자리 이상");
 
 		JTextField nameField = new JTextField();
 		JPasswordField pwField = new JPasswordField();
@@ -66,27 +66,28 @@ public class EmployeeRegistrationFrame extends JFrame {
 
 		setField(pwinfoField, 163);
 		pwinfoField.setForeground(Color.RED);
+		pwinfoField.setFont(new Font(null, Font.PLAIN, 11));
 		pwinfoField.setVisible(true);
 
 		pwField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
 				if (new String(pwField.getPassword()).trim().equals("")) {
-					pwField.setText("특수문자포함 8자리 이상");
-					pwField.setForeground(Color.RED);
+					pwinfoField.setText("숫자, 문자, 특수문자포함 8자리 이상");
+					pwinfoField.setForeground(Color.RED);
 					pwField.setVisible(false);
 					pwinfoField.setVisible(true);
 				}
 			}
 		});
-		pwinfoField.addMouseListener(new MouseAdapter() {
+		pwinfoField.addFocusListener(new FocusAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void focusGained(FocusEvent e) {
 				pwField.setText("");
 				pwField.setForeground(Color.BLACK);
 				pwinfoField.setVisible(false);
 				pwField.setVisible(true);
-				pwField.requestFocus();
+				pwField.requestFocus();				
 			}
 		});
 
@@ -99,21 +100,21 @@ public class EmployeeRegistrationFrame extends JFrame {
 		setBtn(phonecheckBtn, 13, 400, 263);
 		setlabel(phone, 18, 40, 240);
 		setField(phoneField, 263);
-		phoneField.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				phoneField.setText("");
-				phoneField.requestFocus();
-			}
-		});
 		phoneField.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (new String(phoneField.getText()).trim().equals(""))
+				if (new String(phoneField.getText()).trim().equals("")) {
 					phoneField.setText(" ex) 010-1234-5678");
+				}
+			}
+			@Override
+			public void focusGained(FocusEvent e) {
+				if (phoneField.getText().equals(" ex) 010-1234-5678")) {
+					phoneField.setText("");
+				}
 			}
 		});
-
+		
 		setlabel(email, 18, 40, 290);
 		setField(emailField, 313);
 		setBtn(emailcheckBtn, 13, 400, 313);

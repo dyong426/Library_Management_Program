@@ -122,13 +122,14 @@ public class BookRegistrationFrame extends JFrame implements MouseListener, KeyL
 	}
 
 	public void removeRecord(int index) {
-		DefaultTableModel model = (DefaultTableModel) table_Regist.getModel();
 		if (index < 0) {
-			if (table_Regist.getRowCount() == 0)// 비어있는 테이블이면
-				return;
-			index = 0;
+			JOptionPane.showMessageDialog(null, "제외할 도서를 선택해주세요.");
+			return;
 		}
-		model.removeRow(index);
+		model_Regist.removeRow(index);
+		--rowCount;
+		
+//		model_Regist.setRowCount(0);
 	}
 
 	public void addRecord() {
@@ -214,6 +215,7 @@ public class BookRegistrationFrame extends JFrame implements MouseListener, KeyL
 			}
 		}
 		JOptionPane.showMessageDialog(null, "도서 정보가 등록되었습니다.");
+		model_Regist.setRowCount(0);
 	}
 
 	public void printCell(int row, int col) {

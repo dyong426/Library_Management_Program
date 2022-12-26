@@ -34,11 +34,11 @@ public class SelectModeFrame extends JFrame {
 	MyFont myFont = new MyFont();
 	ImageConvert img = new ImageConvert();
 	JLabel imageLabel = new JLabel();
-
+	
 	MemberFrame memberFrame;
-
+	
 	public SelectModeFrame() throws SQLException {
-
+		
 		SelectModeFrame selectModeFrame = this;
 		ThemeVO getTheme = themeDao.getTheme();
 		theme.setTheme(getTheme.getName());

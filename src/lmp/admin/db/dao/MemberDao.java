@@ -6,8 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import lmp.admin.db.vo.AdminVO;
 import lmp.admin.db.vo.MemberVO;
+import lmp.util.ShaPasswordEncoder;
 
 public class MemberDao extends MenuDao{
 
@@ -15,6 +15,7 @@ public class MemberDao extends MenuDao{
 	 * 회원 정보 dao
 	 */
 	
+	ShaPasswordEncoder pwEncoder = new ShaPasswordEncoder();
 	/**
 	 * 회원 등록
 	 * 
@@ -92,19 +93,19 @@ public class MemberDao extends MenuDao{
 	}
 	
 	
-	public void resetPassword(String mem_num) throws SQLException {
+	public void resetPassword(String mem_num) throws Exception {
 		
 		Connection conn = getConnection();
-		
-		String sql =  "UPDATE"
+ 		String sql =  "UPDATE"
 					+ " members"
 					+ " SET"
-					+ " mem_pw = 'a123456789!'"
+					+ " mem_pw = ?"
 					+ " WHERE"
 					+ " mem_num = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
-		pstmt.setString(1, mem_num);
+		pstmt.setString(1, pwEncoder.encrypt("a123456789!"));
+		pstmt.setString(2, mem_num);
 		
 		pstmt.executeUpdate();
 		

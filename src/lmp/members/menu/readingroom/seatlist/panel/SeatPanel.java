@@ -18,8 +18,8 @@ import lmp.util.theme.Theme;
 
 public class SeatPanel extends JPanel{
 
-	static GridLayout gridLayout = new GridLayout(5,2,3,3);
-	static SeatLabel[] seatLabels = new SeatLabel[gridLayout.getRows() * gridLayout.getColumns()];
+	static GridLayout gridLayout = new GridLayout(5, 2, 3, 3);
+	SeatLabel[] seatLabels = new SeatLabel[gridLayout.getRows() * gridLayout.getColumns()];
 
 	ReadingRoomPanel readingRoomPanel;
 	int tens;

@@ -153,7 +153,7 @@ public class MemberPanel extends JPanel {
 		setlabel(memberphone2, 30, 980, 150);
 
 		setlabel(memberemail, 30, 780, 250);
-		setlabel(memberemail2, 30, 980, 250);
+		setlabel(memberemail2, 20, 980, 250);
 
 		setlabel(memberaddress, 30, 800, 350);
 		setlabel(memberaddress2, 30, 980, 350);
@@ -216,11 +216,13 @@ public class MemberPanel extends JPanel {
 
 				setlabel2(pw, 18, 40, 140);
 				setField(pwField, 163);
+				pwField.setFont(new Font(null, Font.PLAIN, 13));
 				j.add(pw);
 				j.add(pwField);
 
 				setlabel2(chkpw, 18, 40, 190);
 				setField(chkpwField, 213);
+				chkpwField.setFont(new Font(null, Font.PLAIN, 13));
 				j.add(chkpw);
 				j.add(chkpwField);
 
@@ -434,8 +436,9 @@ public class MemberPanel extends JPanel {
 				if (var == JOptionPane.YES_OPTION) {
 					try {
 						memberDao.delete(mvo);
-						memberFrame.getMenuCardPanel().getCard().show(memberFrame.getMenuCardPanel(), "1");
+						memberFrame.getMenuCardPanel().getCard().show(memberFrame.getMenuCardPanel(), "홈 화면");
 						JOptionPane.showMessageDialog(null, "탈퇴 완료");
+						
 					} catch (SQLException e1) {
 						e1.printStackTrace();
 					}

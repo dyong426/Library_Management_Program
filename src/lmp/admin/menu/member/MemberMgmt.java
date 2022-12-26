@@ -118,6 +118,8 @@ public class MemberMgmt extends JPanel {
 						memDao.resetPassword(mem_num);
 					} catch (SQLException e1) {
 						e1.printStackTrace();
+					} catch (Exception e1) {
+						e1.printStackTrace();
 					}
 					
 					JOptionPane.showMessageDialog(null, "비밀번호 초기화 완료.");
@@ -530,7 +532,7 @@ public class MemberMgmt extends JPanel {
 	public static void setField(JTextField field, int y) {
 		Font font = new Font(null, Font.PLAIN, 13);
 		field.setFont(font);
-		field.setBounds(130, y, 200, 30);
+		field.setBounds(140, y, 200, 30);
 		field.setBorder(new LineBorder(new Color(49, 82, 91), 2, false));
 	}
 	

@@ -219,27 +219,27 @@ public class EmployeesMgmt extends JPanel {
 				} else {
 					noteField.setText(model.getValueAt(table.getSelectedRow(), 6).toString());
 				}
-
+				
 				JButton phonecheckBtn = new JButton("중복확인");
 				JButton emailcheckBtn = new JButton("중복확인");
 				JButton joinBtn = new JButton("가입하기");
 				JButton changeBtn2 = new JButton("수정");
 				JButton cancelBtn = new JButton("취소");
-
+				
 				MemberMgmt.setlabel2(join, 40, 40, 13);
 				j.add(join);
-
+				
 				MemberMgmt.setlabel2(id, 18, 25, 90);
 				MemberMgmt.setField(idField, 113);
 				idField.setEditable(false);
 				j.add(id);
 				j.add(idField);
-
+				
 				MemberMgmt.setlabel2(name, 18, 25, 140);
 				MemberMgmt.setField(nameField, 163);
 				j.add(name);
 				j.add(nameField);
-
+				
 				MemberMgmt.setlabel2(pw, 18, 25, 190);
 				MemberMgmt.setField(pwField, 213);
 				j.add(pw);

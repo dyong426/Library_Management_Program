@@ -44,14 +44,14 @@ public class SettingMenu extends JFrame {
 
 		JLabel titleLabel = new JLabel("설정");
 		titleLabel.setFont(new Font("굴림", Font.BOLD, 30));
-		titleLabel.setForeground(Color.WHITE);
+		titleLabel.setForeground(Color.BLACK);
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setBounds(140, 10, 95, 29);
 		getContentPane().add(titleLabel);
 
 		JLabel themeTitleLabel = new JLabel("테마");
 		themeTitleLabel.setBounds(12, 54, 57, 15);
-		themeTitleLabel.setForeground(Color.WHITE);
+		themeTitleLabel.setForeground(Color.BLACK);
 		getContentPane().add(themeTitleLabel);
 
 		JPanel themePanel = new JPanel();

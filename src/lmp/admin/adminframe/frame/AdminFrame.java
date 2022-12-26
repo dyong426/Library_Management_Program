@@ -165,6 +165,13 @@ public class AdminFrame extends JFrame {
 		panel.setLayout(null);
 		panel.setPreferredSize(new Dimension(1900, 1000));
 		panel.setBackground(theme.getMainColor());
+		bookPanel.setBackground(theme.getSub1Color());
+		memberSearchPanel.setBackground(theme.getSub1Color());
+		readingroomPanel.setBackground(theme.getSub1Color());
+		memberPanel.setBackground(theme.getSub1Color());
+		employeePanel.setBackground(theme.getSub1Color());
+		homePanel.setLabel(theme.getHomeImage());
+		
 		sp.setViewportView(panel);
 		sp.getVerticalScrollBar().setUnitIncrement(16);
 	}

@@ -54,7 +54,7 @@ public class LogButtonListener implements ActionListener {
 						memLogDao.update(memLogDao.getLog());
 						System.out.println("로그아웃");
 						this.memberFrame.getLoginButton().setVisible(true);
-						this.memberFrame.getMenuCardPanel().getCard().show(this.memberFrame.getMenuCardPanel(), "home");
+						this.memberFrame.getMenuCardPanel().getCard().show(this.memberFrame.getMenuCardPanel(), "홈 화면");
 						
 					}
 				}

@@ -129,6 +129,10 @@ public class MemberFrame extends JFrame{
 		panel.setLayout(null);
 		panel.setPreferredSize(new Dimension(1900, 1000));
 		panel.setBackground(theme.getMainColor());
+		bookSearchPanel.setBackground(theme.getSub1Color());
+		readingroomPanel.setBackground(theme.getSub1Color());
+		memberPanel.setBackground(theme.getSub1Color());
+		homePanel.setLabel(theme.getHomeImage());
 		sp.setViewportView(panel);
 		sp.getVerticalScrollBar().setUnitIncrement(16);
 	}

@@ -5,6 +5,8 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
@@ -35,7 +37,7 @@ public class BookMgmt extends JPanel {
 
 	static JComboBox cb = new JComboBox(category);
 
-	static JTextField textF = new JTextField(" 검색어를 입력하세요.");
+	static JTextField textF = new JTextField();
 	
 	JPanel panel = this;
 	
@@ -162,16 +164,6 @@ public class BookMgmt extends JPanel {
 				table_BookMgmt.setModel(model_BookMgmt);
 				scroll.validate();
 				validate();
-			}
-		});
-		
-		textF.addMouseListener(new MouseAdapter() { // 검색 텍스트필드 안에 마우스 클릭 시 안내문구 삭제
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-				if (textF.getText().equals(" 검색어를 입력하세요.")) {
-					textF.setText("");
-				}
 			}
 		});
 
