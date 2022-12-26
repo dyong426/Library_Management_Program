@@ -112,7 +112,7 @@ public class MemberDao extends MenuDao{
 	}
 	
 	public MemberVO getName(Integer mem_num) throws SQLException {
-		String sql = "SELECT * FROM members WHERE mem_id = ?";
+		String sql = "SELECT * FROM members WHERE mem_num = ?";
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, mem_num);
