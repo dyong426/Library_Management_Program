@@ -2,11 +2,17 @@ package lmp.members.memberframe.frame;
 
 import java.awt.Dimension;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
+import lmp.admin.db.dao.SeatUseDetailDao;
+import lmp.admin.db.vo.SeatUseDetailVO;
 import lmp.members.db.dao.ThemeDao;
 import lmp.members.db.vo.ThemeVO;
 import lmp.members.memberframe.button.LogButton;
@@ -60,7 +66,31 @@ public class MemberFrame extends JFrame{
 		setTitle("회원 모드");
 		MemberFrame memberFrame = this;
 		ThemeVO getTheme = themeDao.getTheme();
-		theme.setTheme(getTheme.getName());		
+		theme.setTheme(getTheme.getName());
+		
+		
+		// 자정 되면 전좌석 강제 퇴실
+		Calendar date = Calendar.getInstance();
+		date.set(Calendar.HOUR_OF_DAY, 23);
+		date.set(Calendar.MINUTE, 59);
+		date.set(Calendar.SECOND, 59);
+		
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			@Override
+			public void run() {
+				SeatUseDetailDao sDao = new SeatUseDetailDao();
+				ArrayList<SeatUseDetailVO> sVo = new ArrayList<>();
+				try {
+					sVo.addAll(sDao.get());
+					
+					for (SeatUseDetailVO seat : sVo) {
+						sDao.update(seat.getUse_id());
+					}
+				} catch (SQLException e) {}
+			}
+		};
+		timer.schedule(task, date.getTime());
 		
 		
 		bookBtn = new MenuButton("book");

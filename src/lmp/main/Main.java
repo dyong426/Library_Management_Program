@@ -8,10 +8,7 @@ import lmp.util.ImageConvert;
 
 public class Main {
 	
-	public static void main(String[] args) {
-		try {
-			new SelectModeFrame();
-		} catch (SQLException e) {
-		}
+	public static void main(String[] args) throws SQLException {
+		new SelectModeFrame();
 	}
 }

@@ -1,21 +1,21 @@
 package lmp.admin.menu.readingroom.usagelist.label;
 
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
-import lmp.admin.adminframe.frame.AdminFrame;
 import lmp.admin.db.dao.ReadingRoomDao;
 import lmp.admin.db.dao.SeatUseDetailDao;
 import lmp.admin.db.vo.SeatUseDetailVO;
@@ -23,7 +23,10 @@ import lmp.admin.menu.readingroom.ReadingRoomPanel;
 import lmp.admin.menu.readingroom.seatlist.SeatListPanel;
 import lmp.admin.menu.readingroom.usagelist.UsageListPanel;
 import lmp.admin.menu.readingroom.usagelist.scrollpane.table.UsageListTable;
+import lmp.members.db.dao.ThemeDao;
+import lmp.members.db.vo.ThemeVO;
 import lmp.util.ImageConvert;
+import lmp.util.theme.Theme;
 
 public class UsageListCheckOutButton extends JPanel {
 	
@@ -37,17 +40,19 @@ public class UsageListCheckOutButton extends JPanel {
 	public UsageListCheckOutButton(ReadingRoomPanel readingRoomPanel) {
 		
 		this.setLayout(new GridLayout(1, 2));
-		this.setBackground(readingRoomPanel.getBackground());
+		this.setBackground(new Color(0, 0, 0, 0));
 		
 		SeatListPanel  seatListPanel = readingRoomPanel.getSeatListPanel();
 		UsageListPanel usageListPanel = readingRoomPanel.getUsageListPanel();
 		UsageListTable usageListTable = readingRoomPanel.getUsageListScrollPane().getUsageListTable();
 		
-		JButton refreshButton = AdminFrame.getButton("");
-		refreshButton.setIcon(img.scaledSmallImage("refresh"));
-		refreshButton.addActionListener(new ActionListener() {
+		JLabel refreshLabel = new JLabel();
+		refreshLabel.setHorizontalAlignment(JLabel.CENTER);
+		refreshLabel.setBackground(new Color(0, 0, 0, 0));
+		refreshLabel.setIcon(img.scaledSmallImage("refresh"));
+		refreshLabel.addMouseListener(new MouseAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void mouseClicked(MouseEvent e) {
 				try {
 					sudList.clear();
 					sudList.addAll(sudDao.get()); // DB 내용 가져오기
@@ -60,7 +65,7 @@ public class UsageListCheckOutButton extends JPanel {
 					
 					int resetRow = 0;
 					for (SeatUseDetailVO sud : sudList) {
-							
+						
 						for (int i = 0; i < sud.getSudList().length; i++) {
 							if (i == 5) {
 								if (sud.getMember().getSex().equals("0")) {
@@ -81,9 +86,16 @@ public class UsageListCheckOutButton extends JPanel {
 					
 					seatListPanel.refresh(sudList);
 					
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}
+				} catch (SQLException e1) {}
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				Cursor cursor = new Cursor(Cursor.HAND_CURSOR);
+				setCursor(cursor);
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				setCursor(null);
 			}
 		});
 		
@@ -112,9 +124,7 @@ public class UsageListCheckOutButton extends JPanel {
 							if (seat_num != null) {
 								try {
 									sudDao.update(seat_num);
-								} catch (SQLException e2) {
-									e2.printStackTrace();
-								}
+								} catch (SQLException e2) {}
 
 								// --------- 데이터베이스 수정하기 ---------
 
@@ -152,23 +162,21 @@ public class UsageListCheckOutButton extends JPanel {
 									seatListPanel.refresh(sudList);
 									
 									
-								} catch (SQLException e1) {
-									e1.printStackTrace();
-								}
+								} catch (SQLException e1) {}
 							}
 						}
 					} else {
-						JOptionPane.showMessageDialog(usageListTable, "퇴실할 좌석을 선택해 주세요");
+						JOptionPane.showMessageDialog(usageListPanel, "퇴실할 좌석을 선택해 주세요");
 						return;
 					}
 				} else {
-					JOptionPane.showMessageDialog(usageListTable, "퇴실할 좌석을 선택해 주세요");
+					JOptionPane.showMessageDialog(usageListPanel, "퇴실할 좌석을 선택해 주세요");
 					return;
 				}
 			}
 		});
 		
-		this.add(refreshButton);
+		this.add(refreshLabel);
 		this.add(checkOutButton);
 	}
 }

@@ -188,11 +188,6 @@ public class BookRegistrationFrame extends JFrame implements MouseListener, KeyL
 
 	public void saveRecord() {
 
-		if (model_Regist.getRowCount() == 0) {
-			JOptionPane.showMessageDialog(null, "저장할 도서를 추가해주세요.");
-			return;
-		}
-
 		BookDao bookDao = new BookDao();
 		BookVO bookVo = new BookVO();
 

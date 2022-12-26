@@ -50,14 +50,17 @@ public class BookDao extends MenuDao{
 		pstmt.setString(4, bookVO.getIsbn());
 		pstmt.setInt(5, bookVO.getBias());
 		// 복권수 확인 절차
-		if (get(bookVO.getTitle(), bookVO.getAuthor(), bookVO.getBias()).size() > 0) {
+		// 등록하는 도서와 같다고 판단되는 도서가 존재하면
+		if (getDuplicates(bookVO.getTitle(), bookVO.getAuthor(), bookVO.getBias()).size() > 0) {
 			
 			ArrayList<BookVO> duplicateList = new ArrayList<BookVO>();
-			duplicateList.addAll(get(bookVO.getTitle(), bookVO.getAuthor(), bookVO.getBias()));
+			duplicateList.addAll(getDuplicates(bookVO.getTitle(), bookVO.getAuthor(), bookVO.getBias()));
 			
+			// 존재하는 도서들의 복권수 + 1
 			pstmt.setInt(6, duplicateList.get(0).getDuplicates() + 1);
 			increaseDuplicate(duplicateList.get(0).getTitle(), duplicateList.get(0).getAuthor(), duplicateList.get(0).getBias());
 		} else {
+			// 존재하지 않는다면 복권수 1로 저장
 			pstmt.setInt(6, 1);
 		}
 		pstmt.setInt(7, bookVO.getPrice());
@@ -206,7 +209,7 @@ public class BookDao extends MenuDao{
 	 * @return ArrayList<BookVO> bookList
 	 * @throws SQLException
 	 */
-	public ArrayList get(int header, String searchStr) throws SQLException {
+	public ArrayList<BookVO> get(int header, String searchStr) throws SQLException {
 		
 		StringBuilder sql = selectSql(header);
 
@@ -252,7 +255,7 @@ public class BookDao extends MenuDao{
 	 * @return
 	 * @throws SQLException
 	 */
-	public ArrayList get(String book_title, String book_author, int bias) throws SQLException {
+	public ArrayList getDuplicates(String book_title, String book_author, int bias) throws SQLException {
 		
 		String sql = "SELECT * FROM books JOIN locations USING(location_id) WHERE book_title = ? AND book_author = ? AND book_bias = ?";
 

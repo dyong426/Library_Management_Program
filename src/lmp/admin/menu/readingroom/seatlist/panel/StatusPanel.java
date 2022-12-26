@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.LineBorder;
 
 import lmp.admin.db.dao.ReadingRoomDao;
 import lmp.admin.db.vo.ReadingRoomVO;
@@ -27,7 +28,8 @@ public class StatusPanel extends JPanel{
 	public StatusPanel(ArrayList<SeatUseDetailVO> sudVO) {
 		
 		setLayout(gridLayout);
-		setBackground(new Color(87, 119, 119));
+		setBorder(new LineBorder(Color.BLACK, 2));
+		setBackground(new Color(0, 0, 0, 0));
 		
 		try {
 			readingRoomVo.addAll(readingRoomDao.get());

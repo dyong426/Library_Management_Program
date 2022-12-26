@@ -206,13 +206,13 @@ public class BookMgmt extends JPanel {
 					switch (num) {
 					case 0:
 						try {
-
 							// 도서 삭제시 대여 중이면 안내문구 출력 후 버튼 무효
 							CheckOutDao checkOutDao = new CheckOutDao();
 							ArrayList<CheckOutVO> checkOutVo = new ArrayList<CheckOutVO>();
 
-							checkOutVo.addAll(checkOutDao
-									.get(model_BookMgmt.getValueAt(table_BookMgmt.getSelectedRow(), 0).toString()));
+							checkOutVo.addAll(checkOutDao.get(
+									model_BookMgmt.getValueAt(
+											table_BookMgmt.getSelectedRow(), 0).toString()));
 
 							if (checkOutVo.size() != 0) {
 								JOptionPane.showMessageDialog(null, "대여 중인 도서입니다.\n반납 후 삭제 해주시기 바랍니다.");
@@ -232,7 +232,7 @@ public class BookMgmt extends JPanel {
 							// 삭제한 도서와 동일한 이름, 저자, 편권수를 가진 책이 있으면 복권수 감소
 							if (updateDuplicateList.size() != 0) {
 								bookDao.decreaseDuplicate(updateDuplicateList.get(0).getTitle(),
-										updateDuplicateList.get(0).getAuthor(), updateDuplicateList.get(0).getBias());
+									updateDuplicateList.get(0).getAuthor(), updateDuplicateList.get(0).getBias());	
 							}
 
 							// 삭제된 도서 제외하고 테이블 새로고침

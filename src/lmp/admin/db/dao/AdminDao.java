@@ -258,14 +258,14 @@ public class AdminDao extends MenuDao{
 		return adminList;
 	}
 	
-	public ArrayList<AdminVO> getByEmail(String email, String admin_id) throws SQLException {
+	public ArrayList<AdminVO> getByEmail(String email, String admin_num) throws SQLException {
 
-		String sql = "SELECT * FROM admins WHERE admin_email LIKE ? AND admin_id <> ?";
+		String sql = "SELECT * FROM admins WHERE admin_email LIKE ? AND admin_num <> ?";
 
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, "%" + email + "%");
-		pstmt.setString(2, admin_id);
+		pstmt.setString(2, admin_num);
 		
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<AdminVO> adminList = new ArrayList<>();

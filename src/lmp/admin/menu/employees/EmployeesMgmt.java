@@ -313,7 +313,7 @@ public class EmployeesMgmt extends JPanel {
 						
 						AdminDao adminDao = new AdminDao();
 
-						if (vd.isValidateEmail(phoneField.getText())) {
+						if (vd.isValidateEmail(emailField.getText())) {
 							AdminVO adminVo = null;
 							try {
 								adminVo = adminDao.getByEmail(emailField.getText(), idField.getText()).get(0);
@@ -325,7 +325,7 @@ public class EmployeesMgmt extends JPanel {
 								changeBtn2.setEnabled(true);
 								return;
 							}
-
+							
 							if (adminVo != null) {
 								JOptionPane.showMessageDialog(null, "중복되는 이메일 입니다.", "경고", JOptionPane.ERROR_MESSAGE);
 								changeBtn2.setEnabled(false);

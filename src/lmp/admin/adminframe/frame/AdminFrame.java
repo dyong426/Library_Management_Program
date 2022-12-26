@@ -99,7 +99,7 @@ public class AdminFrame extends JFrame {
 				} catch (SQLException e) {}
 			}
 		};
-		timer.schedule(task, date.getTime());		
+		timer.schedule(task, date.getTime());
 		
 		
 		menuButtonPanel = new MenuButtonPanel();
@@ -214,7 +214,7 @@ public class AdminFrame extends JFrame {
 						setCursor(cursor);
 					}
 				});
-				}
+			 }
 		 };
 	}
 	

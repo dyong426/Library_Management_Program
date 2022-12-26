@@ -12,6 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -27,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.adminframe.frame.AdminFrame;
 import lmp.admin.db.dao.BookDao;
+import lmp.admin.db.vo.BookVO;
 import lmp.admin.db.vo.LocationVO;
 import lmp.util.ImageConvert;
 
@@ -44,6 +46,8 @@ public class BookModificationFrame extends JFrame implements MouseListener, KeyL
 	ImageConvert img = new ImageConvert();
 	
 	JFrame f = this;
+	
+	BookDao bookDao = new BookDao();
 	
 	public BookModificationFrame(String title) {
 
@@ -183,16 +187,10 @@ public class BookModificationFrame extends JFrame implements MouseListener, KeyL
 	}
 
 	public void overwriteRecord() {
-		DefaultTableModel model_Modify = (DefaultTableModel) table_Modify.getModel();
 		for (int i = 0; i < TABLE_COLUMN.length; i++) {
-			// 위치 정보는 textField가 아니기 때문에 반복문에서 제외
-			if (TABLE_COLUMN[i].equals("위치")) {
-				model_Modify.setValueAt(cb_Modify.getSelectedItem(), 0, i);
-				// 아무것도 없으면 아래 코드 패스
-			} else if (fields_Modify[i].getText().trim().equals("")) {
-				continue;
-			// fields에 무언가 있을 때 테이블에 있는 정보와 비교해서 다르면 정보 수정
-			} else if (TABLE_COLUMN[i].equals("편권수")) {
+			
+			// 편권수/가격에 음수 혹은 문자 입력하면 안내 문구 출력
+			if (TABLE_COLUMN[i].equals("편권수")) {
 				try {
 					if (Integer.parseInt(fields_Modify[i].getText()) <= 0) {
 						JOptionPane.showMessageDialog(null, "편권수에 1이상의 수를 입력해주세요.");
@@ -212,26 +210,57 @@ public class BookModificationFrame extends JFrame implements MouseListener, KeyL
 					JOptionPane.showMessageDialog(null, "가격을 숫자로 입력해주세요.");
 					return;
 				}
-			} else if (!fields_Modify[i].getText().equals(model_Modify.getValueAt(0, i)) &&
-					(!TABLE_COLUMN[i].equals("위치"))) {
+			}
+			
+			// 위치 정보는 textField가 아니기 때문에 반복문에서 제외
+			if (TABLE_COLUMN[i].equals("위치")) {
+				model_Modify.setValueAt(cb_Modify.getSelectedItem(), 0, i);
+				// 아무것도 없으면 아래 코드 패스
+			} else if (fields_Modify[i].getText().trim().equals("")) {
+				continue;
+			// fields에 무언가 있을 때 테이블에 있는 정보와 비교해서 다르면 정보 수정
+			} else {
 				model_Modify.setValueAt(fields_Modify[i].getText(), 0, i);
 			}
 		}
-
-		// 모든 TextField 비우기
-//		for (int i = 0; i < TABLE_COLUMN.length; i++) {
-//			if (!(i == 5 || i == 6))
-//				fields_Modify[i].setText("");
-//		}
-//		fields_Modify[0].requestFocus();
 	}
 	
 	public void updateRecord() {
+		int row = BookMgmt.table_BookMgmt.getSelectedRow();
+		BookVO book = new BookVO();
+		ArrayList<BookVO> duplicateList = new ArrayList<BookVO>();
 		
-		BookDao bookDao = new BookDao();
+		try {
+			book = bookDao.get(1, BookMgmt.model_BookMgmt.getValueAt(row, 0).toString()).get(0);
+		} catch (SQLException e1) {}
+		
+		// 편권수가 수정될 경우 기존 도서들은 복권수 감소, 해당 도서는 복권수 1로 변경
+		if (book.getBias() != model_Modify.getValueAt(0, 4)) {
+			try {
+				bookDao.decreaseDuplicate(book.getTitle(), book.getAuthor(), book.getBias());
+			} catch (SQLException e) {}
+			
+			try {
+				
+				String bookTitle = model_Modify.getValueAt(0, 0).toString();
+				String bookAuthor = model_Modify.getValueAt(0, 1).toString();
+				int bookBias = Integer.parseInt(model_Modify.getValueAt(0, 4).toString());
+				
+				// 수정 도서의 제목, 저자, 편권수 정보와 같은 정보를 가진 도서들이 있다면 복권수 증가
+				duplicateList.addAll(bookDao.getDuplicates(bookTitle, bookAuthor, bookBias));
+				
+				for (BookVO duplicate : duplicateList) {
+					bookDao.increaseDuplicate(bookTitle, bookAuthor, bookBias);
+				}
+				BookMgmt.bookVO.get(row).setDuplicates(duplicateList.get(0).getDuplicates());
+				
+			} catch (NumberFormatException | SQLException e1) {
+				// 같은 정보의 도서가 없다면 복권수 1
+				BookMgmt.bookVO.get(row).setDuplicates(1);
+			}			
+		}
 		
 		// BookVO에서 수정 항목 데이터 변경
-		int row = BookMgmt.table_BookMgmt.getSelectedRow();
 		BookMgmt.bookVO.get(row).setTitle(model_Modify.getValueAt(0, 0).toString());
 		BookMgmt.bookVO.get(row).setAuthor(model_Modify.getValueAt(0, 1).toString());
 		BookMgmt.bookVO.get(row).setPublisher(model_Modify.getValueAt(0, 2).toString());
