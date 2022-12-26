@@ -69,7 +69,7 @@ public class SettingMenu extends JFrame {
 		themeBtns = new JButton[themes.size()];
 
 		for (int i = 0; i < themes.size(); i++) {
-			themeBtns[i] = getThemeButton(themes.get(i).getName());
+			themeBtns[i] = getThemeButton(themes.get(i));
 		}
 		
 		for (JButton themeBtn : themeBtns) {
@@ -124,12 +124,12 @@ public class SettingMenu extends JFrame {
 
 	}
 	
-	public JButton getThemeButton(String text) throws SQLException {
+	public JButton getThemeButton(ThemeVO themeVO) throws SQLException {
 		
 		return new JButton() {
 			{
-				setText(text);
-				if (themeDao.getTheme().equals(text)) {
+				setText(themeVO.getName());
+				if (themeVO.getActivation().equals("1")) {
 					setBackground(new Color(153, 204, 255));
 				} else {
 					setBackground(Color.WHITE);

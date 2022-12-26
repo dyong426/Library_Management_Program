@@ -60,9 +60,7 @@ public class MemberFrame extends JFrame{
 		setTitle("회원 모드");
 		MemberFrame memberFrame = this;
 		ThemeVO getTheme = themeDao.getTheme();
-		theme.setTheme(getTheme.getName());
-		
-		
+		theme.setTheme(getTheme.getName());		
 		
 		
 		bookBtn = new MenuButton("book");

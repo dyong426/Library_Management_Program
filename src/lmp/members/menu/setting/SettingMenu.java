@@ -130,7 +130,7 @@ public class SettingMenu extends JFrame {
 			{
 				setText(themeVO.getName());
 				if (themeVO.getActivation().equals("1")) {
-					setBackground(new Color(153,204,255));
+					setBackground(new Color(153, 204, 255));
 				} else {
 					setBackground(Color.WHITE);
 				}

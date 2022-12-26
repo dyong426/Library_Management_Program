@@ -38,6 +38,7 @@ import lmp.admin.menu.member.MemberMgmt;
 import lmp.admin.menu.readingroom.ReadingRoomPanel;
 import lmp.members.db.dao.ThemeDao;
 import lmp.members.db.vo.ThemeVO;
+import lmp.members.memberframe.label.ClockLabel;
 import lmp.util.theme.Theme;
 
 public class AdminFrame extends JFrame {
@@ -60,6 +61,8 @@ public class AdminFrame extends JFrame {
 	private static ReadingRoomPanel readingroomPanel;
 	private static MemberMgmt memberPanel;
 	private static EmployeesMgmt employeePanel;
+	
+	private static ClockLabel clockLabel;
 	
 	private static OptionButton homeButton;
 	private static OptionButton setupButton;
@@ -120,6 +123,7 @@ public class AdminFrame extends JFrame {
 		homeButton = new OptionButton("home");
 		setupButton = new OptionButton("setup");
 		
+		clockLabel = new ClockLabel();
 		
 		bookMgmtBtn.addActionListener(new MenuButtonListener(this));
 		checkInOutBtn.addActionListener(new MenuButtonListener(this));
@@ -143,6 +147,7 @@ public class AdminFrame extends JFrame {
 		menuCardPanel.add("회원관리", memberPanel);
 		menuCardPanel.add("직원관리", employeePanel);
 		
+		panel.add(clockLabel);
 		panel.add(homeButton);
 		panel.add(setupButton);
 		panel.add(menuButtonPanel);
