@@ -1,5 +1,6 @@
 package lmp.admin.menu.readingroom.usagelist.scrollpane;
 
+import java.awt.Color;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -37,7 +38,7 @@ public class UsageListScrollPane extends JScrollPane{
 				if (i == 5) {
 					if (sud.getMember().getSex().equals("0")) {
 						model.setValueAt("남", resetRow, i);
-					} else {						
+					} else {
 						model.setValueAt("여", resetRow, i);
 					}
 				} else {
@@ -49,6 +50,7 @@ public class UsageListScrollPane extends JScrollPane{
 		
 		usageListTable = new UsageListTable(model);
 		this.setViewportView(usageListTable);
+//		this.setBackground(new Color(0, 0, 0, 0));
 		this.setOpaque(true);
 	}
 

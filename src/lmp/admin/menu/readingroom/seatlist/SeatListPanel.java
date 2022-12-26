@@ -29,8 +29,8 @@ public class SeatListPanel extends JPanel{
 		
 		setLayout(gridLayout);
 //		setBorder(new TitledBorder(new LineBorder(new Color(49, 82, 91), 30)));
-//		setBackground(new Color(87, 119, 119));
-		setOpaque(true);
+		setBackground(new Color(0, 0, 0, 0));
+//		setOpaque(true);
 	
 		try {
 			sudVO = sudDao.get();

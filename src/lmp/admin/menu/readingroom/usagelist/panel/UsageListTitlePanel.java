@@ -24,7 +24,7 @@ public class UsageListTitlePanel extends JPanel{
 		this.setLayout(borderLayout);
 		this.add(usageListTitleLabel, "North");
 		this.add(usageListCheckOutButton, "East");
-		this.setBackground(new Color(87, 119, 119));
+		this.setBackground(new Color(0, 0, 0, 0));
 		
 	}
 }

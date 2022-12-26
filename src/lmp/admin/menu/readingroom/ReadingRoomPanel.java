@@ -28,7 +28,7 @@ public class ReadingRoomPanel extends JPanel {
 	public ReadingRoomPanel() {
 		
 //		setBackground(new Color(87, 119, 119));
-		setOpaque(true);
+//		setOpaque(true);
 		
 		seatListPanel = new SeatListPanel();
 		usageListPanel = new UsageListPanel();
@@ -41,10 +41,10 @@ public class ReadingRoomPanel extends JPanel {
 		
 		
 		usageListPanel.add(usageListTitlePanel, "North");
-		usageListPanel.setBackground(new Color(87, 119, 119));
+		usageListPanel.setBackground(new Color(0, 0, 0, 0));
 		usageListPanel.add(usageListScrollPane, "Center");
 		
-		seatListPanel.setBorder(new LineBorder(new Color(87, 119, 119), 10));
+		seatListPanel.setBorder(new LineBorder(new Color(0, 0, 0, 0), 10));
 		setLayout(gridLayout);
 		add(usageListPanel);
 		add(seatListPanel);

@@ -170,7 +170,7 @@ public class AdminFrame extends JFrame {
 		panel.setBackground(theme.getMainColor());
 		bookPanel.setBackground(sub1Color);
 		memberSearchPanel.setBackground(sub1Color);
-//		readingroomPanel.setBackground(sub1Color);
+		readingroomPanel.setBackground(sub1Color);
 //		readingroomPanel.getSeatListPanel().setBackground(sub1Color);
 //		readingroomPanel.getSeatListPanel().setBorder(new LineBorder(sub1Color, 10));
 //		readingroomPanel.getUsageListPanel().getUsageListScrollPane().setBackground(sub1Color);
