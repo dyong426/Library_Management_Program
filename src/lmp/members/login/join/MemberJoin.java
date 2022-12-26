@@ -201,7 +201,6 @@ public class MemberJoin extends JFrame {
 						JOptionPane.showMessageDialog(null, "사용가능합니다");
 					}
 				} else {
-					System.out.println(4);
 					JOptionPane.showMessageDialog(null, "사용 불가한 아이디입니다",
 							"경고", JOptionPane.ERROR_MESSAGE);
 					joinBtn.setEnabled(false);

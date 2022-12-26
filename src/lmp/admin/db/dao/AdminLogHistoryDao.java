@@ -32,7 +32,6 @@ public class AdminLogHistoryDao extends MenuDao{
 			pstmt = conn.prepareStatement(sql);
 		
 		pstmt.setInt(1, adminVO.getNum());
-		System.out.println("실행");
 		pstmt.executeUpdate();
 			
 		pstmt.close();

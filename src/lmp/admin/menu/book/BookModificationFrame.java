@@ -270,7 +270,6 @@ public class BookModificationFrame extends JFrame implements MouseListener, KeyL
 
 	public void printCell(int row, int col) {
 		DefaultTableModel model = (DefaultTableModel) table_Modify.getModel();
-		System.out.println(model.getValueAt(row, col));
 	}
 
 	// MouseListener Overrides

@@ -202,7 +202,6 @@ public class BookRegistration extends JFrame implements MouseListener, KeyListen
 		String[] record = new String[10];
 		for (int i = 0; i < 9; i++) {
 			if (isInvalidInput(fields[i].getText())) {
-				System.out.println("Invalid Input");
 				return;
 			}
 			record[i] = fields[i].getText();
@@ -217,7 +216,6 @@ public class BookRegistration extends JFrame implements MouseListener, KeyListen
 
 	public void printCell(int row, int col) {
 		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		System.out.println(model.getValueAt(row, col));
 	}
 
 	// MouseListener Overrides

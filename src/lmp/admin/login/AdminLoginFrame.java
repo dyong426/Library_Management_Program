@@ -167,7 +167,6 @@ public class AdminLoginFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					System.out.println(idField.getText() + new String(pwField.getPassword()));
 					if (checkLogin(idField.getText(), new String(pwField.getPassword()))) {
 						adminLoginFrame.dispose();
 						selectModeFrame.dispose();
@@ -215,7 +214,6 @@ public class AdminLoginFrame extends JFrame{
 		try {
 			
 			adminVO = adminDao.getAdminInfo(Integer.parseInt(admin_num));
-			System.out.println(adminVO);
 			if (adminVO == null) {
 				return false;
 			} else {

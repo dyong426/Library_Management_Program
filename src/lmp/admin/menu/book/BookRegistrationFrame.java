@@ -220,7 +220,6 @@ public class BookRegistrationFrame extends JFrame implements MouseListener, KeyL
 
 	public void printCell(int row, int col) {
 		DefaultTableModel model = (DefaultTableModel) table_Regist.getModel();
-		System.out.println(model.getValueAt(row, col));
 	}
 
 	// MouseListener Overrides

@@ -25,7 +25,6 @@ public class UsageListCheckOutLabel extends JLabel{
 	
 	public UsageListCheckOutLabel(ReadingRoomPanel readingRoomPanel) {
 		
-		System.out.println("checkOUtlabel");
 		
 		this.setText("강제퇴실");
 		this.setHorizontalAlignment(JLabel.CENTER);
@@ -47,7 +46,6 @@ public class UsageListCheckOutLabel extends JLabel{
 				ArrayList<SeatUseDetailVO> sudList =  new ArrayList<>();
 				
 				// 테이블에 선택한 값이 없는 경우
-				System.out.println(usageListTable.getSelectedRow());
 				if (usageListTable.getSelectedRow() != -1) {
 
 					if (usageListTable.getValueAt(usageListTable.getSelectedRow(), 0) != null) {

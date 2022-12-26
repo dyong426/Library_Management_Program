@@ -23,7 +23,6 @@ public class ExampleDao extends MenuDao {
 	public void add(BookVO bookVO) throws SQLException {
 
 		Connection conn = getConnection();
-		System.out.println("커넥션");
 		String sql = "INSERT INTO books(" + "book_id," + "book_title," + "book_author," + "book_publisher,"
 				+ "book_isbn," + "book_price," + "location_id," + "book_registrationdate,"
 				+ "book_note) VALUES(book_id_seq.nextval,?,?,?,?,?,?,sysdate,?)";
@@ -37,9 +36,7 @@ public class ExampleDao extends MenuDao {
 		pstmt.setInt(5, bookVO.getPrice());
 		pstmt.setString(6, bookVO.getLocation().getLocID());
 		pstmt.setString(7, bookVO.getNote());
-		System.out.println("쓰기?");
 		pstmt.executeUpdate();
-		System.out.println("성공?");
 		pstmt.close();
 		conn.close();
 

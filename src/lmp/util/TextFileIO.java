@@ -54,16 +54,13 @@ public class TextFileIO {
 			}
 			for (int i = 1; i < list.size(); i++) {				
 				eDao.add(list.get(i));
-				System.out.println("인서트 중...");
 			}
 			// 최근에 열었던 순서대로 닫아야 한다
 			in.close();
 			fin.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("파일을 찾을 수 없거나 쓰기 도중 에러 발생...");
 		}
-		System.out.println("프로그램 종료.");
 		
 	}
 }

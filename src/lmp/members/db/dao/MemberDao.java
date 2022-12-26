@@ -28,7 +28,6 @@ public class MemberDao extends MenuDao{
 										+ "VALUES(mem_num_seq.nextval,?,?,?,?,?,?,?,?)";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		System.out.println(memberVO.getSex());
 		pstmt.setString(1, memberVO.getName());
 		pstmt.setString(2, memberVO.getId());
 		pstmt.setString(3, memberVO.getPw());
