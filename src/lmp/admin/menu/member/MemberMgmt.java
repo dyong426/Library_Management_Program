@@ -26,6 +26,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.menu.book.BookMgmt;
+import lmp.members.db.dao.MemberLogHistoryDao;
 import lmp.admin.adminframe.frame.AdminFrame;
 import lmp.admin.db.dao.CheckOutDao;
 import lmp.admin.db.dao.MemberDao;
@@ -299,10 +300,12 @@ public class MemberMgmt extends JPanel {
 				phonecheckBtn.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
+						
 						if (vd.isValidatePhone(phoneField.getText()))  {
+							
 							MemberVO memberVO = null;
 							try {
-								memberVO = memberDao.getByPhone(phoneField.getText()).get(0);
+								memberVO = memberDao.getByPhone(phoneField.getText(), idField.getText()).get(0);
 							} catch (SQLException e1) {
 								JOptionPane.showMessageDialog(null, "사용가능합니다");
 								
@@ -332,7 +335,7 @@ public class MemberMgmt extends JPanel {
 						if (vd.isValidateEmail(emailField.getText()))  {
 							MemberVO memberVO = null;
 							try {
-								memberVO = memberDao.getByEmail(emailField.getText()).get(0);
+								memberVO = memberDao.getByEmail(emailField.getText(), idField.getText()).get(0);
 							} catch (SQLException e1) {
 								JOptionPane.showMessageDialog(null, "사용가능합니다");
 								

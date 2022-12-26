@@ -14,14 +14,14 @@ import lmp.util.theme.Theme;
 public class OptionButtonListener implements ActionListener{
 
 	MemberFrame memberFrame;
-	static SettingMenu setMenu;
+	SettingMenu setMenu;
 	static ThemeDao themeDao = new ThemeDao();
-	static Theme theme = new Theme();
+	Theme theme = new Theme();
 	
 	public OptionButtonListener(MemberFrame memberFrame) {
 		this.memberFrame = memberFrame;
 		try {
-			setMenu = new SettingMenu(memberFrame);
+			setMenu = new SettingMenu(this.memberFrame);
 		} catch (SQLException e) {
 		}
 	}

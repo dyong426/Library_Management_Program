@@ -27,7 +27,8 @@ public class ReadingRoomPanel extends JPanel {
 	
 	public ReadingRoomPanel() {
 		
-		setBackground(new Color(87, 119, 119));
+//		setBackground(new Color(87, 119, 119));
+		setOpaque(true);
 		
 		seatListPanel = new SeatListPanel();
 		usageListPanel = new UsageListPanel();

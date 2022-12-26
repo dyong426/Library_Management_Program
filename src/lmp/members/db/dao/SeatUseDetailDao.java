@@ -117,8 +117,9 @@ public class SeatUseDetailDao extends MenuDao{
 		String sql = "SELECT * FROM seat_use_details JOIN members USING(mem_num) JOIN readingroom USING(seat_num) WHERE end_time is null";
 		ArrayList<SeatUseDetailVO> sudList = new ArrayList<>();
 		try (Connection conn = getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery();) {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+		){
 			while (rs.next()) {
 				sudList.add(new SeatUseDetailVO(rs.getInt("use_id"),
 						new MemberVO(rs.getInt("mem_num"), rs.getString("mem_name")),

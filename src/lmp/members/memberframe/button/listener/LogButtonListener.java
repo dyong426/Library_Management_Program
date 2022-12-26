@@ -28,18 +28,17 @@ public class LogButtonListener implements ActionListener {
 		LogButton btn = (LogButton) e.getSource();
 		
 		if (btn.getText().equals("로그인")) {
-				try {
-					if (memLogDao.getLog() != null) {
-						JOptionPane.showMessageDialog(memberFrame, "로그인 상태입니다.");
-						return;
-					} else {
-						MemberLoginFrame memLogFrame = new MemberLoginFrame();
-						memLogFrame.setVisible(true);
-					}
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+			try {
+				if (memLogDao.getLog() != null) {
+					JOptionPane.showMessageDialog(memberFrame, "로그인 상태입니다.");
+					return;
+				} else {
+					MemberLoginFrame memLogFrame = new MemberLoginFrame();
+					memLogFrame.setVisible(true);
 				}
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
 		} else {
 			try {
 				if (memLogDao.getLog() == null) {

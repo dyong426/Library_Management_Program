@@ -50,6 +50,7 @@ public class SelectModeFrame extends JFrame {
 				selectModeFrame.dispose();
 				try {
 					MemberFrame memberFrame = new MemberFrame();
+					memberFrame.initialize();
 					memberFrame.setVisible(true);
 				} catch (SQLException e1) {
 					e1.printStackTrace();

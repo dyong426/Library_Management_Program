@@ -12,11 +12,10 @@ public class ThemeDao extends MenuDao {
 
 	public ThemeVO getTheme() throws SQLException {
 
-		String sql = "SELECT * FROM themes WHERE theme_activation = ?";
+		String sql = "SELECT * FROM themes WHERE theme_activation = '1'";
 
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, 1);
 		ResultSet rs = pstmt.executeQuery();
 
 		ThemeVO themeVO = null;
@@ -37,8 +36,9 @@ public class ThemeDao extends MenuDao {
 		ArrayList<ThemeVO> getThemes = new ArrayList<>();
 
 		try (Connection conn = getConnection();
-				PreparedStatement pstmt = conn.prepareStatement(sql);
-				ResultSet rs = pstmt.executeQuery();) {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+		){
 			while (rs.next()) {
 				getThemes.add(new ThemeVO(rs.getInt("theme_id"), rs.getString("theme_name"),
 						rs.getString("theme_activation")));
@@ -52,7 +52,7 @@ public class ThemeDao extends MenuDao {
 
 	public void addTheme(String theme_name) throws SQLException {
 
-		String sql = "INSERT INTO themes VALUES(theme_id_seq.nextval, ?)";
+		String sql = "INSERT INTO themes VALUES(theme_id_seq.nextval, ?,'0')";
 
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -66,21 +66,19 @@ public class ThemeDao extends MenuDao {
 
 	public void setTheme(String theme_name) throws SQLException {
 
-		String sql1 = "UPDATE themes SET theme_activation = 0 WHERE theme_name <> ?";
-		String sql2 = "UPDATE themes SET theme_activation = 1 WHERE theme_name = ?";
+		String sql1 = "UPDATE themes SET theme_activation = '0'";
+		String sql2 = "UPDATE themes SET theme_activation = '1' WHERE theme_name = ?";
 
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql1);
-		pstmt.setString(1, theme_name);
 		pstmt.executeUpdate();
-
+		
 		pstmt = conn.prepareStatement(sql2);
 		pstmt.setString(1, theme_name);
 		pstmt.executeUpdate();
 
 		conn.commit();
 
-		pstmt.close();
 		conn.close();
 	}
 

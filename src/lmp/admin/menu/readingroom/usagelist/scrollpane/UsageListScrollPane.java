@@ -49,6 +49,7 @@ public class UsageListScrollPane extends JScrollPane{
 		
 		usageListTable = new UsageListTable(model);
 		this.setViewportView(usageListTable);
+		this.setOpaque(true);
 	}
 
 	public UsageListTable getUsageListTable() {

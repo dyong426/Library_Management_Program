@@ -131,7 +131,7 @@ public class EmployeeRegistrationFrame extends JFrame {
 				if (vd.isValidatePhone(phoneField.getText()))  {
 					AdminVO adminVo = null;
 					try {
-						adminVo = adminDao.getByPhone(phoneField.getText()).get(0);
+						adminVo = adminDao.getByPhone(phoneField.getText(), nameField.getText()).get(0);
 					} catch (SQLException e1) {
 						JOptionPane.showMessageDialog(null, "사용가능합니다");
 
@@ -161,7 +161,7 @@ public class EmployeeRegistrationFrame extends JFrame {
 				if (vd.isValidateEmail(emailField.getText()))  {
 					AdminVO adminVo = null;
 					try {
-						adminVo = adminDao.getByEmail(emailField.getText()).get(0);
+						adminVo = adminDao.getByEmail(emailField.getText(), nameField.getText()).get(0);
 					} catch (SQLException e1) {
 						JOptionPane.showMessageDialog(null, "사용가능합니다");
 

@@ -28,6 +28,8 @@ public class SettingMenu extends JFrame {
 
 	GridLayout gridLayout = new GridLayout(2, 3,5,5);
 
+	JPanel themePanel;
+	JPanel fontPanel;
 	JButton[] themeBtns;
 	JButton[] fontBtns;
 	static ThemeDao themeDao = new ThemeDao();
@@ -54,7 +56,7 @@ public class SettingMenu extends JFrame {
 		themeTitleLabel.setForeground(Color.BLACK);
 		getContentPane().add(themeTitleLabel);
 
-		JPanel themePanel = new JPanel();
+		themePanel = new JPanel();
 		themePanel.setBounds(12, 79, 360, 46);
 		getContentPane().add(themePanel);
 		themePanel.setLayout(gridLayout);
@@ -64,20 +66,13 @@ public class SettingMenu extends JFrame {
 		
 		for (int i = 0; i < themes.size(); i++) {
 			themeBtns[i] = getThemeButton(themes.get(i));
-		}
-		
-		for (JButton themeBtn : themeBtns) {
-			themeBtn.addMouseListener(new ThemeListener(themeBtns));
-			themePanel.add(themeBtn);
-		}
-		
-		
+		}	
 
 		JLabel fontTitleLabel = new JLabel("폰트크기");
 		fontTitleLabel.setBounds(12, 135, 57, 15);
 		getContentPane().add(fontTitleLabel);
 
-		JPanel fontPanel = new JPanel();
+		fontPanel = new JPanel();
 		fontPanel.setBounds(12, 160, 360, 46);
 		getContentPane().add(fontPanel);
 		fontPanel.setLayout(new GridLayout(1, 3, 5, 5));
@@ -90,10 +85,6 @@ public class SettingMenu extends JFrame {
 			fontBtns[i] = getFontButton(fonts.get(i));
 		}
 		
-		for (JButton fontBtn : fontBtns) {
-			fontBtn.addMouseListener(new FontListener(fontBtns));
-			fontPanel.add(fontBtn);
-		}
 		
 		JButton btnNewButton = new JButton("닫기");
 		btnNewButton.setBounds(275, 228, 97, 23);
@@ -116,8 +107,23 @@ public class SettingMenu extends JFrame {
 		getContentPane().add(btnNewButton);
 		setBounds(100,100,400,300);
 		
+		initialize();
+		
 	}
 
+	public void initialize() {
+		ThemeListener themeListener = new ThemeListener(themeBtns);
+		for (JButton themeBtn : themeBtns) {
+			themeBtn.addMouseListener(themeListener);
+			themePanel.add(themeBtn);
+		}
+		
+		FontListener fontListener = new FontListener(fontBtns);
+		for (JButton fontBtn : fontBtns) {
+			fontBtn.addMouseListener(fontListener);
+			fontPanel.add(fontBtn);
+		}
+	}
 	
 	public JButton getThemeButton(ThemeVO themeVO) throws SQLException {
 		

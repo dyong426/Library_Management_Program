@@ -19,7 +19,7 @@ public class GenderPanel extends JPanel {
 	
 	public GenderPanel() {
 	
-		this.setLayout(new GridLayout(1, 2, 5, 0));
+		this.setLayout(new GridLayout(1, 2));
 		this.setBackground(new Color(126, 151, 148));
 		this.setPreferredSize(new Dimension(100, 30));
 		

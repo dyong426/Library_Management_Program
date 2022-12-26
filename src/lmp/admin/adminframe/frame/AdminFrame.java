@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import lmp.admin.adminframe.button.MenuButton;
@@ -162,14 +163,19 @@ public class AdminFrame extends JFrame {
 		ThemeVO getTheme = themeDao.getTheme();
 		theme.setTheme(getTheme.getName());
 		
+		Color sub1Color = theme.getSub1Color();
+		
 		panel.setLayout(null);
 		panel.setPreferredSize(new Dimension(1900, 1000));
 		panel.setBackground(theme.getMainColor());
-		bookPanel.setBackground(theme.getSub1Color());
-		memberSearchPanel.setBackground(theme.getSub1Color());
-		readingroomPanel.setBackground(theme.getSub1Color());
-		memberPanel.setBackground(theme.getSub1Color());
-		employeePanel.setBackground(theme.getSub1Color());
+		bookPanel.setBackground(sub1Color);
+		memberSearchPanel.setBackground(sub1Color);
+//		readingroomPanel.setBackground(sub1Color);
+//		readingroomPanel.getSeatListPanel().setBackground(sub1Color);
+//		readingroomPanel.getSeatListPanel().setBorder(new LineBorder(sub1Color, 10));
+//		readingroomPanel.getUsageListPanel().getUsageListScrollPane().setBackground(sub1Color);
+		memberPanel.setBackground(sub1Color);
+		employeePanel.setBackground(sub1Color);
 		homePanel.setLabel(theme.getHomeImage());
 		
 		sp.setViewportView(panel);

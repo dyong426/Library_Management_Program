@@ -193,13 +193,14 @@ public class MemberDao extends MenuDao{
 	}
 	
 	
-	public ArrayList<MemberVO> getByPhone(String phone) throws SQLException {
+	public ArrayList<MemberVO> getByPhone(String phone, String mem_id) throws SQLException {
 		
-		String sql = "SELECT * FROM members WHERE mem_phone LIKE ?";
+		String sql = "SELECT * FROM members WHERE mem_phone LIKE ? AND mem_id <> ?";
 
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, "%" + phone + "%");
+		pstmt.setString(2, mem_id);
 		
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<MemberVO> memberList = new ArrayList<>();
@@ -225,13 +226,14 @@ public class MemberDao extends MenuDao{
 	}
 	
 	
-	public ArrayList<MemberVO> getByEmail(String email) throws SQLException {
+	public ArrayList<MemberVO> getByEmail(String email, String mem_id) throws SQLException {
 		
-		String sql = "SELECT * FROM members WHERE mem_email LIKE ?";
+		String sql = "SELECT * FROM members WHERE mem_email LIKE ? AND mem_id <> ?";
 
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setString(1, "%" + email + "%");
+		pstmt.setString(2, mem_id);
 		
 		ResultSet rs = pstmt.executeQuery();
 		ArrayList<MemberVO> memberList = new ArrayList<>();

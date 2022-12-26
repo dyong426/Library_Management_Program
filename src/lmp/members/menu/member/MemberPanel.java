@@ -427,7 +427,7 @@ public class MemberPanel extends JPanel {
 					JOptionPane.showMessageDialog(null, "미반납 도서가 존재합니다.");
 					deleteBtn.setEnabled(false);
 					return;
-				} 
+				}
 				
 				int var = JOptionPane.showConfirmDialog
 						(null, "탈퇴하시겠습니까?", "탈퇴 안내",

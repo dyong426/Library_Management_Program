@@ -63,13 +63,7 @@ public class MemberFrame extends JFrame{
 		theme.setTheme(getTheme.getName());
 		
 		
-		menuButtonPanel = new MenuButtonPanel();
-		menuCardPanel = new MenuCardPanel();
 		
-		homePanel = new HomePanel();
-		bookSearchPanel = new BookSearchPanel();
-		readingroomPanel = new ReadingRoomPanel();
-		memberPanel = new MemberPanel(this);
 		
 		bookBtn = new MenuButton("book");
 		readingroomBtn = new MenuButton("readingroom"); 
@@ -83,14 +77,13 @@ public class MemberFrame extends JFrame{
 		
 		clockLabel = new ClockLabel();
 		
-		bookBtn.addActionListener(new MenuButtonListener(this));
-		readingroomBtn.addActionListener(new MenuButtonListener(this));
-		memberBtn.addActionListener(new MenuButtonListener(this));
+		homePanel = new HomePanel();
+		bookSearchPanel = new BookSearchPanel();
+		readingroomPanel = new ReadingRoomPanel();
+		memberPanel = new MemberPanel(this);
 		
-		loginButton.addActionListener(new LogButtonListener(this));
-		logoutButton.addActionListener(new LogButtonListener(this));
-		homeButton.addActionListener(new OptionButtonListener(this));
-		setupButton.addActionListener(new OptionButtonListener(this));
+		menuButtonPanel = new MenuButtonPanel();
+		menuCardPanel = new MenuCardPanel();
 		
 		menuButtonPanel.add(bookBtn);
 		menuButtonPanel.add(readingroomBtn);
@@ -120,7 +113,24 @@ public class MemberFrame extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().add(sp);
 		setContentPane(sp);
+		
 	}
+	
+	public void initialize() {
+		MenuButtonListener mbl = new MenuButtonListener(this);
+		LogButtonListener lbl = new LogButtonListener(this);
+		OptionButtonListener obl = new OptionButtonListener(this);
+		
+		bookBtn.addActionListener(mbl);
+		readingroomBtn.addActionListener(mbl);
+		memberBtn.addActionListener(mbl);
+		
+		loginButton.addActionListener(lbl);
+		logoutButton.addActionListener(lbl);
+		homeButton.addActionListener(obl);
+		setupButton.addActionListener(obl);
+	}
+	
 
 	public void refresh() throws SQLException {
 		ThemeVO getTheme = themeDao.getTheme();

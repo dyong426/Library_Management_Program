@@ -153,7 +153,7 @@ public class EmployeesMgmt extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 
 				if (table.getSelectedRow() == -1 || model.getValueAt(table.getSelectedRow(), 0) == null) {
-					JOptionPane.showMessageDialog(null, "삭제할 회원을 선택해주세요.");
+					JOptionPane.showMessageDialog(null, "삭제할 직원을 선택해주세요.");
 					return;
 				}
 
@@ -190,7 +190,7 @@ public class EmployeesMgmt extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if (table.getSelectedRow() == -1 || model.getValueAt(table.getSelectedRow(), 0) == null) {
-					JOptionPane.showMessageDialog(null, "수정할 회원을 선택해주세요.");
+					JOptionPane.showMessageDialog(null, "수정할 직원을 선택해주세요.");
 					return;
 				}
 
@@ -277,7 +277,7 @@ public class EmployeesMgmt extends JPanel {
 						if (vd.isValidatePhone(phoneField.getText())) {
 							AdminVO adminVo = null;
 							try {
-								adminVo = adminDao.getByPhone(phoneField.getText()).get(0);
+								adminVo = adminDao.getByPhone(phoneField.getText(), idField.getText()).get(0);
 							} catch (SQLException e1) {
 								JOptionPane.showMessageDialog(null, "사용가능합니다");
 								return;
@@ -316,7 +316,7 @@ public class EmployeesMgmt extends JPanel {
 						if (vd.isValidateEmail(phoneField.getText())) {
 							AdminVO adminVo = null;
 							try {
-								adminVo = adminDao.getByEmail(emailField.getText()).get(0);
+								adminVo = adminDao.getByEmail(emailField.getText(), idField.getText()).get(0);
 							} catch (SQLException e1) {
 								JOptionPane.showMessageDialog(null, "사용가능합니다");
 								return;

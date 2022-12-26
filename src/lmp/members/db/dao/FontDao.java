@@ -20,7 +20,7 @@ public class FontDao extends MenuDao{
 
 		Connection conn = getConnection();
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setInt(1, 1);
+		pstmt.setString(1, "1");
 		ResultSet rs = pstmt.executeQuery();
 
 		String getFont = "";
