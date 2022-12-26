@@ -63,6 +63,7 @@ public class ReadingRoomPanel extends JPanel {
 		add(statusPanel);
 		add(seatListPanel);
 	}
+	
 	public void refresh() throws SQLException {
 		seatListPanel.refresh();
 		statusPanel.refresh();
@@ -79,17 +80,18 @@ public class ReadingRoomPanel extends JPanel {
 	public StatusPanel getStatusPanel() {
 		return statusPanel;
 	}
+	
 	public ArrayList<SeatUseDetailVO> getSudVOs() {
 		return sudVOs;
 	}
+	
 	public ArrayList<ReadingRoomVO> getSeatList() {
 		return seatList;
 	}
+	
 	public Theme getTheme() {
 		return theme;
-	}
-
-	
+	}	
 	
 	
 }

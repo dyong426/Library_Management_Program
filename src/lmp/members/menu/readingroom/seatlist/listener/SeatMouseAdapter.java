@@ -28,7 +28,7 @@ public class SeatMouseAdapter extends MouseAdapter{
 	MemberVO memberVO;
 	ReadingRoomPanel readingRoomPanel;
 	public SeatMouseAdapter(ReadingRoomPanel readingRoomPanel) {
-	this.readingRoomPanel = readingRoomPanel;
+		this.readingRoomPanel = readingRoomPanel;
 	}
 	
 	@Override
@@ -43,34 +43,38 @@ public class SeatMouseAdapter extends MouseAdapter{
 			
 			// 이용중인 자리 확인
 			if (sudVO != null) {
-				JOptionPane.showMessageDialog(null, "이미 사용중인 자리입니다.", "Message", 0);
+				JOptionPane.showMessageDialog(readingRoomPanel, "이미 사용중인 자리입니다.", "Message", 0);
 			} else {
 				memLogVO = memLogDao.getLog();
 				
 				// 로그인 여부 확인
 				if (memLogVO == null) {
-					JOptionPane.showMessageDialog(null, "로그인 후 이용하세요.", "Message", 0);
+					JOptionPane.showMessageDialog(readingRoomPanel, "로그인 후 이용하세요.", "Message", 0);
 					memLogFrame.initialize();
 					memLogFrame.setVisible(true);					
 				} else {
 					memberVO = memberDao.getName(memLogVO.getMemberVO().getNum());
 					
 					// 발권 여부 확인
-					if (JOptionPane.showConfirmDialog(null, String.format("좌석번호 : %d", seat_num), "열람실 입/퇴실 확인", JOptionPane.YES_NO_OPTION) == 0) {
+					if (JOptionPane.showConfirmDialog(readingRoomPanel,
+													  String.format("좌석번호 : %d", seat_num),
+													  "열람실 입/퇴실 확인",
+													  JOptionPane.YES_NO_OPTION) == 0) {
 						sudVO = sudDao.getUsingInfo(memLogVO.getMemberVO().getNum());
 						if (sudVO != null) {
-							JOptionPane.showMessageDialog(null, String.format("이미 사용중 입니다.\n좌석번호 : %d\n회원이름 : %s\n사용시작시간 : %s",
-																				sudVO.getReadingroom().getSeatNum(),
-																				sudVO.getMember().getName(),
-																				sudVO.getStartTime()), "사용중인 자리 확인", 0);	
+							JOptionPane.showMessageDialog(readingRoomPanel,
+														  String.format("이미 사용중 입니다.\n좌석번호 : %d\n회원이름 : %s\n사용시작시간 : %s",
+														  sudVO.getReadingroom().getSeatNum(),
+														  sudVO.getMember().getName(),
+														  sudVO.getStartTime()), "사용중인 자리 확인", 0);	
 						} else {
 							sudDao.add(memLogVO.getMemberVO().getNum(),seat_num);
 							sudVO = sudDao.getUsingInfo(memLogVO.getMemberVO().getNum());
-							JOptionPane.showMessageDialog(null,
+							JOptionPane.showMessageDialog(readingRoomPanel,
 														  String.format("좌석번호 : %d\n회원이름 : %s\n사용시작시간 : %s",
-																				sudVO.getReadingroom().getSeatNum(),
-																				sudVO.getMember().getName(),
-																				sudVO.getStartTime().substring(11)),
+														  sudVO.getReadingroom().getSeatNum(),
+														  sudVO.getMember().getName(),
+														  sudVO.getStartTime().substring(11)),
 														  "발권확인",
 														  JOptionPane.INFORMATION_MESSAGE);
 							readingRoomPanel.refresh();
