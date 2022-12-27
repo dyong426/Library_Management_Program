@@ -39,9 +39,10 @@ public class MemberVO {
 		
 	}
 	
-	public MemberVO(Integer mem_num, String mem_name, String mem_pw, String mem_phone, String mem_email,String mem_address) {
+	public MemberVO(Integer mem_num, String mem_name, String mem_id, String mem_pw, String mem_phone, String mem_email,String mem_address) {
 		this.num = mem_num;
 		this.name = mem_name;
+		this.id = mem_id;
 		this.pw = mem_pw;
 		this.phone = mem_phone;
 		this.email = mem_email;

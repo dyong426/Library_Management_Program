@@ -351,11 +351,10 @@ public class MemberPanel extends JPanel {
 					public void actionPerformed(ActionEvent e) {
 
 						if (vd.isValidatePW(new String(pwField.getPassword())) &&
-								vd.isValidateName(nameField.getText()) &&
-								vd.isValidatePhone(phoneField.getText()) &&
-								vd.isValidateEmail(emailField.getText()) &&
-								!(addressField.getText().equals("")) 
-								) {
+							vd.isValidateName(nameField.getText()) &&
+							vd.isValidatePhone(phoneField.getText()) &&
+							vd.isValidateEmail(emailField.getText()) &&
+							!(addressField.getText().equals(""))) {
 							int var = JOptionPane.showConfirmDialog
 									(null, "수정하시겠습니까?", "수정 확인",
 											JOptionPane.YES_NO_OPTION,
@@ -367,6 +366,7 @@ public class MemberPanel extends JPanel {
 									vo = new MemberVO(
 											mvo.getNum(),
 											nameField.getText(),
+											idField.getText(),
 											pwEncoder.encrypt(new String(pwField.getPassword())),
 											phoneField.getText(),
 											emailField.getText(),
@@ -375,30 +375,29 @@ public class MemberPanel extends JPanel {
 								} catch (Exception e2) {
 									JOptionPane.showMessageDialog(null, "입력 정보를 확인하세요", "경고",
 											JOptionPane.ERROR_MESSAGE);
+									return;
 								}
 								try {
 									mdao.update(vo);
 								} catch (SQLException e1) {
 									JOptionPane.showMessageDialog(null, "입력 정보를 확인하세요", "경고",
 											JOptionPane.ERROR_MESSAGE);
+									return;
 								}
-
-
-
 							} else if (vd.isValidateName(nameField.getText()) == false) {
 								JOptionPane.showMessageDialog(null, "적절하지 않은 이름입니다", "경고",
 										JOptionPane.ERROR_MESSAGE);
+								return;
 							} else {
 								JOptionPane.showMessageDialog(null, "입력되지 않은 정보가 존재합니다.", "경고",
 										JOptionPane.ERROR_MESSAGE);
+								return;
 							}
 						}
 
 						try {
 							refresh();
-						} catch (SQLException e1) {
-							e1.printStackTrace();
-						}
+						} catch (SQLException e1) {}
 						JOptionPane.showMessageDialog(null, "수정되었습니다");
 						j.dispose();
 					}

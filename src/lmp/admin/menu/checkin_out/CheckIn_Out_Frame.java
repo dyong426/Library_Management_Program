@@ -300,7 +300,8 @@ public class CheckIn_Out_Frame extends JFrame{
 									checkOutTable.getValueAt(checkOutTable.getSelectedRow(), 0)));
 							BookMgmt.tableValidate();
 						} else {
-							JOptionPane.showMessageDialog(frame, "대출할 도서를 선택해주세요.");							
+							JOptionPane.showMessageDialog(frame, "대출할 도서를 선택해주세요.");
+							return;
 						}
 						// 대출 버튼 클릭시 해당 도서가 대출 목록의 빈 행에 들어가도록 빈 행 찾는 코드
 						int emptyRow = 0;

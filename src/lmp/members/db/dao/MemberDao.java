@@ -53,18 +53,18 @@ public class MemberDao extends MenuDao{
 		
 		Connection conn = getConnection();
 		
-		String sql =  "Update "
-					+ "members "
-					+ "SET "
-					+ "mem_name = ?,"
-					+ "mem_id = ?,"
-					+ "mem_pw = ?,"
-					+ "mem_phone = ?,"
-					+ "mem_email = ?,"
-					+ "mem_address = ? "
-					+ "mem_updatedate = sysdate"
-					+ "WHERE "
-					+ "mem_num = ?";
+		String sql =  "Update"
+					+ " members"
+					+ " SET"
+					+ " mem_name = ?,"
+					+ " mem_id = ?,"
+					+ " mem_pw = ?,"
+					+ " mem_phone = ?,"
+					+ " mem_email = ?,"
+					+ " mem_address = ?,"
+					+ " mem_updatedate = sysdate"
+					+ " WHERE"
+					+ " mem_num = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 			
 		pstmt.setString(1,memberVO.getName());
